@@ -1,7 +1,5 @@
+# Java
 *.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 *.jar
@@ -10,3 +8,27 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# IntelliJ IDEA
+*.iml
+.idea/
+out/
+
+# Eclipse IDE
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
+# Eclipse Core
+.project
+.classpath
+
+# Locally stored "Eclipse launch configurations"
+*.launch
