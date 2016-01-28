@@ -9,9 +9,9 @@ import java.util.logging.Logger;
 public class CoreEngine {
 
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
+    private final int FRAME_RATE = 60;
 
     private boolean running;
-    private final int FRAME_RATE = 60;
     private long startTime;
 
     private boolean slept = false;
@@ -61,5 +61,4 @@ public class CoreEngine {
     private void updateGameState() {
 
     }
-
 }

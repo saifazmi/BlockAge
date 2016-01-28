@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 public class CoreGUI extends Application {
 
+    private final int WIDTH = 1280;
+    private final int HEIGHT = 720;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -20,7 +23,7 @@ public class CoreGUI extends Application {
 
         try {
             BorderPane root = new BorderPane();
-            Scene scene = new Scene(root, 1280, 720);
+            Scene scene = new Scene(root, WIDTH, HEIGHT);
             primaryStage.setScene(scene);
             Thread engThread = new Thread(new Runnable() {
                 @Override
