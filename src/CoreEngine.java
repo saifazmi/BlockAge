@@ -2,6 +2,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 
 /**
  * @author : saif
@@ -15,10 +16,13 @@ public class CoreEngine {
 
     private boolean running;
     private long startTime;
+    private Graph graph;
 
     private boolean slept = false;
 
-    public CoreEngine(Scene scene) {
+    public CoreEngine() {
+        this.graph = null;
+
         Graph graph = new Graph();
 
         for (int x = 0; x < 5; x++) {
@@ -31,12 +35,16 @@ public class CoreEngine {
         for (GraphNode aNode : graph.getNodes()) {
             aNode.addNeighbours(graph);
         }
-        
-        Renderer renderer = new Renderer(scene, graph, null);
-        renderer.drawPointMarks();
+
+        this.graph = graph;
+    }
+
+    public Graph getGraph() {
+        return graph;
     }
 
     public void startGame() {
+
         this.running = true;
         startTime = System.nanoTime();
 
