@@ -9,7 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class CoreGUI extends Application {
+    private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
 
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
@@ -35,7 +39,7 @@ public class CoreGUI extends Application {
             engThread.start();
             primaryStage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
 

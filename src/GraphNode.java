@@ -64,7 +64,7 @@ public class GraphNode {
         sb.append(" ");
         for (int i = 0; i < this.successors.size(); i++) {
             sb.append("(" + this.successors.get(i).getX() + "," +
-            this.successors.get(i).getY() + ")");
+                    this.successors.get(i).getY() + ")");
         }
 
         return sb.toString();
