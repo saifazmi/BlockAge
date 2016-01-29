@@ -1,6 +1,8 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.scene.Scene;
+
 /**
  * @author : saif
  * @project : bestRTS
@@ -16,7 +18,7 @@ public class CoreEngine {
 
     private boolean slept = false;
 
-    public CoreEngine() {
+    public CoreEngine(Scene scene) {
         Graph graph = new Graph();
 
         for (int x = 0; x < 5; x++) {
@@ -29,6 +31,9 @@ public class CoreEngine {
         for (GraphNode aNode : graph.getNodes()) {
             aNode.addNeighbours(graph);
         }
+        
+        Renderer renderer = new Renderer(scene, graph, null);
+        renderer.drawPointMarks();
     }
 
     public void startGame() {

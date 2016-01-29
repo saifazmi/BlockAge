@@ -28,7 +28,7 @@ public class CoreGUI extends Application {
             Thread engThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    CoreEngine engine = new CoreEngine();
+                    CoreEngine engine = new CoreEngine(scene);
                     engine.startGame();
                 }
             });
