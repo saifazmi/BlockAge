@@ -17,6 +17,18 @@ public class CoreEngine {
     private boolean slept = false;
 
     public CoreEngine() {
+        Graph graph = new Graph();
+
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 5; y++) {
+                GraphNode node = new GraphNode(x, y);
+                graph.nodeWith(node);
+            }
+        }
+
+        for (GraphNode aNode : graph.getNodes()) {
+            aNode.addNeighbours(graph);
+        }
     }
 
     public void startGame() {
@@ -43,7 +55,7 @@ public class CoreEngine {
         // NOTE: first five thread sleeps cause
         // interference with delta time.
         if (deltaTime >= (Math.pow(10, 9) / FRAME_RATE)) {
-            LOG.log(Level.INFO, "Delta time: " + String.valueOf(deltaTime * Math.pow(10, -9)));
+            // LOG.log(Level.INFO, "Delta time: " + String.valueOf(deltaTime * Math.pow(10, -9)));
             timeToUpdate = true;
             this.startTime = currentTime;
         }
@@ -54,7 +66,7 @@ public class CoreEngine {
         try {
             Thread.sleep(950 / FRAME_RATE);
         } catch (InterruptedException e) {
-            LOG.log(Level.SEVERE, e.toString(), e);
+            // LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
 

@@ -1,6 +1,5 @@
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.logging.Level;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -12,10 +11,10 @@ public class Graph {
 
     private static final Logger LOG = Logger.getLogger(Graph.class.getName());
 
-    private Set<GraphNode> nodes;
+    private List<GraphNode> nodes;
 
     public Graph() {
-        this.nodes = new LinkedHashSet<GraphNode>();
+        this.nodes = new ArrayList<GraphNode>();
     }
 
     public GraphNode nodeWith(GraphNode node) {
@@ -28,5 +27,9 @@ public class Graph {
         nodes.add(node);
 
         return node;
+    }
+
+    public List<GraphNode> getNodes() {
+        return nodes;
     }
 }

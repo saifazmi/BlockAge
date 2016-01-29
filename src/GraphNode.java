@@ -24,6 +24,7 @@ public class GraphNode {
         this.units = new ArrayList<Unit>();
         this.successors = new ArrayList<GraphNode>();
         blockade = null;
+
     }
 
     @Override
@@ -35,5 +36,50 @@ public class GraphNode {
 
         if (x != graphNode.x) return false;
         return y == graphNode.y;
+    }
+
+    public void addNeighbours(Graph graph) {
+        for (int i = 0; i < graph.getNodes().size(); i++) {
+            GraphNode node = graph.getNodes().get(i);
+            double deltaX = Math.abs(this.x - node.getX());
+            double deltaY = Math.abs(this.y - node.getY());
+
+            if (!node.equals(this) &&
+                    (deltaX <= 1 && deltaY <= 1) &&
+                    (deltaX + deltaY) < 2) {
+                addSuccessor(node, graph);
+            }
+        }
+
+        LOG.log(Level.INFO, "This node is: " + this.toString());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("GraphNode{" +
+                "x=" + x +
+                ", y=" + y +
+                '}');
+        sb.append(" ");
+        for (int i = 0; i < this.successors.size(); i++) {
+            sb.append("(" + this.successors.get(i).getX() + "," +
+            this.successors.get(i).getY() + ")");
+        }
+
+        return sb.toString();
+    }
+
+    public void addSuccessor(GraphNode node, Graph graph) {
+        GraphNode successor = graph.nodeWith(node);
+        this.successors.add(successor);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
