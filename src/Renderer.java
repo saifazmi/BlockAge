@@ -53,7 +53,7 @@ public class Renderer extends Group
 		double height = results.get(5);
 		success = success && drawLines(xSpacing, ySpacing, width, height, xAccumulator, yAccumulator);
 		//success = success && drawPointMarks(xSpacing, ySpacing, width, height, xAccumulator, yAccumulator);
-		return success;
+		return success; 
 	}
 	
 	public boolean drawPointMarks(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator)	//UNTESTED//
