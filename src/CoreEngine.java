@@ -1,9 +1,6 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-
 /**
  * @author : saif
  * @project : bestRTS
@@ -25,8 +22,8 @@ public class CoreEngine {
 
         Graph graph = new Graph();
 
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
+        for (int x = 0; x < 50; x++) {
+            for (int y = 0; y < 50; y++) {
                 GraphNode node = new GraphNode(x, y);
                 graph.nodeWith(node);
             }
@@ -68,7 +65,7 @@ public class CoreEngine {
         // NOTE: first five thread sleeps cause
         // interference with delta time.
         if (deltaTime >= (Math.pow(10, 9) / FRAME_RATE)) {
-            // LOG.log(Level.INFO, "Delta time: " + String.valueOf(deltaTime * Math.pow(10, -9)));
+            //LOG.log(Level.INFO, "Delta time: " + String.valueOf(deltaTime * Math.pow(10, -9)));
             timeToUpdate = true;
             this.startTime = currentTime;
         }

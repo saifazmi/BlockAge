@@ -1,5 +1,4 @@
 import javafx.scene.Node;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,7 +9,7 @@ import java.util.logging.Logger;
  */
 public class Blockade extends Entity {
 
-    private static final Logger LOG = Logger.getLogger(Blockade.class.getName());
+	private static final Logger LOG = Logger.getLogger(Blockade.class.getName());
 
     // @TODO: Place holder
     public Blockade(int id, String name, String description, GraphNode position, Node sprite) {

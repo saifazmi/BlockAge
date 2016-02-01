@@ -5,8 +5,12 @@
  */
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class CoreGUI extends Application {
@@ -35,15 +39,24 @@ public class CoreGUI extends Application {
                 }
             });
             engThread.start();
-            //System.out.println("Before WHILE");
             while (engine == null) {
                 System.out.println("IN THE WHILE!!!!!");
             }
-            //System.out.println("After WHILE");
-
             Renderer renderer = new Renderer(scene, engine.getGraph(), null);
+            scene.widthProperty().addListener(new ChangeListener<Number>() {
+                @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                	renderer.redraw();
+                }
+            });
+            scene.heightProperty().addListener(new ChangeListener<Number>() {
+                @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                    renderer.redraw();
+                }
+            });
             root.setCenter(renderer);
-            renderer.drawPointMarks();
+            renderer.draw();
+            Blockade block = new Blockade(0, "block", "desc", new GraphNode(2,2) , new Circle(0,0, 10));
+            renderer.drawEntity(block);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
