@@ -5,8 +5,7 @@
  */
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
@@ -34,35 +33,34 @@ public class CoreGUI extends Application {
             BorderPane root = new BorderPane();
             final Scene scene = new Scene(root, WIDTH, HEIGHT);
             primaryStage.setScene(scene);
-            Thread engThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    engine = new CoreEngine();
-                    engine.startGame();
-                }
+            //@TODO: exit the program properly.
+            primaryStage.setOnCloseRequest(e -> Platform.exit());
+            Thread engThread = new Thread(() -> {
+                engine = new CoreEngine();
+                engine.startGame();
             });
             engThread.start();
             while (engine == null) {
                 Thread.sleep(1);
             }
             final Renderer renderer = new Renderer(scene, engine.getGraph(), null);
-            scene.widthProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                    renderer.redraw();
-                }
+            scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
+                renderer.redraw();
             });
-            scene.heightProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-                    renderer.redraw();
-                }
+            scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
+                renderer.redraw();
             });
             root.setCenter(renderer);
             renderer.draw();
             Blockade block = new Blockade(0, "block", "desc", new GraphNode(2, 2), new Circle(0, 0, 10));
+            Unit unit = new Unit(0, "testUnit", new GraphNode(3, 1), new Circle(10), null, this.engine.getGraph());
             renderer.drawEntity(block);
+            renderer.drawEntity(unit);
             primaryStage.show();
+//            unit.moveUp();
+//            unit.moveLeft();
+//            unit.moveRight();
+//            unit.moveDown();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.toString(), e);
         }

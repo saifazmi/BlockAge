@@ -25,12 +25,12 @@ public abstract class Entity {
         this.sprite = sprite;
     }
 
-    public Entity(int id, String name, GraphNode position) {
+    public Entity(int id, String name, GraphNode position, Node sprite) {
         this.id = id;
         this.name = name;
         this.position = position;
         this.description = null;
-        this.sprite = null;
+        this.sprite = sprite;
     }
 
     public int getId() {
@@ -63,5 +63,9 @@ public abstract class Entity {
 
     public void setSprite(Node sprite) {
         this.sprite = sprite;
+    }
+
+    public void setPosition(GraphNode position) {
+        this.position = position;
     }
 }

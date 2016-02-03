@@ -10,7 +10,6 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Renderer extends Group {
@@ -61,7 +60,7 @@ public class Renderer extends Group {
         for (int i = 0; i < xAccumulator; i++) {
             for (int j = 0; j < yAccumulator; j++) {
                 Circle point = new Circle(xSpacing / 2 + i * xSpacing, ySpacing / 2 + j * ySpacing, radius);
-                LOG.log(Level.INFO, "Circle: " + point.getCenterX() + ", " + point.getCenterY());
+                // LOG.log(Level.INFO, "Circle: " + point.getCenterX() + ", " + point.getCenterY());
                 this.getChildren().add(point);
             }
         }
@@ -90,7 +89,7 @@ public class Renderer extends Group {
         ArrayList<Double> returnList = new ArrayList<Double>();
         double width = scene.getWidth(); //subtract the right sidebar width TODO @TODO//
         double height = scene.getHeight(); //subtract the bottom bar height TODO @TODO//
-        LOG.log(Level.INFO, "Screen Sizes: " + width + ", " + height);
+        // LOG.log(Level.INFO, "Screen Sizes: " + width + ", " + height);
 
         int xAccumulator = 0;
         int yAccumulator = 0;
@@ -139,8 +138,8 @@ public class Renderer extends Group {
             GraphNode node = entity.getPosition();
             int xCoord = node.getX();
             int yCoord = node.getY();
-            circle.setCenterX(this.xSpacing / 2 + this.xSpacing * (1 + xCoord));
-            circle.setCenterY(this.ySpacing / 2 + this.ySpacing * (1 + yCoord));
+            circle.setCenterX(this.xSpacing / 2 + this.xSpacing * (xCoord));
+            circle.setCenterY(this.ySpacing / 2 + this.ySpacing * (yCoord));
             if (xSpacing > ySpacing) {
                 circle.setRadius(ySpacing / 2);
             } else {

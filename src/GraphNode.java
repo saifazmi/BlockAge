@@ -82,4 +82,30 @@ public class GraphNode {
     public int getY() {
         return y;
     }
+
+    public Blockade getBlockade() {
+        return blockade;
+    }
+
+    public void setBlockade(Blockade blockade) {
+        this.blockade = blockade;
+    }
+
+    public int addUnit(Unit unit) {
+        int numberOfUnitsAdded = 0;
+
+        units.add(unit);
+        numberOfUnitsAdded++;
+
+        return numberOfUnitsAdded;
+    }
+
+    public int removeUnit(Unit unit) {
+        int numberOfUnitsRemoved = 0;
+
+        units.remove(unit);
+        numberOfUnitsRemoved++;
+
+        return numberOfUnitsRemoved;
+    }
 }

@@ -21,8 +21,8 @@ public class CoreEngine {
 
         Graph graph = new Graph();
 
-        for (int x = 0; x < 50; x++) {
-            for (int y = 0; y < 50; y++) {
+        for (int x = 0; x < Graph.WIDTH; x++) {
+            for (int y = 0; y < Graph.HEIGHT; y++) {
                 GraphNode node = new GraphNode(x, y);
                 graph.nodeWith(node);
             }
