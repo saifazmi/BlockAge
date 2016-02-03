@@ -42,7 +42,7 @@ public class CoreGUI extends Application {
             while (engine == null) {
                 System.out.println("IN THE WHILE!!!!!");
             }
-            Renderer renderer = new Renderer(scene, engine.getGraph(), null);
+            final Renderer renderer = new Renderer(scene, engine.getGraph(), null);
             scene.widthProperty().addListener(new ChangeListener<Number>() {
                 @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 	renderer.redraw();
