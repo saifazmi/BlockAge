@@ -9,9 +9,12 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Logger;
 
-public class Renderer extends Group {
+public class Renderer extends Group implements Observer
+{
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 
     private Scene scene;
@@ -38,7 +41,7 @@ public class Renderer extends Group {
         this.entities = entities;
     }
 
-    public boolean draw()
+    public boolean initialDraw()
 	{
         boolean success = true;
         ArrayList<Double> results = calculateSpacing();
@@ -51,22 +54,6 @@ public class Renderer extends Group {
         double width = results.get(4);
         double height = results.get(5);
         success = success && drawLines(xSpacing, ySpacing, width, height, xAccumulator, yAccumulator);
-        //success = success && drawPointMarks(xSpacing, ySpacing, width, height, xAccumulator, yAccumulator);
-        return success;
-    }
-
-    public boolean drawPointMarks(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator)    //UNTESTED//
-    {
-        boolean success = false;
-        double radius = 1;
-        for (int i = 0; i < xAccumulator; i++) {
-            for (int j = 0; j < yAccumulator; j++) {
-                Circle point = new Circle(xSpacing / 2 + i * xSpacing, ySpacing / 2 + j * ySpacing, radius);
-                // LOG.log(Level.INFO, "Circle: " + point.getCenterX() + ", " + point.getCenterY());
-                this.getChildren().add(point);
-            }
-        }
-        success = true;
         return success;
     }
 
@@ -94,7 +81,6 @@ public class Renderer extends Group {
         ArrayList<Double> returnList = new ArrayList<Double>();
         double width = scene.getWidth(); //subtract the right sidebar width TODO @TODO//
         double height = scene.getHeight(); //subtract the bottom bar height TODO @TODO//
-        // LOG.log(Level.INFO, "Screen Sizes: " + width + ", " + height);
 
         int xAccumulator = 0;
         int yAccumulator = 0;
@@ -129,11 +115,8 @@ public class Renderer extends Group {
     public void redraw()
 	{
         this.getChildren().clear();
-        draw();
-        for (Entity entity : entities)
-		{
-            drawEntity(entity);
-        }
+        initialDraw();
+		entities.forEach(this::drawEntity);
     }
 
     public boolean drawEntity(Entity entity)
@@ -142,6 +125,7 @@ public class Renderer extends Group {
         if (!this.entities.contains(entity))
 		{
             this.entities.add(entity);
+			entity.addObserver(this);
         }
         Node sprite = entity.getSprite();
         if (sprite instanceof Circle)
@@ -159,8 +143,8 @@ public class Renderer extends Group {
 			{
                 circle.setRadius(xSpacing / 2);
             }
-
             this.getChildren().add(circle);
+			entity.setSprite(circle);
         }
 		else if (sprite instanceof Rectangle)
 		{
@@ -176,4 +160,16 @@ public class Renderer extends Group {
         }
         return success;
     }
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		Entity entity = (Entity)o;
+		Entity oldEntity = (Entity)arg;
+
+		entities.remove(oldEntity);
+		this.getChildren().remove(oldEntity.getSprite());
+		entities.add(entity);
+		drawEntity(entity);
+	}
 }

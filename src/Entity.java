@@ -1,5 +1,6 @@
 import javafx.scene.Node;
 
+import java.util.Observable;
 import java.util.logging.Logger;
 
 /**
@@ -7,7 +8,8 @@ import java.util.logging.Logger;
  * @project : bestRTS
  * @date : 28/01/16
  */
-public abstract class Entity {
+public abstract class Entity extends Observable
+{
 
     private static final Logger LOG = Logger.getLogger(Entity.class.getName());
 
@@ -66,6 +68,20 @@ public abstract class Entity {
     }
 
     public void setPosition(GraphNode position) {
+		Entity oldEntity = this;
         this.position = position;
+		setChanged();
+		notifyObservers(oldEntity);
     }
+
+	public boolean idEquals(Entity e)
+	{
+		return id == e.id;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return id;
+	}
 }

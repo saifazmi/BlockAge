@@ -51,7 +51,7 @@ public class CoreGUI extends Application {
                 renderer.redraw();
             });
             root.setCenter(renderer);
-            renderer.draw();
+            renderer.initialDraw();
             Blockade block = new Blockade(0, "block", "desc", new GraphNode(2, 2), new Circle(0, 0, 10));
             Unit unit = new Unit(0, "testUnit", new GraphNode(3, 1), new Circle(10), null, this.engine.getGraph());
             renderer.drawEntity(block);
