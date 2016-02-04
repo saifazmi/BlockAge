@@ -28,15 +28,18 @@ public class Renderer extends Group {
         this.entities = new ArrayList<Entity>();
     }
 
-    public List<Entity> getEntities() {
+    public List<Entity> getEntities()
+    {
         return entities;
     }
 
-    public void setEntities(List<Entity> entities) {
+    public void setEntities(List<Entity> entities)
+	{
         this.entities = entities;
     }
 
-    public boolean draw() {
+    public boolean draw()
+	{
         boolean success = true;
         ArrayList<Double> results = calculateSpacing();
         int xAccumulator = (int) (double) results.get(0);
@@ -67,14 +70,17 @@ public class Renderer extends Group {
         return success;
     }
 
-    public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
+    public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator)
+	{
         boolean success = false;
-        for (int i = 0; i < xAccumulator + 1; i++) {
+        for (int i = 0; i < xAccumulator + 1; i++)
+		{
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
             line.setStroke(Color.LIGHTGRAY);
             this.getChildren().add(line);
         }
-        for (int i = 0; i < yAccumulator + 1; i++) {
+        for (int i = 0; i < yAccumulator + 1; i++)
+		{
             Line line = new Line(0, ySpacing * i, width, ySpacing * i);
             line.setStroke(Color.LIGHTGRAY);
             this.getChildren().add(line);
@@ -98,10 +104,12 @@ public class Renderer extends Group {
             GraphNode node = nodes.get(i);
             int xCount = node.getX();
             int yCount = node.getY();
-            if (xCount > xAccumulator) {
+            if (xCount > xAccumulator)
+			{
                 xAccumulator = xCount;
             }
-            if (yCount > yAccumulator) {
+            if (yCount > yAccumulator)
+			{
                 yAccumulator = yCount;
             }
         }
@@ -118,42 +126,54 @@ public class Renderer extends Group {
         return returnList;                            //ordered return list, see above for order
     }
 
-    public void redraw() {
+    public void redraw()
+	{
         this.getChildren().clear();
         draw();
-        for (Entity entity : entities) {
+        for (Entity entity : entities)
+		{
             drawEntity(entity);
         }
     }
 
-    public boolean drawEntity(Entity entity) {
+    public boolean drawEntity(Entity entity)
+	{
         boolean success = false;
-        if (!this.entities.contains(entity)) {
+        if (!this.entities.contains(entity))
+		{
             this.entities.add(entity);
         }
         Node sprite = entity.getSprite();
-        if (sprite instanceof Circle) {
+        if (sprite instanceof Circle)
+		{
             Circle circle = (Circle) sprite;
             GraphNode node = entity.getPosition();
             int xCoord = node.getX();
             int yCoord = node.getY();
             circle.setCenterX(this.xSpacing / 2 + this.xSpacing * (xCoord));
             circle.setCenterY(this.ySpacing / 2 + this.ySpacing * (yCoord));
-            if (xSpacing > ySpacing) {
+            if (xSpacing > ySpacing)
+			{
                 circle.setRadius(ySpacing / 2);
-            } else {
+            } else
+			{
                 circle.setRadius(xSpacing / 2);
             }
 
             this.getChildren().add(circle);
-        } else if (sprite instanceof Rectangle) {
-
-        } else if (sprite instanceof ImageView) {
-
-        } else if (sprite instanceof StackPane) {
+        }
+		else if (sprite instanceof Rectangle)
+		{
 
         }
+		else if (sprite instanceof ImageView)
+		{
 
+        }
+		else if (sprite instanceof StackPane)
+		{
+
+        }
         return success;
     }
 }
