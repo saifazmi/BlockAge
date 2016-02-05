@@ -82,4 +82,8 @@ public class CoreEngine {
     private void updateGameState() {
 
     }
+
+    public void setEngineState(boolean running) {
+        this.running = running;
+    }
 }

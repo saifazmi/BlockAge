@@ -34,7 +34,10 @@ public class CoreGUI extends Application {
             final Scene scene = new Scene(root, WIDTH, HEIGHT);
             primaryStage.setScene(scene);
             //@TODO: exit the program properly.
-            primaryStage.setOnCloseRequest(e -> Platform.exit());
+            primaryStage.setOnCloseRequest(e -> {
+                engine.setEngineState(false);
+                Platform.exit();
+            });
             Thread engThread = new Thread(() -> {
                 engine = new CoreEngine();
                 engine.startGame();
