@@ -7,7 +7,6 @@
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -62,15 +61,11 @@ public class CoreGUI extends Application {
             //dirty code
             sprite.setOnMouseClicked(e ->
             {
-                if(scene.getFocusOwner() != null && scene.getFocusOwner().equals(sprite))
-                {
+                if (scene.getFocusOwner() != null && scene.getFocusOwner().equals(sprite)) {
                     System.out.println("Has focus");
-                }
-                else
-                {
+                } else {
                     sprite.requestFocus();
-                    if(scene.getFocusOwner().equals(sprite))
-                    {
+                    if (scene.getFocusOwner().equals(sprite)) {
                         System.out.println("Gained focus");
                     }
                 }

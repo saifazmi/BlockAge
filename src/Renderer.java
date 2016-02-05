@@ -1,20 +1,19 @@
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
 
-public class Renderer extends Group implements Observer
-{
+public class Renderer extends Group implements Observer {
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 
     private Scene scene;
@@ -31,18 +30,15 @@ public class Renderer extends Group implements Observer
         this.entities = new ArrayList<Entity>();
     }
 
-    public List<Entity> getEntities()
-    {
+    public List<Entity> getEntities() {
         return entities;
     }
 
-    public void setEntities(List<Entity> entities)
-	{
+    public void setEntities(List<Entity> entities) {
         this.entities = entities;
     }
 
-    public boolean initialDraw()
-	{
+    public boolean initialDraw() {
         boolean success = true;
         ArrayList<Double> results = calculateSpacing();
         int xAccumulator = (int) (double) results.get(0);
@@ -57,17 +53,14 @@ public class Renderer extends Group implements Observer
         return success;
     }
 
-    public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator)
-	{
+    public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
         boolean success = false;
-        for (int i = 0; i < xAccumulator + 1; i++)
-		{
+        for (int i = 0; i < xAccumulator + 1; i++) {
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
             line.setStroke(Color.LIGHTGRAY);
             this.getChildren().add(line);
         }
-        for (int i = 0; i < yAccumulator + 1; i++)
-		{
+        for (int i = 0; i < yAccumulator + 1; i++) {
             Line line = new Line(0, ySpacing * i, width, ySpacing * i);
             line.setStroke(Color.LIGHTGRAY);
             this.getChildren().add(line);
@@ -90,12 +83,10 @@ public class Renderer extends Group implements Observer
             GraphNode node = nodes.get(i);
             int xCount = node.getX();
             int yCount = node.getY();
-            if (xCount > xAccumulator)
-			{
+            if (xCount > xAccumulator) {
                 xAccumulator = xCount;
             }
-            if (yCount > yAccumulator)
-			{
+            if (yCount > yAccumulator) {
                 yAccumulator = yCount;
             }
         }
@@ -112,106 +103,84 @@ public class Renderer extends Group implements Observer
         return returnList;                            //ordered return list, see above for order
     }
 
-    public void redraw()
-	{
+    public void redraw() {
         this.getChildren().clear();
         initialDraw();
-		entities.forEach(this::drawEntity);
+        entities.forEach(this::drawEntity);
     }
 
-    public boolean drawEntity(Entity entity)
-	{
+    public boolean drawEntity(Entity entity) {
         boolean success = false;
-        if (!this.entities.contains(entity))
-		{
+        if (!this.entities.contains(entity)) {
             this.entities.add(entity);
-			entity.addObserver(this);
+            entity.addObserver(this);
         }
         Node sprite = entity.getSprite();
         GraphNode node = entity.getPosition();
         int xCoord = node.getX();
         int yCoord = node.getY();
-        if (sprite instanceof Circle)
-		{
+        if (sprite instanceof Circle) {
             Circle circle = (Circle) sprite;
             circle.setCenterX(this.xSpacing / 2 + this.xSpacing * (xCoord));
             circle.setCenterY(this.ySpacing / 2 + this.ySpacing * (yCoord));
-            if (xSpacing > ySpacing)
-			{
+            if (xSpacing > ySpacing) {
                 circle.setRadius(ySpacing / 2);
-            } else
-			{
+            } else {
                 circle.setRadius(xSpacing / 2);
             }
             this.getChildren().add(circle);
-			entity.setSprite(circle);
-        }
-		else if (sprite instanceof Rectangle)
-		{
+            entity.setSprite(circle);
+        } else if (sprite instanceof Rectangle) {
 
-        }
-		else if (sprite instanceof SpriteImage)
-		{
-            SpriteImage imageView = (SpriteImage)sprite;
+        } else if (sprite instanceof SpriteImage) {
+            SpriteImage imageView = (SpriteImage) sprite;
             imageView.setFitWidth(xSpacing);
             imageView.setFitHeight(ySpacing);
             imageView.setPreserveRatio(true);
-            imageView.setX(xCoord*xSpacing);
-            imageView.setY(yCoord*ySpacing);
+            imageView.setX(xCoord * xSpacing);
+            imageView.setY(yCoord * ySpacing);
             this.getChildren().add(imageView);
-        }
-		else if (sprite instanceof StackPane)
-		{
+        } else if (sprite instanceof StackPane) {
 
         }
         return success;
     }
 
-	@Override
-	public void update(Observable o, Object arg)
-	{
+    @Override
+    public void update(Observable o, Object arg) {
         //change for frame rate related movement @TODO
-		Entity entity = (Entity)o;
-		Entity oldEntity = (Entity)arg;
+        Entity entity = (Entity) o;
+        Entity oldEntity = (Entity) arg;
 
-		entities.remove(oldEntity);
-		this.getChildren().remove(oldEntity.getSprite());
-		entities.add(entity);
-		drawEntity(entity);
-	}
+        entities.remove(oldEntity);
+        this.getChildren().remove(oldEntity.getSprite());
+        entities.add(entity);
+        drawEntity(entity);
+    }
 
-    public Group produceRouteVisualisation(List<GraphNode> route)
-    {
+    public Group produceRouteVisualisation(List<GraphNode> route) {
         //test @TODO
         Group group = new Group();
-        for(int i = 0; i < route.size(); i++)
-        {
+        for (int i = 0; i < route.size(); i++) {
             GraphNode start = route.get(i);
-            if (i + 1 < route.size())
-            {
+            if (i + 1 < route.size()) {
                 GraphNode end = route.get(i + 1);
-                Line line = new Line(this.xSpacing/2 + start.getX()*xSpacing, this.ySpacing/2 + start.getY()*ySpacing, this.xSpacing/2 + end.getX()*xSpacing, this.ySpacing/2 + end.getY()*ySpacing);
+                Line line = new Line(this.xSpacing / 2 + start.getX() * xSpacing, this.ySpacing / 2 + start.getY() * ySpacing, this.xSpacing / 2 + end.getX() * xSpacing, this.ySpacing / 2 + end.getY() * ySpacing);
                 group.getChildren().add(line);
-            }
-            else
-            {
+            } else {
                 i = route.size();
             }
         }
         return group;
     }
 
-    public Group produceRouteVisualRecursive(List<GraphNode> route)
-    {
+    public Group produceRouteVisualRecursive(List<GraphNode> route) {
         //could be inefficient, test @TODO
-        if(route.size() == 2)
-        {
+        if (route.size() == 2) {
             GraphNode start = route.get(0);
             GraphNode end = route.get(1);
-            return new Group(new Line(this.xSpacing/2 + start.getX()*xSpacing, this.ySpacing/2 + start.getY()*ySpacing, this.xSpacing/2 + end.getX()*xSpacing, this.ySpacing/2 + end.getY()*ySpacing));
-        }
-        else
-        {
+            return new Group(new Line(this.xSpacing / 2 + start.getX() * xSpacing, this.ySpacing / 2 + start.getY() * ySpacing, this.xSpacing / 2 + end.getX() * xSpacing, this.ySpacing / 2 + end.getY() * ySpacing));
+        } else {
             GraphNode start = route.get(0);
             GraphNode end = route.get(1);
             ArrayList<GraphNode> list = new ArrayList<GraphNode>();

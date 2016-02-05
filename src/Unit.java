@@ -141,13 +141,12 @@ public class Unit extends Entity {
         return false;
     }
 
-    private boolean followRoute()
-    {
+    private boolean followRoute() {
         //assumes route includes starting node @TODO
         //doesn't time delay @TODO
         //doesn't perform a re-search @TODO
         boolean success = true;
-        for(int i = 0; i < route.size(); i++) {
+        for (int i = 0; i < route.size(); i++) {
             GraphNode start = route.get(i);
             if (i < route.size() - 1) {
                 GraphNode end = route.get(i + 1);
