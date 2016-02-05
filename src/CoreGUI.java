@@ -57,7 +57,7 @@ public class CoreGUI extends Application {
             renderer.drawEntity(block);
             renderer.drawEntity(unit);
             primaryStage.show();
-//            unit.moveUp();
+            //unit.moveUp();
 //            unit.moveLeft();
 //            unit.moveRight();
 //            unit.moveDown();
