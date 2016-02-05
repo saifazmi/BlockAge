@@ -59,14 +59,23 @@ public class CoreGUI extends Application {
 
             Blockade block = new Blockade(0, "block", "desc", new GraphNode(2, 2), new Circle(0, 0, 10));
             SpriteImage sprite = new SpriteImage("http://mail.rsgc.on.ca/~ldevir/ICS3U/Chapter4/Images/tux.png", null);
+            //dirty code
             sprite.setOnMouseClicked(e ->
             {
-                sprite.requestFocus();
-                if(scene.getFocusOwner().equals(sprite))
+                if(scene.getFocusOwner() != null && scene.getFocusOwner().equals(sprite))
                 {
-                    System.out.println(true);
+                    System.out.println("Has focus");
+                }
+                else
+                {
+                    sprite.requestFocus();
+                    if(scene.getFocusOwner().equals(sprite))
+                    {
+                        System.out.println("Gained focus");
+                    }
                 }
             });
+            //dirty code end
             Unit unit = new Unit(0, "testUnit", new GraphNode(3, 1), sprite, null, this.engine.getGraph());
             sprite.setEntity(unit);
             renderer.drawEntity(block);
