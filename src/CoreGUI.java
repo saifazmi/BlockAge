@@ -44,11 +44,6 @@ public class CoreGUI extends Application {
             while (engine == null) {
                 Thread.sleep(1);
             }
-            primaryStage.setOnCloseRequest(e ->
-            {
-                engThread.stop();
-                Platform.exit();
-            });
             final Renderer renderer = new Renderer(scene, engine.getGraph(), null);
             scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
                 renderer.redraw();
