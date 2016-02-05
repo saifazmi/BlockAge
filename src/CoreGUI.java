@@ -6,11 +6,12 @@
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,53 +31,38 @@ public class CoreGUI extends Application {
     public void start(Stage primaryStage) {
 
         try {
-            BorderPane root = new BorderPane();
-            final Scene scene = new Scene(root, WIDTH, HEIGHT);
-            primaryStage.setScene(scene);
-            //@TODO: exit the program properly.
-            primaryStage.setOnCloseRequest(e -> {
-                engine.setEngineState(false);
-                Platform.exit();
-            });
-            Thread engThread = new Thread(() -> {
-                engine = new CoreEngine();
-                engine.startGame();
-            });
-            engThread.start();
-            while (engine == null) {
-                Thread.sleep(1);
-            }
-            final Renderer renderer = new Renderer(scene, engine.getGraph(), null);
-            scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
-                renderer.redraw();
-            });
-            scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
-                renderer.redraw();
-            });
-            root.setCenter(renderer);
-            renderer.initialDraw();
+			BorderPane root = new BorderPane();
+			final Scene scene = new Scene(root, WIDTH, HEIGHT);
+			primaryStage.setScene(scene);
+			primaryStage.setOnCloseRequest(e -> {
+				this.engine.setEngineState(false);
+				Platform.exit();
+			});
 
-            Blockade block = new Blockade(0, "block", "desc", new GraphNode(2, 2), new Circle(0, 0, 10));
-            SpriteImage sprite = new SpriteImage("http://mail.rsgc.on.ca/~ldevir/ICS3U/Chapter4/Images/tux.png", null);
-            //dirty code
-            sprite.setOnMouseClicked(e ->
-            {
-                if (scene.getFocusOwner() != null && scene.getFocusOwner().equals(sprite)) {
-                    System.out.println("Has focus");
-                } else {
-                    sprite.requestFocus();
-                    if (scene.getFocusOwner().equals(sprite)) {
-                        System.out.println("Gained focus");
-                    }
-                }
-            });
-            //dirty code end
-            Unit unit = new Unit(0, "testUnit", new GraphNode(3, 1), sprite, null, this.engine.getGraph());
-            sprite.setEntity(unit);
-            renderer.drawEntity(block);
-            renderer.drawEntity(unit);
+			Thread engThread = new Thread(() -> {
+				this.engine = new CoreEngine();
+				this.engine.startGame();
+			});
+			engThread.start();
+			while (this.engine == null) {
+				Thread.sleep(1);
+			}
+
+			final Renderer renderer = new Renderer(scene, this.engine.getGraph(), null);
+			scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
+				renderer.redraw();
+			});
+			scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
+				renderer.redraw();
+			});
+			root.setCenter(renderer);
+			renderer.initialDraw();
+
+			Test.test(renderer, this.engine);
             primaryStage.show();
-        } catch (Exception e) {
+        }
+		catch (Exception e)
+		{
             LOG.log(Level.SEVERE, e.toString(), e);
         }
     }

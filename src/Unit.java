@@ -28,13 +28,13 @@ public class Unit extends Entity {
     private List<GraphNode> route;
     private Graph graph;
 
-    public Unit(int id, String name, String description, GraphNode position, Node sprite, List<GraphNode> route, Graph graph) {
+    public Unit(int id, String name, String description, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph) {
         super(id, name, description, position, sprite);
         this.route = route;
         this.graph = graph;
     }
 
-    public Unit(int id, String name, GraphNode position, Node sprite, List<GraphNode> route, Graph graph) {
+    public Unit(int id, String name, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph) {
         super(id, name, position, sprite);
         this.route = route;
         this.graph = graph;
