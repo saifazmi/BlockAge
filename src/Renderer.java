@@ -128,12 +128,12 @@ public class Renderer extends Group implements Observer
 			entity.addObserver(this);
         }
         Node sprite = entity.getSprite();
+        GraphNode node = entity.getPosition();
+        int xCoord = node.getX();
+        int yCoord = node.getY();
         if (sprite instanceof Circle)
 		{
             Circle circle = (Circle) sprite;
-            GraphNode node = entity.getPosition();
-            int xCoord = node.getX();
-            int yCoord = node.getY();
             circle.setCenterX(this.xSpacing / 2 + this.xSpacing * (xCoord));
             circle.setCenterY(this.ySpacing / 2 + this.ySpacing * (yCoord));
             if (xSpacing > ySpacing)
@@ -150,9 +150,15 @@ public class Renderer extends Group implements Observer
 		{
 
         }
-		else if (sprite instanceof ImageView)
+		else if (sprite instanceof SpriteImage)
 		{
-
+            SpriteImage imageView = (SpriteImage)sprite;
+            imageView.setFitWidth(xSpacing);
+            imageView.setFitHeight(ySpacing);
+            imageView.setPreserveRatio(true);
+            imageView.setX(xCoord*xSpacing);
+            imageView.setY(yCoord*ySpacing);
+            this.getChildren().add(imageView);
         }
 		else if (sprite instanceof StackPane)
 		{
@@ -164,6 +170,7 @@ public class Renderer extends Group implements Observer
 	@Override
 	public void update(Observable o, Object arg)
 	{
+        //change for frame rate related movement @TODO
 		Entity entity = (Entity)o;
 		Entity oldEntity = (Entity)arg;
 
@@ -172,4 +179,48 @@ public class Renderer extends Group implements Observer
 		entities.add(entity);
 		drawEntity(entity);
 	}
+
+    public Group produceRouteVisualisation(List<GraphNode> route)
+    {
+        //test @TODO
+        Group group = new Group();
+        for(int i = 0; i < route.size(); i++)
+        {
+            GraphNode start = route.get(i);
+            if (i + 1 < route.size())
+            {
+                GraphNode end = route.get(i + 1);
+                Line line = new Line(this.xSpacing/2 + start.getX()*xSpacing, this.ySpacing/2 + start.getY()*ySpacing, this.xSpacing/2 + end.getX()*xSpacing, this.ySpacing/2 + end.getY()*ySpacing);
+                group.getChildren().add(line);
+            }
+            else
+            {
+                i = route.size();
+            }
+        }
+        return group;
+    }
+
+    public Group produceRouteVisualRecursive(List<GraphNode> route)
+    {
+        //could be inefficient, test @TODO
+        if(route.size() == 2)
+        {
+            GraphNode start = route.get(0);
+            GraphNode end = route.get(1);
+            return new Group(new Line(this.xSpacing/2 + start.getX()*xSpacing, this.ySpacing/2 + start.getY()*ySpacing, this.xSpacing/2 + end.getX()*xSpacing, this.ySpacing/2 + end.getY()*ySpacing));
+        }
+        else
+        {
+            GraphNode start = route.get(0);
+            GraphNode end = route.get(1);
+            ArrayList<GraphNode> list = new ArrayList<GraphNode>();
+            list.add(start);
+            list.add(end);
+            Group group = produceRouteVisualRecursive(list);
+            route.remove(0);
+            group.getChildren().addAll(produceRouteVisualRecursive(route));
+            return group;
+        }
+    }
 }

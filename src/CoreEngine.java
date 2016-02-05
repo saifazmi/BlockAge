@@ -5,8 +5,8 @@ import java.util.logging.Logger;
  * @project : bestRTS
  * @date : 28/01/16
  */
-public class CoreEngine {
-
+public class CoreEngine
+{
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
     private final int FRAME_RATE = 60;
 

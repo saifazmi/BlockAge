@@ -7,6 +7,7 @@
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -43,6 +44,11 @@ public class CoreGUI extends Application {
             while (engine == null) {
                 Thread.sleep(1);
             }
+            primaryStage.setOnCloseRequest(e ->
+            {
+                engThread.stop();
+                Platform.exit();
+            });
             final Renderer renderer = new Renderer(scene, engine.getGraph(), null);
             scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
                 renderer.redraw();
@@ -52,15 +58,22 @@ public class CoreGUI extends Application {
             });
             root.setCenter(renderer);
             renderer.initialDraw();
+
             Blockade block = new Blockade(0, "block", "desc", new GraphNode(2, 2), new Circle(0, 0, 10));
-            Unit unit = new Unit(0, "testUnit", new GraphNode(3, 1), new Circle(10), null, this.engine.getGraph());
+            SpriteImage sprite = new SpriteImage("http://mail.rsgc.on.ca/~ldevir/ICS3U/Chapter4/Images/tux.png", null);
+            sprite.setOnMouseClicked(e ->
+            {
+                sprite.requestFocus();
+                if(scene.getFocusOwner().equals(sprite))
+                {
+                    System.out.println(true);
+                }
+            });
+            Unit unit = new Unit(0, "testUnit", new GraphNode(3, 1), sprite, null, this.engine.getGraph());
+            sprite.setEntity(unit);
             renderer.drawEntity(block);
             renderer.drawEntity(unit);
             primaryStage.show();
-            //unit.moveUp();
-//            unit.moveLeft();
-//            unit.moveRight();
-//            unit.moveDown();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.toString(), e);
         }

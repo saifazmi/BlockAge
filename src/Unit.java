@@ -140,4 +140,37 @@ public class Unit extends Entity {
 
         return false;
     }
+
+    private boolean followRoute()
+    {
+        //assumes route includes starting node @TODO
+        //doesn't time delay @TODO
+        //doesn't perform a re-search @TODO
+        boolean success = true;
+        for(int i = 0; i < route.size(); i++) {
+            GraphNode start = route.get(i);
+            if (i < route.size() - 1) {
+                GraphNode end = route.get(i + 1);
+                int xChange = start.getX() - end.getX();
+                int yChange = start.getY() - end.getY();
+
+                if (xChange == 0) {
+                    if (yChange > 0) {
+                        success = success && moveDown();
+                    } else {
+                        success = success && moveUp();
+                    }
+                } else {
+                    if (xChange > 0) {
+                        success = success && moveRight();
+                    } else {
+                        success = success && moveLeft();
+                    }
+                }
+            } else {
+                return success;
+            }
+        }
+        return false;
+    }
 }
