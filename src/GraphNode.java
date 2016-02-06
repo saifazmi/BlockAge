@@ -75,6 +75,11 @@ public class GraphNode {
         this.successors.add(successor);
     }
 
+    public List<GraphNode> getSuccessors()
+    {
+        return successors;
+    }
+
     public int getX() {
         return x;
     }
