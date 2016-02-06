@@ -41,7 +41,7 @@ public class BreadthFirstSearch {
             }
         }
 
-
-        return new Nothing<IList<GraphNode>>();
+        visited.clear();
+        return null;
     }
 }
