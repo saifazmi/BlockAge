@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
@@ -8,9 +7,33 @@ import java.util.TreeSet;
  */
 public class BreadthFirstSearch {
 
-    LinkedList<GraphNode> frontier;
-    TreeSet<GraphNode> visited;
+    private LinkedList<GraphNode> frontier;
+    private TreeSet<GraphNode> visited;
 
+    private static BreadthFirstSearch instance;
+
+    /**
+     * Singleton pattern for search
+     * As there is only ever 1 instance of BFS,
+     * it is efficient and safe to use the singleton pattern
+     */
+    public BreadthFirstSearch()
+    {
+        instance = this;
+    }
+
+    public static BreadthFirstSearch Instance()
+    {
+        return instance;
+    }
+
+    /**
+     * Finds a path from a start node to the end node using DFS
+     * The returned path should not include the start node
+     * @param startNode node search starts from
+     * @param endNode node search terminates with, the goal node, usually enemy base
+     * @return path from start to goal node
+     */
     public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode)
     {
         GraphNode current;

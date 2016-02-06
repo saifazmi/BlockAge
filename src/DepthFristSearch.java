@@ -7,10 +7,10 @@ import java.util.TreeSet;
  */
 public class DepthFristSearch {
 
-    Stack<GraphNode> frontier;
-    TreeSet<GraphNode> visited;
+    private Stack<GraphNode> frontier;
+    private TreeSet<GraphNode> visited;
 
-    static public DepthFristSearch instance;
+    static private DepthFristSearch instance;
 
     /**
      * Singleton pattern for search
@@ -28,7 +28,7 @@ public class DepthFristSearch {
     }
 
     /**
-     * Finds a path from a start node to the end node.
+     * Finds a path from a start node to the end node using DFS
      * The returned path should not include the start node
      * @param startNode node search starts from
      * @param endNode node search terminates with, the goal node, usually enemy base
