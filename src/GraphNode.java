@@ -21,8 +21,8 @@ public class GraphNode {
     public GraphNode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.units = new ArrayList<Unit>();
-        this.successors = new ArrayList<GraphNode>();
+        this.units = new ArrayList<>();
+        this.successors = new ArrayList<>();
         blockade = null;
 
     }
@@ -34,8 +34,7 @@ public class GraphNode {
 
         GraphNode graphNode = (GraphNode) o;
 
-        if (x != graphNode.x) return false;
-        return y == graphNode.y;
+        return x == graphNode.x && y == graphNode.y;
     }
 
     public void addNeighbours(Graph graph) {
@@ -107,5 +106,9 @@ public class GraphNode {
         numberOfUnitsRemoved++;
 
         return numberOfUnitsRemoved;
+    }
+
+    public List<GraphNode> getSuccessors(){
+        return this.successors;
     }
 }
