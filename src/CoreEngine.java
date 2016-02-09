@@ -13,6 +13,7 @@ public class CoreEngine {
     private boolean running;
     private long startTime;
     private Graph graph;
+    private int currentFrame = 0;
 
     private boolean slept = false;
 
@@ -66,6 +67,7 @@ public class CoreEngine {
         if (deltaTime >= (Math.pow(10, 9) / FRAME_RATE)) {
             timeToUpdate = true;
             this.startTime = currentTime;
+            currentFrame++;
         }
         return timeToUpdate;
     }
@@ -84,5 +86,10 @@ public class CoreEngine {
 
     public void setEngineState(boolean running) {
         this.running = running;
+    }
+
+    public int getCurrentFrame()
+    {
+        return currentFrame;
     }
 }

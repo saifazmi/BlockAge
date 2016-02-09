@@ -126,9 +126,16 @@ public class Renderer extends Group implements Observer {
 		sprite.setPreserveRatio(true);
 		sprite.setX(node.getX() * xSpacing);
 		sprite.setY(node.getY() * ySpacing);
-		this.getChildren().add(sprite);
+		success = this.getChildren().add(sprite);
         return success;
     }
+
+    public boolean drawEntityPerFrame(int animationTimeMillis, CoreEngine engine)
+	{
+		boolean success = false;
+
+		return success;
+	}
 
     @Override
     public void update(Observable o, Object arg) {

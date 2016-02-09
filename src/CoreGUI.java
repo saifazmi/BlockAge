@@ -21,8 +21,6 @@ public class CoreGUI extends Application {
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
 
-    private CoreEngine engine;
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -33,32 +31,15 @@ public class CoreGUI extends Application {
         try {
 			BorderPane root = new BorderPane();
 			final Scene scene = new Scene(root, WIDTH, HEIGHT);
+
+			GameRunTime runTime = new GameRunTime(primaryStage);
+			Test.test(runTime.getRenderer(), runTime.getEngine());
+
 			primaryStage.setScene(scene);
 			primaryStage.setOnCloseRequest(e -> {
-				this.engine.setEngineState(false);
+				runTime.getEngine().setEngineState(false);
 				Platform.exit();
 			});
-
-			Thread engThread = new Thread(() -> {
-				this.engine = new CoreEngine();
-				this.engine.startGame();
-			});
-			engThread.start();
-			while (this.engine == null) {
-				Thread.sleep(1);
-			}
-
-			final Renderer renderer = new Renderer(scene, this.engine.getGraph(), null);
-			scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
-				renderer.redraw();
-			});
-			scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
-				renderer.redraw();
-			});
-			root.setCenter(renderer);
-			renderer.initialDraw();
-
-			Test.test(renderer, this.engine);
             primaryStage.show();
         }
 		catch (Exception e)
