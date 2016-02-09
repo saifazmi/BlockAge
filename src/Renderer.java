@@ -141,7 +141,7 @@ public class Renderer extends Group implements Observer {
         drawEntity(entity);
     }
 
-    public Group produceRouteVisualisation(List<GraphNode> route) {
+    public Group produceRouteVisual(List<GraphNode> route) {
         //test @TODO
         Group group = new Group();
 		ObservableList<Node> groupKids = group.getChildren();
