@@ -1,3 +1,4 @@
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -111,44 +112,26 @@ public class Renderer extends Group implements Observer {
 
     public boolean drawEntity(Entity entity) {
         boolean success = false;
-        if (!this.entities.contains(entity)) {
+        if (!this.entities.contains(entity))
+		{
             this.entities.add(entity);
             entity.addObserver(this);
         }
-        Node sprite = entity.getSprite();
+
+		SpriteImage sprite = entity.getSprite();
         GraphNode node = entity.getPosition();
-        int xCoord = node.getX();
-        int yCoord = node.getY();
-        if (sprite instanceof Circle) {
-            Circle circle = (Circle) sprite;
-            circle.setCenterX(this.xSpacing / 2 + this.xSpacing * (xCoord));
-            circle.setCenterY(this.ySpacing / 2 + this.ySpacing * (yCoord));
-            if (xSpacing > ySpacing) {
-                circle.setRadius(ySpacing / 2);
-            } else {
-                circle.setRadius(xSpacing / 2);
-            }
-            this.getChildren().add(circle);
-            entity.setSprite(circle);
-        } else if (sprite instanceof Rectangle) {
 
-        } else if (sprite instanceof SpriteImage) {
-            SpriteImage imageView = (SpriteImage) sprite;
-            imageView.setFitWidth(xSpacing);
-            imageView.setFitHeight(ySpacing);
-            imageView.setPreserveRatio(true);
-            imageView.setX(xCoord * xSpacing);
-            imageView.setY(yCoord * ySpacing);
-            this.getChildren().add(imageView);
-        } else if (sprite instanceof StackPane) {
-
-        }
+		sprite.setFitWidth(xSpacing);
+		sprite.setFitHeight(ySpacing);
+		sprite.setPreserveRatio(true);
+		sprite.setX(node.getX() * xSpacing);
+		sprite.setY(node.getY() * ySpacing);
+		this.getChildren().add(sprite);
         return success;
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        //change for frame rate related movement @TODO
         Entity entity = (Entity) o;
         Entity oldEntity = (Entity) arg;
 
@@ -158,38 +141,29 @@ public class Renderer extends Group implements Observer {
         drawEntity(entity);
     }
 
-    public Group produceRouteVisualisation(List<GraphNode> route) {
+    public Group produceRouteVisual(List<GraphNode> route) {
         //test @TODO
         Group group = new Group();
+		ObservableList<Node> groupKids = group.getChildren();
         for (int i = 0; i < route.size(); i++) {
             GraphNode start = route.get(i);
-            if (i + 1 < route.size()) {
+            if (i + 1 < route.size())
+			{
                 GraphNode end = route.get(i + 1);
-                Line line = new Line(this.xSpacing / 2 + start.getX() * xSpacing, this.ySpacing / 2 + start.getY() * ySpacing, this.xSpacing / 2 + end.getX() * xSpacing, this.ySpacing / 2 + end.getY() * ySpacing);
-                group.getChildren().add(line);
-            } else {
+                Line line = new Line(this.xSpacing / 2 + start.getX() * xSpacing,
+									 this.ySpacing / 2 + start.getY() * ySpacing,
+									 this.xSpacing / 2 + end.getX() * xSpacing,
+						  			 this.ySpacing / 2 + end.getY() * ySpacing);
+                if(!groupKids.contains(line))
+				{
+					groupKids.add(line);
+				}
+            }
+			else
+			{
                 i = route.size();
             }
         }
         return group;
-    }
-
-    public Group produceRouteVisualRecursive(List<GraphNode> route) {
-        //could be inefficient, test @TODO
-        if (route.size() == 2) {
-            GraphNode start = route.get(0);
-            GraphNode end = route.get(1);
-            return new Group(new Line(this.xSpacing / 2 + start.getX() * xSpacing, this.ySpacing / 2 + start.getY() * ySpacing, this.xSpacing / 2 + end.getX() * xSpacing, this.ySpacing / 2 + end.getY() * ySpacing));
-        } else {
-            GraphNode start = route.get(0);
-            GraphNode end = route.get(1);
-            ArrayList<GraphNode> list = new ArrayList<GraphNode>();
-            list.add(start);
-            list.add(end);
-            Group group = produceRouteVisualRecursive(list);
-            route.remove(0);
-            group.getChildren().addAll(produceRouteVisualRecursive(route));
-            return group;
-        }
     }
 }
