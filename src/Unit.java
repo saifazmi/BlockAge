@@ -147,6 +147,10 @@ public class Unit extends Entity {
         //doesn't perform a re-search @TODO
         boolean success = true;
         for (int i = 0; i < route.size(); i++) {
+            if(!success)
+            {
+                //@TODO search has hit a blockade.//
+            }
             GraphNode start = route.get(i);
             if (i < route.size() - 1) {
                 GraphNode end = route.get(i + 1);

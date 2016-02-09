@@ -1,3 +1,4 @@
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -63,7 +64,6 @@ public class CoreEngine {
         // NOTE: first five thread sleeps cause
         // interference with delta time.
         if (deltaTime >= (Math.pow(10, 9) / FRAME_RATE)) {
-            //LOG.log(Level.INFO, "Delta time: " + String.valueOf(deltaTime * Math.pow(10, -9)));
             timeToUpdate = true;
             this.startTime = currentTime;
         }
@@ -74,7 +74,7 @@ public class CoreEngine {
         try {
             Thread.sleep(950 / FRAME_RATE);
         } catch (InterruptedException e) {
-            // LOG.log(Level.SEVERE, e.toString(), e);
+            LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
 
