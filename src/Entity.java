@@ -73,8 +73,18 @@ public abstract class Entity extends Observable {
         notifyObservers(oldEntity);
     }
 
-    @Override
-    public int hashCode() {
-        return id;
-    }
+	@Override
+	public boolean equals(Object o)
+	{
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+
+		Entity entity = (Entity) o;
+
+		if(id != entity.id) return false;
+		if(!name.equals(entity.name)) return false;
+		if(!description.equals(entity.description)) return false;
+		return position.equals(entity.position);
+
+	}
 }

@@ -34,26 +34,27 @@ public class GameRunTime
 				e.printStackTrace();
 			}
 		}
-		final Renderer renderer = new Renderer(primaryStage.getScene(), this.engine.getGraph(), null);
+		this.renderer = new Renderer(primaryStage.getScene());
+		rendererSpecificInit();
+		renderer.initialDraw();
 	}
 	public Renderer getRenderer()
 	{
-		return renderer;
+		return this.renderer;
 	}
 	public CoreEngine getEngine()
 	{
-		return engine;
+		return this.engine;
 	}
-
 	private void rendererSpecificInit()
 	{
 		primaryStage.getScene().widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
-			renderer.redraw();
+			this.renderer.redraw();
 		});
 		primaryStage.getScene().heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
-			renderer.redraw();
+			this.renderer.redraw();
 		});
-		((BorderPane)primaryStage.getScene().getRoot()).setCenter(renderer);
-		renderer.initialDraw();
+		((BorderPane)primaryStage.getScene().getRoot()).setCenter(this.renderer);
+		this.renderer.initialDraw();
 	}
 }

@@ -31,11 +31,11 @@ public class CoreGUI extends Application {
         try {
 			BorderPane root = new BorderPane();
 			final Scene scene = new Scene(root, WIDTH, HEIGHT);
+			primaryStage.setScene(scene);
 
 			GameRunTime runTime = new GameRunTime(primaryStage);
 			Test.test(runTime.getRenderer(), runTime.getEngine());
 
-			primaryStage.setScene(scene);
 			primaryStage.setOnCloseRequest(e -> {
 				runTime.getEngine().setEngineState(false);
 				Platform.exit();

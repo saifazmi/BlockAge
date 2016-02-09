@@ -12,7 +12,7 @@ public class Blockade extends Entity {
     private static final Logger LOG = Logger.getLogger(Blockade.class.getName());
 
     // @TODO: Place holder
-    public Blockade(int id, String name, String description, GraphNode position, Node sprite) {
+    public Blockade(int id, String name, String description, GraphNode position, SpriteImage sprite) {
         super(id, name, description, position, sprite);
     }
 }
