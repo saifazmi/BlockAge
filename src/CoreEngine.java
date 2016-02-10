@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -12,6 +14,9 @@ public class CoreEngine {
     private boolean running;
     private long startTime;
     private Graph graph;
+    private ArrayList<Entity> entities;
+
+    long deltaTime;
 
     private boolean slept = false;
 
@@ -58,7 +63,7 @@ public class CoreEngine {
         boolean timeToUpdate = false;
 
         long currentTime = System.nanoTime();
-        long deltaTime = currentTime - startTime;
+        deltaTime = currentTime - startTime;
 
         // NOTE: first five thread sleeps cause
         // interference with delta time.
@@ -79,7 +84,19 @@ public class CoreEngine {
     }
 
     private void updateGameState() {
+        //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
+        if (entities != null)
+        {
+            for (int i = 0; i < entities.size(); i++)
+            {
+                entities.get(i).update((long) (deltaTime * (Math.pow(10,9))));
+            }
+        }
+    }
 
+    public void setEntities(List<Entity> entities)
+    {
+        this.entities = (ArrayList<Entity>) entities;
     }
 
     public void setEngineState(boolean running) {

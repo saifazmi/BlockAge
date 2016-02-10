@@ -115,10 +115,12 @@ public class Renderer extends Group implements Observer {
             this.entities.add(entity);
             entity.addObserver(this);
         }
+
         Node sprite = entity.getSprite();
         GraphNode node = entity.getPosition();
         int xCoord = node.getX();
         int yCoord = node.getY();
+
         if (sprite instanceof Circle) {
             Circle circle = (Circle) sprite;
             circle.setCenterX(this.xSpacing / 2 + this.xSpacing * (xCoord));
@@ -137,8 +139,9 @@ public class Renderer extends Group implements Observer {
             imageView.setFitWidth(xSpacing);
             imageView.setFitHeight(ySpacing);
             imageView.setPreserveRatio(true);
-            imageView.setX(xCoord * xSpacing);
-            imageView.setY(yCoord * ySpacing);
+            //has been changed as update is done in entity so that it can calculate pixel
+            imageView.setX(entity.getPixelX());
+            imageView.setY(entity.getPixelY());
             this.getChildren().add(imageView);
         } else if (sprite instanceof StackPane) {
 
@@ -191,5 +194,16 @@ public class Renderer extends Group implements Observer {
             group.getChildren().addAll(produceRouteVisualRecursive(route));
             return group;
         }
+    }
+
+
+    public double returnXSpacing()
+    {
+        return xSpacing;
+    }
+
+    public double returnYSpacing()
+    {
+        return ySpacing;
     }
 }

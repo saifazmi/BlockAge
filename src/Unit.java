@@ -1,4 +1,5 @@
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -28,16 +29,29 @@ public class Unit extends Entity {
     private List<GraphNode> route;
     private Graph graph;
 
+    private GraphNode currentNode;
+    private GraphNode nextNode;
+    private ImageView sprite;
+    private double nextPixelX;
+    private double nextPixelY;
+    private boolean completedMove = true;
+    private double speed = 3;
+
+
     public Unit(int id, String name, String description, GraphNode position, Node sprite, List<GraphNode> route, Graph graph) {
         super(id, name, description, position, sprite);
         this.route = route;
         this.graph = graph;
+        currentNode = position;
+        this.sprite = (ImageView) sprite;
     }
 
     public Unit(int id, String name, GraphNode position, Node sprite, List<GraphNode> route, Graph graph) {
         super(id, name, position, sprite);
         this.route = route;
         this.graph = graph;
+        currentNode = position;
+        this.sprite = (ImageView) sprite;
     }
 
     public boolean moveUp() {
@@ -171,6 +185,94 @@ public class Unit extends Entity {
             }
         }
         return false;
+    }
+
+    /**
+     * Updates the unit's position per frame, called by CoreEngine
+     * uses same logic as followRoute() but with delay
+     * Does not include starting node
+     * Also note that its only changing the position of the Sprite ImageView, the actually rendering has to be updated by Renderer instant
+     * Recommend new method (or alter old method) so that it draws according to pixel position rather than logical position
+     */
+    @Override
+    public void update(long deltaTime)
+    {
+        if (completedMove)
+        {
+            if (route.size() > 0)
+            {
+                nextNode = route.remove(0);
+                completedMove = false;
+                SetPositionAndSpeed(nextNode);
+            }
+        }
+        else
+        {
+            if (currentPixelX != nextPixelX && currentPixelY != nextPixelY)
+            {
+                currentPixelX += speed * deltaTime;
+                currentPixelY += speed * deltaTime;
+                CoreGUI.Instance().returnRenderer().update(this,this);
+            }
+            else
+            {
+                completedMove = true;
+            }
+        }
+        //get pixel position of next node
+        //set move to that in time step
+    }
+
+    private void SetPositionAndSpeed(GraphNode nextNode) {
+
+        int x = nextNode.getX();
+        int y = nextNode.getY();
+
+        if (logicalMove(x,y)) {
+
+            double spacingX = CoreGUI.Instance().returnRenderer().returnXSpacing();
+            double spacingY = CoreGUI.Instance().returnRenderer().returnYSpacing();
+
+            nextPixelX = x * spacingX;
+            nextPixelY = y * spacingY;
+
+            speed = (nextPixelX - currentPixelX) / 10;
+        }
+    }
+
+    private boolean logicalMove(int x, int y) {
+
+        boolean success = true;
+
+        int xChange = currentNode.getX() - x;
+        int yChange = currentNode.getY() - y;
+
+        if (xChange == 0) {
+            if (yChange > 0) {
+                success = success && moveDown();
+            } else {
+                success = success && moveUp();
+            }
+        } else {
+            if (xChange > 0) {
+                success = success && moveRight();
+            } else {
+                success = success && moveLeft();
+            }
+        }
+
+        return success;
+    }
+
+    /**
+     * Should be called as soon as sprite is rendered
+     * @param x
+     * @param y
+     */
+    public void setCurrentPixel(double x, double y)
+    {
+        currentPixelX = x;
+        currentPixelY = y;
     }
 
 }

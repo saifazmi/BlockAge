@@ -17,6 +17,8 @@ public abstract class Entity extends Observable {
     private String description;
     private GraphNode position;
     private Node sprite;
+    protected double currentPixelX;
+    protected double currentPixelY;
 
     public Entity(int id, String name, String description, GraphNode position, Node sprite) {
         this.id = id;
@@ -66,6 +68,7 @@ public abstract class Entity extends Observable {
         this.sprite = sprite;
     }
 
+    //may have to change? cuz now set pixels directly
     public void setPosition(GraphNode position) {
         Entity oldEntity = this;
         this.position = position;
@@ -73,9 +76,21 @@ public abstract class Entity extends Observable {
         notifyObservers(oldEntity);
     }
 
+    public double getPixelX()
+    {
+        return currentPixelX;
+    }
+
+    public double getPixelY()
+    {
+        return currentPixelY;
+    }
+
     public boolean idEquals(Entity e) {
         return id == e.id;
     }
+
+    public abstract void update(long deltaTime);
 
     @Override
     public int hashCode() {

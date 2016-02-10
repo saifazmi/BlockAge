@@ -21,6 +21,19 @@ public class CoreGUI extends Application {
     private final int HEIGHT = 720;
 
     private CoreEngine engine;
+    // made renderer a field due to need to call it
+    private Renderer renderer;
+
+    /**
+     * Made CoreGUI follow Singleton Pattern because there is ever only 1 instance of it
+     * Allows easier access
+     */
+    private static CoreGUI instance;
+
+    public static CoreGUI Instance()
+    {
+        return instance;
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -28,6 +41,8 @@ public class CoreGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+        this.instance = this;
 
         try {
             BorderPane root = new BorderPane();
@@ -46,7 +61,7 @@ public class CoreGUI extends Application {
             while (engine == null) {
                 Thread.sleep(1);
             }
-            final Renderer renderer = new Renderer(scene, engine.getGraph(), null);
+            renderer = new Renderer(scene, engine.getGraph(), null);
             scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
                 renderer.redraw();
             });
@@ -55,6 +70,8 @@ public class CoreGUI extends Application {
             });
             root.setCenter(renderer);
             renderer.initialDraw();
+
+            engine.setEntities(renderer.getEntities());
 
             Blockade block = new Blockade(0, "block", "desc", new GraphNode(2, 2), new Circle(0, 0, 10));
             SpriteImage sprite = new SpriteImage("http://mail.rsgc.on.ca/~ldevir/ICS3U/Chapter4/Images/tux.png", null);
@@ -73,12 +90,18 @@ public class CoreGUI extends Application {
             //dirty code end
             Unit unit = new Unit(0, "testUnit", new GraphNode(3, 1), sprite, null, this.engine.getGraph());
             sprite.setEntity(unit);
+            unit.setCurrentPixel(sprite.getX(),sprite.getY());
             renderer.drawEntity(block);
             renderer.drawEntity(unit);
             primaryStage.show();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.toString(), e);
         }
+    }
+
+    public Renderer returnRenderer()
+    {
+        return renderer;
     }
 
 }
