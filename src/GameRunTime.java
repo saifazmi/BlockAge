@@ -1,5 +1,3 @@
-package core;
-
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 

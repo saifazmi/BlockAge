@@ -1,9 +1,3 @@
-package core;
-
-import entity.Entity;
-import entity.SpriteImage;
-import graph.Graph;
-import graph.GraphNode;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.scene.Group;

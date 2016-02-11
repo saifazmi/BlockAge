@@ -1,8 +1,3 @@
-package graph;
-
-import entity.Blockade;
-import entity.Unit;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -62,7 +57,7 @@ public class GraphNode {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("graph.GraphNode{" +
+        sb.append("GraphNode{" +
                 "x=" + x +
                 ", y=" + y +
                 '}');
