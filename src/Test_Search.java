@@ -5,8 +5,7 @@ import java.util.ArrayList;
  * @project : bestRTS
  * @date : 07/02/16
  *
- * Created before juicing era.
- * Really croppy test?
+ * Barebones search test.
  */
 public class Test_Search {
 
@@ -42,9 +41,8 @@ public class Test_Search {
 
         //graph made, do your tests
 
-        AStar a = new AStar();
 
-        ArrayList<GraphNode> path = a.search(startNode,goalNode);
+        ArrayList<GraphNode> path = AStar.search(startNode,goalNode);
 
         for(int x=0; x < path.size();x++){
             System.out.println("Node at: " + path.get(x).getX() + " , " + path.get(x).getY() );
