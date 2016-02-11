@@ -1,12 +1,17 @@
-import javafx.collections.ObservableList;
+package core;
+
+import entity.Entity;
+import entity.SpriteImage;
+import graph.Graph;
+import graph.GraphNode;
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +24,8 @@ public class Renderer extends Group implements Observer
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 
     private Scene scene;
-    private List<Entity> entities;
+    private List<Entity> entitiesToDraw;
+	private List<Line> linesToDraw;
 
     private double xSpacing;
     private double ySpacing;
@@ -28,7 +34,8 @@ public class Renderer extends Group implements Observer
 	{
         super();
         this.scene = scene;
-        this.entities = new ArrayList<>();
+        this.entitiesToDraw = new ArrayList<>();
+		this.linesToDraw = new ArrayList<>();
     }
 
     public boolean initialDraw()
@@ -53,13 +60,13 @@ public class Renderer extends Group implements Observer
         for (int i = 0; i < xAccumulator + 1; i++)
 		{
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
-            line.setStroke(Color.LIGHTGRAY);
+            line.setStroke(Color.LIGHTGREY);
             this.getChildren().add(line);
         }
         for (int i = 0; i < yAccumulator + 1; i++)
 		{
             Line line = new Line(0, ySpacing * i, width, ySpacing * i);
-            line.setStroke(Color.LIGHTGRAY);
+            line.setStroke(Color.LIGHTGREY);
             this.getChildren().add(line);
         }
         success = true;
@@ -90,15 +97,15 @@ public class Renderer extends Group implements Observer
     {
         this.getChildren().clear();
         initialDraw();
-        entities.forEach(this::drawEntity);
+        entitiesToDraw.forEach(this::drawEntity);
     }
 
     public boolean drawEntity(Entity entity)
     {
         boolean success;
-        if (!this.entities.contains(entity))
+        if (!this.entitiesToDraw.contains(entity))
 		{
-            this.entities.add(entity);
+            this.entitiesToDraw.add(entity);
             entity.addObserver(this);
         }
 
@@ -120,37 +127,49 @@ public class Renderer extends Group implements Observer
         Entity entity = (Entity) o;
         Entity oldEntity = (Entity) arg;
 
-        entities.remove(oldEntity);
+        entitiesToDraw.remove(oldEntity);
         this.getChildren().remove(oldEntity.getSprite());
-        entities.add(entity);
+        entitiesToDraw.add(entity);
         drawEntity(entity);
     }
 
-    public Group produceRouteVisual(List<GraphNode> route)
+    public void produceRouteVisual(List<GraphNode> route)
 	{
         //test @TODO
-        Group group = new Group();
-		ObservableList<Node> groupKids = group.getChildren();
-        for (int i = 0; i < route.size(); i++)
+		SequentialTransition trans = new SequentialTransition();
+		for (int i = 0; i < route.size(); i++)
 		{
-            GraphNode start = route.get(i);
-            if (i + 1 < route.size())
+			GraphNode start = route.get(i);
+			if (i + 1 < route.size())
 			{
-                GraphNode end = route.get(i + 1);
-                Line line = new Line(this.xSpacing / 2 + start.getX() * xSpacing,
-									 this.ySpacing / 2 + start.getY() * ySpacing,
-									 this.xSpacing / 2 + end.getX() * xSpacing,
-						  			 this.ySpacing / 2 + end.getY() * ySpacing);
-                if(!groupKids.contains(line))
+				GraphNode end = route.get(i + 1);
+				Line line = new Line(this.xSpacing / 2 + start.getX() * xSpacing,
+						this.ySpacing / 2 + start.getY() * ySpacing,
+						this.xSpacing / 2 + end.getX() * xSpacing,
+						this.ySpacing / 2 + end.getY() * ySpacing);
+				line.setOpacity(0.0);
+				if(!this.getChildren().contains(line))
 				{
-					groupKids.add(line);
+					this.getChildren().add(line);
+					linesToDraw.add(line);
+					FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
+					trans.getChildren().add(lineTransition);
 				}
-            }
+			}
 			else
 			{
-                i = route.size();
-            }
-        }
-        return group;
+				i = route.size();
+			}
+		}
+		trans.play();
     }
+
+	public static FadeTransition buildFadeAnimation(double millis, double opac1, double opac2, Node node)
+	{
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(millis), node);
+		fadeTransition.setAutoReverse(true);
+		fadeTransition.setFromValue(opac1);
+		fadeTransition.setToValue(opac2);
+		return fadeTransition;
+	}
 }

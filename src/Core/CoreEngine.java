@@ -1,3 +1,6 @@
+package core;
+import graph.Graph;
+import graph.GraphNode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

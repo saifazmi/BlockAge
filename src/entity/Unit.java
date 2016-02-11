@@ -1,4 +1,7 @@
-import javafx.scene.Node;
+package entity;
+
+import graph.Graph;
+import graph.GraphNode;
 
 import java.util.List;
 import java.util.logging.Level;

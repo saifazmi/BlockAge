@@ -1,3 +1,4 @@
+package core;
 /**
  * @project : bestRTS
  * @author : saif
@@ -6,12 +7,11 @@
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import other.Test;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +34,7 @@ public class CoreGUI extends Application {
 			primaryStage.setScene(scene);
 
 			GameRunTime runTime = new GameRunTime(primaryStage);
-			Test.test(runTime.getRenderer(), runTime.getEngine());
+			Test.test(runTime);
 
 			primaryStage.setOnCloseRequest(e -> {
 				runTime.getEngine().setEngineState(false);

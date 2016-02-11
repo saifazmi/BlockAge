@@ -1,4 +1,6 @@
-import javafx.scene.Node;
+package entity;
+
+import graph.GraphNode;
 
 import java.util.Observable;
 import java.util.logging.Logger;
