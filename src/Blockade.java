@@ -15,4 +15,9 @@ public class Blockade extends Entity {
     public Blockade(int id, String name, String description, GraphNode position, Node sprite) {
         super(id, name, description, position, sprite);
     }
+
+    @Override
+    public void update(long deltaTime) {
+
+    }
 }

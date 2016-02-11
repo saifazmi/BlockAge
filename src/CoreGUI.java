@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -88,7 +89,11 @@ public class CoreGUI extends Application {
                 }
             });
             //dirty code end
-            Unit unit = new Unit(0, "testUnit", new GraphNode(3, 1), sprite, null, this.engine.getGraph());
+            GraphNode start = this.engine.getGraph().nodeWith(new GraphNode(3,1));
+            GraphNode end = this.engine.getGraph().nodeWith(new GraphNode(5,5));
+            ArrayList<GraphNode> route = DepthFristSearch.Instance().findPathFrom(start,end);
+            System.out.println(route);
+            Unit unit = new Unit(0, "testUnit", start, sprite, route, this.engine.getGraph());
             sprite.setEntity(unit);
             unit.setCurrentPixel(sprite.getX(),sprite.getY());
             renderer.drawEntity(block);

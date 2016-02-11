@@ -8,9 +8,9 @@ import java.util.TreeSet;
 public class DepthFristSearch {
 
     private Stack<GraphNode> frontier;
-    private TreeSet<GraphNode> visited;
+    private ArrayList<GraphNode> visited;
 
-    static private DepthFristSearch instance;
+    private static DepthFristSearch instance = null;
 
     /**
      * Singleton pattern for search
@@ -19,11 +19,15 @@ public class DepthFristSearch {
      */
     public DepthFristSearch()
     {
-        instance = this;
+        visited = new ArrayList<>();
+        frontier = new Stack();
     }
 
-    public DepthFristSearch Instance()
+    public static DepthFristSearch Instance()
     {
+        if (instance == null)
+            instance = new DepthFristSearch();
+
         return instance;
     }
 
@@ -44,32 +48,31 @@ public class DepthFristSearch {
 
         ArrayList<GraphNode> path = new ArrayList<GraphNode>();
 
-        while (!path.isEmpty())
+        while(!frontier.isEmpty())
         {
-            while(!frontier.isEmpty())
+            current = frontier.pop();
+
+            if (!visited.contains(current))
             {
-                current = frontier.pop();
-
-                if (!visited.contains(current))
+                System.out.println("new node");
+                if (current.equals(endNode))
                 {
-                    if (current.equals(endNode))
-                    {
-                        path.add(current);
-                        path.remove(0);
-                        return path;
-                    }
-                    else
-                    {
-                        path.add(current);
-                        visited.add(current);
-                        frontier.clear();
+                    System.out.println("found end");
+                    path.add(current);
+                    path.remove(0);
+                    return path;
+                }
+                else
+                {
+                    path.add(current);
+                    visited.add(current);
+                    frontier.clear();
 
-                        for (GraphNode n : current.getSuccessors())
+                    for (GraphNode n : current.getSuccessors())
+                    {
+                        if(!visited.contains(n))
                         {
-                            if(!visited.contains(n))
-                            {
-                                frontier.push(n);
-                            }
+                            frontier.push(n);
                         }
                     }
                 }

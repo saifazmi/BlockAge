@@ -212,7 +212,7 @@ public class Unit extends Entity {
             {
                 currentPixelX += speed * deltaTime;
                 currentPixelY += speed * deltaTime;
-                CoreGUI.Instance().returnRenderer().update(this,this);
+                //CoreGUI.Instance().returnRenderer().update(this,this);
             }
             else
             {
