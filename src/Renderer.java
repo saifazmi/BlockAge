@@ -31,13 +31,6 @@ public class Renderer extends Group implements Observer
         this.entities = new ArrayList<>();
     }
 
-    public List<Entity> getEntities() {
-        return entities;
-    }
-    public void setEntities(List<Entity> entities) {
-        this.entities = entities;
-    }
-
     public boolean initialDraw()
 	{
         boolean success = true;
