@@ -121,20 +121,6 @@ public class Renderer extends Group implements Observer
         return success;
     }
 
-    public boolean drawEntityPerFrame(Entity entity, int animationTimeMillis, CoreEngine engine)
-	{
-		boolean success = false;
-		if (!this.entities.contains(entity))
-		{
-			this.entities.add(entity);
-			entity.addObserver(this);
-		}
-		
-
-
-		return success;
-	}
-
     @Override
     public void update(Observable o, Object arg)
 	{
