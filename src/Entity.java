@@ -71,18 +71,28 @@ public abstract class Entity extends Observable {
         notifyObservers(oldEntity);
     }
 
-	@Override
-	public boolean equals(Object o)
-	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Entity)) return false;
 
-		Entity entity = (Entity) o;
+        Entity entity = (Entity) o;
 
-		if(id != entity.id) return false;
-		if(!name.equals(entity.name)) return false;
-		if(!description.equals(entity.description)) return false;
-		return position.equals(entity.position);
+        if (id != entity.id) return false;
+        if (name != null ? !name.equals(entity.name) : entity.name != null) return false;
+        if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
+        if (position != null ? !position.equals(entity.position) : entity.position != null) return false;
+        return !(sprite != null ? !sprite.equals(entity.sprite) : entity.sprite != null);
 
-	}
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (sprite != null ? sprite.hashCode() : 0);
+        return result;
+    }
 }
