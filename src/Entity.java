@@ -84,7 +84,7 @@ public abstract class Entity extends Observable {
         return id == e.id;
     }
 
-    public abstract void update(long deltaTime);
+    public abstract void update();
 
     @Override
     public int hashCode() {

@@ -94,7 +94,7 @@ public class CoreEngine {
         {
             for (int i = 0; i < entities.size(); i++)
             {
-                entities.get(i).update((long) (deltaTime / (Math.pow(10,7))));
+                entities.get(i).update();
             }
         }
     }

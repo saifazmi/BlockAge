@@ -25,7 +25,7 @@ public class Blockade extends Entity {
 
 
     @Override
-    public void update(long deltaTime) {
+    public void update() {
 
     }
 

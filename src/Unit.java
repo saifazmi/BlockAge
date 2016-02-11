@@ -1,3 +1,9 @@
+import javafx.animation.PathTransition;
+import javafx.animation.TranslateTransition;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +16,7 @@ import java.util.logging.Logger;
 public class Unit extends Entity {
 
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
+    private static final Duration SPEED = Duration.millis(250);
 
     private enum Search {
         DFS,
@@ -35,9 +42,6 @@ public class Unit extends Entity {
     int xChange;
     int yChange;
     private boolean completedMove = true;
-    private double speed;
-
-
 
     public Unit(int id, String name, String description, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
         super(id, name, description, position, sprite);
@@ -206,61 +210,43 @@ public class Unit extends Entity {
      * Recommend new method (or alter old method) so that it draws according to pixel position rather than logical position
      */
     @Override
-    public void update(long deltaTime)
+    public void update()
     {
-        Entity oldEntity = this;
-
         if (completedMove)
         {
+            if (nextNode != null)
+                currentNode = nextNode;
+
             if (route.size() > 0)
             {
-                System.out.println(route.get(0));
                 nextNode = route.remove(0);
                 xChange = nextNode.getX() - currentNode.getX();
                 yChange = nextNode.getY() - currentNode.getY();
                 completedMove = false;
-
                 SetPositionAndSpeed(xChange,yChange);
             }
         }
-        else
-        {
-            if (currentPixelX != nextPixelX || currentPixelY != nextPixelY)
-            {
-                /*System.out.println("current: " + currentPixelX + ", " + currentPixelY);
-                System.out.println("current: " + nextPixelX + ", " + nextPixelY);*/
-
-                /*System.out.println("delta time = " + deltaTime);
-                System.out.println("speed = " + speed);*/
-
-                currentPixelX += xChange * speed;
-                currentPixelY += yChange * speed;
-                setChanged();
-                notifyObservers(oldEntity);
-            }
-            else
-            {
-                completedMove = true;
-            }
-        }
-        //get pixel position of next node
-        //set move to that in time step
     }
 
     private void SetPositionAndSpeed(int xChange, int yChange) {
 
         int x = nextNode.getX();
         int y = nextNode.getY();
-
+        
         if (logicalMove(xChange,yChange)) {
-
             double spacingX = renderer.returnXSpacing();
             double spacingY = renderer.returnYSpacing();
 
             nextPixelX = x * spacingX;
             nextPixelY = y * spacingY;
 
-            speed = spacingX / 10;
+            TranslateTransition transition = new TranslateTransition(SPEED,sprite);
+            transition.setToX(nextPixelX);
+            transition.setToY(nextPixelY);
+            transition.setOnFinished(e -> {
+                completedMove = true;
+            });
+            transition.play();
         }
     }
 
@@ -268,6 +254,8 @@ public class Unit extends Entity {
 
         boolean success = true;
 
+        System.out.println("xchange = " + xChange);
+        System.out.println("ychange = " + yChange);
         if (xChange == 0) {
             if (yChange > 0) {
                 success = success && moveDown();
