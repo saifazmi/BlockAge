@@ -1,5 +1,3 @@
-import javafx.scene.Node;
-
 import java.util.Observable;
 import java.util.logging.Logger;
 
@@ -16,9 +14,9 @@ public abstract class Entity extends Observable {
     private String name;
     private String description;
     private GraphNode position;
-    private Node sprite;
+    private SpriteImage sprite;
 
-    public Entity(int id, String name, String description, GraphNode position, Node sprite) {
+    public Entity(int id, String name, String description, GraphNode position, SpriteImage sprite) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,7 +24,7 @@ public abstract class Entity extends Observable {
         this.sprite = sprite;
     }
 
-    public Entity(int id, String name, GraphNode position, Node sprite) {
+    public Entity(int id, String name, GraphNode position, SpriteImage sprite) {
         this.id = id;
         this.name = name;
         this.position = position;
@@ -50,7 +48,7 @@ public abstract class Entity extends Observable {
         return position;
     }
 
-    public Node getSprite() {
+    public SpriteImage getSprite() {
         return sprite;
     }
 
@@ -62,7 +60,7 @@ public abstract class Entity extends Observable {
         this.description = description;
     }
 
-    public void setSprite(Node sprite) {
+    public void setSprite(SpriteImage sprite) {
         this.sprite = sprite;
     }
 
@@ -73,12 +71,28 @@ public abstract class Entity extends Observable {
         notifyObservers(oldEntity);
     }
 
-    public boolean idEquals(Entity e) {
-        return id == e.id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Entity)) return false;
+
+        Entity entity = (Entity) o;
+
+        if (id != entity.id) return false;
+        if (name != null ? !name.equals(entity.name) : entity.name != null) return false;
+        if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
+        if (position != null ? !position.equals(entity.position) : entity.position != null) return false;
+        return !(sprite != null ? !sprite.equals(entity.sprite) : entity.sprite != null);
+
     }
 
     @Override
     public int hashCode() {
-        return id;
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (sprite != null ? sprite.hashCode() : 0);
+        return result;
     }
 }
