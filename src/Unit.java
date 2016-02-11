@@ -1,6 +1,3 @@
-import javafx.scene.Node;
-import javafx.scene.image.ImageView;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,29 +26,39 @@ public class Unit extends Entity {
     private List<GraphNode> route;
     private Graph graph;
 
+    private Renderer renderer;
+
     private GraphNode currentNode;
     private GraphNode nextNode;
-    private ImageView sprite;
     private double nextPixelX;
     private double nextPixelY;
+    int xChange;
+    int yChange;
     private boolean completedMove = true;
-    private double speed = 3;
+    private double speed;
 
 
-    public Unit(int id, String name, String description, GraphNode position, Node sprite, List<GraphNode> route, Graph graph) {
+
+    public Unit(int id, String name, String description, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
         super(id, name, description, position, sprite);
         this.route = route;
         this.graph = graph;
         currentNode = position;
-        this.sprite = (ImageView) sprite;
+        this.sprite = sprite;
+        this.renderer = renderer;
+
+        route.remove(0);
     }
 
-    public Unit(int id, String name, GraphNode position, Node sprite, List<GraphNode> route, Graph graph) {
+    public Unit(int id, String name, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
         super(id, name, position, sprite);
         this.route = route;
         this.graph = graph;
         currentNode = position;
-        this.sprite = (ImageView) sprite;
+        this.sprite = sprite;
+        this.renderer = renderer;
+
+        route.remove(0);
     }
 
     public boolean moveUp() {
@@ -161,6 +168,10 @@ public class Unit extends Entity {
         //doesn't perform a re-search @TODO
         boolean success = true;
         for (int i = 0; i < route.size(); i++) {
+            if(!success)
+            {
+                //@TODO search has hit a blockade.//
+            }
             GraphNode start = route.get(i);
             if (i < route.size() - 1) {
                 GraphNode end = route.get(i + 1);
@@ -197,22 +208,35 @@ public class Unit extends Entity {
     @Override
     public void update(long deltaTime)
     {
+        Entity oldEntity = this;
+
         if (completedMove)
         {
             if (route.size() > 0)
             {
+                System.out.println(route.get(0));
                 nextNode = route.remove(0);
+                xChange = nextNode.getX() - currentNode.getX();
+                yChange = nextNode.getY() - currentNode.getY();
                 completedMove = false;
-                SetPositionAndSpeed(nextNode);
+
+                SetPositionAndSpeed(xChange,yChange);
             }
         }
         else
         {
-            if (currentPixelX != nextPixelX && currentPixelY != nextPixelY)
+            if (currentPixelX != nextPixelX || currentPixelY != nextPixelY)
             {
-                currentPixelX += speed * deltaTime;
-                currentPixelY += speed * deltaTime;
-                //CoreGUI.Instance().returnRenderer().update(this,this);
+                /*System.out.println("current: " + currentPixelX + ", " + currentPixelY);
+                System.out.println("current: " + nextPixelX + ", " + nextPixelY);*/
+
+                /*System.out.println("delta time = " + deltaTime);
+                System.out.println("speed = " + speed);*/
+
+                currentPixelX += xChange * speed;
+                currentPixelY += yChange * speed;
+                setChanged();
+                notifyObservers(oldEntity);
             }
             else
             {
@@ -223,29 +247,26 @@ public class Unit extends Entity {
         //set move to that in time step
     }
 
-    private void SetPositionAndSpeed(GraphNode nextNode) {
+    private void SetPositionAndSpeed(int xChange, int yChange) {
 
         int x = nextNode.getX();
         int y = nextNode.getY();
 
-        if (logicalMove(x,y)) {
+        if (logicalMove(xChange,yChange)) {
 
-            double spacingX = CoreGUI.Instance().returnRenderer().returnXSpacing();
-            double spacingY = CoreGUI.Instance().returnRenderer().returnYSpacing();
+            double spacingX = renderer.returnXSpacing();
+            double spacingY = renderer.returnYSpacing();
 
             nextPixelX = x * spacingX;
             nextPixelY = y * spacingY;
 
-            speed = (nextPixelX - currentPixelX) / 10;
+            speed = spacingX / 10;
         }
     }
 
-    private boolean logicalMove(int x, int y) {
+    private boolean logicalMove(int xChange, int yChange) {
 
         boolean success = true;
-
-        int xChange = currentNode.getX() - x;
-        int yChange = currentNode.getY() - y;
 
         if (xChange == 0) {
             if (yChange > 0) {

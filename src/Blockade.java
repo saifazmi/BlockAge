@@ -1,5 +1,3 @@
-import javafx.scene.Node;
-
 import java.util.logging.Logger;
 
 /**
@@ -11,13 +9,34 @@ public class Blockade extends Entity {
 
     private static final Logger LOG = Logger.getLogger(Blockade.class.getName());
 
-    // @TODO: Place holder
-    public Blockade(int id, String name, String description, GraphNode position, Node sprite) {
+	private boolean breakable;
+
+	public Blockade(int id, String name, GraphNode position, SpriteImage sprite)
+	{
+		super(id, name, position, sprite);
+		setBreakable(false);
+	}
+
+    public Blockade(int id, String name, String description, GraphNode position, SpriteImage sprite)
+    {
         super(id, name, description, position, sprite);
+		setBreakable(false);
     }
+
 
     @Override
     public void update(long deltaTime) {
 
     }
+
+	public boolean isBreakable()
+	{
+		return breakable;
+	}
+
+	public void setBreakable(boolean breakable)
+	{
+		this.breakable = breakable;
+	}
+
 }

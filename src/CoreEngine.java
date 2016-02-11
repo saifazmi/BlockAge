@@ -1,5 +1,9 @@
+
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.logging.Level;
+
 import java.util.logging.Logger;
 
 /**
@@ -37,6 +41,8 @@ public class CoreEngine {
         }
 
         this.graph = graph;
+
+        entities = new ArrayList<>();
     }
 
     public Graph getGraph() {
@@ -68,7 +74,6 @@ public class CoreEngine {
         // NOTE: first five thread sleeps cause
         // interference with delta time.
         if (deltaTime >= (Math.pow(10, 9) / FRAME_RATE)) {
-            //LOG.log(Level.INFO, "Delta time: " + String.valueOf(deltaTime * Math.pow(10, -9)));
             timeToUpdate = true;
             this.startTime = currentTime;
         }
@@ -79,7 +84,7 @@ public class CoreEngine {
         try {
             Thread.sleep(950 / FRAME_RATE);
         } catch (InterruptedException e) {
-            // LOG.log(Level.SEVERE, e.toString(), e);
+            LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
 
@@ -89,17 +94,17 @@ public class CoreEngine {
         {
             for (int i = 0; i < entities.size(); i++)
             {
-                entities.get(i).update((long) (deltaTime * (Math.pow(10,9))));
+                entities.get(i).update((long) (deltaTime / (Math.pow(10,7))));
             }
         }
     }
 
-    public void setEntities(List<Entity> entities)
-    {
-        this.entities = (ArrayList<Entity>) entities;
-    }
-
     public void setEngineState(boolean running) {
         this.running = running;
+    }
+
+    public ArrayList<Entity> getEntities()
+    {
+        return entities;
     }
 }

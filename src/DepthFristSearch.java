@@ -54,12 +54,10 @@ public class DepthFristSearch {
 
             if (!visited.contains(current))
             {
-                System.out.println("new node");
                 if (current.equals(endNode))
                 {
-                    System.out.println("found end");
                     path.add(current);
-                    path.remove(0);
+                    System.out.println("path = " + path);
                     return path;
                 }
                 else

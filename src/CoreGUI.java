@@ -8,10 +8,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,10 +18,6 @@ public class CoreGUI extends Application {
 
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
-
-    private CoreEngine engine;
-    // made renderer a field due to need to call it
-    private Renderer renderer;
 
     /**
      * Made CoreGUI follow Singleton Pattern because there is ever only 1 instance of it
@@ -46,67 +40,25 @@ public class CoreGUI extends Application {
         this.instance = this;
 
         try {
-            BorderPane root = new BorderPane();
-            final Scene scene = new Scene(root, WIDTH, HEIGHT);
-            primaryStage.setScene(scene);
-            //@TODO: exit the program properly.
-            primaryStage.setOnCloseRequest(e -> {
-                engine.setEngineState(false);
-                Platform.exit();
-            });
-            Thread engThread = new Thread(() -> {
-                engine = new CoreEngine();
-                engine.startGame();
-            });
-            engThread.start();
-            while (engine == null) {
-                Thread.sleep(1);
-            }
-            renderer = new Renderer(scene, engine.getGraph(), null);
-            scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
-                renderer.redraw();
-            });
-            scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
-                renderer.redraw();
-            });
-            root.setCenter(renderer);
-            renderer.initialDraw();
 
-            engine.setEntities(renderer.getEntities());
+			BorderPane root = new BorderPane();
+			final Scene scene = new Scene(root, WIDTH, HEIGHT);
+			primaryStage.setScene(scene);
 
-            Blockade block = new Blockade(0, "block", "desc", new GraphNode(2, 2), new Circle(0, 0, 10));
-            SpriteImage sprite = new SpriteImage("http://mail.rsgc.on.ca/~ldevir/ICS3U/Chapter4/Images/tux.png", null);
-            //dirty code
-            sprite.setOnMouseClicked(e ->
-            {
-                if (scene.getFocusOwner() != null && scene.getFocusOwner().equals(sprite)) {
-                    System.out.println("Has focus");
-                } else {
-                    sprite.requestFocus();
-                    if (scene.getFocusOwner().equals(sprite)) {
-                        System.out.println("Gained focus");
-                    }
-                }
-            });
-            //dirty code end
-            GraphNode start = this.engine.getGraph().nodeWith(new GraphNode(3,1));
-            GraphNode end = this.engine.getGraph().nodeWith(new GraphNode(5,5));
-            ArrayList<GraphNode> route = DepthFristSearch.Instance().findPathFrom(start,end);
-            System.out.println(route);
-            Unit unit = new Unit(0, "testUnit", start, sprite, route, this.engine.getGraph());
-            sprite.setEntity(unit);
-            unit.setCurrentPixel(sprite.getX(),sprite.getY());
-            renderer.drawEntity(block);
-            renderer.drawEntity(unit);
+			GameRunTime runTime = new GameRunTime(primaryStage);
+			Test.test(runTime);
+
+			primaryStage.setOnCloseRequest(e -> {
+				runTime.getEngine().setEngineState(false);
+				Platform.exit();
+			});
+
             primaryStage.show();
-        } catch (Exception e) {
+        }
+		catch (Exception e)
+		{
             LOG.log(Level.SEVERE, e.toString(), e);
         }
-    }
-
-    public Renderer returnRenderer()
-    {
-        return renderer;
     }
 
 }

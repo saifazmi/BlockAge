@@ -1,5 +1,3 @@
-import javafx.scene.Node;
-
 import java.util.Observable;
 import java.util.logging.Logger;
 
@@ -16,11 +14,15 @@ public abstract class Entity extends Observable {
     private String name;
     private String description;
     private GraphNode position;
-    private Node sprite;
+
+
     protected double currentPixelX;
     protected double currentPixelY;
 
-    public Entity(int id, String name, String description, GraphNode position, Node sprite) {
+    protected SpriteImage sprite;
+
+
+    public Entity(int id, String name, String description, GraphNode position, SpriteImage sprite) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -28,7 +30,7 @@ public abstract class Entity extends Observable {
         this.sprite = sprite;
     }
 
-    public Entity(int id, String name, GraphNode position, Node sprite) {
+    public Entity(int id, String name, GraphNode position, SpriteImage sprite) {
         this.id = id;
         this.name = name;
         this.position = position;
@@ -52,7 +54,7 @@ public abstract class Entity extends Observable {
         return position;
     }
 
-    public Node getSprite() {
+    public SpriteImage getSprite() {
         return sprite;
     }
 
@@ -64,16 +66,8 @@ public abstract class Entity extends Observable {
         this.description = description;
     }
 
-    public void setSprite(Node sprite) {
+    public void setSprite(SpriteImage sprite) {
         this.sprite = sprite;
-    }
-
-    //may have to change? cuz now set pixels directly
-    public void setPosition(GraphNode position) {
-        Entity oldEntity = this;
-        this.position = position;
-        setChanged();
-        notifyObservers(oldEntity);
     }
 
     public double getPixelX()
@@ -95,5 +89,24 @@ public abstract class Entity extends Observable {
     @Override
     public int hashCode() {
         return id;
+    }
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+
+		Entity entity = (Entity) o;
+
+		if(id != entity.id) return false;
+		if(!name.equals(entity.name)) return false;
+		if(!description.equals(entity.description)) return false;
+		return position.equals(entity.position);
+
+	}
+
+    public void setPosition(GraphNode position) {
+        this.position = position;
     }
 }
