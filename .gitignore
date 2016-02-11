@@ -26,9 +26,10 @@ local.properties
 .settings/
 .loadpath
 
-# Eclipse Core
+# Eclipse core
 .project
 .classpath
 
 # Locally stored "Eclipse launch configurations"
 *.launch
+.svnpushD3

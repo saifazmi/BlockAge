@@ -1,5 +1,3 @@
-import javafx.scene.Node;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,13 +26,13 @@ public class Unit extends Entity {
     private List<GraphNode> route;
     private Graph graph;
 
-    public Unit(int id, String name, String description, GraphNode position, Node sprite, List<GraphNode> route, Graph graph) {
+    public Unit(int id, String name, String description, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph) {
         super(id, name, description, position, sprite);
         this.route = route;
         this.graph = graph;
     }
 
-    public Unit(int id, String name, GraphNode position, Node sprite, List<GraphNode> route, Graph graph) {
+    public Unit(int id, String name, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph) {
         super(id, name, position, sprite);
         this.route = route;
         this.graph = graph;
@@ -147,6 +145,10 @@ public class Unit extends Entity {
         //doesn't perform a re-search @TODO
         boolean success = true;
         for (int i = 0; i < route.size(); i++) {
+            if(!success)
+            {
+                //@TODO search has hit a blockade.//
+            }
             GraphNode start = route.get(i);
             if (i < route.size() - 1) {
                 GraphNode end = route.get(i + 1);

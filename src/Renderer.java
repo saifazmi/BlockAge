@@ -1,11 +1,11 @@
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,183 +13,157 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
 
-public class Renderer extends Group implements Observer {
+public class Renderer extends Group implements Observer
+{
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 
     private Scene scene;
-    private final Graph gameMap;
-    private List<Entity> entities;
+    private List<Entity> entitiesToDraw;
+	private List<Line> linesToDraw;
 
-    private double xSpacing = 0;
-    private double ySpacing = 0;
+    private double xSpacing;
+    private double ySpacing;
 
-    public Renderer(Scene scene, Graph gameMap, ArrayList<Entity> entities) {
+    public Renderer(Scene scene)
+	{
         super();
         this.scene = scene;
-        this.gameMap = gameMap;
-        this.entities = new ArrayList<Entity>();
+        this.entitiesToDraw = new ArrayList<>();
+		this.linesToDraw = new ArrayList<>();
     }
 
-    public List<Entity> getEntities() {
-        return entities;
-    }
-
-    public void setEntities(List<Entity> entities) {
-        this.entities = entities;
-    }
-
-    public boolean initialDraw() {
+    public boolean initialDraw()
+	{
         boolean success = true;
         ArrayList<Double> results = calculateSpacing();
-        int xAccumulator = (int) (double) results.get(0);
-        int yAccumulator = (int) (double) results.get(1);
+        int width = (int) (double) results.get(0);
+        int height = (int) (double) results.get(1);
         double xSpacing = results.get(2);
         this.xSpacing = xSpacing;
         double ySpacing = results.get(3);
         this.ySpacing = ySpacing;
-        double width = results.get(4);
-        double height = results.get(5);
-        success = success && drawLines(xSpacing, ySpacing, width, height, xAccumulator, yAccumulator);
+        double pixelWidth = results.get(4);
+        double pixelHeight = results.get(5);
+        success = success && drawLines(xSpacing, ySpacing, pixelWidth, pixelHeight, width, height);
         return success;
     }
 
-    public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
-        boolean success = false;
-        for (int i = 0; i < xAccumulator + 1; i++) {
+    public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator)
+	{
+        boolean success;
+        for (int i = 0; i < xAccumulator + 1; i++)
+		{
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
-            line.setStroke(Color.LIGHTGRAY);
+            line.setStroke(Color.LIGHTGREY);
             this.getChildren().add(line);
         }
-        for (int i = 0; i < yAccumulator + 1; i++) {
+        for (int i = 0; i < yAccumulator + 1; i++)
+		{
             Line line = new Line(0, ySpacing * i, width, ySpacing * i);
-            line.setStroke(Color.LIGHTGRAY);
+            line.setStroke(Color.LIGHTGREY);
             this.getChildren().add(line);
         }
         success = true;
         return success;
     }
 
-    public ArrayList<Double> calculateSpacing() //UNTESTED TODO @TODO//
+    public ArrayList<Double> calculateSpacing()
     {
-        ArrayList<Double> returnList = new ArrayList<Double>();
-        double width = scene.getWidth(); //subtract the right sidebar width TODO @TODO//
-        double height = scene.getHeight(); //subtract the bottom bar height TODO @TODO//
+        ArrayList<Double> returnList = new ArrayList<>();
+        double pixelWidth = scene.getWidth(); //subtract the right sidebar pixelWidth TODO @TODO//
+        double pixelHeight = scene.getHeight(); //subtract the bottom bar height TODO @TODO//
 
-        int xAccumulator = 0;
-        int yAccumulator = 0;
-        List<GraphNode> nodes = gameMap.getNodes();
-        for (int i = 0; i < nodes.size(); i++)                //Assumption: Starts at (0,0), no missing GraphNodes//
-        {
-            GraphNode node = nodes.get(i);
-            int xCount = node.getX();
-            int yCount = node.getY();
-            if (xCount > xAccumulator) {
-                xAccumulator = xCount;
-            }
-            if (yCount > yAccumulator) {
-                yAccumulator = yCount;
-            }
-        }
+        int width = Graph.WIDTH;
+        int height = Graph.HEIGHT;
+        double xSpacing = pixelWidth / (width);
+        double ySpacing = pixelHeight / (height);
 
-        double xSpacing = width / (xAccumulator + 1);
-        double ySpacing = height / (yAccumulator + 1);
-
-        returnList.add((double) xAccumulator + 1);
-        returnList.add((double) yAccumulator + 1);
+        returnList.add((double) width);
+        returnList.add((double) height);
         returnList.add(xSpacing);
         returnList.add(ySpacing);
-        returnList.add(width);
-        returnList.add(height);
+        returnList.add(pixelWidth);
+        returnList.add(pixelHeight);
         return returnList;                            //ordered return list, see above for order
     }
 
-    public void redraw() {
+    public void redraw()
+    {
         this.getChildren().clear();
         initialDraw();
-        entities.forEach(this::drawEntity);
+        entitiesToDraw.forEach(this::drawEntity);
     }
 
-    public boolean drawEntity(Entity entity) {
-        boolean success = false;
-        if (!this.entities.contains(entity)) {
-            this.entities.add(entity);
+    public boolean drawEntity(Entity entity)
+    {
+        boolean success;
+        if (!this.entitiesToDraw.contains(entity))
+		{
+            this.entitiesToDraw.add(entity);
             entity.addObserver(this);
         }
-        Node sprite = entity.getSprite();
+
+		SpriteImage sprite = entity.getSprite();
         GraphNode node = entity.getPosition();
-        int xCoord = node.getX();
-        int yCoord = node.getY();
-        if (sprite instanceof Circle) {
-            Circle circle = (Circle) sprite;
-            circle.setCenterX(this.xSpacing / 2 + this.xSpacing * (xCoord));
-            circle.setCenterY(this.ySpacing / 2 + this.ySpacing * (yCoord));
-            if (xSpacing > ySpacing) {
-                circle.setRadius(ySpacing / 2);
-            } else {
-                circle.setRadius(xSpacing / 2);
-            }
-            this.getChildren().add(circle);
-            entity.setSprite(circle);
-        } else if (sprite instanceof Rectangle) {
 
-        } else if (sprite instanceof SpriteImage) {
-            SpriteImage imageView = (SpriteImage) sprite;
-            imageView.setFitWidth(xSpacing);
-            imageView.setFitHeight(ySpacing);
-            imageView.setPreserveRatio(true);
-            imageView.setX(xCoord * xSpacing);
-            imageView.setY(yCoord * ySpacing);
-            this.getChildren().add(imageView);
-        } else if (sprite instanceof StackPane) {
-
-        }
+		sprite.setFitWidth(xSpacing);
+		sprite.setFitHeight(ySpacing);
+		sprite.setPreserveRatio(true);
+		sprite.setX(node.getX() * xSpacing);
+		sprite.setY(node.getY() * ySpacing);
+		success = this.getChildren().add(sprite);
         return success;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        //change for frame rate related movement @TODO
+    public void update(Observable o, Object arg)
+	{
         Entity entity = (Entity) o;
         Entity oldEntity = (Entity) arg;
 
-        entities.remove(oldEntity);
+        entitiesToDraw.remove(oldEntity);
         this.getChildren().remove(oldEntity.getSprite());
-        entities.add(entity);
+        entitiesToDraw.add(entity);
         drawEntity(entity);
     }
 
-    public Group produceRouteVisualisation(List<GraphNode> route) {
+    public void produceRouteVisual(List<GraphNode> route)
+	{
         //test @TODO
-        Group group = new Group();
-        for (int i = 0; i < route.size(); i++) {
-            GraphNode start = route.get(i);
-            if (i + 1 < route.size()) {
-                GraphNode end = route.get(i + 1);
-                Line line = new Line(this.xSpacing / 2 + start.getX() * xSpacing, this.ySpacing / 2 + start.getY() * ySpacing, this.xSpacing / 2 + end.getX() * xSpacing, this.ySpacing / 2 + end.getY() * ySpacing);
-                group.getChildren().add(line);
-            } else {
-                i = route.size();
-            }
-        }
-        return group;
+		SequentialTransition trans = new SequentialTransition();
+		for (int i = 0; i < route.size(); i++)
+		{
+			GraphNode start = route.get(i);
+			if (i + 1 < route.size())
+			{
+				GraphNode end = route.get(i + 1);
+				Line line = new Line(this.xSpacing / 2 + start.getX() * xSpacing,
+						this.ySpacing / 2 + start.getY() * ySpacing,
+						this.xSpacing / 2 + end.getX() * xSpacing,
+						this.ySpacing / 2 + end.getY() * ySpacing);
+				line.setOpacity(0.0);
+				if(!this.getChildren().contains(line))
+				{
+					this.getChildren().add(line);
+					linesToDraw.add(line);
+					FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
+					trans.getChildren().add(lineTransition);
+				}
+			}
+			else
+			{
+				i = route.size();
+			}
+		}
+		trans.play();
     }
 
-    public Group produceRouteVisualRecursive(List<GraphNode> route) {
-        //could be inefficient, test @TODO
-        if (route.size() == 2) {
-            GraphNode start = route.get(0);
-            GraphNode end = route.get(1);
-            return new Group(new Line(this.xSpacing / 2 + start.getX() * xSpacing, this.ySpacing / 2 + start.getY() * ySpacing, this.xSpacing / 2 + end.getX() * xSpacing, this.ySpacing / 2 + end.getY() * ySpacing));
-        } else {
-            GraphNode start = route.get(0);
-            GraphNode end = route.get(1);
-            ArrayList<GraphNode> list = new ArrayList<GraphNode>();
-            list.add(start);
-            list.add(end);
-            Group group = produceRouteVisualRecursive(list);
-            route.remove(0);
-            group.getChildren().addAll(produceRouteVisualRecursive(route));
-            return group;
-        }
-    }
+	public static FadeTransition buildFadeAnimation(double millis, double opac1, double opac2, Node node)
+	{
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(millis), node);
+		fadeTransition.setAutoReverse(true);
+		fadeTransition.setFromValue(opac1);
+		fadeTransition.setToValue(opac2);
+		return fadeTransition;
+	}
 }
