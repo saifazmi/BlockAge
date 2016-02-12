@@ -2,6 +2,7 @@ package core;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sceneElements.ElementsHandler;
@@ -43,7 +44,7 @@ public class GameRunTime {
     }
 
     public void declareElements() {
-        mainGamePane = new Pane();
+        mainGamePane = new BorderPane();
         mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
         mainGameScene.setOnKeyPressed(e -> ElementsHandler.handleKeys(e));
@@ -64,7 +65,7 @@ public class GameRunTime {
         mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
             this.renderer.redraw();
         });
-        ((Group) mainGameScene.getRoot()).getChildren().add(this.renderer);
+        ((BorderPane)((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
         this.renderer.initialDraw();
     }
 
