@@ -1,3 +1,9 @@
+package test;
+
+import graph.Graph;
+import graph.GraphNode;
+import searches.AStar;
+
 import java.util.ArrayList;
 
 /**
@@ -39,7 +45,7 @@ public class Test_Search {
             aNode.addNeighbours(graph);
         }
 
-        //graph made, do your tests
+        //graph made, do your test
 
 
         ArrayList<GraphNode> path = AStar.search(startNode,goalNode);

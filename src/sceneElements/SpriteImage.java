@@ -1,3 +1,6 @@
+package sceneElements;
+
+import entity.Entity;
 import javafx.scene.image.ImageView;
 
 import java.awt.event.FocusEvent;

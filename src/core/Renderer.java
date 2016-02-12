@@ -1,3 +1,5 @@
+package core;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.scene.Group;

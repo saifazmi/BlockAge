@@ -1,3 +1,7 @@
+package searches;
+
+import graph.GraphNode;
+
 import java.util.*;
 
 /**

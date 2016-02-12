@@ -1,4 +1,4 @@
-/**
+package core; /**
  * @project : bestRTS
  * @author : saif
  * @date : 28/01/16
