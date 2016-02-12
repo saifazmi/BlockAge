@@ -1,4 +1,6 @@
-package core; /**
+package core;
+
+/**
  * @project : bestRTS
  * @author : saif
  * @date : 28/01/16
@@ -9,24 +11,25 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import menus.MenuHandler;
+import test.Test;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CoreGUI extends Application {
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
 
-    private final int WIDTH = 1280;
-    private final int HEIGHT = 720;
-
+    public static Stage primaryStage;
     /**
      * Made CoreGUI follow Singleton Pattern because there is ever only 1 instance of it
      * Allows easier access
      */
     private static CoreGUI instance;
 
-    public static CoreGUI Instance()
-    {
+    public static CoreGUI Instance() {
         return instance;
     }
 
@@ -40,25 +43,21 @@ public class CoreGUI extends Application {
         this.instance = this;
 
         try {
+            CoreGUI.primaryStage = primaryStage;
+            BorderPane root = new BorderPane();
 
-			BorderPane root = new BorderPane();
-			final Scene scene = new Scene(root, WIDTH, HEIGHT);
-			primaryStage.setScene(scene);
+            @SuppressWarnings("unused")
+            MenuHandler menuHandler = new MenuHandler(primaryStage);
+            MenuHandler.switchScene(MenuHandler.MAIN_MENU);
 
-			GameRunTime runTime = new GameRunTime(primaryStage);
-			Test.test(runTime);
-
-			primaryStage.setOnCloseRequest(e -> {
-				runTime.getEngine().setEngineState(false);
-				Platform.exit();
-			});
+            primaryStage.setOnCloseRequest(e -> {
+                CoreEngine.setEngineState(false);
+                Platform.exit();
+            });
 
             primaryStage.show();
-        }
-		catch (Exception e)
-		{
+        } catch (Exception e) {
             LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
-
 }

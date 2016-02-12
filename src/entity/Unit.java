@@ -1,8 +1,11 @@
 package entity;
 
 import core.Renderer;
+import graph.Graph;
+import graph.GraphNode;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+import sceneElements.SpriteImage;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -172,8 +175,7 @@ public class Unit extends Entity {
         //doesn't perform a re-search @TODO
         boolean success = true;
         for (int i = 0; i < route.size(); i++) {
-            if(!success)
-            {
+            if (!success) {
                 //@TODO search has hit a blockade.//
             }
             GraphNode start = route.get(i);
@@ -210,20 +212,17 @@ public class Unit extends Entity {
      * Recommend new method (or alter old method) so that it draws according to pixel position rather than logical position
      */
     @Override
-    public void update()
-    {
-        if (completedMove)
-        {
+    public void update() {
+        if (completedMove) {
             if (nextNode != null)
                 currentNode = nextNode;
 
-            if (route.size() > 0)
-            {
+            if (route.size() > 0) {
                 nextNode = route.remove(0);
                 xChange = nextNode.getX() - currentNode.getX();
                 yChange = nextNode.getY() - currentNode.getY();
                 completedMove = false;
-                SetPositionAndSpeed(xChange,yChange);
+                SetPositionAndSpeed(xChange, yChange);
             }
         }
     }
@@ -232,15 +231,15 @@ public class Unit extends Entity {
 
         int x = nextNode.getX();
         int y = nextNode.getY();
-        
-        if (logicalMove(xChange,yChange)) {
+
+        if (logicalMove(xChange, yChange)) {
             double spacingX = renderer.returnXSpacing();
             double spacingY = renderer.returnYSpacing();
 
             nextPixelX = x * spacingX;
             nextPixelY = y * spacingY;
 
-            TranslateTransition transition = new TranslateTransition(SPEED,sprite);
+            TranslateTransition transition = new TranslateTransition(SPEED, sprite);
             transition.setToX(nextPixelX);
             transition.setToY(nextPixelY);
             transition.setOnFinished(e -> {
@@ -275,11 +274,11 @@ public class Unit extends Entity {
 
     /**
      * Should be called as soon as sprite is rendered
+     *
      * @param x
      * @param y
      */
-    public void setCurrentPixel(double x, double y)
-    {
+    public void setCurrentPixel(double x, double y) {
         currentPixelX = x;
         currentPixelY = y;
     }

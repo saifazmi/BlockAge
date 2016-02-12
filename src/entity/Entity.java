@@ -1,5 +1,8 @@
 package entity;
 
+import graph.GraphNode;
+import sceneElements.SpriteImage;
+
 import java.util.Observable;
 import java.util.logging.Logger;
 
@@ -56,6 +59,10 @@ public abstract class Entity extends Observable {
         return position;
     }
 
+    public void setPosition(GraphNode position) {
+        this.position = position;
+    }
+
     public SpriteImage getSprite() {
         return sprite;
     }
@@ -72,13 +79,11 @@ public abstract class Entity extends Observable {
         this.sprite = sprite;
     }
 
-    public double getPixelX()
-    {
+    public double getCurrentPixelX() {
         return currentPixelX;
     }
 
-    public double getPixelY()
-    {
+    public double getCurrentPixelY() {
         return currentPixelY;
     }
 
@@ -89,26 +94,36 @@ public abstract class Entity extends Observable {
     public abstract void update();
 
     @Override
-    public int hashCode() {
-        return id;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Entity)) return false;
+
+        Entity entity = (Entity) o;
+
+        if (id != entity.id) return false;
+        if (Double.compare(entity.currentPixelX, currentPixelX) != 0) return false;
+        if (Double.compare(entity.currentPixelY, currentPixelY) != 0) return false;
+        if (name != null ? !name.equals(entity.name) : entity.name != null) return false;
+        if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
+        if (!position.equals(entity.position)) return false;
+        return sprite.equals(entity.sprite);
+
     }
 
-	@Override
-	public boolean equals(Object o)
-	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
-
-		Entity entity = (Entity) o;
-
-		if(id != entity.id) return false;
-		if(!name.equals(entity.name)) return false;
-		if(!description.equals(entity.description)) return false;
-		return position.equals(entity.position);
-
-	}
-
-    public void setPosition(GraphNode position) {
-        this.position = position;
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + position.hashCode();
+        temp = Double.doubleToLongBits(currentPixelX);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(currentPixelY);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + sprite.hashCode();
+        return result;
     }
 }
+

@@ -1,9 +1,11 @@
 package core;
 
+import entity.Entity;
+import graph.Graph;
+import graph.GraphNode;
+
 import java.util.ArrayList;
-
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 
 /**
@@ -15,7 +17,7 @@ public class CoreEngine {
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
     private final int FRAME_RATE = 60;
 
-    private boolean running;
+    public static boolean running;
     private long startTime;
     private Graph graph;
     private ArrayList<Entity> entities;
@@ -90,21 +92,18 @@ public class CoreEngine {
 
     private void updateGameState() {
         //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
-        if (entities != null)
-        {
-            for (int i = 0; i < entities.size(); i++)
-            {
+        if (entities != null) {
+            for (int i = 0; i < entities.size(); i++) {
                 entities.get(i).update();
             }
         }
     }
 
-    public void setEngineState(boolean running) {
-        this.running = running;
+    public static void setEngineState(boolean running) {
+        CoreEngine.running = running;
     }
 
-    public ArrayList<Entity> getEntities()
-    {
+    public ArrayList<Entity> getEntities() {
         return entities;
     }
 }

@@ -80,8 +80,7 @@ public class GraphNode {
         this.successors.add(successor);
     }
 
-    public List<GraphNode> getSuccessors()
-    {
+    public List<GraphNode> getSuccessors() {
         return successors;
     }
 

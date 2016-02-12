@@ -1,5 +1,7 @@
 package searches;
 
+import graph.GraphNode;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -18,14 +20,12 @@ public class DepthFristSearch {
      * As there is only ever 1 instance of DFS,
      * it is efficient and safe to use the singleton pattern
      */
-    public DepthFristSearch()
-    {
+    public DepthFristSearch() {
         visited = new ArrayList<>();
         frontier = new Stack();
     }
 
-    public static DepthFristSearch Instance()
-    {
+    public static DepthFristSearch Instance() {
         if (instance == null)
             instance = new DepthFristSearch();
 
@@ -35,8 +35,9 @@ public class DepthFristSearch {
     /**
      * Finds a path from a start node to the end node using DFS
      * The returned path should not include the start node
+     *
      * @param startNode node search starts from
-     * @param endNode node search terminates with, the goal node, usually enemy base
+     * @param endNode   node search terminates with, the goal node, usually enemy base
      * @return path from start to goal node
      */
     public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
@@ -49,28 +50,21 @@ public class DepthFristSearch {
 
         ArrayList<GraphNode> path = new ArrayList<GraphNode>();
 
-        while(!frontier.isEmpty())
-        {
+        while (!frontier.isEmpty()) {
             current = frontier.pop();
 
-            if (!visited.contains(current))
-            {
-                if (current.equals(endNode))
-                {
+            if (!visited.contains(current)) {
+                if (current.equals(endNode)) {
                     path.add(current);
                     System.out.println("path = " + path);
                     return path;
-                }
-                else
-                {
+                } else {
                     path.add(current);
                     visited.add(current);
                     frontier.clear();
 
-                    for (GraphNode n : current.getSuccessors())
-                    {
-                        if(!visited.contains(n))
-                        {
+                    for (GraphNode n : current.getSuccessors()) {
+                        if (!visited.contains(n)) {
                             frontier.push(n);
                         }
                     }
