@@ -1,9 +1,11 @@
 package core;
 
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-
 import java.util.logging.Logger;
+
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import sceneElements.ElementsHandler;
 
 /**
  * Created by Dominic on 09/02/2016.
@@ -14,11 +16,13 @@ public class GameRunTime
 
 	private Renderer renderer;
 	private CoreEngine engine;
-	private Stage primaryStage;
+	
+	Pane mainGamePane = null;
+	static Scene mainGameScene = null;
+	Group mainGame = null;
 
-	public GameRunTime(Stage primaryStage)
+	public GameRunTime()
 	{
-		this.primaryStage = primaryStage;
 		Thread engThread = new Thread(() ->
 		{
 			this.engine = new CoreEngine();
@@ -36,9 +40,17 @@ public class GameRunTime
 				e.printStackTrace();
 			}
 		}
-		this.renderer = new Renderer(primaryStage.getScene());
+		declareElements();
+		this.renderer = new Renderer(mainGameScene);
 		rendererSpecificInit();
 		renderer.initialDraw();
+	}
+	
+	public void declareElements() {
+		mainGamePane = new Pane();
+		mainGame = new Group(mainGamePane);
+		mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
+		mainGameScene.setOnKeyPressed(e->ElementsHandler.handleKeys(e));
 	}
 	public Renderer getRenderer()
 	{
@@ -50,13 +62,21 @@ public class GameRunTime
 	}
 	private void rendererSpecificInit()
 	{
-		primaryStage.getScene().widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
+		mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
 			this.renderer.redraw();
 		});
-		primaryStage.getScene().heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
+		mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
 			this.renderer.redraw();
 		});
-		((BorderPane)primaryStage.getScene().getRoot()).setCenter(this.renderer);
+		((Group)mainGameScene.getRoot()).getChildren().add(this.renderer);
 		this.renderer.initialDraw();
+	}
+	
+	/**
+	 * Returns the main game scene where the game will be played
+	 * @return - the main game scene
+	 */
+	public static Scene getScene() {
+		return mainGameScene;
 	}
 }

@@ -1,10 +1,10 @@
 package sceneElements;
-
-import entity.Entity;
 import javafx.scene.image.ImageView;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
+import entity.Entity;
 
 /**
  * Created by walte on 05/02/2016.

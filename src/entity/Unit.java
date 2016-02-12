@@ -1,8 +1,11 @@
 package entity;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import graph.Graph;
+import graph.GraphNode;
+import sceneElements.SpriteImage;
 
 /**
  * @author : saif

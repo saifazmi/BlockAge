@@ -1,7 +1,9 @@
 package entity;
-
 import java.util.Observable;
 import java.util.logging.Logger;
+
+import graph.GraphNode;
+import sceneElements.SpriteImage;
 
 /**
  * @author : saif

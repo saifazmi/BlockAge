@@ -1,7 +1,9 @@
 package entity;
-
 import java.util.ArrayList;
 import java.util.logging.Logger;
+
+import graph.GraphNode;
+import sceneElements.SpriteImage;
 
 /**
  * Created by Dominic on 11/02/2016.

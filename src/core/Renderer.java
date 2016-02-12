@@ -1,5 +1,4 @@
 package core;
-
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.scene.Group;
@@ -8,12 +7,17 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
+import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
+
+import entity.Entity;
+import graph.Graph;
+import graph.GraphNode;
 
 public class Renderer extends Group implements Observer
 {

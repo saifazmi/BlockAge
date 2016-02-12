@@ -1,7 +1,9 @@
 package core;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import graph.Graph;
+import graph.GraphNode;
 
 /**
  * @author : saif
@@ -12,7 +14,7 @@ public class CoreEngine {
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
     private final int FRAME_RATE = 60;
 
-    private boolean running;
+    public static boolean running;
     private long startTime;
     private Graph graph;
 
@@ -84,7 +86,7 @@ public class CoreEngine {
 
     }
 
-    public void setEngineState(boolean running) {
-        this.running = running;
+    public static void setEngineState(boolean running) {
+        CoreEngine.running = running;
     }
 }

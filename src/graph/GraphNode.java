@@ -1,12 +1,11 @@
 package graph;
-
-import entity.Blockade;
-import entity.Unit;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import entity.Blockade;
+import entity.Unit;
 
 /**
  * @author : saif
@@ -26,8 +25,8 @@ public class GraphNode {
     public GraphNode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.units = new ArrayList<>();
-        this.successors = new ArrayList<>();
+        this.units = new ArrayList<Unit>();
+        this.successors = new ArrayList<GraphNode>();
         blockade = null;
 
     }
@@ -39,7 +38,8 @@ public class GraphNode {
 
         GraphNode graphNode = (GraphNode) o;
 
-        return x == graphNode.x && y == graphNode.y;
+        if (x != graphNode.x) return false;
+        return y == graphNode.y;
     }
 
     public void addNeighbours(Graph graph) {
@@ -79,6 +79,11 @@ public class GraphNode {
         this.successors.add(successor);
     }
 
+    public List<GraphNode> getSuccessors()
+    {
+        return successors;
+    }
+
     public int getX() {
         return x;
     }
@@ -111,9 +116,5 @@ public class GraphNode {
         numberOfUnitsRemoved++;
 
         return numberOfUnitsRemoved;
-    }
-
-    public List<GraphNode> getSuccessors(){
-        return this.successors;
     }
 }

@@ -1,10 +1,9 @@
 package searches;
-
-import graph.GraphNode;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeSet;
+
+import graph.GraphNode;
 
 /**
  * Created by hung on 06/02/16.
