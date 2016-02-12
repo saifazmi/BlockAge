@@ -1,3 +1,7 @@
+package test;
+
+import core.GameRunTime;
+
 /**
  * Created by Dominic on 05/02/2016.
  */

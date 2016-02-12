@@ -1,7 +1,7 @@
-import javafx.animation.PathTransition;
+package entity;
+
+import core.Renderer;
 import javafx.animation.TranslateTransition;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 import java.util.List;

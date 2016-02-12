@@ -1,3 +1,5 @@
+package entity;
+
 import java.util.Observable;
 import java.util.logging.Logger;
 
