@@ -12,6 +12,8 @@ import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 import sceneElements.LabelProperties;
 
+import java.io.File;
+
 public class OptionsMenu implements Menu {
 
 
@@ -27,6 +29,7 @@ public class OptionsMenu implements Menu {
     private LabelProperties l = null;
     private ButtonProperties b = null;
 
+    private static String SEPARATOR = File.separator;
     public OptionsMenu() {
         initialiseScene();
     }
@@ -48,17 +51,17 @@ public class OptionsMenu implements Menu {
         l = new LabelProperties();
         b = new ButtonProperties();
 
-        onImage = new Image("\\sprites\\on_button.png");
-        onImageHovered = new Image("\\sprites\\on_button_hovered.png");
+        onImage = new Image(SEPARATOR + "sprites"+ SEPARATOR+ "on_button.png");
+        onImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "on_button_hovered.png");
 
-        offImage = new Image("\\sprites\\off_button.png");
-        offImageHovered = new Image("\\sprites\\off_button_hovered.png");
+        offImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "off_button.png");
+        offImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "off_button_hovered.png");
 
-        hintsImage = new Image("\\sprites\\hints_label.png");
-        soundImage = new Image("\\sprites\\sound_label.png");
+        hintsImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "hints_label.png");
+        soundImage = new Image(SEPARATOR + "sprites"+ SEPARATOR + "sound_label.png");
 
-        backImage = new Image("\\sprites\\back_button.png");
-        backImageHovered = new Image("\\sprites\\back_button.hovered.png");
+        backImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.png");
+        backImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.hovered.png");
     }
 
     /**

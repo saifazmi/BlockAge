@@ -9,6 +9,8 @@ import javafx.scene.layout.Pane;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 
+import java.io.File;
+
 public class MainMenu implements Menu {
 
     public static Button newGameButton, exitButton, optionsButton = null;
@@ -18,6 +20,10 @@ public class MainMenu implements Menu {
     private ButtonProperties b = null;
     private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered = null;
     private int spaceBetweenImgH = 50;
+
+
+
+    private static String SEPARATOR = File.separator;
 
     public MainMenu() {
         initialiseScene();
@@ -34,14 +40,14 @@ public class MainMenu implements Menu {
         exitButton = new Button();
         b = new ButtonProperties();
 
-        newGameImage = new Image("\\sprites\\new_game_button.png");
-        newGameImageHovered = new Image("\\sprites\\new_game_button_hovered.png");
+        newGameImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "new_game_button.png");
+        newGameImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "new_game_button_hovered.png");
 
-        optionsImage = new Image("\\sprites\\options_button.png");
-        optionsImageHovered = new Image("\\sprites\\options_button_hovered.png");
+        optionsImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "options_button.png");
+        optionsImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "options_button_hovered.png");
 
-        exitImage = new Image("\\sprites\\exit_button.png");
-        exitImageHovered = new Image("\\sprites\\exit_button_hovered.png");
+        exitImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "exit_button.png");
+        exitImageHovered = new Image(SEPARATOR +"sprites" + SEPARATOR + "exit_button_hovered.png");
     }
 
     /**
