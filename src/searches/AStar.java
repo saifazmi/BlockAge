@@ -2,13 +2,7 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author : Evgeniy
@@ -64,6 +58,7 @@ public class AStar {
 
                     }
                     // pathList.add(start);		//add first
+                    Collections.reverse(pathList);
                     return pathList;
                 }
 
