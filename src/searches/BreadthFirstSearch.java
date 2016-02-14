@@ -42,6 +42,7 @@ public class BreadthFirstSearch {
      * @return path from start to goal node
      */
     public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+
         GraphNode current;
         ArrayList<GraphNode> path = new ArrayList<GraphNode>();
 
@@ -56,10 +57,12 @@ public class BreadthFirstSearch {
 
             if (!visited.contains(current)) {
                 if (current.equals(endNode)) {
+
                     path.add(current);
-                    path.remove(0);
                     return path;
+
                 } else {
+                    path.add(current);
                     visited.add(current);
                     frontier.addAll(current.getSuccessors());
                 }

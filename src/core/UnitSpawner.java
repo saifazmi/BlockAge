@@ -36,7 +36,7 @@ public class UnitSpawner {
         Graph graph = runTime.getEngine().getGraph();
         Renderer renderer = runTime.getRenderer();
         // this should be passed in
-        GraphNode goal = graph.getNodes().get(31);
+        GraphNode goal = graph.getNodes().get(graph.getNodes().size() - 1);
 
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++)
         {
@@ -68,11 +68,15 @@ public class UnitSpawner {
         Unit newUnit;
 
         if (unitPool.size() > 0)
+        {
             newUnit = unitPool.remove(0);
+        }
         else
         {
             newUnit = CreateUnit(runTime.getEngine().getGraph(),runTime.getRenderer(), runTime.getEngine().getGraph().getNodes().get(31));
         }
+
+        spawnCount++;
 
         runTime.getEngine().getEntities().add(newUnit);
         runTime.getRenderer().drawEntity(newUnit);
@@ -87,6 +91,7 @@ public class UnitSpawner {
     public void update() {
         if (spawnCount < spawnlimit)
         {
+            System.out.println("spawining, Spawn limit " + spawnlimit);
             spawnUnit();
         }
     }

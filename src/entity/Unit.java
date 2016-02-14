@@ -10,6 +10,7 @@ import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFristSearch;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,16 +91,21 @@ public class Unit extends Entity {
         //only use position, not currentNode, that is redundant, to refactor, dynamic search can use position
         if (search == Search.DFS)
         {
+            System.out.println("using dfs");
             route = DepthFristSearch.Instance().findPathFrom(currentNode, this.goal);
         }
         else if (search == Search.BFS)
         {
+            System.out.println("using bfs");
             route = BreadthFirstSearch.Instance().findPathFrom(currentNode,this.goal);
         }
         else
         {
+            System.out.println("using astar");
             route = AStar.search(currentNode,this.goal);
         }
+
+        System.out.println(route);
 
         route.remove(0);
     }
