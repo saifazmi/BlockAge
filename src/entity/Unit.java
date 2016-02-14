@@ -81,34 +81,18 @@ public class Unit extends Entity {
         super(id, name, position, sprite);
 
         this.graph = graph;
-        currentNode = position;
+        setPosition(position);
         this.sprite = sprite;
         this.renderer = renderer;
         this.search = search;
         this.sort = sort;
         this.goal = goal;
 
-        //only use position, not currentNode, that is redundant, to refactor, dynamic search can use position
-        if (search == Search.DFS)
-        {
-            System.out.println("using dfs");
-            route = DepthFristSearch.Instance().findPathFrom(currentNode, this.goal);
-        }
-        else if (search == Search.BFS)
-        {
-            System.out.println("using bfs");
-            route = BreadthFirstSearch.Instance().findPathFrom(currentNode,this.goal);
-        }
-        else
-        {
-            System.out.println("using astar");
-            route = AStar.search(currentNode,this.goal);
-        }
-
-        System.out.println(route);
+        decideRoute();
 
         route.remove(0);
     }
+
 
     public boolean moveUp() {
 
@@ -256,13 +240,14 @@ public class Unit extends Entity {
     @Override
     public void update() {
         if (completedMove) {
+
             if (nextNode != null)
-                currentNode = nextNode;
+                setPosition(nextNode);
 
             if (route.size() > 0) {
                 nextNode = route.remove(0);
-                xChange = nextNode.getX() - currentNode.getX();
-                yChange = nextNode.getY() - currentNode.getY();
+                xChange = nextNode.getX() - getPosition().getX();
+                yChange = nextNode.getY() - getPosition().getY();
                 completedMove = false;
                 SetPositionAndSpeed(xChange, yChange);
             }
@@ -289,14 +274,17 @@ public class Unit extends Entity {
             });
             transition.play();
         }
+        else
+        {
+            decideRoute();
+            completedMove = true;
+        }
     }
 
     private boolean logicalMove(int xChange, int yChange) {
 
         boolean success = true;
 
-        System.out.println("xchange = " + xChange);
-        System.out.println("ychange = " + yChange);
         if (xChange == 0) {
             if (yChange > 0) {
                 success = success && moveDown();
@@ -324,6 +312,25 @@ public class Unit extends Entity {
         currentPixelX = x;
         currentPixelY = y;
     }
+
+    private void decideRoute() {
+        if (search == Search.DFS)
+        {
+            System.out.println("using dfs");
+            route = DepthFristSearch.Instance().findPathFrom(getPosition(), this.goal);
+        }
+        else if (search == Search.BFS)
+        {
+            System.out.println("using bfs");
+            route = BreadthFirstSearch.Instance().findPathFrom(getPosition(),this.goal);
+        }
+        else
+        {
+            System.out.println("using astar");
+            route = AStar.search(getPosition(), this.goal);
+        }
+    }
+
 
     /**
      * Gets the search algorithm being used by this unit
