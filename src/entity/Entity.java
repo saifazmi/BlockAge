@@ -1,11 +1,9 @@
 package entity;
-
 import graph.GraphNode;
 import sceneElements.SpriteImage;
 
 import java.util.Observable;
 import java.util.logging.Logger;
-
 /**
  * @author : saif
  * @project : bestRTS
@@ -19,7 +17,6 @@ public abstract class Entity extends Observable {
     private String name;
     private String description;
     private GraphNode position;
-
 
     protected double currentPixelX;
     protected double currentPixelY;

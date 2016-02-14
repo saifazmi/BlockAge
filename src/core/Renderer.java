@@ -90,10 +90,10 @@ public class Renderer extends Group implements Observer {
     public void redraw() {
         this.getChildren().clear();
         initialDraw();
-        entitiesToDraw.forEach(this::drawEntity);
+        entitiesToDraw.forEach(this::drawInitialEntity);
     }
 
-    public boolean drawEntity(Entity entity) {
+    public boolean drawInitialEntity(Entity entity) {
         boolean success;
         if (!this.entitiesToDraw.contains(entity)) {
             this.entitiesToDraw.add(entity);
@@ -103,34 +103,26 @@ public class Renderer extends Group implements Observer {
         SpriteImage sprite = entity.getSprite();
         GraphNode node = entity.getPosition();
 
-
         sprite.setFitWidth(xSpacing);
         sprite.setFitHeight(ySpacing);
         sprite.setPreserveRatio(true);
-        sprite.setX(entity.getCurrentPixelX());
-        sprite.setY(entity.getCurrentPixelY());
+        //sprite.setX(entity.getCurrentPixelX());
+        //sprite.setY(entity.getCurrentPixelY());
+        sprite.setX(node.getX()*xSpacing);
+        sprite.setY(node.getY()*ySpacing);
         success = this.getChildren().add(sprite);
         return success;
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("move graphical");
+        System.out.println("SHOULDN'T GET CALLED");
         Entity entity = (Entity) o;
         Entity oldEntity = (Entity) arg;
-
         entitiesToDraw.remove(oldEntity);
-        //this.getChildren().remove(oldEntity.getSprite());
-        Platform.runLater(() ->
-        {
-            this.getChildren().remove(oldEntity.getSprite());
-        });
+        Platform.runLater(() -> this.getChildren().remove(oldEntity.getSprite()));
         entitiesToDraw.add(entity);
-        //drawEntity(entity);
-        Platform.runLater(() ->
-        {
-            drawEntity(entity);
-        });
+        Platform.runLater(() -> drawInitialEntity(entity));
     }
 
     public void produceRouteVisual(List<GraphNode> route) {
@@ -178,13 +170,15 @@ public class Renderer extends Group implements Observer {
     }
 
 
-    public double returnXSpacing() {
+    public double getXSpacing() {
         return xSpacing;
     }
 
-    public double returnYSpacing() {
+    public double getYSpacing() {
         return ySpacing;
     }
+
+    public List<Entity> getEntitiesToDraw() { return entitiesToDraw; }
 
     public static FadeTransition buildFadeAnimation(double millis, double opac1, double opac2, Node node) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(millis), node);

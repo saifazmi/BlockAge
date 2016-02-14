@@ -38,7 +38,7 @@ public class Unit extends Entity {
 
     private Renderer renderer;
 
-    private GraphNode currentNode;
+    private GraphNode position;
     private GraphNode nextNode;
     private double nextPixelX;
     private double nextPixelY;
@@ -50,7 +50,7 @@ public class Unit extends Entity {
         super(id, name, description, position, sprite);
         this.route = route;
         this.graph = graph;
-        currentNode = position;
+        this.position = position;
         this.sprite = sprite;
         this.renderer = renderer;
 
@@ -61,7 +61,7 @@ public class Unit extends Entity {
         super(id, name, position, sprite);
         this.route = route;
         this.graph = graph;
-        currentNode = position;
+        this.position = position;
         this.sprite = sprite;
         this.renderer = renderer;
 
@@ -71,9 +71,9 @@ public class Unit extends Entity {
     public boolean moveUp() {
 
         // Has the unit moved
-        boolean moved = false;
+        boolean moved;
 
-        GraphNode newPosition = null;
+        GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() - 1) < 0) {
@@ -93,9 +93,9 @@ public class Unit extends Entity {
     public boolean moveDown() {
 
         // Has the unit moved
-        boolean moved = false;
+        boolean moved;
 
-        GraphNode newPosition = null;
+        GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() + 1) >= Graph.HEIGHT) {
@@ -115,9 +115,9 @@ public class Unit extends Entity {
     public boolean moveRight() {
 
         // Has the unit moved
-        boolean moved = false;
+        boolean moved;
 
-        GraphNode newPosition = null;
+        GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() + 1) >= Graph.WIDTH) {
@@ -137,9 +137,9 @@ public class Unit extends Entity {
     public boolean moveLeft() {
 
         // Has the unit moved
-        boolean moved = false;
+        boolean moved;
 
-        GraphNode newPosition = null;
+        GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() - 1) < 0) {
@@ -169,41 +169,6 @@ public class Unit extends Entity {
         return false;
     }
 
-    private boolean followRoute() {
-        //assumes route includes starting node @TODO
-        //doesn't time delay @TODO
-        //doesn't perform a re-search @TODO
-        boolean success = true;
-        for (int i = 0; i < route.size(); i++) {
-            if (!success) {
-                //@TODO search has hit a blockade.//
-            }
-            GraphNode start = route.get(i);
-            if (i < route.size() - 1) {
-                GraphNode end = route.get(i + 1);
-                int xChange = start.getX() - end.getX();
-                int yChange = start.getY() - end.getY();
-
-                if (xChange == 0) {
-                    if (yChange > 0) {
-                        success = success && moveDown();
-                    } else {
-                        success = success && moveUp();
-                    }
-                } else {
-                    if (xChange > 0) {
-                        success = success && moveRight();
-                    } else {
-                        success = success && moveLeft();
-                    }
-                }
-            } else {
-                return success;
-            }
-        }
-        return false;
-    }
-
     /**
      * Updates the unit's position per frame, called by CoreEngine
      * uses same logic as followRoute() but with delay
@@ -215,12 +180,12 @@ public class Unit extends Entity {
     public void update() {
         if (completedMove) {
             if (nextNode != null)
-                currentNode = nextNode;
+                position = nextNode;
 
             if (route.size() > 0) {
                 nextNode = route.remove(0);
-                xChange = nextNode.getX() - currentNode.getX();
-                yChange = nextNode.getY() - currentNode.getY();
+                xChange = nextNode.getX() - position.getX();
+                yChange = nextNode.getY() - position.getY();
                 completedMove = false;
                 SetPositionAndSpeed(xChange, yChange);
             }
@@ -233,8 +198,8 @@ public class Unit extends Entity {
         int y = nextNode.getY();
 
         if (logicalMove(xChange, yChange)) {
-            double spacingX = renderer.returnXSpacing();
-            double spacingY = renderer.returnYSpacing();
+            double spacingX = renderer.getXSpacing();
+            double spacingY = renderer.getYSpacing();
 
             nextPixelX = x * spacingX;
             nextPixelY = y * spacingY;
