@@ -40,6 +40,11 @@ public class GameRunTime {
         this.renderer = new Renderer(mainGameScene);
         rendererSpecificInit();
         renderer.initialDraw();
+
+        UnitSpawner spawner = new UnitSpawner(this);
+        //dirty setting
+        spawner.setSpawnlimit(5);
+        engine.setSpawner(spawner);
     }
 
     public void declareElements() {

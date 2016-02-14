@@ -21,6 +21,7 @@ public class CoreEngine {
     private long startTime;
     private Graph graph;
     private ArrayList<Entity> entities;
+    private UnitSpawner spawner;
 
     long deltaTime;
 
@@ -97,6 +98,11 @@ public class CoreEngine {
                 entities.get(i).update();
             }
         }
+
+        if (spawner != null)
+        {
+            spawner.update();
+        }
     }
 
     public static void setEngineState(boolean running) {
@@ -105,5 +111,10 @@ public class CoreEngine {
 
     public ArrayList<Entity> getEntities() {
         return entities;
+    }
+
+    public void setSpawner(UnitSpawner spawner)
+    {
+        this.spawner = spawner;
     }
 }

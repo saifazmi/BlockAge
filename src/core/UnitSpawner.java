@@ -14,8 +14,10 @@ import java.util.Random;
 public class UnitSpawner {
 
     private ArrayList<Unit> unitPool;
-    private int unitSpawnedCount = 0;
+    private int unitPoolCount = 0;
     private int totalSpawnables = 10;
+    private int spawnCount = 0;
+    private int spawnlimit;
     private GameRunTime runTime;
     Random rndSearchGen;
 
@@ -36,13 +38,9 @@ public class UnitSpawner {
         // this should be passed in
         GraphNode goal = graph.getNodes().get(31);
 
-        for (unitSpawnedCount = 0; unitSpawnedCount < totalSpawnables; unitSpawnedCount++)
+        for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++)
         {
             CreateUnit(graph, renderer, goal);
-            //unit end//
-            /*runTime.getEngine().getEntities().add(unit);
-            runTime.getRenderer().drawEntity(unit);
-            unit.setCurrentPixel(sprite.getX(), sprite.getY());*/
         }
     }
 
@@ -57,7 +55,7 @@ public class UnitSpawner {
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
 
-        Unit unit = new Unit(unitSpawnedCount, names[index], graph.nodeWith(new GraphNode(0, 10)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal ,renderer);
+        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 10)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal ,renderer);
         sprite.setEntity(unit);
         unit.setCurrentPixel(sprite.getX(),sprite.getY());
         unitPool.add(unit);
@@ -65,7 +63,7 @@ public class UnitSpawner {
         return unit;
     }
 
-    public void spawnUnit()
+    private void spawnUnit()
     {
         Unit newUnit;
 
@@ -80,9 +78,20 @@ public class UnitSpawner {
         runTime.getRenderer().drawEntity(newUnit);
     }
 
-    public void despawnUnit(Unit unit)
+    private void despawnUnit(Unit unit)
     {
         unitPool.add(unit);
         //remove from list here?
+    }
+
+    public void update() {
+        if (spawnCount < spawnlimit)
+        {
+            spawnUnit();
+        }
+    }
+
+    public void setSpawnlimit(int spawnlimit) {
+        this.spawnlimit = spawnlimit;
     }
 }
