@@ -12,7 +12,7 @@ import java.util.TreeSet;
 public class BreadthFirstSearch {
 
     private LinkedList<GraphNode> frontier;
-    private TreeSet<GraphNode> visited;
+    private ArrayList<GraphNode> visited;
 
     private static BreadthFirstSearch instance;
 
@@ -22,10 +22,14 @@ public class BreadthFirstSearch {
      * it is efficient and safe to use the singleton pattern
      */
     public BreadthFirstSearch() {
-        instance = this;
+        frontier = new LinkedList<>();
+        visited = new ArrayList<>();
     }
 
     public static BreadthFirstSearch Instance() {
+        if (instance == null)
+            instance =  new BreadthFirstSearch();
+
         return instance;
     }
 

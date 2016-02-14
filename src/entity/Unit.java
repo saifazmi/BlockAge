@@ -6,6 +6,9 @@ import graph.GraphNode;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
+import searches.AStar;
+import searches.BreadthFirstSearch;
+import searches.DepthFristSearch;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -18,23 +21,28 @@ import java.util.logging.Logger;
  */
 public class Unit extends Entity {
 
-    private static final Logger LOG = Logger.getLogger(Unit.class.getName());
-    private static final Duration SPEED = Duration.millis(250);
-
-    private enum Search {
+    public enum Search {
         DFS,
         BFS,
         A_STAR
     }
 
-    private enum Sort {
+    public enum Sort {
         BUBBLE,
         SELECTION,
         QUICK
     }
 
+    private static final Logger LOG = Logger.getLogger(Unit.class.getName());
+    private static final Duration SPEED = Duration.millis(250);
+
+
     private List<GraphNode> route;
     private Graph graph;
+    private GraphNode goal;
+
+    private Search search;
+    private Sort sort;
 
     private Renderer renderer;
 
@@ -64,6 +72,34 @@ public class Unit extends Entity {
         currentNode = position;
         this.sprite = sprite;
         this.renderer = renderer;
+
+        route.remove(0);
+    }
+
+    public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal ,Renderer renderer) {
+        super(id, name, position, sprite);
+
+        this.graph = graph;
+        currentNode = position;
+        this.sprite = sprite;
+        this.renderer = renderer;
+        this.search = search;
+        this.sort = sort;
+        this.goal = goal;
+
+        //only use position, not currentNode, that is redundant, to refactor, dynamic search can use position
+        if (search == Search.DFS)
+        {
+            route = DepthFristSearch.Instance().findPathFrom(currentNode, this.goal);
+        }
+        else if (search == Search.BFS)
+        {
+            route = BreadthFirstSearch.Instance().findPathFrom(currentNode,this.goal);
+        }
+        else
+        {
+            route = AStar.search(currentNode,this.goal);
+        }
 
         route.remove(0);
     }
@@ -282,5 +318,22 @@ public class Unit extends Entity {
         currentPixelX = x;
         currentPixelY = y;
     }
+
+    /**
+     * Gets the search algorithm being used by this unit
+     * @return search algorithm used
+     */
+    public Search getSearch() {
+        return search;
+    }
+
+    /**
+     * Gets the sort algorithm being used by this unit
+     * @return sort algorithm used
+     */
+    public Sort getSort() {
+        return sort;
+    }
+
 
 }
