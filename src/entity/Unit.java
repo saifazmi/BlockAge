@@ -98,7 +98,7 @@ public class Unit extends Entity {
 
         decideRoute();
 
-        route.remove(0);
+        //route.remove(0);
     }
 
 
