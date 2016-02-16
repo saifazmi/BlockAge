@@ -12,7 +12,7 @@ import searches.DepthFristSearch;
  */
 public class Test {
     public static void test(GameRunTime runTime) {
-        SpriteImage spriteBlockade = new SpriteImage("http://imgur.com/dZZdmUr.png", null);
+        SpriteImage spriteBlockade = new SpriteImage("http://imsgur.com/dZZdmUr.png", null);
         Blockade block = new Blockade(0, "block", "desc", new GraphNode(2, 2), spriteBlockade);
         spriteBlockade.setOnMouseClicked(e ->
         {

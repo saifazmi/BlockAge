@@ -52,10 +52,9 @@ public class CoreEngine {
     }
 
     public void startGame() {
-
         this.running = true;
         startTime = System.nanoTime();
-
+        // @TODO in case it's not running
         while (running) {
             if (isTimeToUpdate(startTime)) {
                 updateGameState();
