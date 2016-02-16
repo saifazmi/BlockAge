@@ -15,6 +15,7 @@ public class MenuHandler {
 
     private MainMenu mainMenu = new MainMenu();
     private OptionsMenu optionsMenu = new OptionsMenu();
+    private PauseMenu pauseMenu = new PauseMenu();
 
     public static Scene[] sceneList = new Scene[20];
 
@@ -22,7 +23,8 @@ public class MenuHandler {
     public final static int MAIN_MENU = 0;
     public final static int OPTIONS_MENU = 1;
     public final static int MAIN_GAME = 2;
-
+    public final static int PAUSE_MENU = 3;
+    
     public static int currentScene = MAIN_MENU;
 
     /**
@@ -42,6 +44,7 @@ public class MenuHandler {
     public void setScenes() {
         sceneList[MAIN_MENU] = mainMenu.getScene();
         sceneList[OPTIONS_MENU] = optionsMenu.getScene();
+        sceneList[PAUSE_MENU] = pauseMenu.getScene();
     }
 
     public static void setMainGameScene() {

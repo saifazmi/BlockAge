@@ -75,7 +75,7 @@ public class Renderer extends Group// implements Observer
     public ArrayList<Double> calculateSpacing()
     {
         ArrayList<Double> returnList = new ArrayList<>();
-        double pixelWidth = scene.getWidth(); //subtract the right sidebar pixelWidth TODO @TODO//
+        double pixelWidth = scene.getWidth()-224; //subtract the right sidebar pixelWidth TODO @TODO//
         double pixelHeight = scene.getHeight(); //subtract the bottom bar height TODO @TODO//
 
         int width = Graph.WIDTH;

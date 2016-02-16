@@ -53,6 +53,12 @@ public class ButtonProperties {
      * @param hoverImageOut - the image that will be change into when mouse exited
      */
     public void addHoverEffect(Button button, Image hoverImageIn, Image hoverImageOut, double posX, double posY) {
+        button.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                button.getScene().setCursor(Cursor.DEFAULT);
+            }
+        });
         button.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -67,12 +73,5 @@ public class ButtonProperties {
                 button.getScene().setCursor(Cursor.DEFAULT);
             }
         });
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                button.getScene().setCursor(Cursor.DEFAULT);
-            }
-        });
     }
-
 }
