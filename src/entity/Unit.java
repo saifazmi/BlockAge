@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class Unit extends Entity
 {
-
+    //@TODO: fix the move function, using text log
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
     private static final Duration SPEED = Duration.millis(250);
 
@@ -98,8 +98,8 @@ public class Unit extends Entity
             LOG.log(Level.INFO, "Move Up: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-            GameInterface.textInfoText.clear();
-            GameInterface.textInfoText.setText("Move Up: " + newPosition.getX() + "," + newPosition.getY());
+//            GameInterface.textInfoText.clear();
+//            GameInterface.textInfoText.setText("Move Up: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;
@@ -122,8 +122,8 @@ public class Unit extends Entity
             LOG.log(Level.INFO, "Move Down: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-            GameInterface.textInfoText.clear();
-            GameInterface.textInfoText.setText("Move Down: " + newPosition.getX() + "," + newPosition.getY());
+//            GameInterface.textInfoText.clear();
+//            GameInterface.textInfoText.setText("Move Down: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;
@@ -146,8 +146,8 @@ public class Unit extends Entity
             LOG.log(Level.INFO, "Move Right: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-            GameInterface.textInfoText.clear();
-            GameInterface.textInfoText.setText("Move Right: " + newPosition.getX() + "," + newPosition.getY());
+//            GameInterface.textInfoText.clear();
+//            GameInterface.textInfoText.setText("Move Right: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;
@@ -170,8 +170,8 @@ public class Unit extends Entity
             LOG.log(Level.INFO, "Move Left: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-            GameInterface.textInfoText.clear();
-            GameInterface.textInfoText.setText("Move Left: " + newPosition.getX() + "," + newPosition.getY());
+//            GameInterface.textInfoText.clear();
+//            GameInterface.textInfoText.setText("Move Left: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;

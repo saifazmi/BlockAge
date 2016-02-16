@@ -76,7 +76,7 @@ public class Renderer extends Group// implements Observer
     {
         ArrayList<Double> returnList = new ArrayList<>();
         double pixelWidth = scene.getWidth()-224; //subtract the right sidebar pixelWidth TODO @TODO//
-        double pixelHeight = scene.getHeight(); //subtract the bottom bar height TODO @TODO//
+        double pixelHeight = scene.getHeight()-48; //subtract the bottom bar height TODO @TODO//
 
         int width = Graph.WIDTH;
         int height = Graph.HEIGHT;
