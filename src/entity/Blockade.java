@@ -50,12 +50,12 @@ public class Blockade extends Entity
     public static Blockade createBlockade(MouseEvent e, GameRunTime runTime, Blockade blockadeInstance)
     {
         Blockade blockade = new Blockade(calcId(runTime), blockadeInstance.getName(), calcGraphNode(e, runTime), blockadeInstance.getSprite());
-        if(blockade.getPosition().getBlockade() == null && blockade.getPosition().getUnits().size() != 0)
+        if(blockade.getPosition().getBlockade() == null && blockade.getPosition().getUnits().size() == 0)
         {
             blockade.getPosition().setBlockade(blockade);
-            return null;
+            return blockade;
         }
-        return blockade;
+        return null;
     }
 
     private static ArrayList<Blockade> getBlockades(CoreEngine engine)
