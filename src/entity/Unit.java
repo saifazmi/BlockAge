@@ -1,5 +1,7 @@
 package entity;
 
+import core.CoreEngine;
+import core.GameInterface;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
@@ -111,6 +113,8 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Up: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
+            GameInterface.textInfoText.clear();
+            GameInterface.textInfoText.setText("Move Up: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;
@@ -133,6 +137,8 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Down: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
+            GameInterface.textInfoText.clear();
+            GameInterface.textInfoText.setText("Move Down: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;
@@ -155,6 +161,8 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Right: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
+            GameInterface.textInfoText.clear();
+            GameInterface.textInfoText.setText("Move Right: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;
@@ -177,6 +185,8 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Left: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
+            GameInterface.textInfoText.clear();
+            GameInterface.textInfoText.setText("Move Left: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;

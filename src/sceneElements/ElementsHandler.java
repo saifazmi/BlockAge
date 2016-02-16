@@ -1,5 +1,7 @@
 package sceneElements;
 
+import core.CoreEngine;
+import core.GameInterface;
 import core.GameRunTime;
 import javafx.event.Event;
 import javafx.scene.image.ImageView;
@@ -9,6 +11,7 @@ import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
 import menus.OptionsMenu;
+import menus.PauseMenu;
 import test.Test;
 
 public class ElementsHandler {
@@ -27,6 +30,7 @@ public class ElementsHandler {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
             MenuHandler.setMainGameScene();
+            GameInterface gameInterface = new GameInterface();
             Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
@@ -81,12 +85,23 @@ public class ElementsHandler {
         if (event.getSource() == OptionsMenu.backButton) {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
+        // End of elements from Options Menu scene
+        
+        // Elements from the Pause Menu scene
+        if (event.getSource() == PauseMenu.backGameButton) {
+        	CoreEngine.running = true;
+            MenuHandler.switchScene(MenuHandler.MAIN_GAME);
+        }
+        if (event.getSource() == PauseMenu.backMainButton) {
+        	MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        }
     }
 
     public static void handleKeys(KeyEvent event) {
         KeyCode k = event.getCode();
-        if (k == KeyCode.ESCAPE) {
-            MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        if (k == KeyCode.ESCAPE && MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
+        	CoreEngine.running = false;
+            MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
         }
     }
 }
