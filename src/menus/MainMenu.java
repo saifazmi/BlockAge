@@ -21,8 +21,6 @@ public class MainMenu implements Menu {
     private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered = null;
     private int spaceBetweenImgH = 50;
 
-
-
     private static String SEPARATOR = File.separator;
 
     public MainMenu() {
