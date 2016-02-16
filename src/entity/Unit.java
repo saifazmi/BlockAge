@@ -38,7 +38,6 @@ public class Unit extends Entity
     private List<GraphNode> route;
     private SequentialTransition visualTransition;
     private Graph graph;
-
     private Renderer renderer;
 
     /*
