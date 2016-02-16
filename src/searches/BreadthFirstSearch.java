@@ -2,7 +2,10 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 /**
  * Created by hung on 06/02/16.
@@ -11,7 +14,7 @@ public class BreadthFirstSearch {
 
     private LinkedList<GraphNode> frontier;
     private ArrayList<GraphNode> visited;
-    private LinkedHashMap<GraphNode,GraphNode> possiblePath;
+    private LinkedHashMap<GraphNode, GraphNode> possiblePath;
     private ArrayList<GraphNode> path;
 
     private static BreadthFirstSearch instance;
@@ -30,7 +33,7 @@ public class BreadthFirstSearch {
 
     public static BreadthFirstSearch Instance() {
         if (instance == null)
-            instance =  new BreadthFirstSearch();
+            instance = new BreadthFirstSearch();
 
         return instance;
     }
@@ -72,16 +75,13 @@ public class BreadthFirstSearch {
                     Collections.reverse(path);
                     System.out.println(path);
                     return path;
-                }
-                else
-                {
+                } else {
                     visited.add(current);
                     frontier.addAll(current.getSuccessors());
 
-                    for (GraphNode successor: current.getSuccessors())
-                    {
+                    for (GraphNode successor : current.getSuccessors()) {
                         if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
-                            possiblePath.put(successor,current);
+                            possiblePath.put(successor, current);
                     }
                 }
             }

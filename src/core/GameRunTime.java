@@ -64,13 +64,15 @@ public class GameRunTime {
     }
 
     private void rendererSpecificInit() {
-        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
+        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
+        {
             this.renderer.redraw();
         });
-        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
+        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) ->
+        {
             this.renderer.redraw();
         });
-        ((BorderPane)((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
+        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
         this.renderer.initialDraw();
     }
 

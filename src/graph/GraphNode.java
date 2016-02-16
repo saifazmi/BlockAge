@@ -5,7 +5,6 @@ import entity.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +18,7 @@ public class GraphNode {
 
     private int x;
     private int y;
+
     private List<Unit> units;     // Empty list of entities
     private Blockade blockade;    // null blockade
     private List<GraphNode> successors;
@@ -56,7 +56,7 @@ public class GraphNode {
             }
         }
 
-        LOG.log(Level.INFO, "This node is: " + this.toString());
+        //LOG.log(Level.INFO, "This node is: " + this.toString());
     }
 
     @Override
@@ -75,13 +75,13 @@ public class GraphNode {
         return sb.toString();
     }
 
+    public List<GraphNode> getSuccessors() {
+        return successors;
+    }
+
     public void addSuccessor(GraphNode node, Graph graph) {
         GraphNode successor = graph.nodeWith(node);
         this.successors.add(successor);
-    }
-
-    public List<GraphNode> getSuccessors() {
-        return successors;
     }
 
     public int getX() {
@@ -100,21 +100,7 @@ public class GraphNode {
         this.blockade = blockade;
     }
 
-    public int addUnit(Unit unit) {
-        int numberOfUnitsAdded = 0;
-
-        units.add(unit);
-        numberOfUnitsAdded++;
-
-        return numberOfUnitsAdded;
-    }
-
-    public int removeUnit(Unit unit) {
-        int numberOfUnitsRemoved = 0;
-
-        units.remove(unit);
-        numberOfUnitsRemoved++;
-
-        return numberOfUnitsRemoved;
+    public List<Unit> getUnits() {
+        return units;
     }
 }

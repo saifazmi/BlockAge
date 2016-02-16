@@ -25,10 +25,9 @@ public class UnitSpawner {
     private String[] descriptions;
     private int cooldown = 60;
 
-    public UnitSpawner(GameRunTime runTime)
-    {
-        names = new String[] {"Banshee", "Demon", "Death knight"};
-        descriptions = new String[] {"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
+    public UnitSpawner(GameRunTime runTime) {
+        names = new String[]{"Banshee", "Demon", "Death knight"};
+        descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
         rndSearchGen = new Random(System.currentTimeMillis());
         unitPool = new ArrayList<>();
 
@@ -39,8 +38,7 @@ public class UnitSpawner {
         // this should be passed in
         GraphNode goal = graph.getNodes().get(graph.getNodes().size() - 1);
 
-        for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++)
-        {
+        for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
             CreateUnit(graph, renderer, goal);
         }
     }
@@ -56,35 +54,30 @@ public class UnitSpawner {
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
 
-        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 10)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal ,renderer);
+        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 10)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal, renderer);
         sprite.setEntity(unit);
-        unit.setCurrentPixel(sprite.getX(),sprite.getY());
+        //unit.setCurrentPixel(sprite.getX(), sprite.getY());
         unitPool.add(unit);
 
         return unit;
     }
 
-    private void spawnUnit()
-    {
+    private void spawnUnit() {
         Unit newUnit;
 
-        if (unitPool.size() > 0)
-        {
+        if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
-        }
-        else
-        {
-            newUnit = CreateUnit(runTime.getEngine().getGraph(),runTime.getRenderer(), runTime.getEngine().getGraph().getNodes().get(31));
+        } else {
+            newUnit = CreateUnit(runTime.getEngine().getGraph(), runTime.getRenderer(), runTime.getEngine().getGraph().getNodes().get(31));
         }
 
         spawnCount++;
 
         runTime.getEngine().getEntities().add(newUnit);
-        runTime.getRenderer().drawEntity(newUnit);
+        runTime.getRenderer().drawInitialEntity(newUnit);
     }
 
-    private void despawnUnit(Unit unit)
-    {
+    private void despawnUnit(Unit unit) {
         unitPool.add(unit);
         //remove from list here?
     }

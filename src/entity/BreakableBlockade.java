@@ -1,6 +1,8 @@
 package entity;
 
+import core.GameRunTime;
 import graph.GraphNode;
+import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
@@ -29,5 +31,16 @@ public class BreakableBlockade extends Blockade {
         this.listToSort = listToSort;
     }
 
+    public static Blockade createBlockade(MouseEvent e, GameRunTime runTime, BreakableBlockade blockadeInstance) {
+        BreakableBlockade blockade = new BreakableBlockade(calcId(runTime), blockadeInstance.getName(), calcGraphNode(e, runTime), blockadeInstance.getSprite(), blockadeInstance.getSortSpeed(), blockadeInstance.getListToSort());
+        return blockade;
+    }
 
+    public int getSortSpeed() {
+        return sortSpeed;
+    }
+
+    public ArrayList<Comparable> getListToSort() {
+        return listToSort;
+    }
 }

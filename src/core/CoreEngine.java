@@ -98,8 +98,7 @@ public class CoreEngine {
             }
         }
 
-        if (spawner != null)
-        {
+        if (spawner != null) {
             spawner.update();
         }
     }
@@ -112,8 +111,7 @@ public class CoreEngine {
         return entities;
     }
 
-    public void setSpawner(UnitSpawner spawner)
-    {
+    public void setSpawner(UnitSpawner spawner) {
         this.spawner = spawner;
     }
 }
