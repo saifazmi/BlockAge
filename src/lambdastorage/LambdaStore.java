@@ -1,4 +1,5 @@
 package lambdastorage;
+
 import core.GameRunTime;
 import entity.Blockade;
 import graph.GraphNode;
@@ -8,6 +9,7 @@ import sceneElements.SpriteImage;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  * Created by walte on 16/02/2016.
  */
@@ -16,23 +18,19 @@ public class LambdaStore {
     private GameRunTime runTime;
     private final EventHandler<MouseEvent> sceneClickPlaceBlockade = e -> {
         LOG.log(Level.INFO, "Click registered at:  (x, " + e.getX() + "), (y, " + e.getY() + ")");
-        Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0,0), null);
+        Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0, 0), null);
         SpriteImage spriteImage = new SpriteImage("http://imgur.com/dZZdmUr.png", blockadeInstance);
         blockadeInstance.setSprite(spriteImage);
         Blockade blockade = Blockade.createBlockade(e, runTime, blockadeInstance);
-        if (blockade != null)
-        {
+        if (blockade != null) {
             LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
             runTime.getRenderer().drawInitialEntity(blockade);
-        }
-        else
-        {
+        } else {
             LOG.log(Level.INFO, "Blockade creation failed. Request rejected, node has contents.");
         }
     };
 
-    public LambdaStore(GameRunTime runTime)
-    {
+    public LambdaStore(GameRunTime runTime) {
         this.runTime = runTime;
     }
 

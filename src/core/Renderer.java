@@ -1,10 +1,10 @@
 package core;
+
 import entity.Entity;
 import graph.Graph;
 import graph.GraphNode;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
-import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,8 +15,6 @@ import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Logger;
 
 public class Renderer extends Group// implements Observer
@@ -37,8 +35,7 @@ public class Renderer extends Group// implements Observer
         this.linesToDraw = new ArrayList<>();
     }
 
-    public boolean initialDraw()
-    {
+    public boolean initialDraw() {
         boolean success = true;
         ArrayList<Double> results = calculateSpacing();
         int width = (int) (double) results.get(0);
@@ -53,17 +50,14 @@ public class Renderer extends Group// implements Observer
         return success;
     }
 
-    public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator)
-    {
+    public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
         boolean success;
-        for (int i = 0; i < xAccumulator + 1; i++)
-        {
+        for (int i = 0; i < xAccumulator + 1; i++) {
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
             line.setStroke(Color.LIGHTGREY);
             this.getChildren().add(line);
         }
-        for (int i = 0; i < yAccumulator + 1; i++)
-        {
+        for (int i = 0; i < yAccumulator + 1; i++) {
             Line line = new Line(0, ySpacing * i, width, ySpacing * i);
             line.setStroke(Color.LIGHTGREY);
             this.getChildren().add(line);
@@ -72,11 +66,10 @@ public class Renderer extends Group// implements Observer
         return success;
     }
 
-    public ArrayList<Double> calculateSpacing()
-    {
+    public ArrayList<Double> calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
-        double pixelWidth = scene.getWidth()-224; //subtract the right sidebar pixelWidth TODO @TODO//
-        double pixelHeight = scene.getHeight()-48; //subtract the bottom bar height TODO @TODO//
+        double pixelWidth = scene.getWidth() - 224; //subtract the right sidebar pixelWidth TODO @TODO//
+        double pixelHeight = scene.getHeight() - 48; //subtract the bottom bar height TODO @TODO//
 
         int width = Graph.WIDTH;
         int height = Graph.HEIGHT;
@@ -92,19 +85,16 @@ public class Renderer extends Group// implements Observer
         return returnList;                            //ordered return list, see above for order
     }
 
-    public void redraw()
-    {
+    public void redraw() {
         //@TODO redundant, will break transitions on resize
         this.getChildren().clear();
         initialDraw();
         entitiesToDraw.forEach(this::drawInitialEntity);
     }
 
-    public boolean drawInitialEntity(Entity entity)
-    {
+    public boolean drawInitialEntity(Entity entity) {
         boolean success;
-        if (!this.entitiesToDraw.contains(entity))
-        {
+        if (!this.entitiesToDraw.contains(entity)) {
             this.entitiesToDraw.add(entity);
             //entity.addObserver(this);
         }
@@ -117,9 +107,11 @@ public class Renderer extends Group// implements Observer
         sprite.setPreserveRatio(true);
         //sprite.setX(entity.getCurrentPixelX());
         //sprite.setY(entity.getCurrentPixelY());
-        sprite.setX(node.getX()*xSpacing);
-        sprite.setY(node.getY()*ySpacing);
+        sprite.setX(node.getX() * xSpacing);
+        sprite.setY(node.getY() * ySpacing);
         success = this.getChildren().add(sprite);
+        System.out.println(node);
+        System.out.println(sprite.getX() + "," + sprite.getY());
         return success;
     }
     /*
@@ -146,8 +138,7 @@ public class Renderer extends Group// implements Observer
                         this.xSpacing / 2 + end.getX() * xSpacing,
                         this.ySpacing / 2 + end.getY() * ySpacing);
                 line.setOpacity(0.0);
-                if (!this.getChildren().contains(line))
-                {
+                if (!this.getChildren().contains(line)) {
                     this.getChildren().add(line);
                     linesToDraw.add(line);
                     FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
@@ -161,23 +152,28 @@ public class Renderer extends Group// implements Observer
         return trans;
     }
 
-    public void removeTransition(SequentialTransition transition)
-    {
-        for(int i = 0; i < transition.getChildren().size(); i++)
-        {
+    public void removeTransition(SequentialTransition transition) {
+        for (int i = 0; i < transition.getChildren().size(); i++) {
             FadeTransition trans = (FadeTransition) transition.getChildren().get(i);
-            Line line = (Line)trans.getNode();
+            Line line = (Line) trans.getNode();
             line.setOpacity(0.0);
             this.linesToDraw.remove(line);
         }
     }
 
-    public double getXSpacing() { return xSpacing; }
-    public double getYSpacing() { return ySpacing; }
-    public List<Entity> getEntitiesToDraw() { return entitiesToDraw; }
+    public double getXSpacing() {
+        return xSpacing;
+    }
 
-    public static FadeTransition buildFadeAnimation(double millis, double opac1, double opac2, Node node)
-    {
+    public double getYSpacing() {
+        return ySpacing;
+    }
+
+    public List<Entity> getEntitiesToDraw() {
+        return entitiesToDraw;
+    }
+
+    public static FadeTransition buildFadeAnimation(double millis, double opac1, double opac2, Node node) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(millis), node);
         fadeTransition.setAutoReverse(true);
         fadeTransition.setFromValue(opac1);

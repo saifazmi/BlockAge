@@ -53,10 +53,10 @@ public class DepthFristSearch {
         while (!frontier.isEmpty()) {
             current = frontier.pop();
 
-            if (!visited.contains(current)) {
+            if (!visited.contains(current) && current.getBlockade() == null) {
                 if (current.equals(endNode)) {
                     path.add(current);
-                    System.out.println("path = " + path);
+                    path.remove(0);
                     return path;
                 } else {
                     path.add(current);

@@ -86,21 +86,21 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
         // End of elements from Options Menu scene
-        
+
         // Elements from the Pause Menu scene
         if (event.getSource() == PauseMenu.backGameButton) {
-        	CoreEngine.running = true;
+            CoreEngine.running = true;
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
-        	MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
     }
 
     public static void handleKeys(KeyEvent event) {
         KeyCode k = event.getCode();
         if (k == KeyCode.ESCAPE && MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
-        	CoreEngine.running = false;
+            CoreEngine.running = false;
             MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
         }
     }

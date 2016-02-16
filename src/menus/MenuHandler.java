@@ -24,7 +24,7 @@ public class MenuHandler {
     public final static int OPTIONS_MENU = 1;
     public final static int MAIN_GAME = 2;
     public final static int PAUSE_MENU = 3;
-    
+
     public static int currentScene = MAIN_MENU;
 
     /**

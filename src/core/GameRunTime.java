@@ -1,16 +1,12 @@
 package core;
 
-import entity.Blockade;
-import graph.GraphNode;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sceneElements.ElementsHandler;
-import sceneElements.SpriteImage;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -27,22 +23,17 @@ public class GameRunTime {
     static Scene mainGameScene = null;
     Group mainGame = null;
 
-    public GameRunTime()
-    {
+    public GameRunTime() {
         Thread engThread = new Thread(() ->
         {
             this.engine = new CoreEngine();
             this.engine.startGame();
         });
         engThread.start();
-        while (this.engine == null)
-        {
-            try
-            {
+        while (this.engine == null) {
+            try {
                 Thread.sleep(1);
-            }
-            catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -50,10 +41,14 @@ public class GameRunTime {
         this.renderer = new Renderer(mainGameScene);
         rendererSpecificInit();
         renderer.initialDraw();
+
+        UnitSpawner spawner = new UnitSpawner(this);
+        //dirty setting
+        spawner.setSpawnlimit(1);
+        engine.setSpawner(spawner);
     }
 
-    public void declareElements()
-    {
+    public void declareElements() {
         mainGamePane = new BorderPane();
         mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
@@ -68,8 +63,7 @@ public class GameRunTime {
         return this.engine;
     }
 
-    private void rendererSpecificInit()
-    {
+    private void rendererSpecificInit() {
         mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
         {
             this.renderer.redraw();
@@ -78,7 +72,7 @@ public class GameRunTime {
         {
             this.renderer.redraw();
         });
-        ((BorderPane)((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
+        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
         this.renderer.initialDraw();
     }
 

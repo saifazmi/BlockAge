@@ -1,7 +1,5 @@
 package entity;
 
-import core.CoreEngine;
-import core.GameInterface;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
@@ -9,6 +7,9 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
+import searches.AStar;
+import searches.BreadthFirstSearch;
+import searches.DepthFristSearch;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -19,27 +20,31 @@ import java.util.logging.Logger;
  * @project : bestRTS
  * @date : 28/01/16
  */
-public class Unit extends Entity
-{
+
+public class Unit extends Entity {
     //@TODO: fix the move function, using text log
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
-    private static final Duration SPEED = Duration.millis(250);
+    private static final Duration SPEED = Duration.millis(600);
 
-    private enum Search
-    {
+    public enum Search {
         DFS,
         BFS,
         A_STAR
     }
-    private enum Sort
-    {
+
+    public enum Sort {
         BUBBLE,
         SELECTION,
         QUICK
     }
+
     private List<GraphNode> route;
     private SequentialTransition visualTransition;
     private Graph graph;
+    private GraphNode goal;
+    private Search search;
+    private Sort sort;
+
     private Renderer renderer;
 
     /*
@@ -73,13 +78,29 @@ public class Unit extends Entity
         this.renderer = renderer;
 
         //route is assumed to contain the starting and finishing nodes, the following code checks to see if this is held, and if it isn't adds the start node to the route before doing the transition and then bins it again.
-        if(!route.get(0).equals(position))
-        {
+        if (!route.get(0).equals(position)) {
             route.add(0, position);
         }
         showRouteTransition();              //@TODO temporary, remove after testing
         route.remove(0);
     }
+
+    public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal, Renderer renderer) {
+        super(id, name, position, sprite);
+
+        this.graph = graph;
+        setPosition(position);
+        this.sprite = sprite;
+        this.renderer = renderer;
+        this.search = search;
+        this.sort = sort;
+        this.goal = goal;
+
+        decideRoute();
+
+        //route.remove(0);
+    }
+
 
     public boolean moveUp() {
 
@@ -199,6 +220,7 @@ public class Unit extends Entity
     @Override
     public void update() {
         if (completedMove) {
+
             if (nextNode != null)
                 position = nextNode;
 
@@ -231,13 +253,14 @@ public class Unit extends Entity
                 completedMove = true;
             });
             transition.play();
+        } else {
+            decideRoute();
+            completedMove = true;
         }
     }
 
     private boolean logicalMove(int xChange, int yChange) {
         boolean success = true;
-        //System.out.println("xchange = " + xChange);
-        //System.out.println("ychange = " + yChange);
         if (xChange == 0) {
             if (yChange > 0) {
                 success = success && moveDown();
@@ -265,14 +288,50 @@ public class Unit extends Entity
         currentPixelY = y;
     }
 
-    public void showRouteTransition()
-    {
+    private void decideRoute() {
+        if (search == Search.DFS) {
+            System.out.println("using dfs");
+            route = DepthFristSearch.Instance().findPathFrom(getPosition(), this.goal);
+        } else if (search == Search.BFS) {
+            System.out.println("using bfs");
+            route = BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
+        } else {
+            System.out.println("using astar");
+            route = AStar.search(getPosition(), this.goal);
+        }
+        System.out.println(route);
+    }
+
+
+    /**
+     * Gets the search algorithm being used by this unit
+     *
+     * @return search algorithm used
+     */
+    public Search getSearch() {
+        return search;
+    }
+
+    /**
+     * Gets the sort algorithm being used by this unit
+     *
+     * @return sort algorithm used
+     */
+    public Sort getSort() {
+        return sort;
+    }
+
+
+    public void showRouteTransition() {
         this.visualTransition = renderer.produceRouteVisual(route); //Generates route line on unit spawn
     }
 
-    public void cancelRouteTransition()
-    {
+    public void cancelRouteTransition() {
         this.visualTransition.stop();
         renderer.removeTransition(this.visualTransition);
+    }
+
+    public List<GraphNode> getRoute() {
+        return route;
     }
 }

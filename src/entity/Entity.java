@@ -1,9 +1,11 @@
 package entity;
+
 import graph.GraphNode;
 import sceneElements.SpriteImage;
 
 import java.util.Observable;
 import java.util.logging.Logger;
+
 /**
  * @author : saif
  * @project : bestRTS
@@ -105,9 +107,9 @@ public abstract class Entity extends Observable {
         if (!position.equals(entity.position)) return false;
         return sprite.equals(entity.sprite);
     }
+
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int result;
         long temp;
         result = id;

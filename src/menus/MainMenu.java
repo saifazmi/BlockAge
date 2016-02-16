@@ -45,7 +45,7 @@ public class MainMenu implements Menu {
         optionsImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "options_button_hovered.png");
 
         exitImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "exit_button.png");
-        exitImageHovered = new Image(SEPARATOR +"sprites" + SEPARATOR + "exit_button_hovered.png");
+        exitImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "exit_button_hovered.png");
     }
 
     /**

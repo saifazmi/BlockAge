@@ -3,8 +3,9 @@ package searches;
 import graph.GraphNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.TreeSet;
 
 /**
  * Created by hung on 06/02/16.
@@ -12,7 +13,9 @@ import java.util.TreeSet;
 public class BreadthFirstSearch {
 
     private LinkedList<GraphNode> frontier;
-    private TreeSet<GraphNode> visited;
+    private ArrayList<GraphNode> visited;
+    private LinkedHashMap<GraphNode, GraphNode> possiblePath;
+    private ArrayList<GraphNode> path;
 
     private static BreadthFirstSearch instance;
 
@@ -22,10 +25,16 @@ public class BreadthFirstSearch {
      * it is efficient and safe to use the singleton pattern
      */
     public BreadthFirstSearch() {
-        instance = this;
+        frontier = new LinkedList<>();
+        visited = new ArrayList<>();
+        possiblePath = new LinkedHashMap<>();
+        path = new ArrayList<>();
     }
 
     public static BreadthFirstSearch Instance() {
+        if (instance == null)
+            instance = new BreadthFirstSearch();
+
         return instance;
     }
 
@@ -38,11 +47,13 @@ public class BreadthFirstSearch {
      * @return path from start to goal node
      */
     public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
-        GraphNode current;
-        ArrayList<GraphNode> path = new ArrayList<GraphNode>();
 
+        GraphNode current;
+        GraphNode parent;
+        possiblePath.clear();
         frontier.clear();
         visited.clear();
+        path.clear();
 
         frontier.add(startNode);
 
@@ -50,19 +61,32 @@ public class BreadthFirstSearch {
 
             current = frontier.poll();
 
-            if (!visited.contains(current)) {
+            if (!visited.contains(current) && current.getBlockade() == null) {
+
                 if (current.equals(endNode)) {
-                    path.add(current);
-                    path.remove(0);
+
+                    while (possiblePath.keySet().contains(current)) {
+
+                        path.add(current);
+                        parent = possiblePath.get(current);
+                        current = parent;
+                    }
+
+                    Collections.reverse(path);
+                    System.out.println(path);
                     return path;
                 } else {
                     visited.add(current);
                     frontier.addAll(current.getSuccessors());
+
+                    for (GraphNode successor : current.getSuccessors()) {
+                        if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
+                            possiblePath.put(successor, current);
+                    }
                 }
             }
         }
 
-        visited.clear();
         return null;
     }
 }

@@ -2,7 +2,14 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * @author : Evgeniy
@@ -67,7 +74,7 @@ public class AStar {
 
             visited.add(n);
             for (GraphNode s : n.getSuccessors()) {
-                if (!visited.contains(s)) {
+                if (!visited.contains(s) && s.getBlockade() == null) {
                     int cost = D.get(n) + distance(n, s);
                     if (!pending.contains(s) || cost < D.get(s)) {
                         pred.put(s, n);

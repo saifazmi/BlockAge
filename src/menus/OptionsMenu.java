@@ -30,6 +30,7 @@ public class OptionsMenu implements Menu {
     private ButtonProperties b = null;
 
     private static String SEPARATOR = File.separator;
+
     public OptionsMenu() {
         initialiseScene();
     }
@@ -51,14 +52,14 @@ public class OptionsMenu implements Menu {
         l = new LabelProperties();
         b = new ButtonProperties();
 
-        onImage = new Image(SEPARATOR + "sprites"+ SEPARATOR+ "on_button.png");
+        onImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "on_button.png");
         onImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "on_button_hovered.png");
 
         offImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "off_button.png");
         offImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "off_button_hovered.png");
 
         hintsImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "hints_label.png");
-        soundImage = new Image(SEPARATOR + "sprites"+ SEPARATOR + "sound_label.png");
+        soundImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "sound_label.png");
 
         backImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.png");
         backImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.hovered.png");
