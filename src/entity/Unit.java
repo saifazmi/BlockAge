@@ -299,6 +299,7 @@ public class Unit extends Entity {
             System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
         }
+        System.out.println(route);
     }
 
 
@@ -328,5 +329,9 @@ public class Unit extends Entity {
     public void cancelRouteTransition() {
         this.visualTransition.stop();
         renderer.removeTransition(this.visualTransition);
+    }
+
+    public List<GraphNode> getRoute() {
+        return route;
     }
 }

@@ -54,7 +54,7 @@ public class UnitSpawner {
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
 
-        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 10)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal, renderer);
+        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal, renderer);
         sprite.setEntity(unit);
         //unit.setCurrentPixel(sprite.getX(), sprite.getY());
         unitPool.add(unit);
@@ -64,17 +64,19 @@ public class UnitSpawner {
 
     private void spawnUnit() {
         Unit newUnit;
+        Graph graph = this.runTime.getEngine().getGraph();
 
         if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
         } else {
-            newUnit = CreateUnit(runTime.getEngine().getGraph(), runTime.getRenderer(), runTime.getEngine().getGraph().getNodes().get(31));
+            newUnit = CreateUnit(runTime.getEngine().getGraph(), runTime.getRenderer(), graph.getNodes().get(graph.getNodes().size() - 1));
         }
 
         spawnCount++;
 
         runTime.getEngine().getEntities().add(newUnit);
         runTime.getRenderer().drawInitialEntity(newUnit);
+        runTime.getRenderer().produceRouteVisual(newUnit.getRoute());
     }
 
     private void despawnUnit(Unit unit) {

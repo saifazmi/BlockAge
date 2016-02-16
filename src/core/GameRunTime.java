@@ -44,7 +44,7 @@ public class GameRunTime {
 
         UnitSpawner spawner = new UnitSpawner(this);
         //dirty setting
-        spawner.setSpawnlimit(5);
+        spawner.setSpawnlimit(1);
         engine.setSpawner(spawner);
     }
 

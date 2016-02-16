@@ -110,6 +110,8 @@ public class Renderer extends Group// implements Observer
         sprite.setX(node.getX() * xSpacing);
         sprite.setY(node.getY() * ySpacing);
         success = this.getChildren().add(sprite);
+        System.out.println(node);
+        System.out.println(sprite.getX() + "," + sprite.getY());
         return success;
     }
     /*
