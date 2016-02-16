@@ -23,6 +23,7 @@ public class UnitSpawner {
 
     private String[] names;
     private String[] descriptions;
+    private int cooldown = 60;
 
     public UnitSpawner(GameRunTime runTime)
     {
@@ -89,10 +90,16 @@ public class UnitSpawner {
     }
 
     public void update() {
-        if (spawnCount < spawnlimit)
+        /*if (cooldown > 0)
         {
-            System.out.println("spawining, Spawn limit " + spawnlimit);
-            spawnUnit();
+            cooldown--;
+        }
+        else*/
+        {
+            if (spawnCount < spawnlimit) {
+                cooldown = 60;
+                spawnUnit();
+            }
         }
     }
 

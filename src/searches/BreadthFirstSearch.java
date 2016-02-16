@@ -2,9 +2,7 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by hung on 06/02/16.
@@ -13,6 +11,8 @@ public class BreadthFirstSearch {
 
     private LinkedList<GraphNode> frontier;
     private ArrayList<GraphNode> visited;
+    private LinkedHashMap<GraphNode,GraphNode> possiblePath;
+    private ArrayList<GraphNode> path;
 
     private static BreadthFirstSearch instance;
 
@@ -24,6 +24,8 @@ public class BreadthFirstSearch {
     public BreadthFirstSearch() {
         frontier = new LinkedList<>();
         visited = new ArrayList<>();
+        possiblePath = new LinkedHashMap<>();
+        path = new ArrayList<>();
     }
 
     public static BreadthFirstSearch Instance() {
@@ -44,10 +46,11 @@ public class BreadthFirstSearch {
     public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
 
         GraphNode current;
-        ArrayList<GraphNode> path = new ArrayList<GraphNode>();
-
+        GraphNode parent;
+        possiblePath.clear();
         frontier.clear();
         visited.clear();
+        path.clear();
 
         frontier.add(startNode);
 
@@ -56,20 +59,34 @@ public class BreadthFirstSearch {
             current = frontier.poll();
 
             if (!visited.contains(current)) {
+
                 if (current.equals(endNode)) {
 
-                    path.add(current);
-                    return path;
+                    while (possiblePath.keySet().contains(current)) {
 
-                } else {
-                    path.add(current);
+                        path.add(current);
+                        parent = possiblePath.get(current);
+                        current = parent;
+                    }
+
+                    Collections.reverse(path);
+                    System.out.println(path);
+                    return path;
+                }
+                else
+                {
                     visited.add(current);
                     frontier.addAll(current.getSuccessors());
+
+                    for (GraphNode successor: current.getSuccessors())
+                    {
+                        if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
+                            possiblePath.put(successor,current);
+                    }
                 }
             }
         }
 
-        visited.clear();
         return null;
     }
 }

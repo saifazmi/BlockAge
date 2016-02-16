@@ -35,7 +35,7 @@ public class Unit extends Entity {
     }
 
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
-    private static final Duration SPEED = Duration.millis(250);
+    private static final Duration SPEED = Duration.millis(600);
 
 
     private List<GraphNode> route;
