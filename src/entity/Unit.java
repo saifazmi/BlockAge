@@ -5,6 +5,7 @@ import core.GameInterface;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
@@ -18,64 +19,74 @@ import java.util.logging.Logger;
  * @project : bestRTS
  * @date : 28/01/16
  */
-public class Unit extends Entity {
+public class Unit extends Entity
+{
 
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
     private static final Duration SPEED = Duration.millis(250);
 
-    private enum Search {
+    private enum Search
+    {
         DFS,
         BFS,
         A_STAR
     }
-
-    private enum Sort {
+    private enum Sort
+    {
         BUBBLE,
         SELECTION,
         QUICK
     }
-
     private List<GraphNode> route;
+    private SequentialTransition visualTransition;
     private Graph graph;
-
     private Renderer renderer;
 
-    private GraphNode currentNode;
+    /*
+    Inherited parameters
+        private final int id;
+        private String name;
+        private String description;
+        protected GraphNode position;
+        protected double currentPixelX;
+        protected double currentPixelY;
+        protected SpriteImage sprite;
+     */
     private GraphNode nextNode;
-    private double nextPixelX;
-    private double nextPixelY;
-    int xChange;
-    int yChange;
     private boolean completedMove = true;
 
     public Unit(int id, String name, String description, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
         super(id, name, description, position, sprite);
         this.route = route;
         this.graph = graph;
-        currentNode = position;
+        this.position = position;
         this.sprite = sprite;
         this.renderer = renderer;
-
-        route.remove(0);
     }
 
     public Unit(int id, String name, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
         super(id, name, position, sprite);
         this.route = route;
         this.graph = graph;
-        currentNode = position;
+        this.position = position;
         this.sprite = sprite;
         this.renderer = renderer;
 
+        //route is assumed to contain the starting and finishing nodes, the following code checks to see if this is held, and if it isn't adds the start node to the route before doing the transition and then bins it again.
+        if(!route.get(0).equals(position))
+        {
+            route.add(0, position);
+        }
+        showRouteTransition();              //@TODO temporary, remove after testing
         route.remove(0);
     }
 
     public boolean moveUp() {
 
         // Has the unit moved
-        boolean moved = false;
+        boolean moved;
 
-        GraphNode newPosition = null;
+        GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() - 1) < 0) {
@@ -97,9 +108,9 @@ public class Unit extends Entity {
     public boolean moveDown() {
 
         // Has the unit moved
-        boolean moved = false;
+        boolean moved;
 
-        GraphNode newPosition = null;
+        GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() + 1) >= Graph.HEIGHT) {
@@ -121,9 +132,9 @@ public class Unit extends Entity {
     public boolean moveRight() {
 
         // Has the unit moved
-        boolean moved = false;
+        boolean moved;
 
-        GraphNode newPosition = null;
+        GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() + 1) >= Graph.WIDTH) {
@@ -145,9 +156,9 @@ public class Unit extends Entity {
     public boolean moveLeft() {
 
         // Has the unit moved
-        boolean moved = false;
+        boolean moved;
 
-        GraphNode newPosition = null;
+        GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() - 1) < 0) {
@@ -169,47 +180,11 @@ public class Unit extends Entity {
     private boolean blockCheck(GraphNode position) {
 
         if (position.getBlockade() == null) {
-            this.getPosition().removeUnit(this);
-            position.addUnit(this);
+            this.getPosition().getUnits().remove(this);
+            position.getUnits().add(this);
             this.setPosition(position);
 
             return true;
-        }
-
-        return false;
-    }
-
-    private boolean followRoute() {
-        //assumes route includes starting node @TODO
-        //doesn't time delay @TODO
-        //doesn't perform a re-search @TODO
-        boolean success = true;
-        for (int i = 0; i < route.size(); i++) {
-            if (!success) {
-                //@TODO search has hit a blockade.//
-            }
-            GraphNode start = route.get(i);
-            if (i < route.size() - 1) {
-                GraphNode end = route.get(i + 1);
-                int xChange = start.getX() - end.getX();
-                int yChange = start.getY() - end.getY();
-
-                if (xChange == 0) {
-                    if (yChange > 0) {
-                        success = success && moveDown();
-                    } else {
-                        success = success && moveUp();
-                    }
-                } else {
-                    if (xChange > 0) {
-                        success = success && moveRight();
-                    } else {
-                        success = success && moveLeft();
-                    }
-                }
-            } else {
-                return success;
-            }
         }
         return false;
     }
@@ -225,12 +200,12 @@ public class Unit extends Entity {
     public void update() {
         if (completedMove) {
             if (nextNode != null)
-                currentNode = nextNode;
+                position = nextNode;
 
             if (route.size() > 0) {
                 nextNode = route.remove(0);
-                xChange = nextNode.getX() - currentNode.getX();
-                yChange = nextNode.getY() - currentNode.getY();
+                int xChange = nextNode.getX() - position.getX();
+                int yChange = nextNode.getY() - position.getY();
                 completedMove = false;
                 SetPositionAndSpeed(xChange, yChange);
             }
@@ -243,11 +218,11 @@ public class Unit extends Entity {
         int y = nextNode.getY();
 
         if (logicalMove(xChange, yChange)) {
-            double spacingX = renderer.returnXSpacing();
-            double spacingY = renderer.returnYSpacing();
+            double spacingX = renderer.getXSpacing();
+            double spacingY = renderer.getYSpacing();
 
-            nextPixelX = x * spacingX;
-            nextPixelY = y * spacingY;
+            double nextPixelX = x * spacingX;
+            double nextPixelY = y * spacingY;
 
             TranslateTransition transition = new TranslateTransition(SPEED, sprite);
             transition.setToX(nextPixelX);
@@ -260,11 +235,9 @@ public class Unit extends Entity {
     }
 
     private boolean logicalMove(int xChange, int yChange) {
-
         boolean success = true;
-
-        System.out.println("xchange = " + xChange);
-        System.out.println("ychange = " + yChange);
+        //System.out.println("xchange = " + xChange);
+        //System.out.println("ychange = " + yChange);
         if (xChange == 0) {
             if (yChange > 0) {
                 success = success && moveDown();
@@ -278,7 +251,6 @@ public class Unit extends Entity {
                 success = success && moveLeft();
             }
         }
-
         return success;
     }
 
@@ -293,4 +265,14 @@ public class Unit extends Entity {
         currentPixelY = y;
     }
 
+    public void showRouteTransition()
+    {
+        this.visualTransition = renderer.produceRouteVisual(route); //Generates route line on unit spawn
+    }
+
+    public void cancelRouteTransition()
+    {
+        this.visualTransition.stop();
+        renderer.removeTransition(this.visualTransition);
+    }
 }

@@ -1,11 +1,9 @@
 package entity;
-
 import graph.GraphNode;
 import sceneElements.SpriteImage;
 
 import java.util.Observable;
 import java.util.logging.Logger;
-
 /**
  * @author : saif
  * @project : bestRTS
@@ -15,11 +13,10 @@ public abstract class Entity extends Observable {
 
     private static final Logger LOG = Logger.getLogger(Entity.class.getName());
 
-    private final int id;
-    private String name;
-    private String description;
-    private GraphNode position;
-
+    protected final int id;
+    protected String name;
+    protected String description;
+    protected GraphNode position;
 
     protected double currentPixelX;
     protected double currentPixelY;
@@ -107,11 +104,10 @@ public abstract class Entity extends Observable {
         if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
         if (!position.equals(entity.position)) return false;
         return sprite.equals(entity.sprite);
-
     }
-
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result;
         long temp;
         result = id;
