@@ -29,26 +29,29 @@ public class Unit extends Entity
         BFS,
         A_STAR
     }
-
     private enum Sort
     {
         BUBBLE,
         SELECTION,
         QUICK
     }
-
     private List<GraphNode> route;
     private SequentialTransition visualTransition;
     private Graph graph;
 
     private Renderer renderer;
 
-    private GraphNode position;
+    /*
+    Inherited parameters
+        private final int id;
+        private String name;
+        private String description;
+        protected GraphNode position;
+        protected double currentPixelX;
+        protected double currentPixelY;
+        protected SpriteImage sprite;
+     */
     private GraphNode nextNode;
-    private double nextPixelX;
-    private double nextPixelY;
-    int xChange;
-    int yChange;
     private boolean completedMove = true;
 
     public Unit(int id, String name, String description, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
@@ -58,8 +61,6 @@ public class Unit extends Entity
         this.position = position;
         this.sprite = sprite;
         this.renderer = renderer;
-
-        route.remove(0);
     }
 
     public Unit(int id, String name, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
@@ -70,7 +71,12 @@ public class Unit extends Entity
         this.sprite = sprite;
         this.renderer = renderer;
 
-        showRouteTransition();
+        //route is assumed to contain the starting and finishing nodes, the following code checks to see if this is held, and if it isn't adds the start node to the route before doing the transition and then bins it again.
+        if(!route.get(0).equals(position))
+        {
+            route.add(0, position);
+        }
+        showRouteTransition();              //@TODO temporary, remove after testing
         route.remove(0);
     }
 
@@ -162,8 +168,7 @@ public class Unit extends Entity
         return moved;
     }
 
-    private boolean blockCheck(GraphNode position)
-    {
+    private boolean blockCheck(GraphNode position) {
 
         if (position.getBlockade() == null) {
             this.getPosition().getUnits().remove(this);
@@ -172,7 +177,6 @@ public class Unit extends Entity
 
             return true;
         }
-
         return false;
     }
 
@@ -191,8 +195,8 @@ public class Unit extends Entity
 
             if (route.size() > 0) {
                 nextNode = route.remove(0);
-                xChange = nextNode.getX() - position.getX();
-                yChange = nextNode.getY() - position.getY();
+                int xChange = nextNode.getX() - position.getX();
+                int yChange = nextNode.getY() - position.getY();
                 completedMove = false;
                 SetPositionAndSpeed(xChange, yChange);
             }
@@ -208,8 +212,8 @@ public class Unit extends Entity
             double spacingX = renderer.getXSpacing();
             double spacingY = renderer.getYSpacing();
 
-            nextPixelX = x * spacingX;
-            nextPixelY = y * spacingY;
+            double nextPixelX = x * spacingX;
+            double nextPixelY = y * spacingY;
 
             TranslateTransition transition = new TranslateTransition(SPEED, sprite);
             transition.setToX(nextPixelX);
@@ -222,11 +226,9 @@ public class Unit extends Entity
     }
 
     private boolean logicalMove(int xChange, int yChange) {
-
         boolean success = true;
-
-        System.out.println("xchange = " + xChange);
-        System.out.println("ychange = " + yChange);
+        //System.out.println("xchange = " + xChange);
+        //System.out.println("ychange = " + yChange);
         if (xChange == 0) {
             if (yChange > 0) {
                 success = success && moveDown();
@@ -240,7 +242,6 @@ public class Unit extends Entity
                 success = success && moveLeft();
             }
         }
-
         return success;
     }
 

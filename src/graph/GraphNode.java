@@ -1,5 +1,4 @@
 package graph;
-
 import entity.Blockade;
 import entity.Unit;
 
@@ -7,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
  * @author : saif
  * @project : bestRTS
@@ -62,7 +60,7 @@ public class GraphNode {
             }
         }
 
-        LOG.log(Level.INFO, "This node is: " + this.toString());
+        //LOG.log(Level.INFO, "This node is: " + this.toString());
     }
 
     @Override
@@ -94,11 +92,9 @@ public class GraphNode {
     public int getX() {
         return x;
     }
-    public void setX(int x) { this.x = x; }
     public int getY() {
         return y;
     }
-    public void setY(int y) { this.y = y; }
     public Blockade getBlockade() {
         return blockade;
     }
@@ -106,5 +102,4 @@ public class GraphNode {
         this.blockade = blockade;
     }
     public List<Unit> getUnits() { return units; }
-    public void setUnits(List<Unit> units) { this.units = units; }
 }

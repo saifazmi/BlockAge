@@ -13,10 +13,10 @@ public abstract class Entity extends Observable {
 
     private static final Logger LOG = Logger.getLogger(Entity.class.getName());
 
-    private final int id;
-    private String name;
-    private String description;
-    private GraphNode position;
+    protected final int id;
+    protected String name;
+    protected String description;
+    protected GraphNode position;
 
     protected double currentPixelX;
     protected double currentPixelY;
