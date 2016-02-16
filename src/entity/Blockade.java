@@ -50,7 +50,11 @@ public class Blockade extends Entity
     public static Blockade createBlockade(MouseEvent e, GameRunTime runTime, Blockade blockadeInstance)
     {
         Blockade blockade = new Blockade(calcId(runTime), blockadeInstance.getName(), calcGraphNode(e, runTime), blockadeInstance.getSprite());
-        blockade.getPosition().setBlockade(blockade);
+        if(blockade.getPosition().getBlockade() == null && blockade.getPosition().getUnits().size() != 0)
+        {
+            blockade.getPosition().setBlockade(blockade);
+            return null;
+        }
         return blockade;
     }
 

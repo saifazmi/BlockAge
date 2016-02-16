@@ -3,6 +3,7 @@ package entity;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
@@ -16,24 +17,28 @@ import java.util.logging.Logger;
  * @project : bestRTS
  * @date : 28/01/16
  */
-public class Unit extends Entity {
+public class Unit extends Entity
+{
 
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
     private static final Duration SPEED = Duration.millis(250);
 
-    private enum Search {
+    private enum Search
+    {
         DFS,
         BFS,
         A_STAR
     }
 
-    private enum Sort {
+    private enum Sort
+    {
         BUBBLE,
         SELECTION,
         QUICK
     }
 
     private List<GraphNode> route;
+    private SequentialTransition visualTransition;
     private Graph graph;
 
     private Renderer renderer;
@@ -65,6 +70,7 @@ public class Unit extends Entity {
         this.sprite = sprite;
         this.renderer = renderer;
 
+        showRouteTransition();
         route.remove(0);
     }
 
@@ -156,11 +162,12 @@ public class Unit extends Entity {
         return moved;
     }
 
-    private boolean blockCheck(GraphNode position) {
+    private boolean blockCheck(GraphNode position)
+    {
 
         if (position.getBlockade() == null) {
-            this.getPosition().removeUnit(this);
-            position.addUnit(this);
+            this.getPosition().getUnits().remove(this);
+            position.getUnits().add(this);
             this.setPosition(position);
 
             return true;
@@ -248,4 +255,16 @@ public class Unit extends Entity {
         currentPixelY = y;
     }
 
+    public void showRouteTransition()
+    {
+        this.visualTransition = renderer.produceRouteVisual(route); //Generates route line on unit spawn
+    }
+
+    public void cancelRouteTransition()
+    {
+        this.visualTransition.stop();
+        renderer.removeTransition(this.visualTransition);
+
+
+    }
 }

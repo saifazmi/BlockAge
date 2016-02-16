@@ -104,11 +104,10 @@ public abstract class Entity extends Observable {
         if (description != null ? !description.equals(entity.description) : entity.description != null) return false;
         if (!position.equals(entity.position)) return false;
         return sprite.equals(entity.sprite);
-
     }
-
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result;
         long temp;
         result = id;
