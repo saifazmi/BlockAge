@@ -61,7 +61,7 @@ public class BreadthFirstSearch {
 
             current = frontier.poll();
 
-            if (!visited.contains(current)) {
+            if (!visited.contains(current) && current.getBlockade() == null) {
 
                 if (current.equals(endNode)) {
 
