@@ -15,18 +15,25 @@ import java.util.Random;
  */
 public class UnitSpawner {
 
+    //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
     private int unitPoolCount = 0;
     private int totalSpawnables = 10;
     private int spawnCount = 0;
     private int spawnlimit;
     private GameRunTime runTime;
-    Random rndSearchGen;
+    private Random rndSearchGen;
 
     private String[] names;
     private String[] descriptions;
     private int cooldown = 60;
 
+    /**
+     * Creates enemy unit for a game.
+     * Instantiates here the list of names and description for units.
+     * Calls the CreateUnit method for a certain amount specified by programmer.
+     * @param runTime the 'Game Instance' this spawner is used for.
+     */
     public UnitSpawner(GameRunTime runTime) {
         names = new String[]{"Banshee", "Demon", "Death knight"};
         descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
@@ -37,7 +44,6 @@ public class UnitSpawner {
 
         Graph graph = runTime.getEngine().getGraph();
         Renderer renderer = runTime.getRenderer();
-        // this should be passed in
         GraphNode goal = graph.getNodes().get(graph.getNodes().size() - 1);
 
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
@@ -45,6 +51,16 @@ public class UnitSpawner {
         }
     }
 
+    /**
+     * Creates a SpriteImage and set up its appropriate listeners for Mouse Click.
+     * Create a new Unit with the appropriate search and sort algorithm indicator 'attached'.
+     * Sets the 2-way relationship between the sprite and the unit.
+     * Adds this newly created unit to the 'Pool' of units
+     * @param graph The graph the Unit will be on, passed to Unit Constructor
+     * @param renderer The Renderer the Unit will render its Sprite to, passed to Unit Constructor
+     * @param goal The Goal node to which the Unit's search will use, passed to Unit Constructor
+     * @return A new Unit
+     */
     private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
 
         SpriteImage sprite = new SpriteImage("http://imgur.com/FAt5VBo.png", null);
@@ -64,6 +80,10 @@ public class UnitSpawner {
         return unit;
     }
 
+    /**
+     * Actually puts the unit into the game by taking it out of the unit pool and putting it into the list of units in the Core Engine.
+     * If the pool is empty, creates a new Unit and put that into the Core Engine's list instead
+     */
     private void spawnUnit() {
         Unit newUnit;
         Graph graph = this.runTime.getEngine().getGraph();
@@ -81,11 +101,18 @@ public class UnitSpawner {
         runTime.getRenderer().produceRouteVisual(newUnit.getRoute());
     }
 
+    /**
+     * Moves the unit back into the pool if its not needed
+     * @param unit The Unit to move back
+     */
     private void despawnUnit(Unit unit) {
         unitPool.add(unit);
         //remove from list here?
     }
 
+    /**
+     * Updates the spawner itself, If the number of Units in game is less than the set limit, spawn a new one
+     */
     public void update() {
         /*if (cooldown > 0)
         {
@@ -100,6 +127,10 @@ public class UnitSpawner {
         }
     }
 
+    /**
+     * Sets the limit to the number of unit to spawn in one game
+     * @param spawnlimit number of unit allowed to spawn
+     */
     public void setSpawnlimit(int spawnlimit) {
         this.spawnlimit = spawnlimit;
     }
