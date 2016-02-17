@@ -2,10 +2,7 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Created by hung on 06/02/16.
@@ -46,7 +43,7 @@ public class BreadthFirstSearch {
      * @param endNode   node search terminates with, the goal node, usually enemy base
      * @return path from start to goal node
      */
-    public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+    public List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
 
         GraphNode current;
         GraphNode parent;

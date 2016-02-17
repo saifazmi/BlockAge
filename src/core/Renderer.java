@@ -15,15 +15,15 @@ import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Renderer extends Group// implements Observer
+public class Renderer extends Group
 {
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 
     private Scene scene;
     private List<Entity> entitiesToDraw;
-    private List<Line> linesToDraw;
 
     private double xSpacing;
     private double ySpacing;
@@ -32,7 +32,6 @@ public class Renderer extends Group// implements Observer
         super();
         this.scene = scene;
         this.entitiesToDraw = new ArrayList<>();
-        this.linesToDraw = new ArrayList<>();
     }
 
     public boolean initialDraw() {
@@ -96,7 +95,6 @@ public class Renderer extends Group// implements Observer
         boolean success;
         if (!this.entitiesToDraw.contains(entity)) {
             this.entitiesToDraw.add(entity);
-            //entity.addObserver(this);
         }
 
         SpriteImage sprite = entity.getSprite();
@@ -105,60 +103,51 @@ public class Renderer extends Group// implements Observer
         sprite.setFitWidth(xSpacing);
         sprite.setFitHeight(ySpacing);
         sprite.setPreserveRatio(true);
-        //sprite.setX(entity.getCurrentPixelX());
-        //sprite.setY(entity.getCurrentPixelY());
         sprite.setX(node.getX() * xSpacing);
         sprite.setY(node.getY() * ySpacing);
         success = this.getChildren().add(sprite);
-        System.out.println(node);
-        System.out.println(sprite.getX() + "," + sprite.getY());
+        LOG.log(Level.INFO, "Entity drawn at logical " + node + ", graphical (" + sprite.getX() + ", " + sprite.getY() + ")");
         return success;
     }
-    /*
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("SHOULDN'T GET CALLED");
-        Entity entity = (Entity) o;
-        Entity oldEntity = (Entity) arg;
-        entitiesToDraw.remove(oldEntity);
-        Platform.runLater(() -> this.getChildren().remove(oldEntity.getSprite()));
-        entitiesToDraw.add(entity);
-        Platform.runLater(() -> drawInitialEntity(entity));
-    }*/
 
-    public SequentialTransition produceRouteVisual(List<GraphNode> route) {
-        //test @TODO
+    public SequentialTransition produceRouteVisual(List<Line> lines)
+    {
         SequentialTransition trans = new SequentialTransition();
-        for (int i = 0; i < route.size(); i++) {
+        for (int i = 0; i < lines.size(); i++)
+        {
+            Line line = lines.get(i);
+            line.setOpacity(0.0);
+            if(!this.getChildren().contains(line))
+            {
+                this.getChildren().add(line);
+                FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
+                trans.getChildren().add(lineTransition);
+            }
+        }
+        return trans;
+    }
+
+    public ArrayList<Line> produceRoute(List<GraphNode> route)
+    {
+        ArrayList<Line> lines = new ArrayList<>();
+        for (int i = 0; i < route.size(); i++)
+        {
             GraphNode start = route.get(i);
-            if (i + 1 < route.size()) {
+            if(i + 1 < route.size())
+            {
                 GraphNode end = route.get(i + 1);
                 Line line = new Line(this.xSpacing / 2 + start.getX() * xSpacing,
                         this.ySpacing / 2 + start.getY() * ySpacing,
                         this.xSpacing / 2 + end.getX() * xSpacing,
                         this.ySpacing / 2 + end.getY() * ySpacing);
-                line.setOpacity(0.0);
-                if (!this.getChildren().contains(line)) {
-                    this.getChildren().add(line);
-                    linesToDraw.add(line);
-                    FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
-                    trans.getChildren().add(lineTransition);
-                }
-            } else {
+                lines.add(line);
+            }
+            else
+            {
                 i = route.size();
             }
         }
-        trans.play();
-        return trans;
-    }
-
-    public void removeTransition(SequentialTransition transition) {
-        for (int i = 0; i < transition.getChildren().size(); i++) {
-            FadeTransition trans = (FadeTransition) transition.getChildren().get(i);
-            Line line = (Line) trans.getNode();
-            line.setOpacity(0.0);
-            this.linesToDraw.remove(line);
-        }
+        return lines;
     }
 
     public double getXSpacing() {

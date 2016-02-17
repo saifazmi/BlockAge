@@ -3,6 +3,7 @@ package entity;
 import graph.GraphNode;
 import sceneElements.SpriteImage;
 
+import java.awt.event.FocusListener;
 import java.util.Observable;
 import java.util.logging.Logger;
 

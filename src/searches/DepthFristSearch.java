@@ -3,6 +3,7 @@ package searches;
 import graph.GraphNode;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -40,7 +41,7 @@ public class DepthFristSearch {
      * @param endNode   node search terminates with, the goal node, usually enemy base
      * @return path from start to goal node
      */
-    public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+    public List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
 
         GraphNode current;
         visited.clear();

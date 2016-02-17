@@ -5,6 +5,7 @@ import graph.GraphNode;
 import searches.AStar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author : Evgeniy
@@ -48,7 +49,7 @@ public class Test_Search {
         //graph made, do your test
 
 
-        ArrayList<GraphNode> path = AStar.search(startNode, goalNode);
+        List<GraphNode> path = AStar.search(startNode, goalNode);
 
         for (int x = 0; x < path.size(); x++) {
             System.out.println("Node at: " + path.get(x).getX() + " , " + path.get(x).getY());

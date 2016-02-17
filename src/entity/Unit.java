@@ -5,12 +5,14 @@ import graph.Graph;
 import graph.GraphNode;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFristSearch;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +41,9 @@ public class Unit extends Entity {
     }
 
     private List<GraphNode> route;
+    private List<Line> linesOfRoute;
     private SequentialTransition visualTransition;
+
     private Graph graph;
     private GraphNode goal;
     private Search search;
@@ -60,45 +64,21 @@ public class Unit extends Entity {
     private GraphNode nextNode;
     private boolean completedMove = true;
 
-    public Unit(int id, String name, String description, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
-        super(id, name, description, position, sprite);
-        this.route = route;
-        this.graph = graph;
-        this.position = position;
-        this.sprite = sprite;
-        this.renderer = renderer;
-    }
-
-    public Unit(int id, String name, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
-        super(id, name, position, sprite);
-        this.route = route;
-        this.graph = graph;
-        this.position = position;
-        this.sprite = sprite;
-        this.renderer = renderer;
-
-        //route is assumed to contain the starting and finishing nodes, the following code checks to see if this is held, and if it isn't adds the start node to the route before doing the transition and then bins it again.
-        if (!route.get(0).equals(position)) {
-            route.add(0, position);
-        }
-        showRouteTransition();              //@TODO temporary, remove after testing
-        route.remove(0);
-    }
-
     public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal, Renderer renderer) {
         super(id, name, position, sprite);
 
-        this.graph = graph;
         setPosition(position);
         this.sprite = sprite;
-        this.renderer = renderer;
+
+        this.graph = graph;
+        this.goal = goal;
         this.search = search;
         this.sort = sort;
-        this.goal = goal;
+        this.renderer = renderer;
+
+        this.linesOfRoute = new ArrayList<>();
 
         decideRoute();
-
-        //route.remove(0);
     }
 
 
@@ -249,12 +229,14 @@ public class Unit extends Entity {
             TranslateTransition transition = new TranslateTransition(SPEED, sprite);
             transition.setToX(nextPixelX);
             transition.setToY(nextPixelY);
-            transition.setOnFinished(e -> {
-                completedMove = true;
-            });
+            transition.setOnFinished(e -> completedMove = true);
             transition.play();
         } else {
             decideRoute();
+            if(this.getVisualTransition() != null)
+            {
+                this.getVisualTransition().play();
+            }
             completedMove = true;
         }
     }
@@ -291,13 +273,13 @@ public class Unit extends Entity {
     private void decideRoute() {
         if (search == Search.DFS) {
             System.out.println("using dfs");
-            route = DepthFristSearch.Instance().findPathFrom(getPosition(), this.goal);
+            setRoute(DepthFristSearch.Instance().findPathFrom(getPosition(), this.goal));
         } else if (search == Search.BFS) {
             System.out.println("using bfs");
-            route = BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
+            setRoute(BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal));
         } else {
             System.out.println("using astar");
-            route = AStar.search(getPosition(), this.goal);
+            setRoute(AStar.search(getPosition(), this.goal));
         }
         System.out.println(route);
     }
@@ -321,17 +303,27 @@ public class Unit extends Entity {
         return sort;
     }
 
-
-    public void showRouteTransition() {
-        this.visualTransition = renderer.produceRouteVisual(route); //Generates route line on unit spawn
-    }
-
-    public void cancelRouteTransition() {
-        this.visualTransition.stop();
-        renderer.removeTransition(this.visualTransition);
-    }
-
     public List<GraphNode> getRoute() {
         return route;
+    }
+
+    public void setRoute(List<GraphNode> route)
+    {
+        this.route = route;
+        setChanged();
+        notifyObservers();
+    }
+
+    public List<Line> getLinesOfRoute()
+    {
+        return linesOfRoute;
+    }
+    public SequentialTransition getVisualTransition()
+    {
+        return visualTransition;
+    }
+    public void setVisualTransition(SequentialTransition visualTransition)
+    {
+        this.visualTransition = visualTransition;
     }
 }

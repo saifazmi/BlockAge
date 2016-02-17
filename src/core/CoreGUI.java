@@ -42,7 +42,6 @@ public class CoreGUI extends Application {
 
         try {
             CoreGUI.primaryStage = primaryStage;
-            BorderPane root = new BorderPane();
 
             @SuppressWarnings("unused")
             MenuHandler menuHandler = new MenuHandler(primaryStage);
