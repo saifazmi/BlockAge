@@ -39,11 +39,10 @@ public class BreadthFirstSearch {
     }
 
     /**
-     * Finds a path from a start node to the end node using DFS
-     * The returned path should not include the start node
-     *
+     * Finds a path from a start node to the end node using BFS, this utilises a queue which is just a linked list
+     * The returned path should not include the start node.
      * @param startNode node search starts from
-     * @param endNode   node search terminates with, the goal node, usually enemy base
+     * @param endNode   node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
     public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
@@ -73,7 +72,7 @@ public class BreadthFirstSearch {
                     }
 
                     Collections.reverse(path);
-                    System.out.println(path);
+                    //System.out.println(path);
                     return path;
                 } else {
                     visited.add(current);

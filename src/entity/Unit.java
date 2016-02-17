@@ -9,7 +9,7 @@ import javafx.util.Duration;
 import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
-import searches.DepthFristSearch;
+import searches.DepthFirstSearch;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -291,7 +291,7 @@ public class Unit extends Entity {
     private void decideRoute() {
         if (search == Search.DFS) {
             System.out.println("using dfs");
-            route = DepthFristSearch.Instance().findPathFrom(getPosition(), this.goal);
+            route = DepthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
         } else if (search == Search.BFS) {
             System.out.println("using bfs");
             route = BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);

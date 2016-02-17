@@ -20,6 +20,7 @@ public class CoreEngine {
     public static boolean running;
     private long startTime;
     private Graph graph;
+    //Entites that the CoreEngine will 'update'
     private ArrayList<Entity> entities;
     private UnitSpawner spawner;
 
@@ -27,6 +28,10 @@ public class CoreEngine {
 
     private boolean slept = false;
 
+    /**
+     * The graph used by the game instance will be instantiated in the CoreEngine,
+     * All the nodes will be created and added to the graph, each will have their corresponding neighbours added
+     */
     public CoreEngine() {
         this.graph = null;
 
@@ -52,6 +57,12 @@ public class CoreEngine {
         return graph;
     }
 
+    /**
+     * Called to start the game's ticker.
+     * The frame rate is 60 frames per second, so checks if its time to update yet (every 1/60 a second),
+     * if it is, update the game's state, otherwise wait until next frame. Waiting only occurs if this thread has not yet slept,
+     * because waiting will put the thread to sleep.
+     */
     public void startGame() {
         this.running = true;
         startTime = System.nanoTime();
@@ -67,6 +78,13 @@ public class CoreEngine {
         }
     }
 
+    /**
+     * Checks if its time to update,
+     * this is done by checking if the change in time since the last update is larger than or equals to
+     * the frame rate (1/60 a second). Resets the time the clock starts counting for the next update if it is time to update
+     * @param startTime
+     * @return Whether its time to update or not
+     */
     private boolean isTimeToUpdate(long startTime) {
         boolean timeToUpdate = false;
 
@@ -82,6 +100,9 @@ public class CoreEngine {
         return timeToUpdate;
     }
 
+    /**
+     * Waits for the next frame, puts this thread to sleep whilst waiting
+     */
     private void waitForNextFrame() {
         try {
             Thread.sleep(950 / FRAME_RATE);
@@ -90,6 +111,9 @@ public class CoreEngine {
         }
     }
 
+    /**
+     * Updates all game objects that need updating, includes all the entites, spawner
+     */
     private void updateGameState() {
         //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
         if (entities != null) {
@@ -103,14 +127,26 @@ public class CoreEngine {
         }
     }
 
+    /**
+     * Sets engine running state
+     * @param running whether the engine is running
+     */
     public static void setEngineState(boolean running) {
         CoreEngine.running = running;
     }
 
+    /**
+     * Gets all the entities the engine is suppose to update
+     * @return the list of updatable entities
+     */
     public ArrayList<Entity> getEntities() {
         return entities;
     }
 
+    /**
+     * Sets the spawner for this engine to use
+     * @param spawner the spawner used
+     */
     public void setSpawner(UnitSpawner spawner) {
         this.spawner = spawner;
     }

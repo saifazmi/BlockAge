@@ -8,36 +8,35 @@ import java.util.Stack;
 /**
  * Created by hung on 06/02/16.
  */
-public class DepthFristSearch {
+public class DepthFirstSearch {
 
     private Stack<GraphNode> frontier;
     private ArrayList<GraphNode> visited;
 
-    private static DepthFristSearch instance = null;
+    private static DepthFirstSearch instance = null;
 
     /**
      * Singleton pattern for search
      * As there is only ever 1 instance of DFS,
      * it is efficient and safe to use the singleton pattern
      */
-    public DepthFristSearch() {
+    public DepthFirstSearch() {
         visited = new ArrayList<>();
         frontier = new Stack();
     }
 
-    public static DepthFristSearch Instance() {
+    public static DepthFirstSearch Instance() {
         if (instance == null)
-            instance = new DepthFristSearch();
+            instance = new DepthFirstSearch();
 
         return instance;
     }
 
     /**
-     * Finds a path from a start node to the end node using DFS
+     * Finds a path from a start node to the end node using DFS, utilises a stack
      * The returned path should not include the start node
-     *
      * @param startNode node search starts from
-     * @param endNode   node search terminates with, the goal node, usually enemy base
+     * @param endNode   node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
     public ArrayList<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
