@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
