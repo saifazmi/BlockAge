@@ -35,6 +35,11 @@ public class Renderer extends Group// implements Observer
         this.linesToDraw = new ArrayList<>();
     }
 
+    /**
+     * Function to perform the initial draw of the screen.
+     * This includes calculating the xSpacing, ySpacing, and the grid lines
+     * @return success boolean representing the success of the operation
+     */
     public boolean initialDraw() {
         boolean success = true;
         ArrayList<Double> results = calculateSpacing();
@@ -50,6 +55,16 @@ public class Renderer extends Group// implements Observer
         return success;
     }
 
+    /**
+     * Creates the grid lines and adds them to the renderer.
+     * @param xSpacing the x width of grid quadrilaterals
+     * @param ySpacing the y width of grid quadrilaterals
+     * @param width the width of the rendering pane
+     * @param height the height of the rendering pane
+     * @param xAccumulator the amount of graphnodes in the x direction
+     * @param yAccumulator the amount of graphnodes in the y direction
+     * @return success boolean representing the success of the operation
+     */
     public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
         boolean success;
         for (int i = 0; i < xAccumulator + 1; i++) {
@@ -66,6 +81,17 @@ public class Renderer extends Group// implements Observer
         return success;
     }
 
+    /**
+     * Calculates the spacing needed for the grid to fit the space it has been granted.
+     * @return an array list containing 6 things ordered as follows:
+     *
+        width           Number of GraphNodes on the width
+        height          Number of GraphNodes on the height
+        xSpacing        Pixel width of each grid quadrilateral
+        ySpacing        Pixel height of each grid quadrilateral
+        pixelWidth      Pane width in pixels
+        pixelHeight     Pane height in pixels
+     */
     public ArrayList<Double> calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
         double pixelWidth = scene.getWidth() - 224; //subtract the right sidebar pixelWidth TODO @TODO//
@@ -85,6 +111,9 @@ public class Renderer extends Group// implements Observer
         return returnList;                            //ordered return list, see above for order
     }
 
+    /**
+     * Irrelevant, should be removed.
+     */
     public void redraw() {
         //@TODO redundant, will break transitions on resize
         this.getChildren().clear();
@@ -92,6 +121,11 @@ public class Renderer extends Group// implements Observer
         entitiesToDraw.forEach(this::drawInitialEntity);
     }
 
+    /**
+     * Draws an entity before it starts to move.
+     * @param entity the entity to be drawn
+     * @return success boolean representing the success of the operation
+     */
     public boolean drawInitialEntity(Entity entity) {
         boolean success;
         if (!this.entitiesToDraw.contains(entity)) {
@@ -114,18 +148,12 @@ public class Renderer extends Group// implements Observer
         System.out.println(sprite.getX() + "," + sprite.getY());
         return success;
     }
-    /*
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("SHOULDN'T GET CALLED");
-        Entity entity = (Entity) o;
-        Entity oldEntity = (Entity) arg;
-        entitiesToDraw.remove(oldEntity);
-        Platform.runLater(() -> this.getChildren().remove(oldEntity.getSprite()));
-        entitiesToDraw.add(entity);
-        Platform.runLater(() -> drawInitialEntity(entity));
-    }*/
 
+    /**
+     * Produces a Transition effect to play for a given list of lines.
+     * @param route the list of lines to be given transitions
+     * @return the transition created
+     */
     public SequentialTransition produceRouteVisual(List<GraphNode> route) {
         //test @TODO
         SequentialTransition trans = new SequentialTransition();
@@ -152,6 +180,10 @@ public class Renderer extends Group// implements Observer
         return trans;
     }
 
+    /**
+     * Turns off a transition, and sets the opacity of all lines involved to 0
+     * @param transition the transition to be removed
+     */
     public void removeTransition(SequentialTransition transition) {
         for (int i = 0; i < transition.getChildren().size(); i++) {
             FadeTransition trans = (FadeTransition) transition.getChildren().get(i);
@@ -161,18 +193,38 @@ public class Renderer extends Group// implements Observer
         }
     }
 
+    /**
+     * Get the x spacing
+     * @return the xSpacing
+     */
     public double getXSpacing() {
         return xSpacing;
     }
 
+    /**
+     * Get the y spacing
+     * @return the ySpacing
+     */
     public double getYSpacing() {
         return ySpacing;
     }
 
+    /**
+     * Get the entities list
+     * @return the entities list
+     */
     public List<Entity> getEntitiesToDraw() {
         return entitiesToDraw;
     }
 
+    /**
+     * Builds a fade animation with the given inputs
+     * @param millis the millisecond time the transition should occur over
+     * @param opac1 the opacity to start at
+     * @param opac2 the opacity to end at
+     * @param node the node that the transition should be performed on
+     * @return the transition that has been made
+     */
     public static FadeTransition buildFadeAnimation(double millis, double opac1, double opac2, Node node) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(millis), node);
         fadeTransition.setAutoReverse(true);
@@ -180,5 +232,4 @@ public class Renderer extends Group// implements Observer
         fadeTransition.setToValue(opac2);
         return fadeTransition;
     }
-
 }

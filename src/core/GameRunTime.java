@@ -17,12 +17,15 @@ public class GameRunTime {
 
     private Renderer renderer;
     private CoreEngine engine;
-    private Stage primaryStage;
 
     Pane mainGamePane = null;
     static Scene mainGameScene = null;
     Group mainGame = null;
 
+    /**
+     * Constructor for the game run time.
+     * Initialises the engine, renderer, and unit spawner
+     */
     public GameRunTime() {
         Thread engThread = new Thread(() ->
         {
@@ -55,14 +58,25 @@ public class GameRunTime {
         mainGameScene.setOnKeyPressed(e -> ElementsHandler.handleKeys(e));
     }
 
+    /**
+     * Get the renderer to draw on
+     * @return the renderer
+     */
     public Renderer getRenderer() {
         return this.renderer;
     }
 
+    /**
+     * Get the engine the game is playing on
+     * @return the engine
+     */
     public CoreEngine getEngine() {
         return this.engine;
     }
 
+    /**
+     * Renderer specific initialisation that isn't necessary and could be partially removed.
+     */
     private void rendererSpecificInit() {
         mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
         {
