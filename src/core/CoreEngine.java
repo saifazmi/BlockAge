@@ -110,7 +110,6 @@ public class CoreEngine {
             LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
-
     /**
      * Updates all game objects that need updating, includes all the entites, spawner
      */
@@ -126,7 +125,6 @@ public class CoreEngine {
             spawner.update();
         }
     }
-
     /**
      * Sets engine running state
      * @param running whether the engine is running
@@ -134,7 +132,6 @@ public class CoreEngine {
     public static void setEngineState(boolean running) {
         CoreEngine.running = running;
     }
-
     /**
      * Gets all the entities the engine is suppose to update
      * @return the list of updatable entities
