@@ -7,7 +7,7 @@ import graph.GraphNode;
 import lambdastorage.LambdaStore;
 import sceneElements.SpriteImage;
 import searches.AStar;
-import searches.DepthFristSearch;
+import searches.DepthFirstSearch;
 
 import java.util.logging.Logger;
 
