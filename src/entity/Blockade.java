@@ -46,10 +46,14 @@ public class Blockade extends Entity {
     }
 
     public static Blockade createBlockade(MouseEvent e, GameRunTime runTime, Blockade blockadeInstance) {
-        Blockade blockade = new Blockade(calcId(runTime), blockadeInstance.getName(), calcGraphNode(e, runTime), blockadeInstance.getSprite());
-        if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getUnits().size() == 0) {
-            blockade.getPosition().setBlockade(blockade);
-            return blockade;
+        GraphNode node = calcGraphNode(e, runTime);
+        if(node != null)
+        {
+            Blockade blockade = new Blockade(calcId(runTime), blockadeInstance.getName(), calcGraphNode(e, runTime), blockadeInstance.getSprite());
+            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getUnits().size() == 0) {
+                blockade.getPosition().setBlockade(blockade);
+                return blockade;
+            }
         }
         return null;
     }
@@ -76,9 +80,12 @@ public class Blockade extends Entity {
         double y = e.getY() - 34;                //@TODO subtract pane height of pauls menu
         double logicalX = Math.floor(x / xSpacing);
         double logicalY = Math.floor(y / ySpacing);
-        GraphNode position = engine.getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
-        System.out.println(position.toString());
-        return position;
+        if (logicalX >= 0 && logicalX <= 29 && logicalY >= 0 && logicalY <= 29) {
+            GraphNode position = engine.getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
+            System.out.println(position.toString());
+            return position;
+        }
+        return null;
     }
 
     protected static int calcId(GameRunTime runTime) {
