@@ -25,7 +25,7 @@ public class LambdaStore {
         SpriteImage spriteImage = new SpriteImage(image, blockadeInstance);
         spriteImage.setFitWidth(GameRunTime.Instance().getRenderer().getXSpacing());
         spriteImage.setFitHeight(GameRunTime.Instance().getRenderer().getYSpacing());
-        spriteImage.setPreserveRatio(true);
+        spriteImage.setPreserveRatio(false);
         spriteImage.setSmooth(true);
         blockadeInstance.setSprite(spriteImage);
         Blockade blockade = Blockade.createBlockade(e, GameRunTime.Instance(), blockadeInstance);

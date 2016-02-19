@@ -188,7 +188,7 @@ public class GameInterface {
         rightMenuPlayPause.getChildren().addAll(playButton, pauseButton);
         sortingBox.getChildren().addAll(unsortableButton, sortableButton);
 
-        rightMenuBox.getChildren().addAll(unitDescriptionLabel, unitDescriptionText, textInfoLabel, textInfoText, algorithmVisualisationLabel, algorithmVisualisationText, blockadesLabel, sortingBox); //rightMenuPlayPause);
+        rightMenuBox.getChildren().addAll(unitDescriptionLabel, unitDescriptionText, textInfoLabel, textInfoText, algorithmVisualisationLabel, algorithmVisualisationText, blockadesLabel, sortingBox, rightMenuPlayPause);
         rightMenuBox.setSpacing(10);
         BorderPane.setMargin(rightMenuBox, new Insets(12, 12, 12, 12));
         int insetsWidth = 12 + 12;

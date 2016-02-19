@@ -108,7 +108,7 @@ public class Renderer extends Group
 
         sprite.setFitWidth(xSpacing);
         sprite.setFitHeight(ySpacing);
-        sprite.setPreserveRatio(true);
+        //sprite.setPreserveRatio(true);
         sprite.setX(node.getX() * xSpacing);
         sprite.setY(node.getY() * ySpacing);
         success = this.getChildren().add(sprite);

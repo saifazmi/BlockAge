@@ -18,6 +18,7 @@ public class CoreEngine {
     private final int FRAME_RATE = 60;
 
     public static boolean running;
+    public static boolean paused;
     private long startTime;
     private Graph graph;
     private ArrayList<Entity> entities;
@@ -57,6 +58,14 @@ public class CoreEngine {
         startTime = System.nanoTime();
         // @TODO in case it's not running
         while (running) {
+            while(paused)
+            {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             if (isTimeToUpdate(startTime)) {
                 updateGameState();
                 this.slept = false;

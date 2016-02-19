@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 public class Graph {
 
     private static final Logger LOG = Logger.getLogger(Graph.class.getName());
-    public static final int WIDTH = 30;
-    public static final int HEIGHT = 30;
+    public static final int WIDTH = 20;
+    public static final int HEIGHT = 20;
 
     private List<GraphNode> nodes;
 

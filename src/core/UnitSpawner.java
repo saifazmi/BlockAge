@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.SpriteImage;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -46,7 +47,9 @@ public class UnitSpawner {
     }
 
     private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
-        Image image = new Image("http://imgur.com/FAt5VBo.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+        String SEPARATOR = File.separator;
+        //new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
+        Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
         SpriteImage sprite = new SpriteImage(image, null);
         sprite.setOnMouseClicked(e -> sprite.requestFocus());
 
