@@ -116,14 +116,6 @@ public class GameInterface {
         
         topMenuBox.getChildren().addAll(fileButton, helpButton);
         ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setTop(topMenuBox);
-        
-        // Calculates the height of the top pane
-        topMenuBox.heightProperty().addListener(new ChangeListener<Number>() {  
-        	  @Override  
-        	  public void changed(ObservableValue<? extends Number> observable, Number oldHeight, Number newHeight) {  
-        		  topPaneHeight = newHeight.intValue();
-        	  }  
-        });  
     }
     
     /**
@@ -189,14 +181,6 @@ public class GameInterface {
         BorderPane.setMargin(rightMenuBox, new Insets(12, 12, 12, 12));
         int insetsWidth = 12 + 12;
         ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setRight(rightMenuBox);
-        
-        //Calculates the width of the rightPane
-        rightMenuBox.widthProperty().addListener(new ChangeListener<Number>() {  
-      	  @Override  
-      	  public void changed(ObservableValue<? extends Number> observable, Number oldWidth, Number newWidth) {  
-      		  rightPaneWidth = newWidth.intValue() + insetsWidth;
-      	  }  
-      });
     }
     
     /**
