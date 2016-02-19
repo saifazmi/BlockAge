@@ -1,6 +1,8 @@
 package sceneElements;
 
+import core.Renderer;
 import entity.Entity;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.event.FocusEvent;
@@ -12,8 +14,8 @@ import java.awt.event.FocusListener;
 public class SpriteImage extends ImageView implements FocusListener {
     private Entity entity;
 
-    public SpriteImage(String imageURL, Entity entity) {
-        super(imageURL);
+    public SpriteImage(Image image, Entity entity) {
+        super(image);
         this.entity = entity;
     }
 

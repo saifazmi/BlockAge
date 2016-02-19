@@ -69,14 +69,18 @@ public class Renderer extends Group
 
     public void calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
-        double pixelWidth = scene.getWidth() - 224; //GameInterface.rightPaneWidth; //subtract the right sidebar pixelWidth TODO @TODO//
-        double pixelHeight = scene.getHeight() - 48; //GameInterface.topPaneHeight; //subtract the bottom bar height TODO @TODO//
+        System.out.println(GameInterface.rightPaneWidth);
+        System.out.println(GameInterface.topPaneHeight);
+        double pixelWidth = scene.getWidth() - GameInterface.rightPaneWidth; //subtract the right sidebar pixelWidth TODO @TODO//
+        double pixelHeight = scene.getHeight() - GameInterface.topPaneHeight; //subtract the bottom bar height TODO @TODO//
 
         int width = Graph.WIDTH;
         int height = Graph.HEIGHT;
         double xSpacing = pixelWidth / (width);
         double ySpacing = pixelHeight / (height);
 
+        this.xSpacing = xSpacing;
+        this.ySpacing = ySpacing;
         returnList.add((double) width);
         returnList.add((double) height);
         returnList.add(xSpacing);
@@ -126,6 +130,7 @@ public class Renderer extends Group
                 trans.getChildren().add(lineTransition);
             }
         }
+        System.out.println("DDDDDDDDDDDDDDDDD - Route Produced");
         return trans;
     }
 

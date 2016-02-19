@@ -4,6 +4,7 @@ import core.GameRunTime;
 import entity.Blockade;
 import graph.GraphNode;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
@@ -19,7 +20,8 @@ public class LambdaStore {
     private final EventHandler<MouseEvent> sceneClickPlaceBlockade = e -> {
         LOG.log(Level.INFO, "Click registered at:  (x, " + e.getX() + "), (y, " + e.getY() + ")");
         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0, 0), null);
-        SpriteImage spriteImage = new SpriteImage("http://imgur.com/dZZdmUr.png", blockadeInstance);
+        Image image = new Image("http://imgur.com/dZZdmUr.png", runTime.getRenderer().getXSpacing(), runTime.getRenderer().getYSpacing(), true, true);
+        SpriteImage spriteImage = new SpriteImage(image, blockadeInstance);
         blockadeInstance.setSprite(spriteImage);
         Blockade blockade = Blockade.createBlockade(e, runTime, blockadeInstance);
         if (blockade != null) {

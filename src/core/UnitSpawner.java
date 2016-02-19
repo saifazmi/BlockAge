@@ -4,6 +4,7 @@ import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
@@ -45,8 +46,8 @@ public class UnitSpawner {
     }
 
     private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
-
-        SpriteImage sprite = new SpriteImage("http://imgur.com/FAt5VBo.png", null);
+        Image image = new Image("http://imgur.com/FAt5VBo.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+        SpriteImage sprite = new SpriteImage(image, null);
         sprite.setOnMouseClicked(e -> sprite.requestFocus());
 
         // doing random for now, could return sequence of numbers representing units wanted
@@ -74,7 +75,7 @@ public class UnitSpawner {
 
         runTime.getEngine().getEntities().add(newUnit);
         runTime.getRenderer().drawInitialEntity(newUnit);
-        Platform.runLater(() -> runTime.getRenderer().produceRouteVisual(runTime.getRenderer().produceRoute(newUnit.getRoute())).play());
+        runTime.getRenderer().produceRouteVisual(runTime.getRenderer().produceRoute(newUnit.getRoute())).play();
     }
 
     private void despawnUnit(Unit unit) {

@@ -26,8 +26,8 @@ import sceneElements.ElementsHandler;
 public class GameInterface {
     public static Button fileButton, fileExitButton, helpButton, playButton, pauseButton, unsortableButton, sortableButton;
     public static TextArea unitDescriptionText, textInfoText, algorithmVisualisationText;
-    public static int topPaneHeight;
-    public static int rightPaneWidth;
+    public static int topPaneHeight = 35;
+    public static int rightPaneWidth = 224;
 
     private Font bellotaFont;
     private Label unitDescriptionLabel, textInfoLabel, algorithmVisualisationLabel, blockadesLabel, sortLabel;
