@@ -3,6 +3,7 @@ package core;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
+import javafx.application.Platform;
 import sceneElements.SpriteImage;
 
 import java.util.ArrayList;

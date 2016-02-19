@@ -28,6 +28,8 @@ public class Renderer extends Group// implements Observer
     private double xSpacing;
     private double ySpacing;
 
+    private ArrayList<Double> spacingOutput;
+
     public Renderer(Scene scene) {
         super();
         this.scene = scene;
@@ -37,7 +39,7 @@ public class Renderer extends Group// implements Observer
 
     public boolean initialDraw() {
         boolean success = true;
-        ArrayList<Double> results = calculateSpacing();
+        ArrayList<Double> results = spacingOutput;
         int width = (int) (double) results.get(0);
         int height = (int) (double) results.get(1);
         double xSpacing = results.get(2);
@@ -66,7 +68,7 @@ public class Renderer extends Group// implements Observer
         return success;
     }
 
-    public ArrayList<Double> calculateSpacing() {
+    public void calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
         double pixelWidth = scene.getWidth() - 224; //GameInterface.rightPaneWidth; //subtract the right sidebar pixelWidth TODO @TODO//
         double pixelHeight = scene.getHeight() - 48; //GameInterface.topPaneHeight; //subtract the bottom bar height TODO @TODO//
@@ -82,7 +84,7 @@ public class Renderer extends Group// implements Observer
         returnList.add(ySpacing);
         returnList.add(pixelWidth);
         returnList.add(pixelHeight);
-        return returnList;                            //ordered return list, see above for order
+        spacingOutput = returnList;
     }
 
     public void redraw() {

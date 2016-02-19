@@ -30,10 +30,13 @@ public class ElementsHandler {
         if (event.getSource() == MainMenu.newGameButton) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
+            gameRunTime.getRenderer().calculateSpacing();
+            gameRunTime.startGame();
             MenuHandler.setMainGameScene();
             GameInterface gameInterface = new GameInterface();
             Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
+            gameRunTime.getRenderer().initialDraw();
         }
         if (event.getSource() == MainMenu.optionsButton) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
@@ -94,6 +97,7 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
+            CoreEngine.running = false;
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
     }
