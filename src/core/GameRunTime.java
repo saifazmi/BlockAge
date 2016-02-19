@@ -23,7 +23,15 @@ public class GameRunTime {
     static Scene mainGameScene = null;
     Group mainGame = null;
 
+
+    private static GameRunTime instance;
+
+    public static GameRunTime Instance() {
+        return instance;
+    }
+
     public GameRunTime() {
+        this.instance = this;
         Thread engThread = new Thread(() ->
         {
             this.engine = new CoreEngine();

@@ -13,7 +13,7 @@ public class Test {
     private static LambdaStore lambdaStore;
 
     public static void test(GameRunTime runTime) {
-        lambdaStore = new LambdaStore(runTime);
+        //lambdaStore = new LambdaStore(runTime);
         //unit//
         /*
         SpriteImage sprite = new SpriteImage("http://imgur.com/FAt5VBo.png", null);
@@ -43,6 +43,6 @@ public class Test {
         unit2.setCurrentPixel(sprite2.getX(), sprite2.getY());*/
 
 
-        runTime.getScene().setOnMouseClicked(lambdaStore.getSceneClickPlaceBlockade());
+        //runTime.getScene().setOnMouseClicked(lambdaStore.getSceneClickPlaceUnbreakableBlockade());
     }
 }

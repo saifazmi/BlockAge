@@ -3,11 +3,8 @@ package core;
 import java.io.File;
 import java.io.InputStream;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -20,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import lambdastorage.LambdaStore;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 
@@ -98,6 +96,20 @@ public class GameInterface {
         
         unitDescriptionImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "unit_description_label.png");
         textInfoImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "text_log_label.png");
+
+        unsortableButton.setOnMouseClicked(e ->
+        {
+            System.out.println("Clicked");
+            LambdaStore store = new LambdaStore();
+            if(GameRunTime.getScene().getOnMouseClicked() != null && GameRunTime.getScene().getOnMouseClicked().equals(store.getSceneClickPlaceUnbreakableBlockade()))
+            {
+                GameRunTime.getScene().setOnMouseClicked(null);
+            }
+            else
+            {
+                GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
+            }
+        });
     }
 
     /**
