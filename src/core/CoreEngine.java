@@ -18,7 +18,7 @@ public class CoreEngine {
     private final int FRAME_RATE = 60;
 
     public static boolean running;
-    public static boolean paused;
+    public static boolean paused = false;
     private long startTime;
     private Graph graph;
     private ArrayList<Entity> entities;

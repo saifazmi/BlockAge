@@ -3,6 +3,7 @@ package entity;
 import core.CoreEngine;
 import core.GameRunTime;
 import core.Renderer;
+import graph.Graph;
 import graph.GraphNode;
 import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
@@ -80,7 +81,7 @@ public class Blockade extends Entity {
         double y = e.getY() - 34;                //@TODO subtract pane height of pauls menu
         double logicalX = Math.floor(x / xSpacing);
         double logicalY = Math.floor(y / ySpacing);
-        if (logicalX >= 0 && logicalX <= 29 && logicalY >= 0 && logicalY <= 29) {
+        if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
             GraphNode position = engine.getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
             System.out.println(position.toString());
             return position;

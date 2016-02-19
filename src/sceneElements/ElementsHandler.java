@@ -30,6 +30,7 @@ public class ElementsHandler {
         if (event.getSource() == MainMenu.newGameButton) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
+            gameRunTime.getEngine().paused = false;
             gameRunTime.getRenderer().calculateSpacing();
             gameRunTime.startGame();
             MenuHandler.setMainGameScene();
