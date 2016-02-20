@@ -3,7 +3,7 @@ package sceneElements;
 import core.CoreEngine;
 import core.GameInterface;
 import core.GameRunTime;
-import entity.Entity;
+import core.Renderer;
 import entity.Unit;
 import javafx.event.Event;
 import javafx.scene.Node;
@@ -12,8 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lambdastorage.LambdaStore;
 import menus.*;
-
-import java.util.ArrayList;
 
 public class ElementsHandler {
 
@@ -30,14 +28,14 @@ public class ElementsHandler {
         if (event.getSource() == MainMenu.newGameButton) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
-            gameRunTime.getEngine().paused = false;
-            gameRunTime.getRenderer().calculateSpacing();
+            CoreEngine.paused = false;
+            Renderer.Instance().calculateSpacing();
             gameRunTime.startGame();
             MenuHandler.setMainGameScene();
             GameInterface gameInterface = new GameInterface();
             //Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
-            gameRunTime.getRenderer().initialDraw();
+            Renderer.Instance().initialDraw();
         }
         if (event.getSource() == MainMenu.optionsButton) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);

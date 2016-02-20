@@ -3,12 +3,7 @@ package core;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.SequentialTransition;
-import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Line;
 import sceneElements.SpriteImage;
 
 import java.io.File;
@@ -19,47 +14,49 @@ import java.util.Random;
  * Created by hung on 13/02/16.
  */
 public class UnitSpawner {
+    private CoreEngine engine = CoreEngine.Instance();
+    private Graph graph = engine.getGraph();
+    private Renderer renderer = Renderer.Instance();
 
     private ArrayList<Unit> unitPool;
     private int unitPoolCount = 0;
     private int totalSpawnables = 10;
     private int spawnCount = 0;
     private int spawnlimit;
-    private GameRunTime runTime;
     Random rndSearchGen;
 
     private String[] names;
     private String[] descriptions;
     private int cooldown = 60;
 
-    public UnitSpawner(GameRunTime runTime) {
+    private static UnitSpawner instance;
+
+    public static UnitSpawner Instance() {
+        return instance;
+    }
+
+    public UnitSpawner() {
+        instance = this;
         names = new String[]{"Banshee", "Demon", "Death knight"};
         descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
         rndSearchGen = new Random(System.currentTimeMillis());
         unitPool = new ArrayList<>();
-
-        this.runTime = runTime;
-
-        Graph graph = runTime.getEngine().getGraph();
-        Renderer renderer = runTime.getRenderer();
         // this should be passed in
         GraphNode goal = graph.getNodes().get(graph.getNodes().size() - 1);
-
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-            CreateUnit(graph, renderer, goal);
+            CreateUnit(this.graph, this.renderer, goal);
         }
     }
 
     private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
         String SEPARATOR = File.separator;
-        Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+        Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0.png", this.renderer.getXSpacing(), this.renderer.getYSpacing(), true, true);
         SpriteImage sprite = new SpriteImage(image, null);
         sprite.setOnMouseClicked(e -> {
             sprite.requestFocus();
             Unit unit = ((Unit)sprite.getEntity());
             unit.showTransition();
         });
-                                
 
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
@@ -72,18 +69,17 @@ public class UnitSpawner {
 
     private void spawnUnit() {
         Unit newUnit;
-        Graph graph = this.runTime.getEngine().getGraph();
 
         if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
         } else {
-            newUnit = CreateUnit(runTime.getEngine().getGraph(), runTime.getRenderer(), graph.getNodes().get(graph.getNodes().size() - 1));
+            newUnit = CreateUnit(graph, renderer, graph.getNodes().get(graph.getNodes().size() - 1));
         }
 
         spawnCount++;
 
-        runTime.getEngine().getEntities().add(newUnit);
-        runTime.getRenderer().drawInitialEntity(newUnit);
+        engine.getEntities().add(newUnit);
+        renderer.drawInitialEntity(newUnit);
     }
 
     private void despawnUnit(Unit unit) {

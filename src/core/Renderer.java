@@ -25,16 +25,28 @@ public class Renderer extends Group
 
     private Scene scene;
     private List<Entity> entitiesToDraw;
-
     private double xSpacing;
     private double ySpacing;
-
     private ArrayList<Double> spacingOutput;
+    private static Renderer instance;
+
+    public static Renderer Instance() {
+        return instance;
+    }
 
     public Renderer(Scene scene) {
         super();
+        instance = this;
         this.scene = scene;
         this.entitiesToDraw = new ArrayList<>();
+    }
+
+    public double getXSpacing() {
+        return xSpacing;
+    }
+
+    public double getYSpacing() {
+        return ySpacing;
     }
 
     public boolean initialDraw() {
@@ -53,7 +65,6 @@ public class Renderer extends Group
     }
 
     public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
-        boolean success;
         for (int i = 0; i < xAccumulator + 1; i++) {
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
             line.setStroke(Color.LIGHTGREY);
@@ -64,16 +75,13 @@ public class Renderer extends Group
             line.setStroke(Color.LIGHTGREY);
             this.getChildren().add(line);
         }
-        success = true;
-        return success;
+        return true;
     }
 
     public void calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
-        System.out.println(GameInterface.rightPaneWidth);
-        System.out.println(GameInterface.topPaneHeight);
-        double pixelWidth = scene.getWidth() - GameInterface.rightPaneWidth; //subtract the right sidebar pixelWidth TODO @TODO//
-        double pixelHeight = scene.getHeight() - GameInterface.topPaneHeight; //subtract the bottom bar height TODO @TODO//
+        double pixelWidth = scene.getWidth() - GameInterface.rightPaneWidth;
+        double pixelHeight = scene.getHeight() - GameInterface.topPaneHeight; //TODO subtract the bottom bar height//
 
         int width = Graph.WIDTH;
         int height = Graph.HEIGHT;
@@ -109,7 +117,6 @@ public class Renderer extends Group
 
         sprite.setFitWidth(xSpacing);
         sprite.setFitHeight(ySpacing);
-        //sprite.setPreserveRatio(true);
         sprite.setX(node.getX() * xSpacing);
         sprite.setY(node.getY() * ySpacing);
         success = this.getChildren().add(sprite);
@@ -120,12 +127,10 @@ public class Renderer extends Group
     public SequentialTransition produceRouteVisual(List<Line> lines)
     {
         SequentialTransition trans = new SequentialTransition();
-        for (int i = 0; i < lines.size(); i++)
+        for (Line line : lines)
         {
-            Line line = lines.get(i);
             line.setOpacity(0.0);
-            if(!this.getChildren().contains(line))
-            {
+            if (!this.getChildren().contains(line)) {
                 this.getChildren().add(line);
                 FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
                 trans.getChildren().add(lineTransition);
@@ -165,18 +170,6 @@ public class Renderer extends Group
         return produceRoute(nodes);
     }
 
-    public double getXSpacing() {
-        return xSpacing;
-    }
-
-    public double getYSpacing() {
-        return ySpacing;
-    }
-
-    public List<Entity> getEntitiesToDraw() {
-        return entitiesToDraw;
-    }
-
     public static FadeTransition buildFadeAnimation(double millis, double opac1, double opac2, Node node) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(millis), node);
         fadeTransition.setAutoReverse(true);
@@ -184,5 +177,4 @@ public class Renderer extends Group
         fadeTransition.setToValue(opac2);
         return fadeTransition;
     }
-
 }

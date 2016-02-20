@@ -37,7 +37,7 @@ public class CoreGUI extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        this.instance = this;
+        instance = this;
 
         try {
             CoreGUI.primaryStage = primaryStage;

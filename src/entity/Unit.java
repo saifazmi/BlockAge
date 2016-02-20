@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 
 public class Unit extends Entity {
     //@TODO: fix the move function
+    private Renderer renderer = Renderer.Instance();
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
     private static final Duration SPEED = Duration.millis(600);
 
@@ -52,8 +53,6 @@ public class Unit extends Entity {
     private Search search;
     private Sort sort;
 
-    private Renderer renderer;
-
     /*
     Inherited parameters
         private final int id;
@@ -67,17 +66,12 @@ public class Unit extends Entity {
     private GraphNode nextNode;
     private boolean completedMove = true;
 
-    public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal, Renderer renderer) {
+    public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal) {
         super(id, name, position, sprite);
-
-        setPosition(position);
-        this.sprite = sprite;
-
         this.graph = graph;
         this.goal = goal;
         this.search = search;
         this.sort = sort;
-        this.renderer = renderer;
 
         this.linesOfRoute = new ArrayList<>();
 
@@ -201,72 +195,62 @@ public class Unit extends Entity {
      * Recommend new method (or alter old method) so that it draws according to pixel position rather than logical position
      */
     @Override
-    public void update() {
-        if (completedMove) {
+    public void update()
+    {
+        if (completedMove)
+        {
+            if (this.nextNode != null)
+                this.position = this.nextNode;
 
-            if (nextNode != null)
-                position = nextNode;
+            if (route.size() > 0)
+            {
+                this.completedMove = false;
+                this.nextNode = this.route.remove(0);
+                int x = this.nextNode.getX();
+                int y = this.nextNode.getY();
+                int xChange = this.nextNode.getX() - this.position.getX();
+                int yChange = this.nextNode.getY() - this.position.getY();
+                if(xChange + yChange > 1 || xChange + yChange < -1)
+                {
+                    LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
+                                          "Fatal error, check search implementation: " + this.search.toString());
+                    return;
+                }
+                if (logicalMove(xChange, yChange))
+                {
+                    double nextPixelX = x * this.renderer.getXSpacing();
+                    double nextPixelY = y * this.renderer.getYSpacing();
 
-            if (route.size() > 0) {
-                nextNode = route.remove(0);
-                int xChange = nextNode.getX() - position.getX();
-                int yChange = nextNode.getY() - position.getY();
-                completedMove = false;
-                SetPositionAndSpeed(xChange, yChange);
+                    TranslateTransition transition = new TranslateTransition(SPEED, sprite);
+                    transition.setToX(nextPixelX);
+                    transition.setToY(nextPixelY);
+                    transition.setOnFinished(e -> this.completedMove = true);
+                    transition.play();
+                } else {
+                    decideRoute();
+                    this.completedMove = true;
+                }
             }
         }
     }
 
-    private void SetPositionAndSpeed(int xChange, int yChange) {
-
-        int x = nextNode.getX();
-        int y = nextNode.getY();
-
-        if (logicalMove(xChange, yChange)) {
-            double spacingX = renderer.getXSpacing();
-            double spacingY = renderer.getYSpacing();
-
-            double nextPixelX = x * spacingX;
-            double nextPixelY = y * spacingY;
-
-            TranslateTransition transition = new TranslateTransition(SPEED, sprite);
-            transition.setToX(nextPixelX);
-            transition.setToY(nextPixelY);
-            transition.setOnFinished(e -> completedMove = true);
-            transition.play();
-        } else {
-            decideRoute();
-            completedMove = true;
-        }
-    }
-
-    private boolean logicalMove(int xChange, int yChange) {
-        boolean success = true;
+    private boolean logicalMove(int xChange, int yChange)
+    {
+        boolean success;
         if (xChange == 0) {
             if (yChange > 0) {
-                success = success && moveDown();
+                success = moveDown();
             } else {
-                success = success && moveUp();
+                success = moveUp();
             }
         } else {
             if (xChange > 0) {
-                success = success && moveRight();
+                success = moveRight();
             } else {
-                success = success && moveLeft();
+                success = moveLeft();
             }
         }
         return success;
-    }
-
-    /**
-     * Should be called as soon as sprite is rendered
-     *
-     * @param x
-     * @param y
-     */
-    public void setCurrentPixel(double x, double y) {
-        currentPixelX = x;
-        currentPixelY = y;
     }
 
     private void decideRoute() {
@@ -309,8 +293,6 @@ public class Unit extends Entity {
     public void setRoute(List<GraphNode> route)
     {
         this.route = route;
-        setChanged();
-        notifyObservers();
     }
 
     public List<Line> getLinesOfRoute()
@@ -344,10 +326,8 @@ public class Unit extends Entity {
                 FadeTransition trans = (FadeTransition) transition;
                 Line line = (Line) trans.getNode();
                 line.setOpacity(0.0);
-                line = null;
             }
-            currentTrans = null;
-            this.setVisualTransition(currentTrans);
+            this.setVisualTransition(null);
         }
     }
 }

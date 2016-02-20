@@ -4,7 +4,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import sceneElements.ElementsHandler;
 
 import java.util.logging.Logger;
@@ -17,12 +16,10 @@ public class GameRunTime {
 
     private Renderer renderer;
     private CoreEngine engine;
-    private Stage primaryStage;
 
     Pane mainGamePane = null;
     static Scene mainGameScene = null;
     Group mainGame = null;
-
 
     private static GameRunTime instance;
 
@@ -48,22 +45,13 @@ public class GameRunTime {
         declareElements();
         this.renderer = new Renderer(mainGameScene);
         rendererSpecificInit();
-        //renderer.initialDraw();
     }
 
     public void declareElements() {
         mainGamePane = new BorderPane();
         mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
-        mainGameScene.setOnKeyPressed(e -> ElementsHandler.handleKeys(e));
-    }
-
-    public Renderer getRenderer() {
-        return this.renderer;
-    }
-
-    public CoreEngine getEngine() {
-        return this.engine;
+        mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys); //equivalent to e -> ElementsHandler.handleKeys(e)//
     }
 
     private void rendererSpecificInit() {
@@ -89,7 +77,7 @@ public class GameRunTime {
 
     public void startGame()
     {
-        UnitSpawner spawner = new UnitSpawner(this);
+        UnitSpawner spawner = new UnitSpawner();
         //dirty setting
         spawner.setSpawnlimit(1);
         engine.setSpawner(spawner);

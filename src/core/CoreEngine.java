@@ -25,10 +25,16 @@ public class CoreEngine {
     private UnitSpawner spawner;
 
     long deltaTime;
-
     private boolean slept = false;
 
+    private static CoreEngine instance;
+
+    public static CoreEngine Instance() {
+        return instance;
+    }
+
     public CoreEngine() {
+        instance = this;
         this.graph = null;
 
         Graph graph = new Graph();
