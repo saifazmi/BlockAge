@@ -4,7 +4,6 @@ import graph.Graph;
 import graph.GraphNode;
 import searches.AStar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

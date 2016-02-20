@@ -3,8 +3,12 @@ package core;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
-import javafx.application.Platform;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Line;
 import sceneElements.SpriteImage;
 
 import java.io.File;
@@ -48,19 +52,41 @@ public class UnitSpawner {
 
     private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
         String SEPARATOR = File.separator;
-        //new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
         Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
         SpriteImage sprite = new SpriteImage(image, null);
-        sprite.setOnMouseClicked(e -> sprite.requestFocus());
+        sprite.setOnMouseClicked(e -> {
+            sprite.requestFocus();
+            Unit unit = ((Unit)sprite.getEntity());
+            SequentialTransition currentTrans = unit.getVisualTransition();
+            if(currentTrans == null && unit.getRoute() != null)
+            {
+                SequentialTransition transition = runTime.getRenderer().produceRouteVisual(runTime.getRenderer().produceRoute(unit.getRoute(), unit.getPosition()));
+                unit.setVisualTransition(transition);
+                transition.play();
+            }
+            else
+            {
+                currentTrans.stop();
+                ObservableList<Animation> transitions = currentTrans.getChildren();
+                for(int i = 0; i < transitions.size(); i++)
+                {
+                    FadeTransition trans = (FadeTransition)transitions.get(i);
+                    Line line = (Line)trans.getNode();
+                    line.setOpacity(0.0);
+                    line = null;
+                }
+                currentTrans = null;
+                unit.setVisualTransition(currentTrans);
+            }
+        });
+                                
 
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
 
         Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal, renderer);
         sprite.setEntity(unit);
-        //unit.setCurrentPixel(sprite.getX(), sprite.getY());
         unitPool.add(unit);
-
         return unit;
     }
 
@@ -78,7 +104,6 @@ public class UnitSpawner {
 
         runTime.getEngine().getEntities().add(newUnit);
         runTime.getRenderer().drawInitialEntity(newUnit);
-        runTime.getRenderer().produceRouteVisual(runTime.getRenderer().produceRoute(newUnit.getRoute())).play();
     }
 
     private void despawnUnit(Unit unit) {

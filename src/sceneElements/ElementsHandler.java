@@ -7,13 +7,8 @@ import javafx.event.Event;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import menus.MainMenu;
-import menus.Menu;
-import menus.MenuHandler;
-import menus.OptionsMenu;
-import menus.PauseMenu;
-import test.Test;
+import lambdastorage.LambdaStore;
+import menus.*;
 
 public class ElementsHandler {
 
@@ -35,7 +30,7 @@ public class ElementsHandler {
             gameRunTime.startGame();
             MenuHandler.setMainGameScene();
             GameInterface gameInterface = new GameInterface();
-            Test.test(gameRunTime);
+            //Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
             gameRunTime.getRenderer().initialDraw();
         }
@@ -114,9 +109,35 @@ public class ElementsHandler {
 
     public static void handleKeys(KeyEvent event) {
         KeyCode k = event.getCode();
-        if (k == KeyCode.ESCAPE && MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
-            CoreEngine.paused = true;
-            MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
+        if(MenuHandler.currentScene == MenuHandler.MAIN_GAME)
+        {
+            if (k == KeyCode.ESCAPE) {
+                CoreEngine.paused = true;
+                MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
+            }
+            else if (k == KeyCode.B)
+            {
+                LambdaStore store = new LambdaStore();
+                if(GameRunTime.getScene().getOnMouseClicked() != null && GameRunTime.getScene().getOnMouseClicked().equals(store.getSceneClickPlaceUnbreakableBlockade()))
+                {
+                    GameRunTime.getScene().setOnMouseClicked(null);
+                }
+                else
+                {
+                    GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
+                }
+            }
+            else if (k == KeyCode.P)
+            {
+                if(CoreEngine.paused == true)
+                {
+                    CoreEngine.paused = false;
+                }
+                else
+                {
+                    CoreEngine.paused = true;
+                }
+            }
         }
     }
 }

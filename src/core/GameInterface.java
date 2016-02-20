@@ -1,8 +1,5 @@
 package core;
 
-import java.io.File;
-import java.io.InputStream;
-
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -20,6 +17,9 @@ import javafx.scene.text.Font;
 import lambdastorage.LambdaStore;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
+
+import java.io.File;
+import java.io.InputStream;
 
 public class GameInterface {
     public static Button fileButton, fileExitButton, helpButton, playButton, pauseButton, unsortableButton, sortableButton;

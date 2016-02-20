@@ -66,5 +66,4 @@ public class MenuHandler {
         currentScene = scene;
         primaryStage.setScene(sceneList[scene]);
     }
-
 }

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Renderer extends Group
 {
@@ -130,7 +131,6 @@ public class Renderer extends Group
                 trans.getChildren().add(lineTransition);
             }
         }
-        System.out.println("DDDDDDDDDDDDDDDDD - Route Produced");
         return trans;
     }
 
@@ -155,6 +155,14 @@ public class Renderer extends Group
             }
         }
         return lines;
+    }
+
+    public ArrayList<Line> produceRoute(List<GraphNode> route, GraphNode start)
+    {
+        ArrayList<GraphNode> nodes = new ArrayList<>();
+        nodes.add(start);
+        nodes.addAll(route.stream().collect(Collectors.toList()));
+        return produceRoute(nodes);
     }
 
     public double getXSpacing() {
