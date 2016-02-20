@@ -57,27 +57,7 @@ public class UnitSpawner {
         sprite.setOnMouseClicked(e -> {
             sprite.requestFocus();
             Unit unit = ((Unit)sprite.getEntity());
-            SequentialTransition currentTrans = unit.getVisualTransition();
-            if(currentTrans == null && unit.getRoute() != null)
-            {
-                SequentialTransition transition = runTime.getRenderer().produceRouteVisual(runTime.getRenderer().produceRoute(unit.getRoute(), unit.getPosition()));
-                unit.setVisualTransition(transition);
-                transition.play();
-            }
-            else
-            {
-                currentTrans.stop();
-                ObservableList<Animation> transitions = currentTrans.getChildren();
-                for(int i = 0; i < transitions.size(); i++)
-                {
-                    FadeTransition trans = (FadeTransition)transitions.get(i);
-                    Line line = (Line)trans.getNode();
-                    line.setOpacity(0.0);
-                    line = null;
-                }
-                currentTrans = null;
-                unit.setVisualTransition(currentTrans);
-            }
+            unit.showTransition();
         });
                                 
 

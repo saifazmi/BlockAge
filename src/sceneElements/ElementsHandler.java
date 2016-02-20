@@ -3,12 +3,17 @@ package sceneElements;
 import core.CoreEngine;
 import core.GameInterface;
 import core.GameRunTime;
+import entity.Entity;
+import entity.Unit;
 import javafx.event.Event;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lambdastorage.LambdaStore;
 import menus.*;
+
+import java.util.ArrayList;
 
 public class ElementsHandler {
 
@@ -136,6 +141,14 @@ public class ElementsHandler {
                 else
                 {
                     CoreEngine.paused = true;
+                }
+            }
+            else if (k == KeyCode.R)
+            {
+                Node node = GameRunTime.getScene().getFocusOwner();
+                if(node instanceof SpriteImage)
+                {
+                    ((Unit) ((SpriteImage) node).getEntity()).showTransition();
                 }
             }
         }

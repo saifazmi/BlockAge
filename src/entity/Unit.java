@@ -3,8 +3,11 @@ package entity;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
@@ -24,7 +27,7 @@ import java.util.logging.Logger;
  */
 
 public class Unit extends Entity {
-    //@TODO: fix the move function, using text log
+    //@TODO: fix the move function
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
     private static final Duration SPEED = Duration.millis(600);
 
@@ -233,10 +236,6 @@ public class Unit extends Entity {
             transition.play();
         } else {
             decideRoute();
-            if(this.getVisualTransition() != null)
-            {
-                this.getVisualTransition().play();
-            }
             completedMove = true;
         }
     }
@@ -278,7 +277,7 @@ public class Unit extends Entity {
             System.out.println("using bfs");
             setRoute(BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal));
         } else {
-            System.out.println("using astar");
+            System.out.println("using a-star");
             setRoute(AStar.search(getPosition(), this.goal));
         }
         System.out.println(route);
@@ -325,5 +324,30 @@ public class Unit extends Entity {
     public void setVisualTransition(SequentialTransition visualTransition)
     {
         this.visualTransition = visualTransition;
+    }
+
+    public void showTransition()
+    {
+        SequentialTransition currentTrans = this.getVisualTransition();
+        if(currentTrans == null && this.getRoute() != null)
+        {
+            SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
+            this.setVisualTransition(transition);
+            transition.play();
+        }
+        else if (currentTrans != null)
+        {
+            currentTrans.stop();
+            ObservableList<Animation> transitions = currentTrans.getChildren();
+            for (Animation transition : transitions)
+            {
+                FadeTransition trans = (FadeTransition) transition;
+                Line line = (Line) trans.getNode();
+                line.setOpacity(0.0);
+                line = null;
+            }
+            currentTrans = null;
+            this.setVisualTransition(currentTrans);
+        }
     }
 }
