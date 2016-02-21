@@ -23,7 +23,6 @@ public class OptionsMenu implements Menu {
     public static int spaceBetweenImgH = 50;
     public static Pane optionsMenuPane = null;
 
-
     private Scene optionsMenuScene = null;
     private Label hintsLabel, soundLabel = null;
     private LabelProperties l = null;

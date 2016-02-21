@@ -24,11 +24,12 @@ public class ElementsHandler {
      */
     public static void handle(Event event) {
         // Elements from the Main Menu scene
-
+        CoreEngine engine = CoreEngine.Instance();
         if (event.getSource() == MainMenu.newGameButton) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
-            CoreEngine.paused = false;
+            engine = CoreEngine.Instance();
+            engine.setPaused(false);
             Renderer.Instance().calculateSpacing();
             gameRunTime.startGame();
             MenuHandler.setMainGameScene();
@@ -92,30 +93,31 @@ public class ElementsHandler {
 
         // Elements from the Pause Menu scene
         if (event.getSource() == PauseMenu.backGameButton) {
-            CoreEngine.paused = false;
+            engine.setPaused(false);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
-            CoreEngine.running = false;
+            engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
         if(event.getSource() == GameInterface.playButton)
         {
-            CoreEngine.paused = false;
+            engine.setPaused(false);
         }
         if(event.getSource() == GameInterface.pauseButton)
         {
-            CoreEngine.paused = true;
+            engine.setPaused(true);
         }
 
     }
 
     public static void handleKeys(KeyEvent event) {
+        CoreEngine engine = CoreEngine.Instance();
         KeyCode k = event.getCode();
         if(MenuHandler.currentScene == MenuHandler.MAIN_GAME)
         {
             if (k == KeyCode.ESCAPE) {
-                CoreEngine.paused = true;
+                engine.setPaused(true);
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
             }
             else if (k == KeyCode.B)
@@ -132,13 +134,13 @@ public class ElementsHandler {
             }
             else if (k == KeyCode.P)
             {
-                if(CoreEngine.paused == true)
+                if(engine.isPaused())
                 {
-                    CoreEngine.paused = false;
+                    engine.setPaused(false);
                 }
                 else
                 {
-                    CoreEngine.paused = true;
+                    engine.setPaused(true);
                 }
             }
             else if (k == KeyCode.R)

@@ -11,19 +11,10 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import menus.MenuHandler;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CoreGUI extends Application {
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
-
-    public static Stage primaryStage;
-    /**
-     * Made CoreGUI follow Singleton Pattern because there is ever only 1 instance of it
-     * Allows easier access
-     */
     private static CoreGUI instance;
 
     public static CoreGUI Instance() {
@@ -36,24 +27,22 @@ public class CoreGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         instance = this;
-
-        try {
-            CoreGUI.primaryStage = primaryStage;
-
-            @SuppressWarnings("unused")
-            MenuHandler menuHandler = new MenuHandler(primaryStage);
-            MenuHandler.switchScene(MenuHandler.MAIN_MENU);
-
-            primaryStage.setOnCloseRequest(e -> {
-                CoreEngine.setEngineState(false);
-                Platform.exit();
-            });
-
-            primaryStage.show();
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, e.toString(), e);
-        }
+        @SuppressWarnings("unused")
+        MenuHandler menuHandler = new MenuHandler(primaryStage);
+        MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        primaryStage.setOnCloseRequest(e -> {
+            CoreEngine engine = CoreEngine.Instance();
+            if(engine != null)
+            {
+                CoreEngine.Instance().setRunning(false);
+            }
+            Platform.exit();
+        });
+        primaryStage.show();
     }
+
+    public int getHEIGHT() { return 720; }
+
+    public int getWIDTH() { return 1280; }
 }

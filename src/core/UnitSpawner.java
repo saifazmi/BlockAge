@@ -23,7 +23,7 @@ public class UnitSpawner {
     private int totalSpawnables = 10;
     private int spawnCount = 0;
     private int spawnlimit;
-    Random rndSearchGen;
+    private Random rndSearchGen;
 
     private String[] names;
     private String[] descriptions;
@@ -61,7 +61,7 @@ public class UnitSpawner {
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
 
-        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal, renderer);
+        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
         sprite.setEntity(unit);
         unitPool.add(unit);
         return unit;

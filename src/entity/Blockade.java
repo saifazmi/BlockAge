@@ -9,6 +9,7 @@ import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * @author : saif
@@ -30,7 +31,6 @@ public class Blockade extends Entity {
         super(id, name, description, position, sprite);
         setBreakable(false);
     }
-
 
     @Override
     public void update() {
@@ -58,15 +58,21 @@ public class Blockade extends Entity {
         return null;
     }
 
-    private static ArrayList<Blockade> getBlockades() {
+    private static ArrayList<Blockade> getBlockades()
+    {
         ArrayList<Blockade> blockades = new ArrayList<>();
         ArrayList<Entity> entities = CoreEngine.Instance().getEntities();
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            if (entity instanceof Blockade) {
+        blockades.addAll(entities.stream().filter(entity -> entity instanceof Blockade).map(entity -> (Blockade) entity).collect(Collectors.toList()));
+        /*
+            Equivalent to:
+            for (Entity entity : entities)
+        {
+            if (entity instanceof Blockade)
+            {
                 blockades.add((Blockade) entity);
             }
         }
+         */
         return blockades;
     }
 
@@ -79,7 +85,8 @@ public class Blockade extends Entity {
         double y = e.getY() - 34;                //@TODO subtract pane height of pauls menu
         double logicalX = Math.floor(x / xSpacing);
         double logicalY = Math.floor(y / ySpacing);
-        if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
+        if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT)
+        {
             GraphNode position = CoreEngine.Instance().getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
             System.out.println(position.toString());
             return position;
@@ -90,12 +97,13 @@ public class Blockade extends Entity {
     protected static int calcId() {
         ArrayList<Blockade> blockades = getBlockades();
         int max = 0;
-        for (int i = 0; i < blockades.size(); i++) {
-            if (max < blockades.get(i).getId()) {
-                max = blockades.get(i).getId();
+        for (Blockade blockade : blockades)
+        {
+            if (max < blockade.getId())
+            {
+                max = blockade.getId();
             }
         }
-        int id = max + 1;
-        return id;
+        return max + 1;
     }
 }

@@ -31,8 +31,7 @@ public class BreakableBlockade extends Blockade {
     }
 
     public static Blockade createBlockade(MouseEvent e, BreakableBlockade blockadeInstance) {
-        BreakableBlockade blockade = new BreakableBlockade(calcId(), blockadeInstance.getName(), calcGraphNode(e), blockadeInstance.getSprite(), blockadeInstance.getSortSpeed(), blockadeInstance.getListToSort());
-        return blockade;
+        return new BreakableBlockade(calcId(), blockadeInstance.getName(), calcGraphNode(e), blockadeInstance.getSprite(), blockadeInstance.getSortSpeed(), blockadeInstance.getListToSort());
     }
 
     public int getSortSpeed() {

@@ -17,18 +17,14 @@ public class GameRunTime {
     private Renderer renderer;
     private CoreEngine engine;
 
-    Pane mainGamePane = null;
-    static Scene mainGameScene = null;
-    Group mainGame = null;
-
+    private static Scene mainGameScene = null;
     private static GameRunTime instance;
-
     public static GameRunTime Instance() {
         return instance;
     }
 
     public GameRunTime() {
-        this.instance = this;
+        instance = this;
         Thread engThread = new Thread(() ->
         {
             this.engine = new CoreEngine();
@@ -48,9 +44,9 @@ public class GameRunTime {
     }
 
     public void declareElements() {
-        mainGamePane = new BorderPane();
-        mainGame = new Group(mainGamePane);
-        mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
+        Pane mainGamePane = new BorderPane();
+        Group mainGame = new Group(mainGamePane);
+        mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys); //equivalent to e -> ElementsHandler.handleKeys(e)//
     }
 

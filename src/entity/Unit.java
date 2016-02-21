@@ -15,7 +15,6 @@ import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFristSearch;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +44,6 @@ public class Unit extends Entity {
     }
 
     private List<GraphNode> route;
-    private List<Line> linesOfRoute;
     private SequentialTransition visualTransition;
 
     private Graph graph;
@@ -53,27 +51,22 @@ public class Unit extends Entity {
     private Search search;
     private Sort sort;
 
-    /*
-    Inherited parameters
-        private final int id;
-        private String name;
-        private String description;
-        protected GraphNode position;
-        protected double currentPixelX;
-        protected double currentPixelY;
-        protected SpriteImage sprite;
-     */
     private GraphNode nextNode;
     private boolean completedMove = true;
-
+    /*
+        Inherited parameters
+            protected final int id;
+            protected String name;
+            protected String description;
+            protected GraphNode position;
+            protected SpriteImage sprite;
+     */
     public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal) {
         super(id, name, position, sprite);
         this.graph = graph;
         this.goal = goal;
         this.search = search;
         this.sort = sort;
-
-        this.linesOfRoute = new ArrayList<>();
 
         decideRoute();
     }
@@ -289,15 +282,9 @@ public class Unit extends Entity {
     public List<GraphNode> getRoute() {
         return route;
     }
-
     public void setRoute(List<GraphNode> route)
     {
         this.route = route;
-    }
-
-    public List<Line> getLinesOfRoute()
-    {
-        return linesOfRoute;
     }
     public SequentialTransition getVisualTransition()
     {

@@ -17,7 +17,7 @@ public class MenuHandler {
     private OptionsMenu optionsMenu = new OptionsMenu();
     private PauseMenu pauseMenu = new PauseMenu();
 
-    public static Scene[] sceneList = new Scene[20];
+    private static Scene[] sceneList = new Scene[20];
 
     //Declaring indexes for the menus so that we know how to access them easily in the scene array
     public final static int MAIN_MENU = 0;
@@ -32,9 +32,9 @@ public class MenuHandler {
      *
      * @param primaryStage - our primary stage
      */
-    @SuppressWarnings("static-access")
+    //@SuppressWarnings("static-access")
     public MenuHandler(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        MenuHandler.primaryStage = primaryStage;
         setScenes();
     }
 

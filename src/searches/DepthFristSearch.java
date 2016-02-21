@@ -65,8 +65,8 @@ public class DepthFristSearch {
                     frontier.clear();
 
                     current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(n -> frontier.push(n));
-                    //equivalent to:
                     /*
+                        equivalent to:
                     for (GraphNode n : current.getSuccessors()) {
                         if (!visited.contains(n)) {
                             frontier.push(n);

@@ -17,14 +17,14 @@ public class CoreEngine {
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
     private final int FRAME_RATE = 60;
 
-    public static boolean running;
-    public static boolean paused = false;
+    private boolean running;
+    private boolean paused = false;
     private long startTime;
     private Graph graph;
     private ArrayList<Entity> entities;
     private UnitSpawner spawner;
 
-    long deltaTime;
+    private long deltaTime;
     private boolean slept = false;
 
     private static CoreEngine instance;
@@ -60,7 +60,7 @@ public class CoreEngine {
     }
 
     public void startGame() {
-        this.running = true;
+        running = true;
         startTime = System.nanoTime();
         // @TODO in case it's not running
         while (running) {
@@ -118,14 +118,13 @@ public class CoreEngine {
         }
     }
 
-    public static void setEngineState(boolean running) {
-        CoreEngine.running = running;
-    }
-
+    public boolean isPaused() { return paused; }
+    public void setPaused(boolean paused) { this.paused = paused; }
+    public boolean isRunning() { return running; }
+    public void setRunning(boolean running) { this.running = running; }
     public ArrayList<Entity> getEntities() {
         return entities;
     }
-
     public void setSpawner(UnitSpawner spawner) {
         this.spawner = spawner;
     }

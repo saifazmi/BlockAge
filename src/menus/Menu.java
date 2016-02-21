@@ -8,8 +8,7 @@ import javafx.scene.Scene;
  * @author paulp
  */
 public interface Menu {
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
-
-    public Scene getScene();
+    int WIDTH = 1280;
+    int HEIGHT = 720;
+    Scene getScene();
 }
