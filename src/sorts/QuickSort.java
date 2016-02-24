@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Created by Caitlyn PLS on 19-Feb-16
  * WORKS
- * Underlying IDEA for SAIF: SortableComponent comes in sets of 3. one for left side, one for pivot, one for right
+ * Underlying IDEA: SortableComponent comes in sets of 3. one for left side, one for pivot, one for right
  * Do with it what you will, i thnk this is safest
  */
 

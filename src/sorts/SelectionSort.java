@@ -7,7 +7,6 @@ import java.util.Collections;
  * Created by dckxqt on 19-Feb-16.
  *
  * WORKS, visualization logic untested, cant really see until its made
- * SAIF ^
  *
  */
 public class SelectionSort {
