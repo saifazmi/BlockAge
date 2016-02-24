@@ -32,12 +32,12 @@ public class ElementsHandler {
             GameRunTime gameRunTime = new GameRunTime();
             gameRunTime.getEngine().paused = false;
             gameRunTime.getRenderer().calculateSpacing();
+            gameRunTime.getRenderer().initialDraw();
             gameRunTime.startGame();
             MenuHandler.setMainGameScene();
             GameInterface gameInterface = new GameInterface();
             Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
-            gameRunTime.getRenderer().initialDraw();
         }
         if (event.getSource() == MainMenu.optionsButton) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
