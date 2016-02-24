@@ -1,6 +1,11 @@
 package entity;
 
+import core.CoreEngine;
+import core.GameRunTime;
+import core.Renderer;
+import graph.Graph;
 import graph.GraphNode;
+import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
 import java.awt.event.FocusListener;
@@ -125,4 +130,3 @@ public abstract class Entity extends Observable {
         return result;
     }
 }
-

@@ -1,5 +1,6 @@
 package graph;
 
+import entity.Base;
 import entity.Blockade;
 import entity.Unit;
 
@@ -22,6 +23,7 @@ public class GraphNode {
     private List<Unit> units;     // Empty list of entities
     private Blockade blockade;    // null blockade
     private List<GraphNode> successors;
+    private Base base;
 
     public GraphNode(int x, int y) {
         this.x = x;
@@ -29,6 +31,7 @@ public class GraphNode {
         this.units = new ArrayList<Unit>();
         this.successors = new ArrayList<GraphNode>();
         blockade = null;
+        base = null;
 
     }
 
@@ -103,4 +106,8 @@ public class GraphNode {
     public List<Unit> getUnits() {
         return units;
     }
+
+    public Base getBase() { return base; }
+
+    public void setBase(Base base) { this.base = base; }
 }

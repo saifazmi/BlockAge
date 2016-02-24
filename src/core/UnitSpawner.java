@@ -1,20 +1,28 @@
 package core;
 
+import entity.Base;
+import entity.Blockade;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
-import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by hung on 13/02/16.
  */
 public class UnitSpawner {
+
+    private static final Logger LOG = Logger.getLogger(UnitSpawner.class.getName());
+    private static String SEPARATOR = File.separator;
 
     private ArrayList<Unit> unitPool;
     private int unitPoolCount = 0;
@@ -22,28 +30,80 @@ public class UnitSpawner {
     private int spawnCount = 0;
     private int spawnlimit;
     private GameRunTime runTime;
+    private GraphNode goal;
+    private boolean goalSet = false;
     Random rndSearchGen;
 
     private String[] names;
     private String[] descriptions;
     private int cooldown = 60;
 
-    public UnitSpawner(GameRunTime runTime) {
+    public UnitSpawner(GameRunTime runTime, int spawnlimit) {
         names = new String[]{"Banshee", "Demon", "Death knight"};
         descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
         rndSearchGen = new Random(System.currentTimeMillis());
         unitPool = new ArrayList<>();
 
         this.runTime = runTime;
-
-        Graph graph = runTime.getEngine().getGraph();
+        this.spawnlimit = spawnlimit;
         Renderer renderer = runTime.getRenderer();
-        // this should be passed in
-        GraphNode goal = graph.getNodes().get(graph.getNodes().size() - 1);
+        CoreEngine engine = runTime.getEngine();
+        Graph graph = engine.getGraph();
 
-        for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-            CreateUnit(graph, renderer, goal);
+        int blockageNeeded = 10;
+
+        while(blockageNeeded > 0) {
+            Random rand = new Random();
+            int randomX = rand.nextInt(graph.HEIGHT);
+            int randomY = rand.nextInt(graph.WIDTH);
+            Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
+            Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
+            SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
+            spriteImage1.setFitWidth(renderer.getXSpacing());
+            spriteImage1.setFitHeight(renderer.getYSpacing());
+            spriteImage1.setPreserveRatio(false);
+            spriteImage1.setSmooth(true);
+            blockadeInstance.setSprite(spriteImage1);
+            Blockade blockade = Blockade.randomBlockage(runTime, blockadeInstance);
+            if (blockade != null) {
+                renderer.drawInitialEntity(blockade);
+                blockageNeeded --;
+                LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
+            }
         }
+
+        runTime.getScene().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+
+                double xSpacing = renderer.getXSpacing();
+                double ySpacing = renderer.getYSpacing();
+                double x = e.getX();
+                double y = e.getY() - 34;                //@TODO subtract pane height of pauls menu
+                double logicalX = Math.floor(x / xSpacing);
+                double logicalY = Math.floor(y / ySpacing);
+                if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
+                    goal = engine.getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
+                    System.out.println(goal.toString());
+                    Base base = new Base(99999, "Base", goal, null);
+                    Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Blokage sprite copy.png");
+                    SpriteImage spriteImage = new SpriteImage(image, base);
+                    spriteImage.setFitWidth(renderer.getXSpacing());
+                    spriteImage.setFitHeight(renderer.getYSpacing());
+                    spriteImage.setPreserveRatio(false);
+                    spriteImage.setSmooth(true);
+                    base.setSprite(spriteImage);
+                    LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
+                    renderer.drawInitialEntity(base);
+                    runTime.getScene().setOnMouseClicked(null);
+                    goal.setBase(base);
+                    goalSet = true;
+                    for (unitPoolCount = 0; unitPoolCount < spawnlimit; unitPoolCount++) {
+                        spawnUnit();
+                    }
+                }
+            }
+        });
     }
 
     private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
@@ -71,7 +131,7 @@ public class UnitSpawner {
         if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
         } else {
-            newUnit = CreateUnit(runTime.getEngine().getGraph(), runTime.getRenderer(), graph.getNodes().get(graph.getNodes().size() - 1));
+            newUnit = CreateUnit(runTime.getEngine().getGraph(), runTime.getRenderer(), goal);
         }
 
         spawnCount++;
@@ -98,9 +158,5 @@ public class UnitSpawner {
                 spawnUnit();
             }
         }
-    }
-
-    public void setSpawnlimit(int spawnlimit) {
-        this.spawnlimit = spawnlimit;
     }
 }

@@ -34,13 +34,9 @@ public class Blockade extends Entity {
 
 
     @Override
-    public void update() {
+    public void update() { }
 
-    }
-
-    public boolean isBreakable() {
-        return breakable;
-    }
+    public boolean isBreakable() { return breakable; }
 
     public void setBreakable(boolean breakable) {
         this.breakable = breakable;
@@ -51,24 +47,12 @@ public class Blockade extends Entity {
         if(node != null)
         {
             Blockade blockade = new Blockade(calcId(runTime), blockadeInstance.getName(), calcGraphNode(e, runTime), blockadeInstance.getSprite());
-            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getUnits().size() == 0) {
+            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
                 blockade.getPosition().setBlockade(blockade);
                 return blockade;
             }
         }
         return null;
-    }
-
-    private static ArrayList<Blockade> getBlockades(CoreEngine engine) {
-        ArrayList<Blockade> blockades = new ArrayList<>();
-        ArrayList<Entity> entities = engine.getEntities();
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            if (entity instanceof Blockade) {
-                blockades.add((Blockade) entity);
-            }
-        }
-        return blockades;
     }
 
     protected static GraphNode calcGraphNode(MouseEvent e, GameRunTime runTime) {
@@ -87,6 +71,31 @@ public class Blockade extends Entity {
             return position;
         }
         return null;
+    }
+
+    public static Blockade randomBlockage(GameRunTime runTime, Blockade blockadeInstance) {
+        GraphNode node = runTime.getEngine().getGraph().nodeWith(blockadeInstance.getPosition());
+        if(node != null && !node.equals(new GraphNode(0,0)))
+        {
+            Blockade blockade = new Blockade(calcId(runTime), blockadeInstance.getName(), node, blockadeInstance.getSprite());
+            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
+                blockade.getPosition().setBlockade(blockade);
+                return blockade;
+            }
+        }
+        return null;
+    }
+
+    private static ArrayList<Blockade> getBlockades(CoreEngine engine) {
+        ArrayList<Blockade> blockades = new ArrayList<>();
+        ArrayList<Entity> entities = engine.getEntities();
+        for (int i = 0; i < entities.size(); i++) {
+            Entity entity = entities.get(i);
+            if (entity instanceof Blockade) {
+                blockades.add((Blockade) entity);
+            }
+        }
+        return blockades;
     }
 
     protected static int calcId(GameRunTime runTime) {

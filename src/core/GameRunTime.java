@@ -1,5 +1,6 @@
 package core;
 
+import graph.GraphNode;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -7,13 +8,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sceneElements.ElementsHandler;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 /**
  * Created by Dominic on 09/02/2016.
  */
-public class GameRunTime {
+public class GameRunTime{
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
+    private static String SEPARATOR = File.separator;
 
     private Renderer renderer;
     private CoreEngine engine;
@@ -89,9 +92,7 @@ public class GameRunTime {
 
     public void startGame()
     {
-        UnitSpawner spawner = new UnitSpawner(this);
-        //dirty setting
-        spawner.setSpawnlimit(1);
+        UnitSpawner spawner = new UnitSpawner(this, 1);
         engine.setSpawner(spawner);
     }
 }
