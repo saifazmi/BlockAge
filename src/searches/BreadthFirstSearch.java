@@ -1,5 +1,6 @@
 package searches;
 
+import graph.Graph;
 import graph.GraphNode;
 
 import java.util.*;
@@ -86,4 +87,10 @@ public class BreadthFirstSearch {
 
         return null;
     }
+
+    public ArrayList<GraphNode> returnVisited()
+    {
+        return visited;
+    }
+
 }

@@ -73,7 +73,11 @@ public class DepthFristSearch {
             }
         }
 
-        visited.clear();
         return null;
+    }
+
+    public ArrayList<GraphNode> returnVisited()
+    {
+        return visited;
     }
 }
