@@ -107,6 +107,7 @@ public class CoreEngine {
             }
         }
 
+        // @TODO redundancy
         //if (spawner != null) {
            // spawner.update();
        // }

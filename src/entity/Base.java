@@ -6,7 +6,9 @@ import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
 /**
- * Created by user on 24/02/2016.
+ * @author : Anh
+ * @project : bestRTS
+ * @date : 24/02/16
  */
 public class Base extends Entity {
 

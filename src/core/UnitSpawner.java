@@ -31,7 +31,6 @@ public class UnitSpawner {
     private int spawnlimit;
     private GameRunTime runTime;
     private GraphNode goal;
-    private boolean goalSet = false;
     Random rndSearchGen;
 
     private String[] names;
@@ -50,9 +49,9 @@ public class UnitSpawner {
         CoreEngine engine = runTime.getEngine();
         Graph graph = engine.getGraph();
 
-        int blockageNeeded = 10;
-
-        while(blockageNeeded > 0) {
+        // create a number of blockade randomly
+        int blockadeNeeded = 10;
+        while(blockadeNeeded > 0) {
             Random rand = new Random();
             int randomX = rand.nextInt(graph.HEIGHT);
             int randomY = rand.nextInt(graph.WIDTH);
@@ -67,25 +66,31 @@ public class UnitSpawner {
             Blockade blockade = Blockade.randomBlockage(runTime, blockadeInstance);
             if (blockade != null) {
                 renderer.drawInitialEntity(blockade);
-                blockageNeeded --;
+                blockadeNeeded --;
                 LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
             }
         }
 
+        // setting function for choosing the goal of the game
         runTime.getScene().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-
+                // get the limitation on where to click to choose the goal
                 double xSpacing = renderer.getXSpacing();
                 double ySpacing = renderer.getYSpacing();
                 double x = e.getX();
                 double y = e.getY() - 34;                //@TODO subtract pane height of pauls menu
                 double logicalX = Math.floor(x / xSpacing);
                 double logicalY = Math.floor(y / ySpacing);
+
+                // checking if the position is within the boundaries
                 if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
+                    // set the goal
                     goal = engine.getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
                     System.out.println(goal.toString());
-                    Base base = new Base(99999, "Base", goal, null);
+
+                    // make the base
+                    Base base = new Base(9999, "Base", goal, null);
                     Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Blokage sprite copy.png");
                     SpriteImage spriteImage = new SpriteImage(image, base);
                     spriteImage.setFitWidth(renderer.getXSpacing());
@@ -95,9 +100,12 @@ public class UnitSpawner {
                     base.setSprite(spriteImage);
                     LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
                     renderer.drawInitialEntity(base);
-                    runTime.getScene().setOnMouseClicked(null);
                     goal.setBase(base);
-                    goalSet = true;
+
+                    // remove the setting function
+                    runTime.getScene().setOnMouseClicked(null);
+
+                    // spawning the units
                     for (unitPoolCount = 0; unitPoolCount < spawnlimit; unitPoolCount++) {
                         spawnUnit();
                     }
@@ -158,5 +166,10 @@ public class UnitSpawner {
                 spawnUnit();
             }
         }
+    }
+
+    // @TODO redundancy
+    public void setSpawnlimit(int spawnlimit) {
+        this.spawnlimit = spawnlimit;
     }
 }

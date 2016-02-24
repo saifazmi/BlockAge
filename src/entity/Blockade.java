@@ -73,6 +73,12 @@ public class Blockade extends Entity {
         return null;
     }
 
+    /*
+     * Method for creating blockage in random GraphNode
+     * @param runtime the current game run time
+     * @param blockadeInstance the blockade information to be created
+     * @return blockade the blockade object to be created
+     */
     public static Blockade randomBlockage(GameRunTime runTime, Blockade blockadeInstance) {
         GraphNode node = runTime.getEngine().getGraph().nodeWith(blockadeInstance.getPosition());
         if(node != null && !node.equals(new GraphNode(0,0)))
