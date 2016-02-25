@@ -96,6 +96,8 @@ public class UnitSpawner {
         // focus sprite and displays text when clicked on it
         sprite.setOnMouseClicked(e -> {
             sprite.requestFocus();
+            Unit u = (Unit) sprite.getEntity();
+            u.showTransition();
             GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
             GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
                     "Search:  " + Unit.Search.values()[index] + "\n" +
