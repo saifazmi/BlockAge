@@ -1,11 +1,15 @@
-# BestRTS
-Team Name: D3  
+BestRTS
+=======
+**Team Name:** D3  
+[Link](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to the Markdown cheat sheet for editing this file.  
 
-## Key Bindings  
-- P: pause units
-- R: toggle route display  
+Key Bindings  
+------------
+- **P:** pause units
+- **R:** toggle route display  
 
-## Knows Bugs    
+Knows Bugs    
+----------
 #### Breadth First Search
 - Occasionally can't find a route even though routes are possible.  
 
