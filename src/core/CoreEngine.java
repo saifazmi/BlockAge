@@ -133,8 +133,8 @@ public class CoreEngine {
     private void updateGameState() {
         //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
         if (entities != null) {
-            for (int i = 0; i < entities.size(); i++) {
-                entities.get(i).update();
+            for (Entity entity : entities) {
+                entity.update();
             }
         }
 

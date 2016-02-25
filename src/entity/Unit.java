@@ -46,12 +46,14 @@ public class Unit extends Entity {
     }
 
     private List<GraphNode> route;
+
     private SequentialTransition visualTransition;
 
     private Graph graph;
     private GraphNode goal;
     private Search search;
     private Sort sort;
+    private boolean changingRoute = true;
 
     private GraphNode nextNode;
     private boolean completedMove = true;
@@ -198,6 +200,7 @@ public class Unit extends Entity {
 
             return true;
         }
+        this.changingRoute = true;
         return false;
     }
 
@@ -210,6 +213,7 @@ public class Unit extends Entity {
     @Override
     public void update() {
         if (completedMove) {
+
             if (this.nextNode != null)
                 this.position = this.nextNode;
 
@@ -272,6 +276,7 @@ public class Unit extends Entity {
 
 
     private void decideRoute() {
+        LOG.log(Level.INFO, getPosition().toString());
         if (search == Search.DFS) {
             //System.out.println("using dfs");
             route = DepthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
@@ -311,7 +316,6 @@ public class Unit extends Entity {
 
     public void setRoute(List<GraphNode> route) {
         this.route = route;
-
     }
 
     public SequentialTransition getVisualTransition() {

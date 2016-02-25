@@ -1,10 +1,13 @@
 package sceneElements;
 
+import core.BaseSpawner;
 import core.CoreEngine;
 import core.GameInterface;
 import core.GameRunTime;
 import core.Renderer;
+import core.UnitSpawner;
 import entity.Unit;
+import graph.GraphNode;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -17,8 +20,12 @@ import menus.MenuHandler;
 import menus.OptionsMenu;
 import menus.PauseMenu;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class ElementsHandler {
 
+    private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
     public static ButtonProperties b = new ButtonProperties();
 
     /**
@@ -42,6 +49,26 @@ public class ElementsHandler {
             //Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
             Renderer.Instance().initialDraw();
+
+            Thread unitSpawnerThread = new Thread(() -> {
+
+                GraphNode goal = BaseSpawner.Instance().getGoal();
+                while (goal == null) {
+                    try {
+                        goal = BaseSpawner.Instance().getGoal();
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        LOG.log(Level.SEVERE, e.toString(), e);
+                    }
+                }
+
+                LOG.log(Level.INFO, "GOAL found!!!");
+                UnitSpawner spawner = new UnitSpawner(2, goal);
+                CoreEngine.Instance().setSpawner(spawner);
+            });
+
+            unitSpawnerThread.start();
+
         }
         if (event.getSource() == MainMenu.optionsButton) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);

@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import sceneElements.ElementsHandler;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -13,13 +14,13 @@ import java.util.logging.Logger;
  */
 public class GameRunTime {
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
+    private static String SEPARATOR = File.separator;
 
     private Renderer renderer;
     private CoreEngine engine;
+    private boolean basePlaced = false;
 
-    Pane mainGamePane = null;
     static Scene mainGameScene = null;
-    Group mainGame = null;
 
     private static GameRunTime instance;
 
@@ -29,7 +30,7 @@ public class GameRunTime {
 
     /**
      * Constructor for the game run time.
-     * Initialises the engine, renderer, and unit spawner
+     * Initialises the engine, renderer, and unit unitSpawner
      */
     public GameRunTime() {
         instance = this;
@@ -83,9 +84,15 @@ public class GameRunTime {
     }
 
     public void startGame() {
-        UnitSpawner spawner = new UnitSpawner();
-        //dirty setting
-        spawner.setSpawnlimit(2);
-        engine.setSpawner(spawner);
+        BaseSpawner baseSpawner = new BaseSpawner();
+    }
+
+    // to notify the placement of the base
+    public void setBasePlaced(boolean basePlaced) {
+        this.basePlaced = basePlaced;
+    }
+
+    public boolean isBasePlaced() {
+        return basePlaced;
     }
 }

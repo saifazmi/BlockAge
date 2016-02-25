@@ -102,7 +102,7 @@ public class GameInterface {
             LambdaStore store = new LambdaStore();
             if (GameRunTime.getScene().getOnMouseClicked() != null && GameRunTime.getScene().getOnMouseClicked().equals(store.getSceneClickPlaceUnbreakableBlockade())) {
                 GameRunTime.getScene().setOnMouseClicked(null);
-            } else {
+            } else if (GameRunTime.Instance().isBasePlaced()) {
                 GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
             }
         });
@@ -149,6 +149,7 @@ public class GameInterface {
                 System.out.println("ADAFAA" + newWidth);
             }
         });
+        BorderPane.setMargin(bottomMenuBox, new Insets(12, 12, 12, 12));
         ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setBottom(bottomMenuBox);
     }
 

@@ -190,7 +190,6 @@ public class Renderer extends Group {
                 i = route.size();
             }
         }
-
         return lines;
     }
 

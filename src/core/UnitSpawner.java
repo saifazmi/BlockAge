@@ -3,6 +3,7 @@ package core;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import sceneElements.SpriteImage;
@@ -10,6 +11,7 @@ import sceneElements.SpriteImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Created by hung on 13/02/16.
@@ -19,11 +21,15 @@ public class UnitSpawner {
     private Graph graph = engine.getGraph();
     private Renderer renderer = Renderer.Instance();
 
+    private static final Logger LOG = Logger.getLogger(UnitSpawner.class.getName());
+    private static String SEPARATOR = File.separator;
+
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
     private int unitPoolCount = 0;
     private int totalSpawnables = 10;
     private int spawnCount = 0;
+    private GraphNode goal;
     private int spawnlimit;
     private Random rndSearchGen;
 
@@ -34,7 +40,6 @@ public class UnitSpawner {
 
     private static UnitSpawner instance;
 
-
     /**
      * Creates enemy unit for a game.
      * Instantiates here the list of names and description for units.
@@ -44,16 +49,17 @@ public class UnitSpawner {
         return instance;
     }
 
-    public UnitSpawner() {
+    public UnitSpawner(int spawnlimit, GraphNode goal) {
         instance = this;
-        names = new String[]{"Banshee", "Demon", "Death knight"};
-        descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
-        rndSearchGen = new Random(System.currentTimeMillis());
-        unitPool = new ArrayList<>();
-        // this should be passed in
-        GraphNode goal = graph.getNodes().get(graph.getNodes().size() - 1);
+        this.names = new String[]{"Banshee", "Demon", "Death knight"};
+        this.descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
+        this.rndSearchGen = new Random(System.currentTimeMillis());
+        this.unitPool = new ArrayList<>();
+        this.goal = goal;
+        this.spawnlimit = spawnlimit;
+
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-            CreateUnit(this.graph, this.renderer, goal);
+            CreateUnit(graph, renderer, goal);
         }
     }
 
@@ -151,7 +157,7 @@ public class UnitSpawner {
         spawnCount++;
 
         engine.getEntities().add(newUnit);
-        renderer.drawInitialEntity(newUnit);
+        Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
     /**

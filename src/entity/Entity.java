@@ -88,4 +88,3 @@ public abstract class Entity extends Observable {
         return result;
     }
 }
-
