@@ -23,10 +23,21 @@ Knows Bugs
 - Transitions don't work if unit doesn't spawn at (0,0)
 
 #### Renderer  
- - Route lines don't draw from the route start, but from the 2nd node
+- Route lines don't draw from the route start, but from the 2nd node
 
 #### Overlay  
- - ~~Hovering over the Blockade causes the grid to move (Paul is moving elements around to fix this)~~  
+- ~~Hovering over the Blockade causes the grid to move (Paul is moving elements around to fix this)~~  
 
 #### Renderer   
- - ~~Gambling Error - Occasionally program thinks it isn't on the FX Thread when it is. (Fixed - Duplicate line caused the error)~~
+- ~~Gambling Error - Occasionally program thinks it isn't on the FX 
+hread when it is. (Fixed - Duplicate line caused the error)~~  
+
+Contributors
+------------
+- [Saifullah Azmi](https://github.com/saif-azmi)  
+- [Dominic Walters](https://github.com/domWalters)  
+- [Evgeniy Kim](https://github.com/yev1master)  
+- [Anh Tuan Pham](https://github.com/istatsuki)  
+- [Hung Hoang](https://github.com/ParityB1t)  
+- [Paul Popa](https://github.com/PaulPopa)  
+
