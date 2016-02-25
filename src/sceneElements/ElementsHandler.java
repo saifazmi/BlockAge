@@ -3,17 +3,19 @@ package sceneElements;
 import core.CoreEngine;
 import core.GameInterface;
 import core.GameRunTime;
+import core.Renderer;
+import entity.Unit;
 import javafx.event.Event;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import lambdastorage.LambdaStore;
 import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
 import menus.OptionsMenu;
 import menus.PauseMenu;
-import test.Test;
 
 public class ElementsHandler {
 
@@ -26,18 +28,20 @@ public class ElementsHandler {
      */
     public static void handle(Event event) {
         // Elements from the Main Menu scene
+        CoreEngine engine = CoreEngine.Instance();
 
         if (event.getSource() == MainMenu.newGameButton) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
-            gameRunTime.getEngine().paused = false;
-            gameRunTime.getRenderer().calculateSpacing();
-            gameRunTime.getRenderer().initialDraw();
+            engine = CoreEngine.Instance();
+            engine.setPaused(false);
+            Renderer.Instance().calculateSpacing();
             gameRunTime.startGame();
             MenuHandler.setMainGameScene();
             GameInterface gameInterface = new GameInterface();
-            Test.test(gameRunTime);
+            //Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
+            Renderer.Instance().initialDraw();
         }
         if (event.getSource() == MainMenu.optionsButton) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
@@ -94,29 +98,48 @@ public class ElementsHandler {
 
         // Elements from the Pause Menu scene
         if (event.getSource() == PauseMenu.backGameButton) {
-            CoreEngine.paused = false;
+            engine.setPaused(false);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
-            CoreEngine.running = false;
+            engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
-        if(event.getSource() == GameInterface.playButton)
-        {
-            CoreEngine.paused = false;
+        if (event.getSource() == GameInterface.playButton) {
+            engine.setPaused(false);
         }
-        if(event.getSource() == GameInterface.pauseButton)
-        {
-            CoreEngine.paused = true;
+        if (event.getSource() == GameInterface.pauseButton) {
+            engine.setPaused(true);
         }
 
     }
 
     public static void handleKeys(KeyEvent event) {
+        CoreEngine engine = CoreEngine.Instance();
         KeyCode k = event.getCode();
-        if (k == KeyCode.ESCAPE && MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
-            CoreEngine.paused = true;
-            MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
+        if (MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
+            if (k == KeyCode.ESCAPE) {
+                engine.setPaused(true);
+                MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
+            } else if (k == KeyCode.B) {
+                LambdaStore store = new LambdaStore();
+                if (GameRunTime.getScene().getOnMouseClicked() != null && GameRunTime.getScene().getOnMouseClicked().equals(store.getSceneClickPlaceUnbreakableBlockade())) {
+                    GameRunTime.getScene().setOnMouseClicked(null);
+                } else {
+                    GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
+                }
+            } else if (k == KeyCode.P) {
+                if (engine.isPaused()) {
+                    engine.setPaused(false);
+                } else {
+                    engine.setPaused(true);
+                }
+            } else if (k == KeyCode.R) {
+                Node node = GameRunTime.getScene().getFocusOwner();
+                if (node instanceof SpriteImage) {
+                    ((Unit) ((SpriteImage) node).getEntity()).showTransition();
+                }
+            }
         }
     }
 }

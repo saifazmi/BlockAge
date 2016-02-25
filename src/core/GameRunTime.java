@@ -5,7 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import sceneElements.ElementsHandler;
 
 import java.io.File;
@@ -20,13 +19,9 @@ public class GameRunTime{
 
     private Renderer renderer;
     private CoreEngine engine;
-    private Stage primaryStage;
     private boolean basePlaced = false;
 
-    Pane mainGamePane = null;
     static Scene mainGameScene = null;
-    Group mainGame = null;
-
 
     private static GameRunTime instance;
 
@@ -34,8 +29,12 @@ public class GameRunTime{
         return instance;
     }
 
+    /**
+     * Constructor for the game run time.
+     * Initialises the engine, renderer, and unit spawner
+     */
     public GameRunTime() {
-        this.instance = this;
+        instance = this;
         Thread engThread = new Thread(() ->
         {
             this.engine = new CoreEngine();
@@ -52,24 +51,18 @@ public class GameRunTime{
         declareElements();
         this.renderer = new Renderer(mainGameScene);
         rendererSpecificInit();
-        //renderer.initialDraw();
     }
 
     public void declareElements() {
-        mainGamePane = new BorderPane();
-        mainGame = new Group(mainGamePane);
-        mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
-        mainGameScene.setOnKeyPressed(e -> ElementsHandler.handleKeys(e));
+        Pane mainGamePane = new BorderPane();
+        Group mainGame = new Group(mainGamePane);
+        mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());
+        mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
     }
 
-    public Renderer getRenderer() {
-        return this.renderer;
-    }
-
-    public CoreEngine getEngine() {
-        return this.engine;
-    }
-
+    /**
+     * Renderer specific initialisation that isn't necessary and could be partially removed.
+     */
     private void rendererSpecificInit() {
         mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
         {
@@ -93,7 +86,7 @@ public class GameRunTime{
 
     public void startGame()
     {
-        UnitSpawner spawner = new UnitSpawner(this, 1);
+        UnitSpawner spawner = new UnitSpawner(2);
         engine.setSpawner(spawner);
     }
 

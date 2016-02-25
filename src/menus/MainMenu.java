@@ -21,8 +21,6 @@ public class MainMenu implements Menu {
     private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered = null;
     private int spaceBetweenImgH = 50;
 
-    private static String SEPARATOR = File.separator;
-
     public MainMenu() {
         initialiseScene();
     }
@@ -37,6 +35,7 @@ public class MainMenu implements Menu {
         optionsButton = new Button();
         exitButton = new Button();
         b = new ButtonProperties();
+        String SEPARATOR = File.separator;
 
         newGameImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "new_game_button.png");
         newGameImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "new_game_button_hovered.png");

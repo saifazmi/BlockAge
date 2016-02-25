@@ -1,14 +1,10 @@
 package core;
 
 import entity.Entity;
-import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
-import javafx.application.Platform;
-import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,18 +17,29 @@ public class CoreEngine {
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
     private final int FRAME_RATE = 60;
 
-    public static boolean running;
-    public static boolean paused = false;
+    private boolean running;
+    private boolean paused = false;
     private long startTime;
     private Graph graph;
+    //Entites that the CoreEngine will 'update'
     private ArrayList<Entity> entities;
     private UnitSpawner spawner;
 
-    long deltaTime;
-
+    private long deltaTime;
     private boolean slept = false;
 
+    private static CoreEngine instance;
+
+    public static CoreEngine Instance() {
+        return instance;
+    }
+
+    /**
+     * The graph used by the game instance will be instantiated in the CoreEngine,
+     * All the nodes will be created and added to the graph, each will have their corresponding neighbours added
+     */
     public CoreEngine() {
+        instance = this;
         this.graph = null;
 
         Graph graph = new Graph();
@@ -55,15 +62,21 @@ public class CoreEngine {
 
     public Graph getGraph() {
         return graph;
+
     }
 
+    /**
+     * Called to start the game's ticker.
+     * The frame rate is 60 frames per second, so checks if its time to update yet (every 1/60 a second),
+     * if it is, update the game's state, otherwise wait until next frame. Waiting only occurs if this thread has not yet slept,
+     * because waiting will put the thread to sleep.
+     */
     public void startGame() {
-        this.running = true;
+        running = true;
         startTime = System.nanoTime();
         // @TODO in case it's not running
         while (running) {
-            while(paused)
-            {
+            while (paused) {
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
@@ -80,6 +93,14 @@ public class CoreEngine {
         }
     }
 
+    /**
+     * Checks if its time to update,
+     * this is done by checking if the change in time since the last update is larger than or equals to
+     * the frame rate (1/60 a second). Resets the time the clock starts counting for the next update if it is time to update
+     *
+     * @param startTime
+     * @return Whether its time to update or not
+     */
     private boolean isTimeToUpdate(long startTime) {
         boolean timeToUpdate = false;
 
@@ -95,6 +116,9 @@ public class CoreEngine {
         return timeToUpdate;
     }
 
+    /**
+     * Waits for the next frame, puts this thread to sleep whilst waiting
+     */
     private void waitForNextFrame() {
         try {
             Thread.sleep(950 / FRAME_RATE);
@@ -103,48 +127,47 @@ public class CoreEngine {
         }
     }
 
+    /**
+     * Updates all game objects that need updating, includes all the entites, spawner
+     */
     private void updateGameState() {
         //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
         if (entities != null) {
-            for (int i = 0; i < entities.size(); i++) {
-                // if the entity is a unit, update route if change route.
-                if(entities.get(i).getClass().getName() == "entity.Unit") {
-                    Unit a = (Unit) entities.get(i);
-                    List<Line> route = a.getCurrentRoute();
-                    if(a.routeChanged()){
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                // set the next route
-                                a.setCurrentRoute(GameRunTime.Instance().getRenderer().produceRoute(a.getRoute()));
-                                // remove the old drawings and draw the next route
-                                GameRunTime.Instance().getRenderer().produceRouteVisual(route, a.getCurrentRoute()).play();
-                                // notify that the unit has change route
-                            }
-                        });;
-                        a.setChangingRoute(false);
-                    }
-                    a.update();
-                } else {
-                    entities.get(i).update();
-                }
+            for (Entity entity : entities) {
+                entity.update();
             }
         }
 
-        // @TODO redundancy
-        //if (spawner != null) {
-          //  spawner.update();
-       // }
+//        if (spawner != null) {
+//            spawner.update();
+//        }
     }
 
-    public static void setEngineState(boolean running) {
-        CoreEngine.running = running;
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     public ArrayList<Entity> getEntities() {
         return entities;
     }
 
+    /**
+     * Sets the spawner for this engine to use
+     *
+     * @param spawner the spawner used
+     */
     public void setSpawner(UnitSpawner spawner) {
         this.spawner = spawner;
     }

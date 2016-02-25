@@ -4,17 +4,19 @@ import core.GameRunTime;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.GridPane;
+import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
-import searches.DepthFristSearch;
+import searches.DepthFirstSearch;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -27,16 +29,19 @@ import java.util.logging.Logger;
  */
 
 public class Unit extends Entity {
-    //@TODO: fix the move function, using text log
+    //@TODO: fix the move function
+    private Renderer renderer = Renderer.Instance();
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
     private static final Duration SPEED = Duration.millis(600);
 
+    //enum to indicate which search algorithm is being used by a Unit instance
     public enum Search {
         DFS,
         BFS,
         A_STAR
     }
 
+    //enum to indicate which sort algorithm is being used by a Unit instance
     public enum Sort {
         BUBBLE,
         SELECTION,
@@ -44,8 +49,7 @@ public class Unit extends Entity {
     }
 
     private List<GraphNode> route;
-    private List<Line> currentRoute;
-    private List<Line> linesOfRoute;
+
     private SequentialTransition visualTransition;
 
     private Graph graph;
@@ -54,46 +58,49 @@ public class Unit extends Entity {
     private Sort sort;
     private boolean changingRoute = true;
 
-    private Renderer renderer;
-
-    /*
-    Inherited parameters
-        private final int id;
-        private String name;
-        private String description;
-        protected GraphNode position;
-        protected double currentPixelX;
-        protected double currentPixelY;
-        protected SpriteImage sprite;
-     */
     private GraphNode nextNode;
     private boolean completedMove = true;
+    /*
+        Inherited parameters
+            protected final int id;
+            protected String name;
+            protected String description;
+            protected GraphNode position;
+            protected SpriteImage sprite;
+     */
 
-    public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal, Renderer renderer) {
+    /**
+     * Constructor for Unit used by UnitSpawner
+     *
+     * @param id       unit ID
+     * @param name     unit Name
+     * @param position Unit position in graph
+     * @param sprite   Unit's associated sprite
+     * @param search   Unit's search indicator, used for deciding search algorithm used
+     * @param sort     Unit's sort indicator, used for deciding sort algorithm used
+     * @param graph    The graph the unit is on
+     * @param goal     The goal node for the search algorithm
+     */
+    public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal) {
+
         super(id, name, position, sprite);
-
-        setPosition(position);
-        this.sprite = sprite;
-
         this.graph = graph;
         this.goal = goal;
         this.search = search;
         this.sort = sort;
-        this.renderer = renderer;
-
-        this.linesOfRoute = new ArrayList<>();
 
         decideRoute();
     }
 
-
+    /**
+     * Moves the unit up logically, i.e. change its graph position if there is no block there
+     *
+     * @return whether the move was successful
+     */
     public boolean moveUp() {
-
         // Has the unit moved
         boolean moved;
-
         GraphNode newPosition;
-
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() - 1) < 0) {
             moved = false;
@@ -111,13 +118,15 @@ public class Unit extends Entity {
         return moved;
     }
 
+    /**
+     * Moves the unit down logically, i.e. change its graph position if there is no block there
+     *
+     * @return whether the move was successful
+     */
     public boolean moveDown() {
-
         // Has the unit moved
         boolean moved;
-
         GraphNode newPosition;
-
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() + 1) >= Graph.HEIGHT) {
             moved = false;
@@ -128,20 +137,19 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Down: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-//            GameInterface.textInfoText.clear();
-//            GameInterface.textInfoText.setText("Move Down: " + newPosition.getX() + "," + newPosition.getY());
         }
-
         return moved;
     }
 
+    /**
+     * Moves the unit right logically, i.e. change its graph position if there is no block there
+     *
+     * @return whether the move was successful
+     */
     public boolean moveRight() {
-
         // Has the unit moved
         boolean moved;
-
         GraphNode newPosition;
-
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() + 1) >= Graph.WIDTH) {
             moved = false;
@@ -152,20 +160,19 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Right: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-//            GameInterface.textInfoText.clear();
-//            GameInterface.textInfoText.setText("Move Right: " + newPosition.getX() + "," + newPosition.getY());
         }
-
         return moved;
     }
 
+    /**
+     * Moves the unit left logically, i.e. change its graph position if there is no block there
+     *
+     * @return whether the move was successful
+     */
     public boolean moveLeft() {
-
         // Has the unit moved
         boolean moved;
-
         GraphNode newPosition;
-
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() - 1) < 0) {
             moved = false;
@@ -176,13 +183,17 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Left: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-//            GameInterface.textInfoText.clear();
-//            GameInterface.textInfoText.setText("Move Left: " + newPosition.getX() + "," + newPosition.getY());
         }
-
         return moved;
     }
 
+    /**
+     * Checks if the specified graph position has a block associated with it
+     *
+     * @param position the position to be checked
+     * @return whether the position has a block
+     * //@TODO comment on removing, adding units
+     */
     private boolean blockCheck(GraphNode position) {
 
         if (position.getBlockade() == null) {
@@ -197,100 +208,90 @@ public class Unit extends Entity {
     }
 
     /**
-     * Updates the unit's position per frame, called by CoreEngine
-     * uses same logic as followRoute() but with delay
-     * Does not include starting node
-     * Also note that its only changing the position of the Sprite ImageView, the actually rendering has to be updated by Renderer instant
-     * Recommend new method (or alter old method) so that it draws according to pixel position rather than logical position
+     * Updates the unit's position per frame, if it has completed its previous move, called by CoreEngine.
+     * Takes the first node from what remains of the route this unit is following and calculate the difference between
+     * that node and its current position, after that moves the unit with MoveUnit. This method also updates the unit's logical position,
+     * this is done after the unit moves graphically
      */
     @Override
     public void update() {
         if (completedMove) {
-            if(!changingRoute) {
 
-                if (nextNode != null)
-                    position = nextNode;
+            if (this.nextNode != null)
+                this.position = this.nextNode;
 
-                if (route.size() > 0) {
-                    nextNode = route.remove(0);
-                    int xChange = nextNode.getX() - position.getX();
-                    int yChange = nextNode.getY() - position.getY();
-                    completedMove = false;
-                    SetPositionAndSpeed(xChange, yChange);
+            if (route.size() > 0) {
+                this.completedMove = false;
+                this.nextNode = this.route.remove(0);
+                int x = this.nextNode.getX();
+                int y = this.nextNode.getY();
+                int xChange = this.nextNode.getX() - this.position.getX();
+                int yChange = this.nextNode.getY() - this.position.getY();
+                if (xChange + yChange > 1 || xChange + yChange < -1) {
+                    LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
+                            "Fatal error, check search implementation: " + this.search.toString());
+                    return;
+                }
+                if (logicalMove(xChange, yChange)) {
+                    double nextPixelX = x * this.renderer.getXSpacing();
+                    double nextPixelY = y * this.renderer.getYSpacing();
+
+                    TranslateTransition transition = new TranslateTransition(SPEED, sprite);
+                    transition.setToX(nextPixelX);
+                    transition.setToY(nextPixelY);
+                    transition.setOnFinished(e -> this.completedMove = true);
+                    transition.play();
+                } else {
+                    decideRoute();
+                    this.completedMove = true;
                 }
             }
+
+
         }
     }
 
-    private void SetPositionAndSpeed(int xChange, int yChange) {
-
-        int x = nextNode.getX();
-        int y = nextNode.getY();
-
-        if (logicalMove(xChange, yChange)) {
-            double spacingX = renderer.getXSpacing();
-            double spacingY = renderer.getYSpacing();
-
-            double nextPixelX = x * spacingX;
-            double nextPixelY = y * spacingY;
-
-            TranslateTransition transition = new TranslateTransition(SPEED, sprite);
-            transition.setToX(nextPixelX);
-            transition.setToY(nextPixelY);
-            transition.setOnFinished(e -> completedMove = true);
-            transition.play();
-        } else {
-            decideRoute();
-            if(this.getVisualTransition() != null)
-            {
-                this.getVisualTransition().play();
-            }
-            completedMove = true;
-        }
-    }
-
+    /**
+     * Does a logical move of the unit in the specified direction, i.e. move it in the graph and change its graph position
+     *
+     * @param xChange amount of nodes to move in the x axis
+     * @param yChange amount of nodes to move in the y axis
+     * @return if the logical move was successful
+     */
     private boolean logicalMove(int xChange, int yChange) {
-        boolean success = true;
+        boolean success;
+
         if (xChange == 0) {
             if (yChange > 0) {
-                success = success && moveDown();
+                success = moveDown();
             } else {
-                success = success && moveUp();
+                success = moveUp();
             }
         } else {
             if (xChange > 0) {
-                success = success && moveRight();
+                success = moveRight();
             } else {
-                success = success && moveLeft();
+                success = moveLeft();
             }
         }
         return success;
     }
 
-    /**
-     * Should be called as soon as sprite is rendered
-     *
-     * @param x
-     * @param y
-     */
-    public void setCurrentPixel(double x, double y) {
-        currentPixelX = x;
-        currentPixelY = y;
-    }
 
     private void decideRoute() {
         LOG.log(Level.INFO,  getPosition().toString());
         if (search == Search.DFS) {
-            LOG.log(Level.INFO, "using dfs");
-            setRoute(DepthFristSearch.Instance().findPathFrom(getPosition(), this.goal));
+            //System.out.println("using dfs");
+            route = DepthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
         } else if (search == Search.BFS) {
-            LOG.log(Level.INFO, "using bfs");
-            setRoute(BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal));
+            //System.out.println("using bfs");
+            route = BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
         } else {
-            LOG.log(Level.INFO, "using astar");
-            setRoute(AStar.search(getPosition(), this.goal));
+
+            //System.out.println("using astar");
+            route = AStar.search(getPosition(), this.goal);
         }
-        LOG.log(Level.INFO,  route.toString());
+        //System.out.println(route);
     }
 
 
@@ -316,42 +317,36 @@ public class Unit extends Entity {
         return route;
     }
 
-    public void setRoute(List<GraphNode> route)
-    {
+    public void setRoute(List<GraphNode> route) {
         this.route = route;
-        changingRoute = true;
-        setChanged();
-        notifyObservers();
     }
 
-    public boolean routeChanged() {
-        return changingRoute;
-    }
-
-    public void setChangingRoute(boolean bool) {
-        this.changingRoute = bool;
-    }
-
-    public List<Line> getLinesOfRoute()
-    {
-        return linesOfRoute;
-    }
-    public SequentialTransition getVisualTransition()
-    {
+    public SequentialTransition getVisualTransition() {
         return visualTransition;
     }
-    public void setVisualTransition(SequentialTransition visualTransition)
-    {
+
+    public void setVisualTransition(SequentialTransition visualTransition) {
         this.visualTransition = visualTransition;
     }
 
-    // get the current route
-    public List<Line> getCurrentRoute() {
-        return currentRoute;
-    }
+    public void showTransition() {
+        SequentialTransition currentTrans = this.getVisualTransition();
+        if (currentTrans == null && this.getRoute() != null) {
+            SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
+            this.setVisualTransition(transition);
+            transition.play();
+        } else if (currentTrans != null) {
+            currentTrans.stop();
+            ObservableList<Animation> transitions = currentTrans.getChildren();
 
-    // set the current route
-    public void setCurrentRoute(List<Line> currentRoute) {
-        this.currentRoute = currentRoute;
+            for (Animation transition : transitions) {
+
+                FadeTransition trans = (FadeTransition) transition;
+                Line line = (Line) trans.getNode();
+                line.setOpacity(0.0);
+            }
+
+            this.setVisualTransition(null);
+        }
     }
 }
