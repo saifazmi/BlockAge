@@ -21,7 +21,7 @@ public class LambdaStore {
     private static final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
         LOG.log(Level.INFO, "Click registered at:  (x, " + e.getX() + "), (y, " + e.getY() + ")");
         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0, 0), null);
-        Image image = ((ImageView)GameInterface.unsortableButton.getGraphic()).getImage();
+        Image image = ((ImageView) GameInterface.unsortableButton.getGraphic()).getImage();
         SpriteImage spriteImage = new SpriteImage(image, blockadeInstance);
         spriteImage.setFitWidth(GameRunTime.Instance().getRenderer().getXSpacing());
         spriteImage.setFitHeight(GameRunTime.Instance().getRenderer().getYSpacing());
@@ -37,8 +37,8 @@ public class LambdaStore {
         }
     };
 
-    public LambdaStore(){
-           }
+    public LambdaStore() {
+    }
 
     public EventHandler<MouseEvent> getSceneClickPlaceUnbreakableBlockade() {
         System.out.println("Blockade Event Handler Created");
