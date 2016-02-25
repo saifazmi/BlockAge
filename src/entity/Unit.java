@@ -1,10 +1,12 @@
 package entity;
 
+import core.GameRunTime;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
@@ -41,6 +43,7 @@ public class Unit extends Entity {
     }
 
     private List<GraphNode> route;
+    private List<Line> currentRoute;
     private List<Line> linesOfRoute;
     private SequentialTransition visualTransition;
 
@@ -48,6 +51,7 @@ public class Unit extends Entity {
     private GraphNode goal;
     private Search search;
     private Sort sort;
+    private boolean changingRoute = false;
 
     private Renderer renderer;
 
@@ -310,8 +314,17 @@ public class Unit extends Entity {
     public void setRoute(List<GraphNode> route)
     {
         this.route = route;
+        changingRoute = true;
         setChanged();
         notifyObservers();
+    }
+
+    public boolean routeChanged() {
+        return changingRoute;
+    }
+
+    public void setChangingRoute(boolean bool) {
+        this.changingRoute = bool;
     }
 
     public List<Line> getLinesOfRoute()
@@ -325,5 +338,15 @@ public class Unit extends Entity {
     public void setVisualTransition(SequentialTransition visualTransition)
     {
         this.visualTransition = visualTransition;
+    }
+
+    // get the current route
+    public List<Line> getCurrentRoute() {
+        return currentRoute;
+    }
+
+    // set the current route
+    public void setCurrentRoute(List<Line> currentRoute) {
+        this.currentRoute = currentRoute;
     }
 }

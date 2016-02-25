@@ -1,10 +1,14 @@
 package core;
 
 import entity.Entity;
+import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
+import javafx.application.Platform;
+import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,13 +107,37 @@ public class CoreEngine {
         //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
         if (entities != null) {
             for (int i = 0; i < entities.size(); i++) {
-                entities.get(i).update();
+                Entity a = entities.get(i);
+
+                // if the entity is a unit, update route if change route.
+                if(a.getClass().getName() == "entity.Unit") {
+                    Unit b = (Unit) a;
+                    List<Line> route = b.getCurrentRoute();
+                    b.update();
+                    if(b.routeChanged()){
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                // forget the current route
+                                GameRunTime.Instance().getRenderer().forgetRouteVisual(route);
+                                // set the next route
+                                b.setCurrentRoute(GameRunTime.Instance().getRenderer().produceRoute(b.getRoute()));
+                                // draw the next route
+                                GameRunTime.Instance().getRenderer().produceRouteVisual(b.getCurrentRoute()).play();
+                                // notify that the unit has change route
+                                b.setChangingRoute(false);
+                            }
+                        });;
+                    }
+                } else {
+                    a.update();
+                }
             }
         }
 
         // @TODO redundancy
         //if (spawner != null) {
-           // spawner.update();
+          //  spawner.update();
        // }
     }
 

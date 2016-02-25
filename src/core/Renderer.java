@@ -134,6 +134,22 @@ public class Renderer extends Group
         return trans;
     }
 
+    // delete the last route visual
+    public void forgetRouteVisual(List<Line> lines)
+    {
+        for (int i = 0; i < lines.size(); i++)
+        {
+            Line line = lines.get(i);
+            line.setStroke(Color.WHITE);
+            if(this.getChildren().contains(line))
+            {
+                this.getChildren().remove(line);
+            }
+        }
+        System.out.println("DDDDDD" +
+                "DDDDDDDDDDD - Route Forgotten");
+    }
+
     public ArrayList<Line> produceRoute(List<GraphNode> route)
     {
         ArrayList<Line> lines = new ArrayList<>();

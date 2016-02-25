@@ -146,7 +146,10 @@ public class UnitSpawner {
 
         runTime.getEngine().getEntities().add(newUnit);
         runTime.getRenderer().drawInitialEntity(newUnit);
-        runTime.getRenderer().produceRouteVisual(runTime.getRenderer().produceRoute(newUnit.getRoute())).play();
+        // set the current route
+        newUnit.setCurrentRoute(GameRunTime.Instance().getRenderer().produceRoute(newUnit.getRoute()));
+        // draw the route
+        runTime.getRenderer().produceRouteVisual(newUnit.getCurrentRoute()).play();
     }
 
     private void despawnUnit(Unit unit) {
