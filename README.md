@@ -1,11 +1,11 @@
 # BestRTS
 Team Name: D3  
 
-### Key Bindings  
+## Key Bindings  
 - P: pause units
-- R: toggle route display 
+- R: toggle route display  
 
-### Knows Bugs    
+## Knows Bugs    
 #### Breadth First Search
 - Occasionally can't find a route even though routes are possible.  
 
@@ -22,7 +22,7 @@ Team Name: D3
  - Route lines don't draw from the route start, but from the 2nd node
 
 #### Overlay  
- - Hovering over the Blockade causes the grid to move (Paul is moving elements around to fix this)  
+ - ~~Hovering over the Blockade causes the grid to move (Paul is moving elements around to fix this)~~  
 
 #### Renderer   
  - ~~Gambling Error - Occasionally program thinks it isn't on the FX Thread when it is. (Fixed - Duplicate line caused the error)~~
