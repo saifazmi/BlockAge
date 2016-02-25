@@ -105,7 +105,7 @@ public class GameInterface {
             {
                 GameRunTime.getScene().setOnMouseClicked(null);
             }
-            else
+            else if(GameRunTime.Instance().isBasePlaced())
             {
                 GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
             }

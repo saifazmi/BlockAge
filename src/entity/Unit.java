@@ -16,6 +16,7 @@ import searches.DepthFristSearch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +52,7 @@ public class Unit extends Entity {
     private GraphNode goal;
     private Search search;
     private Sort sort;
-    private boolean changingRoute = false;
+    private boolean changingRoute = true;
 
     private Renderer renderer;
 
@@ -191,6 +192,7 @@ public class Unit extends Entity {
 
             return true;
         }
+        this.changingRoute = true;
         return false;
     }
 
@@ -204,16 +206,18 @@ public class Unit extends Entity {
     @Override
     public void update() {
         if (completedMove) {
+            if(!changingRoute) {
 
-            if (nextNode != null)
-                position = nextNode;
+                if (nextNode != null)
+                    position = nextNode;
 
-            if (route.size() > 0) {
-                nextNode = route.remove(0);
-                int xChange = nextNode.getX() - position.getX();
-                int yChange = nextNode.getY() - position.getY();
-                completedMove = false;
-                SetPositionAndSpeed(xChange, yChange);
+                if (route.size() > 0) {
+                    nextNode = route.remove(0);
+                    int xChange = nextNode.getX() - position.getX();
+                    int yChange = nextNode.getY() - position.getY();
+                    completedMove = false;
+                    SetPositionAndSpeed(xChange, yChange);
+                }
             }
         }
     }
@@ -275,17 +279,18 @@ public class Unit extends Entity {
     }
 
     private void decideRoute() {
+        LOG.log(Level.INFO,  getPosition().toString());
         if (search == Search.DFS) {
-            System.out.println("using dfs");
+            LOG.log(Level.INFO, "using dfs");
             setRoute(DepthFristSearch.Instance().findPathFrom(getPosition(), this.goal));
         } else if (search == Search.BFS) {
-            System.out.println("using bfs");
+            LOG.log(Level.INFO, "using bfs");
             setRoute(BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal));
         } else {
-            System.out.println("using astar");
+            LOG.log(Level.INFO, "using astar");
             setRoute(AStar.search(getPosition(), this.goal));
         }
-        System.out.println(route);
+        LOG.log(Level.INFO,  route.toString());
     }
 
 

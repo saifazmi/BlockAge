@@ -8,6 +8,7 @@ import graph.GraphNode;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Line;
 import sceneElements.SpriteImage;
 
 import java.io.File;
@@ -101,6 +102,7 @@ public class UnitSpawner {
                     LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
                     renderer.drawInitialEntity(base);
                     goal.setBase(base);
+                    GameRunTime.Instance().setBasePlaced(true);
 
                     // remove the setting function
                     runTime.getScene().setOnMouseClicked(null);
@@ -149,7 +151,7 @@ public class UnitSpawner {
         // set the current route
         newUnit.setCurrentRoute(GameRunTime.Instance().getRenderer().produceRoute(newUnit.getRoute()));
         // draw the route
-        runTime.getRenderer().produceRouteVisual(newUnit.getCurrentRoute()).play();
+        runTime.getRenderer().produceRouteVisual(new ArrayList<Line>(), newUnit.getCurrentRoute()).play();
     }
 
     private void despawnUnit(Unit unit) {

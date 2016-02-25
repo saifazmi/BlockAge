@@ -21,6 +21,7 @@ public class GameRunTime{
     private Renderer renderer;
     private CoreEngine engine;
     private Stage primaryStage;
+    private boolean basePlaced = false;
 
     Pane mainGamePane = null;
     static Scene mainGameScene = null;
@@ -94,5 +95,14 @@ public class GameRunTime{
     {
         UnitSpawner spawner = new UnitSpawner(this, 1);
         engine.setSpawner(spawner);
+    }
+
+    // to notify the placement of the base
+    public void setBasePlaced(boolean basePlaced) {
+        this.basePlaced = basePlaced;
+    }
+
+    public boolean isBasePlaced() {
+        return basePlaced;
     }
 }

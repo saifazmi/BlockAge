@@ -107,30 +107,26 @@ public class CoreEngine {
         //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
         if (entities != null) {
             for (int i = 0; i < entities.size(); i++) {
-                Entity a = entities.get(i);
-
                 // if the entity is a unit, update route if change route.
-                if(a.getClass().getName() == "entity.Unit") {
-                    Unit b = (Unit) a;
-                    List<Line> route = b.getCurrentRoute();
-                    b.update();
-                    if(b.routeChanged()){
+                if(entities.get(i).getClass().getName() == "entity.Unit") {
+                    Unit a = (Unit) entities.get(i);
+                    List<Line> route = a.getCurrentRoute();
+                    if(a.routeChanged()){
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                // forget the current route
-                                GameRunTime.Instance().getRenderer().forgetRouteVisual(route);
                                 // set the next route
-                                b.setCurrentRoute(GameRunTime.Instance().getRenderer().produceRoute(b.getRoute()));
-                                // draw the next route
-                                GameRunTime.Instance().getRenderer().produceRouteVisual(b.getCurrentRoute()).play();
+                                a.setCurrentRoute(GameRunTime.Instance().getRenderer().produceRoute(a.getRoute()));
+                                // remove the old drawings and draw the next route
+                                GameRunTime.Instance().getRenderer().produceRouteVisual(route, a.getCurrentRoute()).play();
                                 // notify that the unit has change route
-                                b.setChangingRoute(false);
                             }
                         });;
+                        a.setChangingRoute(false);
                     }
-                } else {
                     a.update();
+                } else {
+                    entities.get(i).update();
                 }
             }
         }

@@ -57,7 +57,6 @@ public class BreadthFirstSearch {
         while (!frontier.isEmpty()) {
 
             current = frontier.poll();
-
             if (!visited.contains(current) && current.getBlockade() == null) {
 
                 if (current.equals(endNode)) {
@@ -76,6 +75,7 @@ public class BreadthFirstSearch {
                     visited.add(current);
                     frontier.addAll(current.getSuccessors());
 
+                    //??
                     for (GraphNode successor : current.getSuccessors()) {
                         if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
                             possiblePath.put(successor, current);

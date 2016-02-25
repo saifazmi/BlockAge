@@ -116,12 +116,25 @@ public class Renderer extends Group
         return success;
     }
 
-    public SequentialTransition produceRouteVisual(List<Line> lines)
+    // delete the old route and draw new route
+    public SequentialTransition produceRouteVisual(List<Line> oldRoute, List<Line> newRoute)
     {
-        SequentialTransition trans = new SequentialTransition();
-        for (int i = 0; i < lines.size(); i++)
+        for (int i = 0; i <  oldRoute.size(); i++)
         {
-            Line line = lines.get(i);
+            Line line = oldRoute.get(i);
+            if(this.getChildren().contains(line))
+            {
+                this.getChildren().remove(line);
+            }
+        }
+
+        System.out.println("DDDDDD" +
+                "DDDDDDDDDDD - Route Forgotten");
+
+        SequentialTransition trans = new SequentialTransition();
+        for (int i = 0; i < newRoute.size(); i++)
+        {
+            Line line = newRoute.get(i);
             line.setOpacity(0.0);
             if(!this.getChildren().contains(line))
             {
@@ -130,24 +143,11 @@ public class Renderer extends Group
                 trans.getChildren().add(lineTransition);
             }
         }
+        if(newRoute.isEmpty()) {
+            System.out.println("Unit dies");
+        }
         System.out.println("DDDDDDDDDDDDDDDDD - Route Produced");
         return trans;
-    }
-
-    // delete the last route visual
-    public void forgetRouteVisual(List<Line> lines)
-    {
-        for (int i = 0; i < lines.size(); i++)
-        {
-            Line line = lines.get(i);
-            line.setStroke(Color.WHITE);
-            if(this.getChildren().contains(line))
-            {
-                this.getChildren().remove(line);
-            }
-        }
-        System.out.println("DDDDDD" +
-                "DDDDDDDDDDD - Route Forgotten");
     }
 
     public ArrayList<Line> produceRoute(List<GraphNode> route)
