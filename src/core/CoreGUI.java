@@ -33,8 +33,7 @@ public class CoreGUI extends Application {
         MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         primaryStage.setOnCloseRequest(e -> {
             CoreEngine engine = CoreEngine.Instance();
-            if(engine != null)
-            {
+            if (engine != null) {
                 CoreEngine.Instance().setRunning(false);
             }
             Platform.exit();
@@ -42,7 +41,11 @@ public class CoreGUI extends Application {
         primaryStage.show();
     }
 
-    public int getHEIGHT() { return 720; }
+    public int getHEIGHT() {
+        return 720;
+    }
 
-    public int getWIDTH() { return 1280; }
+    public int getWIDTH() {
+        return 1280;
+    }
 }

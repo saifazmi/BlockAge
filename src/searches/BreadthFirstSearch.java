@@ -2,7 +2,11 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by hung on 06/02/16.
@@ -36,11 +40,11 @@ public class BreadthFirstSearch {
     }
 
     /**
-     * Finds a path from a start node to the end node using DFS
-     * The returned path should not include the start node
+     * Finds a path from a start node to the end node using BFS, this utilises a queue which is just a linked list
+     * The returned path should not include the start node.
      *
      * @param startNode node search starts from
-     * @param endNode   node search terminates with, the goal node, usually enemy base
+     * @param endNode   node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
     public List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
@@ -70,7 +74,7 @@ public class BreadthFirstSearch {
                     }
 
                     Collections.reverse(path);
-                    System.out.println(path);
+                    //System.out.println(path);
                     return path;
                 } else {
                     visited.add(current);
@@ -85,4 +89,9 @@ public class BreadthFirstSearch {
         }
         return null;
     }
+
+    public ArrayList<GraphNode> returnVisited() {
+        return visited;
+    }
+
 }

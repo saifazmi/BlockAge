@@ -11,7 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lambdastorage.LambdaStore;
-import menus.*;
+import menus.MainMenu;
+import menus.Menu;
+import menus.MenuHandler;
+import menus.OptionsMenu;
+import menus.PauseMenu;
 
 public class ElementsHandler {
 
@@ -25,6 +29,7 @@ public class ElementsHandler {
     public static void handle(Event event) {
         // Elements from the Main Menu scene
         CoreEngine engine = CoreEngine.Instance();
+
         if (event.getSource() == MainMenu.newGameButton) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
@@ -100,12 +105,10 @@ public class ElementsHandler {
             engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
-        if(event.getSource() == GameInterface.playButton)
-        {
+        if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
         }
-        if(event.getSource() == GameInterface.pauseButton)
-        {
+        if (event.getSource() == GameInterface.pauseButton) {
             engine.setPaused(true);
         }
 
@@ -114,40 +117,26 @@ public class ElementsHandler {
     public static void handleKeys(KeyEvent event) {
         CoreEngine engine = CoreEngine.Instance();
         KeyCode k = event.getCode();
-        if(MenuHandler.currentScene == MenuHandler.MAIN_GAME)
-        {
+        if (MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
             if (k == KeyCode.ESCAPE) {
                 engine.setPaused(true);
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
-            }
-            else if (k == KeyCode.B)
-            {
+            } else if (k == KeyCode.B) {
                 LambdaStore store = new LambdaStore();
-                if(GameRunTime.getScene().getOnMouseClicked() != null && GameRunTime.getScene().getOnMouseClicked().equals(store.getSceneClickPlaceUnbreakableBlockade()))
-                {
+                if (GameRunTime.getScene().getOnMouseClicked() != null && GameRunTime.getScene().getOnMouseClicked().equals(store.getSceneClickPlaceUnbreakableBlockade())) {
                     GameRunTime.getScene().setOnMouseClicked(null);
-                }
-                else
-                {
+                } else {
                     GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
                 }
-            }
-            else if (k == KeyCode.P)
-            {
-                if(engine.isPaused())
-                {
+            } else if (k == KeyCode.P) {
+                if (engine.isPaused()) {
                     engine.setPaused(false);
-                }
-                else
-                {
+                } else {
                     engine.setPaused(true);
                 }
-            }
-            else if (k == KeyCode.R)
-            {
+            } else if (k == KeyCode.R) {
                 Node node = GameRunTime.getScene().getFocusOwner();
-                if(node instanceof SpriteImage)
-                {
+                if (node instanceof SpriteImage) {
                     ((Unit) ((SpriteImage) node).getEntity()).showTransition();
                 }
             }

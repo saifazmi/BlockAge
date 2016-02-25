@@ -10,5 +10,6 @@ import javafx.scene.Scene;
 public interface Menu {
     int WIDTH = 1280;
     int HEIGHT = 720;
+
     Scene getScene();
 }

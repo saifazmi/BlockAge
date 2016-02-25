@@ -13,8 +13,7 @@ import java.util.List;
  * <p>
  * Barebones search test.
  */
-public class Test_Search
-{
+public class Test_Search {
     private static GraphNode startNode;
     private static GraphNode goalNode;
 
@@ -49,8 +48,7 @@ public class Test_Search
         List<GraphNode> path = AStar.search(startNode, goalNode);
 
         assert path != null;
-        for (GraphNode aPath : path)
-        {
+        for (GraphNode aPath : path) {
             System.out.println("Node at: " + aPath.getX() + " , " + aPath.getY());
         }
 

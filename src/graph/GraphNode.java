@@ -67,8 +67,7 @@ public class GraphNode {
         StringBuilder sb = new StringBuilder();
         sb.append("GraphNode{x=").append(x).append(", y=").append(y).append('}');
         sb.append(" ");
-        for (GraphNode successor : this.successors)
-        {
+        for (GraphNode successor : this.successors) {
             sb.append("(").append(successor.getX()).append(",").append(successor.getY()).append(")");
         }
         return sb.toString();

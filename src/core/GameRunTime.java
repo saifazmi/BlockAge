@@ -17,12 +17,20 @@ public class GameRunTime {
     private Renderer renderer;
     private CoreEngine engine;
 
-    private static Scene mainGameScene = null;
+    Pane mainGamePane = null;
+    static Scene mainGameScene = null;
+    Group mainGame = null;
+
     private static GameRunTime instance;
+
     public static GameRunTime Instance() {
         return instance;
     }
 
+    /**
+     * Constructor for the game run time.
+     * Initialises the engine, renderer, and unit spawner
+     */
     public GameRunTime() {
         instance = this;
         Thread engThread = new Thread(() ->
@@ -47,9 +55,12 @@ public class GameRunTime {
         Pane mainGamePane = new BorderPane();
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());
-        mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys); //equivalent to e -> ElementsHandler.handleKeys(e)//
+        mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
     }
 
+    /**
+     * Renderer specific initialisation that isn't necessary and could be partially removed.
+     */
     private void rendererSpecificInit() {
         mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
         {
@@ -71,11 +82,10 @@ public class GameRunTime {
         return mainGameScene;
     }
 
-    public void startGame()
-    {
+    public void startGame() {
         UnitSpawner spawner = new UnitSpawner();
         //dirty setting
-        spawner.setSpawnlimit(1);
+        spawner.setSpawnlimit(2);
         engine.setSpawner(spawner);
     }
 }

@@ -40,16 +40,23 @@ public abstract class Entity extends Observable {
     public int getId() {
         return id;
     }
-    public String getName() { return name; }
+
+    public String getName() {
+        return name;
+    }
+
     public GraphNode getPosition() {
         return position;
     }
+
     public void setPosition(GraphNode position) {
         this.position = position;
     }
+
     public SpriteImage getSprite() {
         return sprite;
     }
+
     public void setSprite(SpriteImage sprite) {
         this.sprite = sprite;
     }
