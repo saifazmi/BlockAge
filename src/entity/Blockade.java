@@ -53,7 +53,8 @@ public class Blockade extends Entity {
      * Left empty as nothing is necessary.
      */
     @Override
-    public void update() { }
+    public void update() {
+    }
 
 
     /**
@@ -147,10 +148,9 @@ public class Blockade extends Entity {
      * @param blockadeInstance the blockade information to be created
      * @return blockade the blockade object to be created
      */
-    public static Blockade randomBlockage(GameRunTime runTime, Blockade blockadeInstance) {
+    public static Blockade randomBlockage(Blockade blockadeInstance) {
         GraphNode node = CoreEngine.Instance().getGraph().nodeWith(blockadeInstance.getPosition());
-        if(node != null && !node.equals(new GraphNode(0,0)))
-        {
+        if (node != null && !node.equals(new GraphNode(0, 0))) {
             Blockade blockade = new Blockade(calcId(), blockadeInstance.getName(), node, blockadeInstance.getSprite());
             if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
                 blockade.getPosition().setBlockade(blockade);

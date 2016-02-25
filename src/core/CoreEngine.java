@@ -138,9 +138,9 @@ public class CoreEngine {
             }
         }
 
-//        if (spawner != null) {
-//            spawner.update();
-//        }
+        if (spawner != null) {
+            spawner.update();
+        }
     }
 
     public boolean isPaused() {

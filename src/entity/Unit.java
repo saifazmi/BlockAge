@@ -1,6 +1,5 @@
 package entity;
 
-import core.GameRunTime;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
@@ -8,7 +7,6 @@ import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
-import javafx.scene.layout.GridPane;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
@@ -18,7 +16,6 @@ import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
 
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -279,7 +276,7 @@ public class Unit extends Entity {
 
 
     private void decideRoute() {
-        LOG.log(Level.INFO,  getPosition().toString());
+        LOG.log(Level.INFO, getPosition().toString());
         if (search == Search.DFS) {
             //System.out.println("using dfs");
             route = DepthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);

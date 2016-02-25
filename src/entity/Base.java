@@ -1,8 +1,6 @@
 package entity;
 
-import core.GameRunTime;
 import graph.GraphNode;
-import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
 /**
@@ -17,5 +15,6 @@ public class Base extends Entity {
     }
 
     @Override
-    public void update() { }
+    public void update() {
+    }
 }

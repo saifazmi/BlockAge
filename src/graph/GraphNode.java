@@ -105,7 +105,11 @@ public class GraphNode {
         return units;
     }
 
-    public Base getBase() { return base; }
+    public Base getBase() {
+        return base;
+    }
 
-    public void setBase(Base base) { this.base = base; }
+    public void setBase(Base base) {
+        this.base = base;
+    }
 }

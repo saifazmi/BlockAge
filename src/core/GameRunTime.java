@@ -1,6 +1,5 @@
 package core;
 
-import graph.GraphNode;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -13,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * Created by Dominic on 09/02/2016.
  */
-public class GameRunTime{
+public class GameRunTime {
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
     private static String SEPARATOR = File.separator;
 
@@ -31,7 +30,7 @@ public class GameRunTime{
 
     /**
      * Constructor for the game run time.
-     * Initialises the engine, renderer, and unit spawner
+     * Initialises the engine, renderer, and unit unitSpawner
      */
     public GameRunTime() {
         instance = this;
@@ -84,10 +83,8 @@ public class GameRunTime{
         return mainGameScene;
     }
 
-    public void startGame()
-    {
-        UnitSpawner spawner = new UnitSpawner(2);
-        engine.setSpawner(spawner);
+    public void startGame() {
+        BaseSpawner baseSpawner = new BaseSpawner();
     }
 
     // to notify the placement of the base

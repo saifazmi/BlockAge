@@ -1,21 +1,16 @@
 package core;
 
-import entity.Base;
-import entity.Blockade;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
-import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Line;
 import javafx.scene.input.KeyCode;
 import sceneElements.SpriteImage;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -34,9 +29,8 @@ public class UnitSpawner {
     private int unitPoolCount = 0;
     private int totalSpawnables = 10;
     private int spawnCount = 0;
-    private int spawnlimit;
-    private GameRunTime runTime;
     private GraphNode goal;
+    private int spawnlimit;
     private Random rndSearchGen;
 
     private String[] names;
@@ -45,6 +39,7 @@ public class UnitSpawner {
     private Image image = null;
 
     private static UnitSpawner instance;
+
     /**
      * Creates enemy unit for a game.
      * Instantiates here the list of names and description for units.
@@ -54,81 +49,17 @@ public class UnitSpawner {
         return instance;
     }
 
-    public UnitSpawner(int spawnlimit) {
+    public UnitSpawner(int spawnlimit, GraphNode goal) {
         instance = this;
-        names = new String[]{"Banshee", "Demon", "Death knight"};
-        descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
-        rndSearchGen = new Random(System.currentTimeMillis());
-        unitPool = new ArrayList<>();
-
+        this.names = new String[]{"Banshee", "Demon", "Death knight"};
+        this.descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
+        this.rndSearchGen = new Random(System.currentTimeMillis());
+        this.unitPool = new ArrayList<>();
+        this.goal = goal;
         this.spawnlimit = spawnlimit;
-        // create a number of blockade randomly
-        int blockadeNeeded = 0;
-        while (blockadeNeeded > 0) {
-            Random rand = new Random();
-            int randomX = rand.nextInt(graph.HEIGHT);
-            int randomY = rand.nextInt(graph.WIDTH);
-            Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
-            Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
-            SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
-            spriteImage1.setFitWidth(renderer.getXSpacing());
-            spriteImage1.setFitHeight(renderer.getYSpacing());
-            spriteImage1.setPreserveRatio(false);
-            spriteImage1.setSmooth(true);
-            blockadeInstance.setSprite(spriteImage1);
-            Blockade blockade = Blockade.randomBlockage(runTime, blockadeInstance);
-            if (blockade != null) {
-                renderer.drawInitialEntity(blockade);
-                blockadeNeeded--;
-                LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
-            }
-            // this should be passed in
-            for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-                CreateUnit(this.graph, this.renderer, goal);
-            }
 
-            // setting function for choosing the goal of the game
-            runTime.getScene().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
-                    // get the limitation on where to click to choose the goal
-                    double xSpacing = renderer.getXSpacing();
-                    double ySpacing = renderer.getYSpacing();
-                    double x = e.getX();
-                    double y = e.getY();
-                    double logicalX = Math.floor(x / xSpacing);
-                    double logicalY = Math.floor(y / ySpacing);
-
-                    // checking if the position is within the boundaries
-                    if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
-                        // set the goal
-                        goal = engine.getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
-                        System.out.println(goal.toString());
-
-                        // make the base
-                        Base base = new Base(9999, "Base", goal, null);
-                        Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Blockade_sprite.png");
-                        SpriteImage spriteImage = new SpriteImage(image, base);
-                        spriteImage.setFitWidth(renderer.getXSpacing());
-                        spriteImage.setFitHeight(renderer.getYSpacing());
-                        spriteImage.setPreserveRatio(false);
-                        spriteImage.setSmooth(true);
-                        base.setSprite(spriteImage);
-                        LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
-                        renderer.drawInitialEntity(base);
-                        goal.setBase(base);
-                        GameRunTime.Instance().setBasePlaced(true);
-
-                        // remove the setting function
-                        runTime.getScene().setOnMouseClicked(null);
-
-                        // spawning the units
-                        for (unitPoolCount = 0; unitPoolCount < spawnlimit; unitPoolCount++) {
-                            spawnUnit();
-                        }
-                    }
-                }
-            });
+        for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
+            CreateUnit(graph, renderer, goal);
         }
     }
 
@@ -226,7 +157,7 @@ public class UnitSpawner {
         spawnCount++;
 
         engine.getEntities().add(newUnit);
-        renderer.drawInitialEntity(newUnit);
+        Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
     /**
@@ -255,6 +186,7 @@ public class UnitSpawner {
             }
         }
     }
+
     /**
      * Sets the limit to the number of unit to spawn in one game
      *
