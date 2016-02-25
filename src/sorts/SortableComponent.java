@@ -20,7 +20,7 @@ public class SortableComponent {
         this.value = value;
     }
 
-    public SortableComponent(ArrayList<Integer> value, int comparing1, int comparing2, boolean swapped){
+    public SortableComponent(ArrayList<Integer> value, int comparing1, int comparing2, boolean swapped) {
         this.value = value;
         this.comparing1 = comparing1;
         this.comparing2 = comparing2;

@@ -8,7 +8,6 @@ package core;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import menus.MenuHandler;
 
@@ -42,7 +41,6 @@ public class CoreGUI extends Application {
 
         try {
             CoreGUI.primaryStage = primaryStage;
-            BorderPane root = new BorderPane();
 
             @SuppressWarnings("unused")
             MenuHandler menuHandler = new MenuHandler(primaryStage);

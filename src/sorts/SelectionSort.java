@@ -5,13 +5,13 @@ import java.util.Collections;
 
 /**
  * Created by dckxqt on 19-Feb-16.
- *
+ * <p>
  * WORKS, visualization logic untested, cant really see until its made
- *
  */
 public class SelectionSort {
     /**
      * Selection sort, not sure if functional
+     *
      * @param size
      * @return
      */
@@ -28,23 +28,23 @@ public class SelectionSort {
             state.add(x);
         }
         Collections.shuffle(state);
-        int i,j;
-        for (j = 0; j<size-1;j++) {
+        int i, j;
+        for (j = 0; j < size - 1; j++) {
             int min = j;
-            for (i= j+1;i<size;i++) {
-                SortableComponent s = new SortableComponent(getByValue(state),min,i,false);
+            for (i = j + 1; i < size; i++) {
+                SortableComponent s = new SortableComponent(getByValue(state), min, i, false);
                 allStates.add(s);
-                if ((Integer)state.get(i) < (Integer)state.get(min)) {
+                if ((Integer) state.get(i) < (Integer) state.get(min)) {
                     min = i;
-                    SortableComponent c = new SortableComponent(getByValue(state),j,i,true);
+                    SortableComponent c = new SortableComponent(getByValue(state), j, i, true);
                     allStates.add(c);
                 }
             }
-            if(min!=j) { //swapping
+            if (min != j) { //swapping
                 Integer temp = (Integer) state.get(j);
-                state.set(j,state.get(min));
-                state.set(min,temp);
-                SortableComponent s = new SortableComponent(getByValue(state),min,j,true);
+                state.set(j, state.get(min));
+                state.set(min, temp);
+                SortableComponent s = new SortableComponent(getByValue(state), min, j, true);
                 allStates.add(s);
             }
         }
@@ -53,10 +53,11 @@ public class SelectionSort {
 
     /**
      * Pass by value
+     *
      * @param list
      * @return
      */
-    public static ArrayList<Integer> getByValue(ArrayList<Integer> list){
+    public static ArrayList<Integer> getByValue(ArrayList<Integer> list) {
         ArrayList s = new ArrayList<Integer>(list);
         return s;
     }

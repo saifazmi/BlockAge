@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class AStar {
      * @param goal  Goal Node
      * @return
      */
-    public static ArrayList<GraphNode> search(GraphNode start, GraphNode goal) {
+    public static List<GraphNode> search(GraphNode start, GraphNode goal) {
 
         Set<GraphNode> visited = new LinkedHashSet<>();
         Map<GraphNode, GraphNode> pred = new LinkedHashMap<>();

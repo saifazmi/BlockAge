@@ -29,10 +29,14 @@ public class ElementsHandler {
         if (event.getSource() == MainMenu.newGameButton) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
+            gameRunTime.getEngine().paused = false;
+            gameRunTime.getRenderer().calculateSpacing();
+            gameRunTime.startGame();
             MenuHandler.setMainGameScene();
             GameInterface gameInterface = new GameInterface();
             Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
+            gameRunTime.getRenderer().initialDraw();
         }
         if (event.getSource() == MainMenu.optionsButton) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
@@ -89,18 +93,26 @@ public class ElementsHandler {
 
         // Elements from the Pause Menu scene
         if (event.getSource() == PauseMenu.backGameButton) {
-            CoreEngine.running = true;
+            CoreEngine.paused = false;
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
+            CoreEngine.running = false;
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
+        if (event.getSource() == GameInterface.playButton) {
+            CoreEngine.paused = false;
+        }
+        if (event.getSource() == GameInterface.pauseButton) {
+            CoreEngine.paused = true;
+        }
+
     }
 
     public static void handleKeys(KeyEvent event) {
         KeyCode k = event.getCode();
         if (k == KeyCode.ESCAPE && MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
-            CoreEngine.running = false;
+            CoreEngine.paused = true;
             MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
         }
     }

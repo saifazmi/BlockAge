@@ -5,12 +5,14 @@ import graph.Graph;
 import graph.GraphNode;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +43,9 @@ public class Unit extends Entity {
     }
 
     private List<GraphNode> route;
+    private List<Line> linesOfRoute;
     private SequentialTransition visualTransition;
+
     private Graph graph;
     private GraphNode goal;
     private Search search;
@@ -62,62 +66,39 @@ public class Unit extends Entity {
     private GraphNode nextNode;
     private boolean completedMove = true;
 
-
-    public Unit(int id, String name, String description, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
-        super(id, name, description, position, sprite);
-        this.route = route;
-        this.graph = graph;
-        this.position = position;
-        this.sprite = sprite;
-        this.renderer = renderer;
-    }
-
-    public Unit(int id, String name, GraphNode position, SpriteImage sprite, List<GraphNode> route, Graph graph, Renderer renderer) {
-        super(id, name, position, sprite);
-        this.route = route;
-        this.graph = graph;
-        this.position = position;
-        this.sprite = sprite;
-        this.renderer = renderer;
-
-        //route is assumed to contain the starting and finishing nodes, the following code checks to see if this is held, and if it isn't adds the start node to the route before doing the transition and then bins it again.
-        if (!route.get(0).equals(position)) {
-            route.add(0, position);
-        }
-        showRouteTransition();              //@TODO temporary, remove after testing
-        route.remove(0);
-    }
-
     /**
      * Constructor for Unit used by UnitSpawner
-     * @param id unit ID
-     * @param name unit Name
+     *
+     * @param id       unit ID
+     * @param name     unit Name
      * @param position Unit position in graph
-     * @param sprite Unit's associated sprite
-     * @param search Unit's search indicator, used for deciding search algorithm used
-     * @param sort Unit's sort indicator, used for deciding sort algorithm used
-     * @param graph The graph the unit is on
-     * @param goal The goal node for the search algorithm
+     * @param sprite   Unit's associated sprite
+     * @param search   Unit's search indicator, used for deciding search algorithm used
+     * @param sort     Unit's sort indicator, used for deciding sort algorithm used
+     * @param graph    The graph the unit is on
+     * @param goal     The goal node for the search algorithm
      * @param renderer The renderer to draw the unit's sprite to
      */
     public Unit(int id, String name, GraphNode position, SpriteImage sprite, Search search, Sort sort, Graph graph, GraphNode goal, Renderer renderer) {
         super(id, name, position, sprite);
 
-        this.graph = graph;
         setPosition(position);
         this.sprite = sprite;
-        this.renderer = renderer;
+
+        this.graph = graph;
+        this.goal = goal;
         this.search = search;
         this.sort = sort;
-        this.goal = goal;
+        this.renderer = renderer;
+
+        this.linesOfRoute = new ArrayList<>();
 
         decideRoute();
-
-        //route.remove(0);
     }
 
     /**
      * Moves the unit up logically, i.e. change its graph position if there is no block there
+     *
      * @return whether the move was successful
      */
     public boolean moveUp() {
@@ -146,6 +127,7 @@ public class Unit extends Entity {
 
     /**
      * Moves the unit down logically, i.e. change its graph position if there is no block there
+     *
      * @return whether the move was successful
      */
     public boolean moveDown() {
@@ -174,6 +156,7 @@ public class Unit extends Entity {
 
     /**
      * Moves the unit right logically, i.e. change its graph position if there is no block there
+     *
      * @return whether the move was successful
      */
     public boolean moveRight() {
@@ -202,6 +185,7 @@ public class Unit extends Entity {
 
     /**
      * Moves the unit left logically, i.e. change its graph position if there is no block there
+     *
      * @return whether the move was successful
      */
     public boolean moveLeft() {
@@ -230,6 +214,7 @@ public class Unit extends Entity {
 
     /**
      * Checks if the specified graph position has a block associated with it
+     *
      * @param position the position to be checked
      * @return whether the position has a block
      * //@TODO comment on removing, adding units
@@ -277,6 +262,7 @@ public class Unit extends Entity {
      * the update function can make the next move.
      * If the logical move fails, i.e. there was a block, then decide a new route based on current position and search assigned.
      * In the latter case, make completeMove true anyway so that the update function may make the next move
+     *
      * @param xChange amount of change in x direction
      * @param yChange amount of change in y direction
      */
@@ -295,18 +281,20 @@ public class Unit extends Entity {
             TranslateTransition transition = new TranslateTransition(SPEED, sprite);
             transition.setToX(nextPixelX);
             transition.setToY(nextPixelY);
-            transition.setOnFinished(e -> {
-                completedMove = true;
-            });
+            transition.setOnFinished(e -> completedMove = true);
             transition.play();
         } else {
             decideRoute();
+            if (this.getVisualTransition() != null) {
+                this.getVisualTransition().play();
+            }
             completedMove = true;
         }
     }
 
     /**
      * Does a logical move of the unit in the specified direction, i.e. move it in the graph and change its graph position
+     *
      * @param xChange amount of nodes to move in the x axis
      * @param yChange amount of nodes to move in the y axis
      * @return if the logical move was successful
@@ -331,6 +319,7 @@ public class Unit extends Entity {
 
     /**
      * Should be called as soon as sprite is rendered
+     *
      * @param x
      * @param y
      */
@@ -375,17 +364,25 @@ public class Unit extends Entity {
         return sort;
     }
 
-
-    public void showRouteTransition() {
-        this.visualTransition = renderer.produceRouteVisual(route); //Generates route line on unit spawn
-    }
-
-    public void cancelRouteTransition() {
-        this.visualTransition.stop();
-        renderer.removeTransition(this.visualTransition);
-    }
-
     public List<GraphNode> getRoute() {
         return route;
+    }
+
+    public void setRoute(List<GraphNode> route) {
+        this.route = route;
+        setChanged();
+        notifyObservers();
+    }
+
+    public List<Line> getLinesOfRoute() {
+        return linesOfRoute;
+    }
+
+    public SequentialTransition getVisualTransition() {
+        return visualTransition;
+    }
+
+    public void setVisualTransition(SequentialTransition visualTransition) {
+        this.visualTransition = visualTransition;
     }
 }

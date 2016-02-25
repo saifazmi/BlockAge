@@ -1,9 +1,12 @@
 package lambdastorage;
 
+import core.GameInterface;
 import core.GameRunTime;
 import entity.Blockade;
 import graph.GraphNode;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
@@ -15,26 +18,30 @@ import java.util.logging.Logger;
  */
 public class LambdaStore {
     private static final Logger LOG = Logger.getLogger(LambdaStore.class.getName());
-    private GameRunTime runTime;
-    private final EventHandler<MouseEvent> sceneClickPlaceBlockade = e -> {
+    private static final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
         LOG.log(Level.INFO, "Click registered at:  (x, " + e.getX() + "), (y, " + e.getY() + ")");
         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0, 0), null);
-        SpriteImage spriteImage = new SpriteImage("http://imgur.com/dZZdmUr.png", blockadeInstance);
+        Image image = ((ImageView) GameInterface.unsortableButton.getGraphic()).getImage();
+        SpriteImage spriteImage = new SpriteImage(image, blockadeInstance);
+        spriteImage.setFitWidth(GameRunTime.Instance().getRenderer().getXSpacing());
+        spriteImage.setFitHeight(GameRunTime.Instance().getRenderer().getYSpacing());
+        spriteImage.setPreserveRatio(false);
+        spriteImage.setSmooth(true);
         blockadeInstance.setSprite(spriteImage);
-        Blockade blockade = Blockade.createBlockade(e, runTime, blockadeInstance);
+        Blockade blockade = Blockade.createBlockade(e, GameRunTime.Instance(), blockadeInstance);
         if (blockade != null) {
             LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
-            runTime.getRenderer().drawInitialEntity(blockade);
+            GameRunTime.Instance().getRenderer().drawInitialEntity(blockade);
         } else {
             LOG.log(Level.INFO, "Blockade creation failed. Request rejected, node has contents.");
         }
     };
 
-    public LambdaStore(GameRunTime runTime) {
-        this.runTime = runTime;
+    public LambdaStore() {
     }
 
-    public EventHandler<MouseEvent> getSceneClickPlaceBlockade() {
-        return sceneClickPlaceBlockade;
+    public EventHandler<MouseEvent> getSceneClickPlaceUnbreakableBlockade() {
+        System.out.println("Blockade Event Handler Created");
+        return sceneClickPlaceUnbreakableBlockade;
     }
 }

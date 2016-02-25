@@ -18,6 +18,7 @@ public class CoreEngine {
     private final int FRAME_RATE = 60;
 
     public static boolean running;
+    public static boolean paused = false;
     private long startTime;
     private Graph graph;
     //Entites that the CoreEngine will 'update'
@@ -68,6 +69,13 @@ public class CoreEngine {
         startTime = System.nanoTime();
         // @TODO in case it's not running
         while (running) {
+            while (paused) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             if (isTimeToUpdate(startTime)) {
                 updateGameState();
                 this.slept = false;
@@ -82,6 +90,7 @@ public class CoreEngine {
      * Checks if its time to update,
      * this is done by checking if the change in time since the last update is larger than or equals to
      * the frame rate (1/60 a second). Resets the time the clock starts counting for the next update if it is time to update
+     *
      * @param startTime
      * @return Whether its time to update or not
      */
@@ -110,6 +119,7 @@ public class CoreEngine {
             LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
+
     /**
      * Updates all game objects that need updating, includes all the entites, spawner
      */
@@ -125,15 +135,19 @@ public class CoreEngine {
             spawner.update();
         }
     }
+
     /**
      * Sets engine running state
+     *
      * @param running whether the engine is running
      */
     public static void setEngineState(boolean running) {
         CoreEngine.running = running;
     }
+
     /**
      * Gets all the entities the engine is suppose to update
+     *
      * @return the list of updatable entities
      */
     public ArrayList<Entity> getEntities() {
@@ -142,6 +156,7 @@ public class CoreEngine {
 
     /**
      * Sets the spawner for this engine to use
+     *
      * @param spawner the spawner used
      */
     public void setSpawner(UnitSpawner spawner) {

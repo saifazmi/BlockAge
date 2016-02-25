@@ -3,11 +3,11 @@ package core;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
+import javafx.scene.image.Image;
 import sceneElements.SpriteImage;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -32,6 +32,7 @@ public class UnitSpawner {
      * Creates enemy unit for a game.
      * Instantiates here the list of names and description for units.
      * Calls the CreateUnit method for a certain amount specified by programmer.
+     *
      * @param runTime the 'Game Instance' this spawner is used for.
      */
     public UnitSpawner(GameRunTime runTime) {
@@ -56,18 +57,18 @@ public class UnitSpawner {
      * Create a new Unit with the appropriate search and sort algorithm indicator 'attached'.
      * Sets the 2-way relationship between the sprite and the unit.
      * Adds this newly created unit to the 'Pool' of units
-     * @param graph The graph the Unit will be on, passed to Unit Constructor
+     *
+     * @param graph    The graph the Unit will be on, passed to Unit Constructor
      * @param renderer The Renderer the Unit will render its Sprite to, passed to Unit Constructor
-     * @param goal The Goal node to which the Unit's search will use, passed to Unit Constructor
+     * @param goal     The Goal node to which the Unit's search will use, passed to Unit Constructor
      * @return A new Unit
      */
     private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
-
-        SpriteImage sprite = new SpriteImage("http://imgur.com/FAt5VBo.png", null);
-        sprite.setOnMouseClicked(e ->
-        {
-            sprite.requestFocus();
-        });
+        String SEPARATOR = File.separator;
+        //new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
+        Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+        SpriteImage sprite = new SpriteImage(image, null);
+        sprite.setOnMouseClicked(e -> sprite.requestFocus());
 
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
@@ -98,11 +99,12 @@ public class UnitSpawner {
 
         runTime.getEngine().getEntities().add(newUnit);
         runTime.getRenderer().drawInitialEntity(newUnit);
-        runTime.getRenderer().produceRouteVisual(newUnit.getRoute());
+        runTime.getRenderer().produceRouteVisual(runTime.getRenderer().produceRoute(newUnit.getRoute())).play();
     }
 
     /**
      * Moves the unit back into the pool if its not needed
+     *
      * @param unit The Unit to move back
      */
     private void despawnUnit(Unit unit) {
@@ -129,6 +131,7 @@ public class UnitSpawner {
 
     /**
      * Sets the limit to the number of unit to spawn in one game
+     *
      * @param spawnlimit number of unit allowed to spawn
      */
     public void setSpawnlimit(int spawnlimit) {

@@ -2,8 +2,7 @@ package sorts;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+
 /**
  * Created by Caitlyn PLS on 19-Feb-16
  * WORKS
@@ -16,10 +15,11 @@ public class QuickSort {
 
     /**
      * Pre-quicksort formatting
+     *
      * @param size
      * @return
      */
-    public  ArrayList<Integer> sort(int size){
+    public ArrayList<Integer> sort(int size) {
         if (size < 3) {
             System.out.println("SORT: Input too low, returned null");
             return null;
@@ -41,37 +41,37 @@ public class QuickSort {
     /**
      * Code taken and edited from User djitz on GitHub
      * Pointers on pivot
+     *
      * @param input
      * @return
      */
-    private ArrayList<Integer> quickSort(ArrayList<Integer> input){
+    private ArrayList<Integer> quickSort(ArrayList<Integer> input) {
 
-        if(input.size() <= 1){
+        if (input.size() <= 1) {
             return input;
         }
 
-        int middle = (int) Math.ceil((double)input.size() / 2);
+        int middle = (int) Math.ceil((double) input.size() / 2);
         int pivot = input.get(middle);
 
         ArrayList<Integer> less = new ArrayList<Integer>();
         ArrayList<Integer> greater = new ArrayList<Integer>();
 
         for (int i = 0; i < input.size(); i++) {
-            if(input.get(i) <= pivot){
-                if(i == middle){
+            if (input.get(i) <= pivot) {
+                if (i == middle) {
                     continue;
                 }
                 less.add(input.get(i));
-            }
-            else{
+            } else {
                 greater.add(input.get(i));
             }
         }
-        SortableComponent s = new SortableComponent(less,pivot,pivot,false);
+        SortableComponent s = new SortableComponent(less, pivot, pivot, false);
         ArrayList qp = new ArrayList<Integer>();
         qp.add(pivot);
-        SortableComponent x = new SortableComponent(qp,pivot,pivot,false);
-        SortableComponent y = new SortableComponent(greater,pivot,pivot,false);
+        SortableComponent x = new SortableComponent(qp, pivot, pivot, false);
+        SortableComponent y = new SortableComponent(greater, pivot, pivot, false);
         System.out.println("Adding");
 
         allStates.add(s);
@@ -82,12 +82,13 @@ public class QuickSort {
 
     /**
      * Code taken and edited from User djitz on GitHub
+     *
      * @param less
      * @param pivot
      * @param greater
      * @return
      */
-    private ArrayList<Integer> concatenate(ArrayList<Integer> less, int pivot, ArrayList<Integer> greater){
+    private ArrayList<Integer> concatenate(ArrayList<Integer> less, int pivot, ArrayList<Integer> greater) {
 
         ArrayList<Integer> list = new ArrayList<Integer>();
 

@@ -4,7 +4,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import sceneElements.ElementsHandler;
 
 import java.util.logging.Logger;
@@ -22,11 +21,18 @@ public class GameRunTime {
     static Scene mainGameScene = null;
     Group mainGame = null;
 
+    private static GameRunTime instance;
+
+    public static GameRunTime Instance() {
+        return instance;
+    }
+
     /**
      * Constructor for the game run time.
      * Initialises the engine, renderer, and unit spawner
      */
     public GameRunTime() {
+        this.instance = this;
         Thread engThread = new Thread(() ->
         {
             this.engine = new CoreEngine();
@@ -43,12 +49,7 @@ public class GameRunTime {
         declareElements();
         this.renderer = new Renderer(mainGameScene);
         rendererSpecificInit();
-        renderer.initialDraw();
-
-        UnitSpawner spawner = new UnitSpawner(this);
-        //dirty setting
-        spawner.setSpawnlimit(1);
-        engine.setSpawner(spawner);
+        //renderer.initialDraw();
     }
 
     public void declareElements() {
@@ -60,6 +61,7 @@ public class GameRunTime {
 
     /**
      * Get the renderer to draw on
+     *
      * @return the renderer
      */
     public Renderer getRenderer() {
@@ -68,6 +70,7 @@ public class GameRunTime {
 
     /**
      * Get the engine the game is playing on
+     *
      * @return the engine
      */
     public CoreEngine getEngine() {
@@ -87,7 +90,6 @@ public class GameRunTime {
             this.renderer.redraw();
         });
         ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
-        this.renderer.initialDraw();
     }
 
     /**
@@ -97,5 +99,12 @@ public class GameRunTime {
      */
     public static Scene getScene() {
         return mainGameScene;
+    }
+
+    public void startGame() {
+        UnitSpawner spawner = new UnitSpawner(this);
+        //dirty setting
+        spawner.setSpawnlimit(1);
+        engine.setSpawner(spawner);
     }
 }
