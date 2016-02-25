@@ -15,6 +15,9 @@ import java.util.Random;
  * Created by hung on 13/02/16.
  */
 public class UnitSpawner {
+    private CoreEngine engine = CoreEngine.Instance();
+    private Graph graph = engine.getGraph();
+    private Renderer renderer = Renderer.Instance();
 
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
@@ -22,7 +25,6 @@ public class UnitSpawner {
     private int totalSpawnables = 10;
     private int spawnCount = 0;
     private int spawnlimit;
-    private GameRunTime runTime;
     private Random rndSearchGen;
 
     private String[] names;
@@ -30,27 +32,28 @@ public class UnitSpawner {
     private int cooldown = 60;
     private Image image = null;
 
+    private static UnitSpawner instance;
+
+
     /**
      * Creates enemy unit for a game.
      * Instantiates here the list of names and description for units.
      * Calls the CreateUnit method for a certain amount specified by programmer.
-     *
-     * @param runTime the 'Game Instance' this spawner is used for.
      */
-    public UnitSpawner(GameRunTime runTime) {
+    public static UnitSpawner Instance() {
+        return instance;
+    }
+
+    public UnitSpawner() {
+        instance = this;
         names = new String[]{"Banshee", "Demon", "Death knight"};
         descriptions = new String[]{"Depth First Search", "Breadth First Search", "A* Search", "Selection Sort", "Insertion Sort", "Bubble Sort"};
         rndSearchGen = new Random(System.currentTimeMillis());
         unitPool = new ArrayList<>();
-
-        this.runTime = runTime;
-
-        Graph graph = runTime.getEngine().getGraph();
-        Renderer renderer = runTime.getRenderer();
+        // this should be passed in
         GraphNode goal = graph.getNodes().get(graph.getNodes().size() - 1);
-
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-            CreateUnit(graph, renderer, goal);
+            CreateUnit(this.graph, this.renderer, goal);
         }
     }
 
@@ -87,7 +90,7 @@ public class UnitSpawner {
             image = imageBanshee;
         }
         SpriteImage sprite = new SpriteImage(image, null);
-        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal, renderer);
+        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
         sprite.setEntity(unit);
 
         // focus sprite and displays text when clicked on it
@@ -111,15 +114,15 @@ public class UnitSpawner {
             Image img = new Image(sprite.getImage().impl_getUrl().substring(0, sprite.getImage().impl_getUrl().length() - 5) + ".png");
             KeyCode k = e.getCode();
             if (k == KeyCode.S) {
-                System.out.println(runTime.getEngine().getEntities().size());
-                for (int i = 0; i < runTime.getEngine().getEntities().size(); i++) {
-                    System.out.println(runTime.getEngine().getEntities().get(i).getName());
-                    if (runTime.getEngine().getEntities().get(i).getSprite().getImage().impl_getUrl().contains("2.0s")) {
-                        runTime.getEngine().getEntities().get(i).getSprite().setImage(imageDemon);
-                    } else if (runTime.getEngine().getEntities().get(i).getSprite().getImage().impl_getUrl().contains("3.0s")) {
-                        runTime.getEngine().getEntities().get(i).getSprite().setImage(imageDk);
-                    } else if (runTime.getEngine().getEntities().get(i).getSprite().getImage().impl_getUrl().contains("4.0s")) {
-                        runTime.getEngine().getEntities().get(i).getSprite().setImage(imageBanshee);
+                System.out.println(engine.getEntities().size());
+                for (int i = 0; i < engine.getEntities().size(); i++) {
+                    System.out.println(engine.getEntities().get(i).getName());
+                    if (engine.getEntities().get(i).getSprite().getImage().impl_getUrl().contains("2.0s")) {
+                        engine.getEntities().get(i).getSprite().setImage(imageDemon);
+                    } else if (engine.getEntities().get(i).getSprite().getImage().impl_getUrl().contains("3.0s")) {
+                        engine.getEntities().get(i).getSprite().setImage(imageDk);
+                    } else if (engine.getEntities().get(i).getSprite().getImage().impl_getUrl().contains("4.0s")) {
+                        engine.getEntities().get(i).getSprite().setImage(imageBanshee);
                     }
                 }
                 GameInterface.unitDescriptionText.clear();
@@ -137,17 +140,16 @@ public class UnitSpawner {
      */
     private void spawnUnit() {
         Unit newUnit;
-        Graph graph = this.runTime.getEngine().getGraph();
 
         if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
         } else {
-            newUnit = CreateUnit(runTime.getEngine().getGraph(), runTime.getRenderer(), graph.getNodes().get(graph.getNodes().size() - 1));
+            newUnit = CreateUnit(graph, renderer, graph.getNodes().get(graph.getNodes().size() - 1));
         }
         spawnCount++;
-        runTime.getEngine().getEntities().add(newUnit);
-        runTime.getRenderer().drawInitialEntity(newUnit);
-        runTime.getRenderer().produceRouteVisual(runTime.getRenderer().produceRoute(newUnit.getRoute())).play();
+
+        engine.getEntities().add(newUnit);
+        renderer.drawInitialEntity(newUnit);
     }
 
     /**

@@ -17,23 +17,29 @@ public class CoreEngine {
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
     private final int FRAME_RATE = 60;
 
-    public static boolean running;
-    public static boolean paused = false;
+    private boolean running;
+    private boolean paused = false;
     private long startTime;
     private Graph graph;
     //Entites that the CoreEngine will 'update'
     private ArrayList<Entity> entities;
     private UnitSpawner spawner;
 
-    long deltaTime;
-
+    private long deltaTime;
     private boolean slept = false;
+
+    private static CoreEngine instance;
+
+    public static CoreEngine Instance() {
+        return instance;
+    }
 
     /**
      * The graph used by the game instance will be instantiated in the CoreEngine,
      * All the nodes will be created and added to the graph, each will have their corresponding neighbours added
      */
     public CoreEngine() {
+        instance = this;
         this.graph = null;
 
         Graph graph = new Graph();
@@ -66,7 +72,7 @@ public class CoreEngine {
      * because waiting will put the thread to sleep.
      */
     public void startGame() {
-        this.running = true;
+        running = true;
         startTime = System.nanoTime();
         // @TODO in case it's not running
         while (running) {
@@ -137,20 +143,22 @@ public class CoreEngine {
         }
     }
 
-    /**
-     * Sets engine running state
-     *
-     * @param running whether the engine is running
-     */
-    public static void setEngineState(boolean running) {
-        CoreEngine.running = running;
+    public boolean isPaused() {
+        return paused;
     }
 
-    /**
-     * Gets all the entities the engine is suppose to update
-     *
-     * @return the list of updatable entities
-     */
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
     public ArrayList<Entity> getEntities() {
         return entities;
     }

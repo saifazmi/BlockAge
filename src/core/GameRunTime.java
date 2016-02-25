@@ -32,7 +32,7 @@ public class GameRunTime {
      * Initialises the engine, renderer, and unit spawner
      */
     public GameRunTime() {
-        this.instance = this;
+        instance = this;
         Thread engThread = new Thread(() ->
         {
             this.engine = new CoreEngine();
@@ -52,28 +52,10 @@ public class GameRunTime {
     }
 
     public void declareElements() {
-        mainGamePane = new BorderPane();
-        mainGame = new Group(mainGamePane);
-        mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
-        mainGameScene.setOnKeyPressed(e -> ElementsHandler.handleKeys(e));
-    }
-
-    /**
-     * Get the renderer to draw on
-     *
-     * @return the renderer
-     */
-    public Renderer getRenderer() {
-        return this.renderer;
-    }
-
-    /**
-     * Get the engine the game is playing on
-     *
-     * @return the engine
-     */
-    public CoreEngine getEngine() {
-        return this.engine;
+        Pane mainGamePane = new BorderPane();
+        Group mainGame = new Group(mainGamePane);
+        mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());
+        mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
     }
 
     /**
@@ -101,7 +83,7 @@ public class GameRunTime {
     }
 
     public void startGame() {
-        UnitSpawner spawner = new UnitSpawner(this);
+        UnitSpawner spawner = new UnitSpawner();
         //dirty setting
         spawner.setSpawnlimit(2);
         engine.setSpawner(spawner);

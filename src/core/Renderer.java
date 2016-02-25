@@ -17,22 +17,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Renderer extends Group {
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 
     private Scene scene;
     private List<Entity> entitiesToDraw;
-
     private double xSpacing;
     private double ySpacing;
-
     private ArrayList<Double> spacingOutput;
+    private static Renderer instance;
+
+    public static Renderer Instance() {
+        return instance;
+    }
 
     public Renderer(Scene scene) {
         super();
+        instance = this;
         this.scene = scene;
         this.entitiesToDraw = new ArrayList<>();
+    }
+
+    public double getXSpacing() {
+        return xSpacing;
+    }
+
+    public double getYSpacing() {
+        return ySpacing;
     }
 
     /**
@@ -68,7 +81,6 @@ public class Renderer extends Group {
      * @return success boolean representing the success of the operation
      */
     public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
-        boolean success;
         for (int i = 0; i < xAccumulator + 1; i++) {
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
             line.setStroke(Color.LIGHTGREY);
@@ -79,8 +91,7 @@ public class Renderer extends Group {
             line.setStroke(Color.LIGHTGREY);
             this.getChildren().add(line);
         }
-        success = true;
-        return success;
+        return true;
     }
 
     /**
@@ -97,8 +108,8 @@ public class Renderer extends Group {
      */
     public void calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
-        double pixelWidth = scene.getWidth() - GameInterface.rightPaneWidth; //subtract the right sidebar pixelWidth TODO @TODO//
-        double pixelHeight = scene.getHeight() - GameInterface.bottomPaneHeight;// GameInterface.topPaneHeight; //subtract the bottom bar height TODO @TODO//
+        double pixelWidth = scene.getWidth() - GameInterface.rightPaneWidth; //subtract the right sidebar pixelWidth
+        double pixelHeight = scene.getHeight() - GameInterface.bottomPaneHeight;//subtract the bottom bar height
 
         int width = Graph.WIDTH;
         int height = Graph.HEIGHT;
@@ -144,7 +155,6 @@ public class Renderer extends Group {
 
         sprite.setFitWidth(xSpacing);
         sprite.setFitHeight(ySpacing);
-        //sprite.setPreserveRatio(true);
         sprite.setX(node.getX() * xSpacing);
         sprite.setY(node.getY() * ySpacing);
         success = this.getChildren().add(sprite);
@@ -154,8 +164,7 @@ public class Renderer extends Group {
 
     public SequentialTransition produceRouteVisual(List<Line> lines) {
         SequentialTransition trans = new SequentialTransition();
-        for (int i = 0; i < lines.size(); i++) {
-            Line line = lines.get(i);
+        for (Line line : lines) {
             line.setOpacity(0.0);
             if (!this.getChildren().contains(line)) {
                 this.getChildren().add(line);
@@ -163,7 +172,6 @@ public class Renderer extends Group {
                 trans.getChildren().add(lineTransition);
             }
         }
-        System.out.println("DDDDDDDDDDDDDDDDD - Route Produced");
         return trans;
     }
 
@@ -186,31 +194,11 @@ public class Renderer extends Group {
         return lines;
     }
 
-    /**
-     * Get the x spacing
-     *
-     * @return the xSpacing
-     */
-    public double getXSpacing() {
-        return xSpacing;
-    }
-
-    /**
-     * Get the y spacing
-     *
-     * @return the ySpacing
-     */
-    public double getYSpacing() {
-        return ySpacing;
-    }
-
-    /**
-     * Get the entities list
-     *
-     * @return the entities list
-     */
-    public List<Entity> getEntitiesToDraw() {
-        return entitiesToDraw;
+    public ArrayList<Line> produceRoute(List<GraphNode> route, GraphNode start) {
+        ArrayList<GraphNode> nodes = new ArrayList<>();
+        nodes.add(start);
+        nodes.addAll(route.stream().collect(Collectors.toList()));
+        return produceRoute(nodes);
     }
 
     /**

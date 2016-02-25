@@ -18,7 +18,7 @@ public class Graph {
     private List<GraphNode> nodes;
 
     public Graph() {
-        this.nodes = new ArrayList<GraphNode>();
+        this.nodes = new ArrayList<>();
     }
 
     public GraphNode nodeWith(GraphNode node) {

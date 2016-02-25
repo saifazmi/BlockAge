@@ -23,7 +23,7 @@ public class DepthFirstSearch {
      */
     public DepthFirstSearch() {
         visited = new ArrayList<>();
-        frontier = new Stack();
+        frontier = new Stack<>();
     }
 
     public static DepthFirstSearch Instance() {
@@ -49,7 +49,7 @@ public class DepthFirstSearch {
 
         frontier.push(startNode);
 
-        ArrayList<GraphNode> path = new ArrayList<GraphNode>();
+        ArrayList<GraphNode> path = new ArrayList<>();
 
         while (!frontier.isEmpty()) {
             current = frontier.pop();
@@ -64,14 +64,19 @@ public class DepthFirstSearch {
                     visited.add(current);
                     frontier.clear();
 
+                    current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(n -> frontier.push(n));
+                    /*
+                        equivalent to:
                     for (GraphNode n : current.getSuccessors()) {
                         if (!visited.contains(n)) {
                             frontier.push(n);
                         }
                     }
+                     */
                 }
             }
         }
+        visited.clear();
 
         return null;
     }

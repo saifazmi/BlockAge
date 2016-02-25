@@ -6,7 +6,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 public class ButtonProperties {
 
@@ -53,25 +52,16 @@ public class ButtonProperties {
      * @param hoverImageOut - the image that will be change into when mouse exited
      */
     public void addHoverEffect(Button button, Image hoverImageIn, Image hoverImageOut, double posX, double posY) {
-        button.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                button.getScene().setCursor(Cursor.DEFAULT);
-            }
+        button.setOnMousePressed(event -> button.getScene().setCursor(Cursor.DEFAULT));
+        button.setOnMouseEntered(event ->
+        {
+            setButtonProperties(button, "", posX, posY, e -> ElementsHandler.handle(e), new ImageView(hoverImageIn));
+            button.getScene().setCursor(Cursor.HAND);
         });
-        button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setButtonProperties(button, "", posX, posY, e -> ElementsHandler.handle(e), new ImageView(hoverImageIn));
-                button.getScene().setCursor(Cursor.HAND);
-            }
-        });
-        button.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setButtonProperties(button, "", posX, posY, e -> ElementsHandler.handle(e), new ImageView(hoverImageOut));
-                button.getScene().setCursor(Cursor.DEFAULT);
-            }
+        button.setOnMouseExited(event ->
+        {
+            setButtonProperties(button, "", posX, posY, e -> ElementsHandler.handle(e), new ImageView(hoverImageOut));
+            button.getScene().setCursor(Cursor.DEFAULT);
         });
     }
 }
