@@ -49,7 +49,6 @@ public class GameRunTime {
         declareElements();
         this.renderer = new Renderer(mainGameScene);
         rendererSpecificInit();
-        //renderer.initialDraw();
     }
 
     public void declareElements() {
@@ -104,7 +103,7 @@ public class GameRunTime {
     public void startGame() {
         UnitSpawner spawner = new UnitSpawner(this);
         //dirty setting
-        spawner.setSpawnlimit(1);
+        spawner.setSpawnlimit(2);
         engine.setSpawner(spawner);
     }
 }

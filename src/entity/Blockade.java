@@ -126,7 +126,7 @@ public class Blockade extends Entity {
         double xSpacing = renderer.getXSpacing();
         double ySpacing = renderer.getYSpacing();
         double x = e.getX();
-        double y = e.getY() - 34;                //@TODO subtract pane height of pauls menu
+        double y = e.getY();                //@TODO subtract pane height of pauls menu
         double logicalX = Math.floor(x / xSpacing);
         double logicalY = Math.floor(y / ySpacing);
 

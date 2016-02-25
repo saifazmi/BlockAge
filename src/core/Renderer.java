@@ -97,15 +97,14 @@ public class Renderer extends Group {
      */
     public void calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
-        System.out.println(GameInterface.rightPaneWidth);
-        System.out.println(GameInterface.topPaneHeight);
         double pixelWidth = scene.getWidth() - GameInterface.rightPaneWidth; //subtract the right sidebar pixelWidth TODO @TODO//
-        double pixelHeight = scene.getHeight() - GameInterface.topPaneHeight; //subtract the bottom bar height TODO @TODO//
+        double pixelHeight = scene.getHeight() - GameInterface.bottomPaneHeight;// GameInterface.topPaneHeight; //subtract the bottom bar height TODO @TODO//
 
         int width = Graph.WIDTH;
         int height = Graph.HEIGHT;
         double xSpacing = pixelWidth / (width);
         double ySpacing = pixelHeight / (height);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + ySpacing);
 
         this.xSpacing = xSpacing;
         this.ySpacing = ySpacing;
