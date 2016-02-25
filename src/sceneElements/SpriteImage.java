@@ -1,6 +1,5 @@
 package sceneElements;
 
-import core.Renderer;
 import entity.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

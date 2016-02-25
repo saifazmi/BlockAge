@@ -4,7 +4,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import sceneElements.ElementsHandler;
 
 import java.util.logging.Logger;
@@ -17,12 +16,10 @@ public class GameRunTime {
 
     private Renderer renderer;
     private CoreEngine engine;
-    private Stage primaryStage;
 
     Pane mainGamePane = null;
     static Scene mainGameScene = null;
     Group mainGame = null;
-
 
     private static GameRunTime instance;
 
@@ -30,6 +27,10 @@ public class GameRunTime {
         return instance;
     }
 
+    /**
+     * Constructor for the game run time.
+     * Initialises the engine, renderer, and unit spawner
+     */
     public GameRunTime() {
         this.instance = this;
         Thread engThread = new Thread(() ->
@@ -58,14 +59,27 @@ public class GameRunTime {
         mainGameScene.setOnKeyPressed(e -> ElementsHandler.handleKeys(e));
     }
 
+    /**
+     * Get the renderer to draw on
+     *
+     * @return the renderer
+     */
     public Renderer getRenderer() {
         return this.renderer;
     }
 
+    /**
+     * Get the engine the game is playing on
+     *
+     * @return the engine
+     */
     public CoreEngine getEngine() {
         return this.engine;
     }
 
+    /**
+     * Renderer specific initialisation that isn't necessary and could be partially removed.
+     */
     private void rendererSpecificInit() {
         mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
         {
@@ -87,8 +101,7 @@ public class GameRunTime {
         return mainGameScene;
     }
 
-    public void startGame()
-    {
+    public void startGame() {
         UnitSpawner spawner = new UnitSpawner(this);
         //dirty setting
         spawner.setSpawnlimit(1);

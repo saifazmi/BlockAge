@@ -7,7 +7,6 @@ import javafx.event.Event;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
@@ -101,12 +100,10 @@ public class ElementsHandler {
             CoreEngine.running = false;
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
-        if(event.getSource() == GameInterface.playButton)
-        {
+        if (event.getSource() == GameInterface.playButton) {
             CoreEngine.paused = false;
         }
-        if(event.getSource() == GameInterface.pauseButton)
-        {
+        if (event.getSource() == GameInterface.pauseButton) {
             CoreEngine.paused = true;
         }
 

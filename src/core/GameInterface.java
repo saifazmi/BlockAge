@@ -1,8 +1,5 @@
 package core;
 
-import java.io.File;
-import java.io.InputStream;
-
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -21,6 +18,9 @@ import lambdastorage.LambdaStore;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 
+import java.io.File;
+import java.io.InputStream;
+
 public class GameInterface {
     public static Button fileButton, fileExitButton, helpButton, playButton, pauseButton, unsortableButton, sortableButton;
     public static TextArea unitDescriptionText, textInfoText, algorithmVisualisationText;
@@ -36,19 +36,19 @@ public class GameInterface {
     private static String SEPARATOR = File.separator;
 
     public GameInterface() {
-    	loadFont();
+        loadFont();
         declareElements();
         topPane();
         rightPane();
         bottomPane();
     }
-    
+
     public void loadFont() {
-    	InputStream fontStream = GameInterface.class.getResourceAsStream(".." + SEPARATOR + "sprites" + SEPARATOR + "Bellota-Bold.otf");
-    	if(fontStream == null) {
-    		System.out.println("No font at that path");
-    	}
-    	bellotaFont = Font.loadFont(fontStream, 17);
+        InputStream fontStream = GameInterface.class.getResourceAsStream(".." + SEPARATOR + "sprites" + SEPARATOR + "Bellota-Bold.otf");
+        if (fontStream == null) {
+            System.out.println("No font at that path");
+        }
+        bellotaFont = Font.loadFont(fontStream, 17);
     }
 
     /**
@@ -90,10 +90,10 @@ public class GameInterface {
 
         pauseImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "pause_button.png");
         pauseImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "pause_button_hovered.png");
-        
+
         unsortableImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
         sortableImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 2.0.png", 55, 55, false, false);
-        
+
         unitDescriptionImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "unit_description_label.png");
         textInfoImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "text_log_label.png");
 
@@ -101,12 +101,9 @@ public class GameInterface {
         {
             System.out.println("Clicked");
             LambdaStore store = new LambdaStore();
-            if(GameRunTime.getScene().getOnMouseClicked() != null && GameRunTime.getScene().getOnMouseClicked().equals(store.getSceneClickPlaceUnbreakableBlockade()))
-            {
+            if (GameRunTime.getScene().getOnMouseClicked() != null && GameRunTime.getScene().getOnMouseClicked().equals(store.getSceneClickPlaceUnbreakableBlockade())) {
                 GameRunTime.getScene().setOnMouseClicked(null);
-            }
-            else
-            {
+            } else {
                 GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
             }
         });
@@ -125,11 +122,11 @@ public class GameInterface {
         b.setButtonProperties(helpButton, "", 0, 0,
                 e -> ElementsHandler.handle(e), new ImageView(helpImage));
         b.addHoverEffect(helpButton, helpImageHovered, helpImage, 0, 0);
-        
+
         topMenuBox.getChildren().addAll(fileButton, helpButton);
         ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setTop(topMenuBox);
     }
-    
+
     /**
      * Constructs the bottom Pane of the scene
      */
@@ -141,8 +138,8 @@ public class GameInterface {
      * Constructs the right Pane of the scene
      */
     public void rightPane() {
-    	unitDescriptionLabel.setText("Unit Description");
-    	unitDescriptionLabel.setFont(bellotaFont);
+        unitDescriptionLabel.setText("Unit Description");
+        unitDescriptionLabel.setFont(bellotaFont);
         unitDescriptionText.setPrefSize(200, 100);
         unitDescriptionText.setEditable(false);
 
@@ -150,15 +147,15 @@ public class GameInterface {
         textInfoLabel.setFont(bellotaFont);
         textInfoText.setPrefSize(200, 100);
         textInfoText.setEditable(false);
-        
+
         algorithmVisualisationLabel.setText("Algorithm Visualisation");
         algorithmVisualisationLabel.setFont(bellotaFont);
         algorithmVisualisationText.setPrefSize(200, 175);
         algorithmVisualisationText.setEditable(false);
-        
+
         blockadesLabel.setText("Blockades");
         blockadesLabel.setFont(bellotaFont);
-        
+
         sortLabel.setText("Error");
         sortLabel.setFont(bellotaFont);
 
@@ -171,16 +168,16 @@ public class GameInterface {
         b.setButtonProperties(pauseButton, "", 0, 0,
                 e -> ElementsHandler.handle(e), new ImageView(pauseImage));
         b.addHoverEffect(pauseButton, pauseImageHovered, pauseImage, 0, 0);
-        
+
         // Set the properties for the unsortable button
-        b.setButtonProperties(unsortableButton, "", 0, 0, 
-        		e -> ElementsHandler.handle(e), new ImageView(unsortableImage));
+        b.setButtonProperties(unsortableButton, "", 0, 0,
+                e -> ElementsHandler.handle(e), new ImageView(unsortableImage));
         b.addHoverEffect(unsortableButton, unsortableImage, unsortableImage, 0, 0);
         handleSort(unsortableButton, "Unsortable blockade");
-        
+
         // Set the properties for the sortable button
-        b.setButtonProperties(sortableButton, "", 0, 0, 
-        		e -> ElementsHandler.handle(e), new ImageView(sortableImage));
+        b.setButtonProperties(sortableButton, "", 0, 0,
+                e -> ElementsHandler.handle(e), new ImageView(sortableImage));
         b.addHoverEffect(sortableButton, sortableImage, sortableImage, 0, 0);
         handleSort(sortableButton, "Sortable blockade");
 
@@ -194,29 +191,30 @@ public class GameInterface {
         int insetsWidth = 12 + 12;
         ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setRight(rightMenuBox);
     }
-    
+
     /**
      * Handles the blockades appropriately
+     *
      * @param button - the button to be handled
-     * @param text - the text the label will have
+     * @param text   - the text the label will have
      */
     public void handleSort(Button button, String text) {
-    	 button.setOnMouseExited(new EventHandler<MouseEvent>() {
-             @Override
-             public void handle(MouseEvent event) {
-             	GameRunTime.getScene().setCursor(Cursor.DEFAULT);
-             	if(rightMenuBox.getChildren().contains(sortLabel))
-             		rightMenuBox.getChildren().remove(sortLabel);
-             }
-         });
-    	 button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-             @Override
-             public void handle(MouseEvent event) {
-             	sortLabel.setText(text);
-             	GameRunTime.getScene().setCursor(Cursor.HAND);
-             	if(!rightMenuBox.getChildren().contains(sortLabel))
-             		rightMenuBox.getChildren().add(sortLabel);
-             }
-         });
+        button.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                GameRunTime.getScene().setCursor(Cursor.DEFAULT);
+                if (rightMenuBox.getChildren().contains(sortLabel))
+                    rightMenuBox.getChildren().remove(sortLabel);
+            }
+        });
+        button.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                sortLabel.setText(text);
+                GameRunTime.getScene().setCursor(Cursor.HAND);
+                if (!rightMenuBox.getChildren().contains(sortLabel))
+                    rightMenuBox.getChildren().add(sortLabel);
+            }
+        });
     }
 }
