@@ -26,7 +26,6 @@ public class ElementsHandler {
      */
     public static void handle(Event event) {
         // Elements from the Main Menu scene
-
         if (event.getSource() == MainMenu.newGameButton) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();

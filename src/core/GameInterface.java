@@ -3,8 +3,11 @@ package core;
 import java.io.File;
 import java.io.InputStream;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -23,26 +26,27 @@ import sceneElements.ElementsHandler;
 
 public class GameInterface {
     public static Button fileButton, fileExitButton, helpButton, playButton, pauseButton, unsortableButton, sortableButton;
-    public static TextArea unitDescriptionText, textInfoText, algorithmVisualisationText;
-    public static int topPaneHeight = 35;
+    public static TextArea unitDescriptionText, textInfoText, algorithmVisualisationText, searchVisualisationText;
+    public static int bottomPaneHeight = 130;
     public static int rightPaneWidth = 224;
-
-    private Font bellotaFont;
-    private Label unitDescriptionLabel, textInfoLabel, algorithmVisualisationLabel, blockadesLabel, sortLabel;
-    private HBox topMenuBox, rightMenuPlayPause, sortingBox;
-    private VBox rightMenuBox;
-    private Image fileImage, fileImageHovered, helpImage, helpImageHovered, unitDescriptionImage, textInfoImage, playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
+    public static Font bellotaFont;
+    private Label unitDescriptionLabel, textInfoLabel, algorithmVisualisationLabel, searchVisualisationLabel, blockadesLabel, sortLabel;
+    private HBox bottomMenuBox, rightMenuPlayPause, sortingBox;
+    private VBox rightMenuBox, unitBox, textBox;
+    private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
     private ButtonProperties b;
     private static String SEPARATOR = File.separator;
 
     public GameInterface() {
     	loadFont();
         declareElements();
-        topPane();
         rightPane();
         bottomPane();
     }
     
+    /**
+     * Loads the font for labels/buttons
+     */
     public void loadFont() {
     	InputStream fontStream = GameInterface.class.getResourceAsStream(".." + SEPARATOR + "sprites" + SEPARATOR + "Bellota-Bold.otf");
     	if(fontStream == null) {
@@ -55,21 +59,25 @@ public class GameInterface {
      * Declare the elements for the scene
      */
     public void declareElements() {
-        topMenuBox = new HBox();
+    	bottomMenuBox = new HBox();
         rightMenuPlayPause = new HBox();
         sortingBox = new HBox();
 
         rightMenuBox = new VBox();
+        unitBox = new VBox();
+        textBox = new VBox();
 
         unitDescriptionLabel = new Label();
         textInfoLabel = new Label();
         algorithmVisualisationLabel = new Label();
+        searchVisualisationLabel = new Label();
         blockadesLabel = new Label();
         sortLabel = new Label();
 
         unitDescriptionText = new TextArea();
         textInfoText = new TextArea();
         algorithmVisualisationText = new TextArea();
+        searchVisualisationText = new TextArea();
 
         fileButton = new Button();
         helpButton = new Button();
@@ -79,12 +87,6 @@ public class GameInterface {
         sortableButton = new Button();
         b = new ButtonProperties();
 
-        fileImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "file_button.png");
-        fileImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "file_button_hovered.png");
-
-        helpImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "help_button.png");
-        helpImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "help_button_hovered.png");
-
         playImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "play_button.png");
         playImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "play_button_hovered.png");
 
@@ -93,10 +95,77 @@ public class GameInterface {
         
         unsortableImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
         sortableImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 2.0.png", 55, 55, false, false);
-        
-        unitDescriptionImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "unit_description_label.png");
-        textInfoImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "text_log_label.png");
+    }
+    
+    /**
+     * Constructs the bottom Pane of the scene
+     */
+    public void bottomPane() {
+    	unitDescriptionLabel.setText("Unit Description");
+    	unitDescriptionLabel.setFont(bellotaFont);
+        unitDescriptionText.setPrefSize(300, 80);
+        unitDescriptionText.setEditable(false);
 
+        textInfoLabel.setText("Text Info");
+        textInfoLabel.setFont(bellotaFont);
+        textInfoText.setPrefSize(300, 80);
+        textInfoText.setEditable(false);
+        
+        // Set the properties for the play button
+        b.setButtonProperties(playButton, "", 0, 0,
+                e -> ElementsHandler.handle(e), new ImageView(playImage));
+        b.addHoverEffect(playButton, playImageHovered, playImage, 0, 0);
+
+        // Set the properties for the pause button
+        b.setButtonProperties(pauseButton, "", 0, 0,
+                e -> ElementsHandler.handle(e), new ImageView(pauseImage));
+        b.addHoverEffect(pauseButton, pauseImageHovered, pauseImage, 0, 0);
+        
+        unitBox.getChildren().addAll(unitDescriptionLabel, unitDescriptionText);
+        unitBox.setAlignment(Pos.TOP_LEFT);
+        textBox.getChildren().addAll(textInfoLabel, textInfoText);
+        textBox.setAlignment(Pos.TOP_LEFT);
+        rightMenuPlayPause.getChildren().addAll(playButton, pauseButton);
+        rightMenuPlayPause.setAlignment(Pos.BOTTOM_CENTER);
+        bottomMenuBox.setAlignment(Pos.CENTER);
+        bottomMenuBox.getChildren().addAll(unitBox, textBox, rightMenuPlayPause);
+        bottomMenuBox.setSpacing(20);
+        //bottomMenuBox.setStyle("-fx-border-color: red;"); // testpurpose
+
+        bottomMenuBox.heightProperty().addListener(new ChangeListener<Number>() {  
+          @Override  
+          public void changed(ObservableValue<? extends Number> observable, Number oldWidth, Number newWidth) {  
+            System.out.println("ADAFAA" + newWidth);  
+          }  
+        });  
+        ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setBottom(bottomMenuBox);
+    }
+
+    /**
+     * Constructs the right Pane of the scene
+     */
+    public void rightPane() {
+        algorithmVisualisationLabel.setText("Search Visualisation");
+        algorithmVisualisationLabel.setFont(bellotaFont);
+        algorithmVisualisationText.setPrefSize(200, 170);
+        algorithmVisualisationText.setEditable(false);
+        
+        searchVisualisationLabel.setText("Sort Visualisation");
+        searchVisualisationLabel.setFont(bellotaFont);
+        searchVisualisationText.setPrefSize(200, 170);
+        searchVisualisationText.setEditable(false);
+        
+        blockadesLabel.setText("Blockades");
+        blockadesLabel.setFont(bellotaFont);
+        
+        sortLabel.setText("Error");
+        sortLabel.setFont(bellotaFont);
+        
+        // Set the properties for the unsortable button
+        b.setButtonProperties(unsortableButton, "", 0, 0, 
+        		e -> ElementsHandler.handle(e), new ImageView(unsortableImage));
+        b.addHoverEffect(unsortableButton, unsortableImage, unsortableImage, 0, 0);
+        handleSort(unsortableButton, "Unsortable blockade");
         unsortableButton.setOnMouseClicked(e ->
         {
             System.out.println("Clicked");
@@ -110,73 +179,6 @@ public class GameInterface {
                 GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
             }
         });
-    }
-
-    /**
-     * Construct the top Pane of the scene
-     */
-    public void topPane() {
-        // Set properties for the file button
-        b.setButtonProperties(fileButton, "", 0, 0,
-                e -> ElementsHandler.handle(e), new ImageView(fileImage));
-        b.addHoverEffect(fileButton, fileImageHovered, fileImage, 0, 0);
-
-        // Set properties for the help button
-        b.setButtonProperties(helpButton, "", 0, 0,
-                e -> ElementsHandler.handle(e), new ImageView(helpImage));
-        b.addHoverEffect(helpButton, helpImageHovered, helpImage, 0, 0);
-        
-        topMenuBox.getChildren().addAll(fileButton, helpButton);
-        ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setTop(topMenuBox);
-    }
-    
-    /**
-     * Constructs the bottom Pane of the scene
-     */
-    public void bottomPane() {
-
-    }
-
-    /**
-     * Constructs the right Pane of the scene
-     */
-    public void rightPane() {
-    	unitDescriptionLabel.setText("Unit Description");
-    	unitDescriptionLabel.setFont(bellotaFont);
-        unitDescriptionText.setPrefSize(200, 100);
-        unitDescriptionText.setEditable(false);
-
-        textInfoLabel.setText("Text Info");
-        textInfoLabel.setFont(bellotaFont);
-        textInfoText.setPrefSize(200, 100);
-        textInfoText.setEditable(false);
-        
-        algorithmVisualisationLabel.setText("Algorithm Visualisation");
-        algorithmVisualisationLabel.setFont(bellotaFont);
-        algorithmVisualisationText.setPrefSize(200, 175);
-        algorithmVisualisationText.setEditable(false);
-        
-        blockadesLabel.setText("Blockades");
-        blockadesLabel.setFont(bellotaFont);
-        
-        sortLabel.setText("Error");
-        sortLabel.setFont(bellotaFont);
-
-        // Set the properties for the play button
-        b.setButtonProperties(playButton, "", 0, 0,
-                e -> ElementsHandler.handle(e), new ImageView(playImage));
-        b.addHoverEffect(playButton, playImageHovered, playImage, 0, 0);
-
-        // Set the properties for the pause button
-        b.setButtonProperties(pauseButton, "", 0, 0,
-                e -> ElementsHandler.handle(e), new ImageView(pauseImage));
-        b.addHoverEffect(pauseButton, pauseImageHovered, pauseImage, 0, 0);
-        
-        // Set the properties for the unsortable button
-        b.setButtonProperties(unsortableButton, "", 0, 0, 
-        		e -> ElementsHandler.handle(e), new ImageView(unsortableImage));
-        b.addHoverEffect(unsortableButton, unsortableImage, unsortableImage, 0, 0);
-        handleSort(unsortableButton, "Unsortable blockade");
         
         // Set the properties for the sortable button
         b.setButtonProperties(sortableButton, "", 0, 0, 
@@ -185,13 +187,10 @@ public class GameInterface {
         handleSort(sortableButton, "Sortable blockade");
 
         // add everything to the pane
-        rightMenuPlayPause.getChildren().addAll(playButton, pauseButton);
         sortingBox.getChildren().addAll(unsortableButton, sortableButton);
-
-        rightMenuBox.getChildren().addAll(unitDescriptionLabel, unitDescriptionText, textInfoLabel, textInfoText, algorithmVisualisationLabel, algorithmVisualisationText, blockadesLabel, sortingBox, rightMenuPlayPause);
+        rightMenuBox.getChildren().addAll(algorithmVisualisationLabel, algorithmVisualisationText, searchVisualisationLabel, searchVisualisationText, blockadesLabel, sortingBox);
         rightMenuBox.setSpacing(10);
         BorderPane.setMargin(rightMenuBox, new Insets(12, 12, 12, 12));
-        int insetsWidth = 12 + 12;
         ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setRight(rightMenuBox);
     }
     

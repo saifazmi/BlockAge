@@ -83,12 +83,9 @@ public class Unit extends Entity {
 
 
     public boolean moveUp() {
-
         // Has the unit moved
         boolean moved;
-
         GraphNode newPosition;
-
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() - 1) < 0) {
             moved = false;
@@ -107,12 +104,9 @@ public class Unit extends Entity {
     }
 
     public boolean moveDown() {
-
         // Has the unit moved
         boolean moved;
-
         GraphNode newPosition;
-
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() + 1) >= Graph.HEIGHT) {
             moved = false;
@@ -123,20 +117,14 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Down: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-//            GameInterface.textInfoText.clear();
-//            GameInterface.textInfoText.setText("Move Down: " + newPosition.getX() + "," + newPosition.getY());
         }
-
         return moved;
     }
 
     public boolean moveRight() {
-
         // Has the unit moved
         boolean moved;
-
         GraphNode newPosition;
-
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() + 1) >= Graph.WIDTH) {
             moved = false;
@@ -147,20 +135,14 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Right: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-//            GameInterface.textInfoText.clear();
-//            GameInterface.textInfoText.setText("Move Right: " + newPosition.getX() + "," + newPosition.getY());
         }
-
         return moved;
     }
 
     public boolean moveLeft() {
-
         // Has the unit moved
         boolean moved;
-
         GraphNode newPosition;
-
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() - 1) < 0) {
             moved = false;
@@ -171,10 +153,7 @@ public class Unit extends Entity {
             LOG.log(Level.INFO, "Move Left: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-//            GameInterface.textInfoText.clear();
-//            GameInterface.textInfoText.setText("Move Left: " + newPosition.getX() + "," + newPosition.getY());
         }
-
         return moved;
     }
 
@@ -215,7 +194,6 @@ public class Unit extends Entity {
     }
 
     private void SetPositionAndSpeed(int xChange, int yChange) {
-
         int x = nextNode.getX();
         int y = nextNode.getY();
 

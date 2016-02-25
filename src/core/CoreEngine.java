@@ -51,6 +51,7 @@ public class CoreEngine {
 
     public Graph getGraph() {
         return graph;
+
     }
 
     public void startGame() {
