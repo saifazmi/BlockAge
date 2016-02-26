@@ -10,11 +10,14 @@ Key Bindings
 
 Knows Bugs    
 ----------
+#### Base Spawner
+- Base can be placed anywhere (on blockades, off of grid etc)
+
 #### Breadth First Search
-- Occasionally can't find a route even though routes are possible.  
+- ~~Occasionally can't find a route even though routes are possible.~~
 
 #### Depth First Search  
-- Occasionally can't find a route even though routes are possible.  
+- ~~Occasionally can't find a route even though routes are possible.~~
 
 #### AStar
 - Occasionally make diagonal moves.  
@@ -23,7 +26,7 @@ Knows Bugs
 - Transitions don't work if unit doesn't spawn at (0,0)
 
 #### Renderer  
-- Route lines don't draw from the route start, but from the 2nd node
+- ~~Route lines don't draw from the route start, but from the 2nd node~~
 
 #### Overlay  
 - ~~Hovering over the Blockade causes the grid to move (Paul is moving elements around to fix this)~~  

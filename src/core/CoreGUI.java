@@ -1,5 +1,6 @@
 package core;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -35,7 +36,8 @@ public class CoreGUI extends Application {
             if (engine != null) {
                 CoreEngine.Instance().setRunning(false);
             }
-            Platform.exit();
+            LOG.log(Level.INFO, "Happy Times!");
+            System.exit(0);
         });
         primaryStage.show();
     }

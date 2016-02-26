@@ -14,6 +14,11 @@ import javafx.scene.image.Image;
 import sceneElements.Images;
 import sceneElements.SpriteImage;
 
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author : First created by Hung Hoang with code by Hung Hoang, and Paul Popa
  * @date : 13/02/16, last edited by Paul Popa on 23/02/16
@@ -26,8 +31,8 @@ public class UnitSpawner {
 
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
-    private int unitPoolCount = 0;
-    private int totalSpawnables = 10;
+    private int unitPoolCount;
+    private int totalSpawnables = 2;
     private int spawnCount = 0;
     private GraphNode goal;
     private int spawnlimit;
@@ -69,14 +74,13 @@ public class UnitSpawner {
      * Sets the 2-way relationship between the sprite and the unit.
      * Adds this newly created unit to the 'Pool' of units
      *
-     * @param graph    The graph the Unit will be on, passed to Unit Constructor
-     * @param renderer The Renderer the Unit will render its Sprite to, passed to Unit Constructor
-     * @param goal     The Goal node to which the Unit's search will use, passed to Unit Constructor
+     * @param graph The graph the Unit will be on, passed to Unit Constructor
+     * @param goal  The Goal node to which the Unit's search will use, passed to Unit Constructor
      * @return A new Unit
      */
     private Unit CreateUnit(Graph graph, GraphNode goal) {
         // doing random for now, could return sequence of numbers representing units wanted
-        int index = rndSearchGen.nextInt(3);
+        int index = rndSearchGen.nextInt(1);
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
             image = Images.imageDemon;
@@ -87,47 +91,43 @@ public class UnitSpawner {
         }
         SpriteImage sprite = new SpriteImage(image, null);
         Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
+        LOG.log(Level.INFO, "Unit created");
         sprite.setEntity(unit);
 
         // focus sprite and displays text when clicked on it
         sprite.setOnMouseClicked(e -> {
+            LOG.log(Level.INFO, "in mouse click");
             sprite.requestFocus();
             ArrayList<Entity> units = engine.getEntities();
-			for(int i=0; i<units.size(); i++) {
-    			if(sprite.getEntity() == units.get(i)) {
-    				GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
-            		GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" + 
-    		    										  "Search:  " + Unit.Search.values()[index] + "\n" +
-    		    										  "Sort:      " + Unit.Sort.values()[index]);
-            		// sets the image pressed for each unit accordingly to the search
-            		if(Unit.Search.values()[index] == Unit.Search.BFS) {
-            			sprite.setImage(Images.imagePressedDemon);
-            		}
-            		else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            			sprite.setImage(Images.imagePressedDk);
-            		}
-            		else {
-            			sprite.setImage(Images.imagePressedBanshee);
-            		}
-        			((Unit) units.get(i)).showTransition();
-    			}
-    			else {
-    				SpriteImage obtainedSprite = units.get(i).getSprite();
+            for (Entity unit1 : units) {
+                if (sprite.getEntity() == unit1) {
+                    GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
+                    GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
+                            "Search:  " + Unit.Search.values()[index] + "\n" +
+                            "Sort:      " + Unit.Sort.values()[index]);
+                    // sets the image pressed for each unit accordingly to the search
+                    if (Unit.Search.values()[index] == Unit.Search.BFS) {
+                        sprite.setImage(Images.imagePressedDemon);
+                    } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
+                        sprite.setImage(Images.imagePressedDk);
+                    } else {
+                        sprite.setImage(Images.imagePressedBanshee);
+                    }
+                    ((Unit) unit1).showTransition();
+                } else {
+                    SpriteImage obtainedSprite = unit1.getSprite();
                     Image image = obtainedSprite.getImage();
-    				if (image.equals(Images.imagePressedDemon)) { 
-    					units.get(i).getSprite().setImage(Images.imageDemon);
-    					((Unit) units.get(i)).showTransition();
-					}
-					else if (image.equals(Images.imagePressedDk)) {
-						units.get(i).getSprite().setImage(Images.imageDk);
-						((Unit) units.get(i)).showTransition();
-					}
-					else if(image.equals(Images.imagePressedBanshee)) {
-						units.get(i).getSprite().setImage(Images.imageBanshee);
-						
-					}
-    			}
-			}
+                    if (image.equals(Images.imagePressedDemon)) {
+                        unit1.getSprite().setImage(Images.imageDemon);
+                    } else if (image.equals(Images.imagePressedDk)) {
+                        unit1.getSprite().setImage(Images.imageDk);
+                    } else if (image.equals(Images.imagePressedBanshee)) {
+                        unit1.getSprite().setImage(Images.imageBanshee);
+                    }
+                    ((Unit) unit1).showTransition();
+                }
+            }
+            LOG.log(Level.INFO, "Reached the end of Mouse CLick");
         });
         // adds the units into an array list
         unitPool.add(unit);
@@ -147,8 +147,11 @@ public class UnitSpawner {
             newUnit = CreateUnit(this.graph, this.goal);
         }
         spawnCount++;
+//
+//        if (!engine.getEntities().contains(newUnit)) {
+            engine.getEntities().add(newUnit);
+//        }
 
-        engine.getEntities().add(newUnit);
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
