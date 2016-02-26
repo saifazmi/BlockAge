@@ -160,7 +160,7 @@ public class ElementsHandler {
                 } else {
                     GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
                 }
-            } else if (k == KeyCode.P) {
+            } else if (k == KeyCode.SPACE) {
                 if (engine.isPaused()) {
                     engine.setPaused(false);
                 } else {

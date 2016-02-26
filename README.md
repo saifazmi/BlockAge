@@ -5,8 +5,10 @@ BestRTS
 
 Key Bindings  
 ------------
-- **P:** pause units
+- **SPACE:** pause units
 - **R:** toggle route display  
+- **B:** toggle block palcement  
+- **S:** toggle unit selection
 
 Knows Bugs    
 ----------
