@@ -228,11 +228,11 @@ public class Unit extends Entity {
                 int y = this.nextNode.getY();
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
-                if (xChange + yChange > 1 || xChange + yChange < -1) {
-                    LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
-                            "Fatal error, check search implementation: " + this.search.toString());
-                    return;
-                }
+                //if (xChange + yChange > 1 || xChange + yChange < -1) {
+                 //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
+                 //           "Fatal error, check search implementation: " + this.search.toString());
+                 //   return;
+                //}
                 if (logicalMove(xChange, yChange)) {
                     double nextPixelX = x * this.renderer.getXSpacing();
                     double nextPixelY = y * this.renderer.getYSpacing();

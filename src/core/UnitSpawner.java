@@ -1,6 +1,6 @@
 package core;
 
-import java.io.File;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -10,10 +10,7 @@ import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import sceneElements.Images;
 import sceneElements.SpriteImage;
 
@@ -105,16 +102,14 @@ public class UnitSpawner {
             		// sets the image pressed for each unit accordingly to the search
             		if(Unit.Search.values()[index] == Unit.Search.BFS) {
             			sprite.setImage(Images.imagePressedDemon);
-            			((Unit) units.get(i)).showTransition();
             		}
             		else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
             			sprite.setImage(Images.imagePressedDk);
-            			((Unit) units.get(i)).showTransition();
             		}
             		else {
             			sprite.setImage(Images.imagePressedBanshee);
-            			((Unit) units.get(i)).showTransition();
             		}
+        			((Unit) units.get(i)).showTransition();
     			}
     			else {
     				SpriteImage obtainedSprite = units.get(i).getSprite();
@@ -129,7 +124,7 @@ public class UnitSpawner {
 					}
 					else if(image.equals(Images.imagePressedBanshee)) {
 						units.get(i).getSprite().setImage(Images.imageBanshee);
-						((Unit) units.get(i)).showTransition();
+						
 					}
     			}
 			}
