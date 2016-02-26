@@ -80,7 +80,7 @@ public class UnitSpawner {
      */
     private Unit CreateUnit(Graph graph, GraphNode goal) {
         // doing random for now, could return sequence of numbers representing units wanted
-        int index = rndSearchGen.nextInt(1);
+        int index = rndSearchGen.nextInt(3);
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
             image = Images.imageDemon;
@@ -119,12 +119,14 @@ public class UnitSpawner {
                     Image image = obtainedSprite.getImage();
                     if (image.equals(Images.imagePressedDemon)) {
                         unit1.getSprite().setImage(Images.imageDemon);
+                        ((Unit) unit1).showTransition();
                     } else if (image.equals(Images.imagePressedDk)) {
                         unit1.getSprite().setImage(Images.imageDk);
+                        ((Unit) unit1).showTransition();
                     } else if (image.equals(Images.imagePressedBanshee)) {
                         unit1.getSprite().setImage(Images.imageBanshee);
+                        ((Unit) unit1).showTransition();
                     }
-                    ((Unit) unit1).showTransition();
                 }
             }
             LOG.log(Level.INFO, "Reached the end of Mouse CLick");
