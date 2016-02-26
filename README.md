@@ -34,8 +34,7 @@ Knows Bugs
 - ~~Hovering over the Blockade causes the grid to move (Paul is moving elements around to fix this)~~  
 
 #### Renderer   
-- ~~Gambling Error - Occasionally program thinks it isn't on the FX 
-hread when it is. (Fixed - Duplicate line caused the error)~~  
+- ~~Gambling Error - Occasionally program thinks it isn't on the FX thread when it is. (Fixed - Duplicate line caused the error)~~  
 
 Contributors
 ------------

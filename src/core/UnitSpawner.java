@@ -75,7 +75,7 @@ public class UnitSpawner {
      */
     private Unit CreateUnit(Graph graph, GraphNode goal) {
         // doing random for now, could return sequence of numbers representing units wanted
-        int index = rndSearchGen.nextInt(1);
+        int index = rndSearchGen.nextInt(3);
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
             image = Images.imageDemon;
