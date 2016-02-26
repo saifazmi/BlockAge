@@ -5,7 +5,9 @@ import graph.Graph;
 import graph.GraphNode;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import sceneElements.Images;
 import sceneElements.SpriteImage;
 
 import java.io.File;
@@ -21,9 +23,7 @@ public class UnitSpawner {
     private CoreEngine engine = CoreEngine.Instance();
     private Graph graph = engine.getGraph();
     private Renderer renderer = Renderer.Instance();
-
     private static final Logger LOG = Logger.getLogger(UnitSpawner.class.getName());
-    private static String SEPARATOR = File.separator;
 
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
@@ -60,7 +60,8 @@ public class UnitSpawner {
         this.spawnlimit = spawnlimit;
 
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-            CreateUnit(graph, renderer, goal);
+            //CreateUnit(graph, renderer, goal);
+            CreateUnit2(graph, renderer, goal);
         }
     }
 
@@ -121,6 +122,7 @@ public class UnitSpawner {
         // if S key is pressed, the sprite gets unfocused and the text area gets cleared
         sprite.setOnKeyPressed(e -> {
             Image img = new Image(sprite.getImage().impl_getUrl().substring(0, sprite.getImage().impl_getUrl().length() - 5) + ".png");
+            ImageView imgView = new ImageView(img);
             KeyCode k = e.getCode();
             if (k == KeyCode.S) {
                 System.out.println(engine.getEntities().size());
@@ -153,7 +155,8 @@ public class UnitSpawner {
         if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
         } else {
-            newUnit = CreateUnit(graph, renderer, graph.getNodes().get(graph.getNodes().size() - 1));
+            //newUnit = CreateUnit(this.graph, this.renderer, this.goal);
+            newUnit = CreateUnit2(this.graph, this.renderer, this.goal);
         }
         spawnCount++;
 
@@ -195,5 +198,65 @@ public class UnitSpawner {
      */
     public void setSpawnlimit(int spawnlimit) {
         this.spawnlimit = spawnlimit;
+    }
+
+    private Unit CreateUnit2(Graph graph, Renderer renderer, GraphNode goal) {
+        // doing random for now, could return sequence of numbers representing units wanted
+        int index = rndSearchGen.nextInt(3);
+
+
+        // Load the appropriate image for each search
+
+
+        if (Unit.Search.values()[index] == Unit.Search.BFS) {
+            image = Images.imageDemon;
+        } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
+            image = Images.imageDk;
+        } else {
+            image = Images.imageBanshee;
+        }
+        SpriteImage sprite = new SpriteImage(image, null);
+        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
+        sprite.setEntity(unit);
+
+        // focus sprite and displays text when clicked on it
+        sprite.setOnMouseClicked(e -> {
+            sprite.requestFocus();
+            Unit u = (Unit) sprite.getEntity();
+            u.showTransition();
+            GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
+            GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
+                    "Search:  " + Unit.Search.values()[index] + "\n" +
+                    "Sort:      " + Unit.Sort.values()[index]);
+            // sets the image pressed for each unit accordingly to the search
+            if (Unit.Search.values()[index] == Unit.Search.BFS) {
+                sprite.setImage(Images.imagePressedDemon);
+            } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
+                sprite.setImage(Images.imagePressedDk);
+            } else {
+                sprite.setImage(Images.imagePressedBanshee);
+            }
+        });
+        // if S key is pressed, the sprite gets unfocused and the text area gets cleared
+        sprite.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.S) {
+                for (int i = 0; i < engine.getEntities().size(); i++) {
+                    SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
+                    Image image = obtainedSprite.getImage();
+                    if (image.equals(Images.imagePressedDemon)) {
+                        obtainedSprite.setImage(Images.imageDemon);
+                    } else if (image.equals(Images.imagePressedDk)) {
+                        obtainedSprite.setImage(Images.imageDk);
+                    } else if (image.equals(Images.imagePressedBanshee)) {
+                        obtainedSprite.setImage(Images.imageBanshee);
+                    }
+                }
+                GameInterface.unitDescriptionText.clear();
+                //sets the images back to originals if they are selected
+            }
+        });
+        // adds the units into an array list
+        unitPool.add(unit);
+        return unit;
     }
 }
