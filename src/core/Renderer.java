@@ -158,7 +158,7 @@ public class Renderer extends Group {
         sprite.setX(node.getX() * xSpacing);
         sprite.setY(node.getY() * ySpacing);
         success = this.getChildren().add(sprite);
-        LOG.log(Level.INFO, "Entity drawn at logical " + node + ", graphical (" + sprite.getX() + ", " + sprite.getY() + ")");
+        //LOG.log(Level.INFO, "Entity drawn at logical " + node + ", graphical (" + sprite.getX() + ", " + sprite.getY() + ")");
         return success;
     }
 

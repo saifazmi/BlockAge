@@ -54,15 +54,15 @@ public class BaseSpawner {
             if (blockade != null) {
                 renderer.drawInitialEntity(blockade);
                 blockadeNeeded--;
-                LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
+                //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
             }
 
-            LOG.log(Level.INFO, "Outside the MouseEvent");
+            //LOG.log(Level.INFO, "Outside the MouseEvent");
             // setting function for choosing the goal of the game
             GameRunTime.getScene().setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                    LOG.log(Level.INFO, "Reached the MouseEvent");
+                    //LOG.log(Level.INFO, "Reached the MouseEvent");
                     // get the limitation on where to click to choose the goal
                     double xSpacing = renderer.getXSpacing();
                     double ySpacing = renderer.getYSpacing();
@@ -75,7 +75,7 @@ public class BaseSpawner {
                     if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
                         // set the goal
                         goal = graph.nodeWith(new GraphNode((int) logicalX, (int) logicalY));
-                        System.out.println(goal.toString());
+                        System.out.println("goal at " + goal.toString());
 
                         // make the base
                         Base base = new Base(9999, "Base", goal, null);
@@ -86,7 +86,7 @@ public class BaseSpawner {
                         spriteImage.setPreserveRatio(false);
                         spriteImage.setSmooth(true);
                         base.setSprite(spriteImage);
-                        LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
+                        //LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
                         renderer.drawInitialEntity(base);
                         goal.setBase(base);
                         GameRunTime.Instance().setBasePlaced(true);
