@@ -1,5 +1,10 @@
 package core;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.logging.Logger;
+
 import entity.Entity;
 import entity.Unit;
 import graph.Graph;
@@ -114,12 +119,14 @@ public class UnitSpawner {
                     Image image = obtainedSprite.getImage();
                     if (image.equals(Images.imagePressedDemon)) {
                         unit1.getSprite().setImage(Images.imageDemon);
+                        ((Unit) unit1).showTransition();
                     } else if (image.equals(Images.imagePressedDk)) {
                         unit1.getSprite().setImage(Images.imageDk);
+                        ((Unit) unit1).showTransition();
                     } else if (image.equals(Images.imagePressedBanshee)) {
                         unit1.getSprite().setImage(Images.imageBanshee);
+                        ((Unit) unit1).showTransition();
                     }
-                    ((Unit) unit1).showTransition();
                 }
             }
             LOG.log(Level.INFO, "Reached the end of Mouse CLick");
@@ -142,7 +149,11 @@ public class UnitSpawner {
             newUnit = CreateUnit(this.graph, this.goal);
         }
         spawnCount++;
-        engine.getEntities().add(newUnit);
+//
+//        if (!engine.getEntities().contains(newUnit)) {
+            engine.getEntities().add(newUnit);
+//        }
+
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
