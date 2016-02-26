@@ -6,6 +6,7 @@ import core.GameInterface;
 import core.GameRunTime;
 import core.Renderer;
 import core.UnitSpawner;
+import entity.Entity;
 import entity.Unit;
 import graph.GraphNode;
 import javafx.event.Event;
@@ -20,6 +21,7 @@ import menus.MenuHandler;
 import menus.OptionsMenu;
 import menus.PauseMenu;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,7 +68,6 @@ public class ElementsHandler {
                 UnitSpawner spawner = new UnitSpawner(2, goal);
                 CoreEngine.Instance().setSpawner(spawner);
             });
-
             unitSpawnerThread.start();
 
         }
@@ -166,6 +167,20 @@ public class ElementsHandler {
                 if (node instanceof SpriteImage) {
                     ((Unit) ((SpriteImage) node).getEntity()).showTransition();
                 }
+            } else if (k == KeyCode.S) {
+            	ArrayList<Entity> units = engine.getEntities();
+            	System.out.println(units.size());
+                for (int i = 0; i < units.size(); i++) {
+                    System.out.println(units.get(i).getName());
+                    if (units.get(i).getSprite().getImage().impl_getUrl().contains("2.0s")) {
+                    	units.get(i).getSprite().setImage(UnitSpawner.Instance().getDemonImage());
+                    } else if (units.get(i).getSprite().getImage().impl_getUrl().contains("3.0s")) {
+                    	units.get(i).getSprite().setImage(UnitSpawner.Instance().getDkImage());
+                    } else if (units.get(i).getSprite().getImage().impl_getUrl().contains("4.0s")) {
+                    	units.get(i).getSprite().setImage(UnitSpawner.Instance().getBansheeImage());
+                    }
+                }
+                GameInterface.unitDescriptionText.clear();
             }
         }
     }

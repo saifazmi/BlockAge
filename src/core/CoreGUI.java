@@ -1,5 +1,7 @@
 package core;
 
+import java.util.logging.Logger;
+
 /**
  * @project : bestRTS
  * @author : saif
@@ -9,9 +11,8 @@ package core;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import menus.MenuHandler;
-
-import java.util.logging.Logger;
 
 public class CoreGUI extends Application {
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());

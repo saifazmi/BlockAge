@@ -8,6 +8,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
@@ -288,7 +289,7 @@ public class Unit extends Entity {
             //System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
         }
-        //System.out.println(route);
+        System.out.println(route);
     }
 
 
