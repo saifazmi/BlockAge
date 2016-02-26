@@ -149,11 +149,7 @@ public class UnitSpawner {
             newUnit = CreateUnit(this.graph, this.goal);
         }
         spawnCount++;
-//
-//        if (!engine.getEntities().contains(newUnit)) {
-            engine.getEntities().add(newUnit);
-//        }
-
+        engine.getEntities().add(newUnit);
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 

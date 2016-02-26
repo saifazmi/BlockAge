@@ -219,8 +219,6 @@ public class Unit extends Entity {
                 LOG.log(Level.INFO, "next node is " + this.nextNode);
                 this.position = this.nextNode;
             }
-
-
             if (route.size() > 0) {
                 this.completedMove = false;
                 this.nextNode = this.route.remove(0);
@@ -248,8 +246,6 @@ public class Unit extends Entity {
                     this.completedMove = true;
                 }
             }
-
-
         }
     }
 
@@ -350,7 +346,6 @@ public class Unit extends Entity {
             this.setVisualTransition(null);
         }
     }
-
 //    public void showTransition2() {
 //        SequentialTransition transition = null;
 //        if(search == Search.BFS)
