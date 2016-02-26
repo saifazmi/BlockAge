@@ -212,8 +212,13 @@ public class Unit extends Entity {
     public void update() {
         if (completedMove) {
 
+            LOG.log(Level.INFO,"completed move");
             if (this.nextNode != null)
+            {
+                LOG.log(Level.INFO, "next node is " + this.nextNode);
                 this.position = this.nextNode;
+            }
+
 
             if (route.size() > 0) {
                 this.completedMove = false;
@@ -238,6 +243,7 @@ public class Unit extends Entity {
                     transition.play();
                 } else {
                     decideRoute();
+                    nextNode = null;
                     this.completedMove = true;
                 }
             }
@@ -274,7 +280,7 @@ public class Unit extends Entity {
 
 
     private void decideRoute() {
-        LOG.log(Level.INFO, getPosition().toString());
+        LOG.log(Level.INFO, "my position is " + getPosition().toString());
         if (search == Search.DFS) {
             //System.out.println("using dfs");
             route = DepthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
