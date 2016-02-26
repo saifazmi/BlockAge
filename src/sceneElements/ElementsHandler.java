@@ -21,6 +21,7 @@ import menus.Menu;
 import menus.MenuHandler;
 import menus.OptionsMenu;
 import menus.PauseMenu;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
