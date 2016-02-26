@@ -49,33 +49,62 @@ public class TestVisual extends Application {
         Application.launch(args);
     }
 
+    /**
+     * General Pattern:
+     * Make transition, add to constructor of SequentialTransition
+     */
     public void swapFF() {
 
-        double fourX = blocks.get(3).getX();
-        double fourY = blocks.get(3).getY();
+        // first block , 3 transitions
+        TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(3));
+        tty.setFromY(blocks.get(3).getY());
+        tty.setToY(-100);
+        tty.setCycleCount(1);
 
-        double fiveX = blocks.get(4).getX();
-        double fiveY = blocks.get(4).getY();
+        TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.25), blocks.get(3));
+        ttx.setFromX(blocks.get(3).getX());
+        ttx.setToX(-200);
+        ttx.setCycleCount(1);
 
-        TranslateTransition tt = new TranslateTransition(Duration.seconds(2), blocks.get(3));
+        TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(3));
+        txx.setFromY(blocks.get(3).getY() - 100);
+        txx.setToY(0);
+        txx.setCycleCount(1);
+        // second block, take note of values on the last transitions of each one
+        //you can change the dimensions as you wish, easier to navigate if you have some sort of class-wide var for sizes
+        TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(4));
+        tx.setFromX(blocks.get(4).getY());
+        tx.setToX(-60);
+        tx.setCycleCount(1);
 
-        tt.setFromY(fourY);
-        tt.setToY(-100);
-        tt.setCycleCount(1);
+        TranslateTransition ty = new TranslateTransition(Duration.seconds(0.25), blocks.get(4));
+        ty.setFromY(blocks.get(4).getY());
+        ty.setToY(-200);
+        ty.setCycleCount(1);
 
-        TranslateTransition tz = new TranslateTransition(Duration.seconds(2), blocks.get(3));
+        TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(4));
+        txt.setFromY(blocks.get(4).getY() - 200);
+        txt.setToY(0);
+        txt.setCycleCount(1);
 
-        tz.setFromX(blocks.get(3).getX());
-        tz.setToX(-100);
-        tz.setCycleCount(1);
+        //last 3
+        TranslateTransition gy = new TranslateTransition(Duration.seconds(0.25), blocks.get(3));
+        gy.setFromY(blocks.get(3).getY());
+        gy.setToY(-200);
+        gy.setCycleCount(1);
 
+        TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(3));
+        gx.setFromX(-200);
+        gx.setToX(60);
+        gx.setCycleCount(1);
 
-        TranslateTransition ty = new TranslateTransition(Duration.seconds(2), blocks.get(3));
+        TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(3));
+        gyy.setFromY(blocks.get(3).getY()-200); //this is how it works...dont ask
+        gyy.setToY(0);
+        gyy.setCycleCount(1);
 
-        tz.setFromY(blocks.get(3).getY());
-        tz.setToY(100);
-        tz.setCycleCount(1);
-        SequentialTransition seqT = new SequentialTransition(blocks.get(3), tz);
-        seqT.play();
+        SequentialTransition seq = new SequentialTransition(blocks.get(4), tty,ttx,txx,ty,tx,txt,gy,gx,gyy);
+        seq.play();
+
     }
 }
