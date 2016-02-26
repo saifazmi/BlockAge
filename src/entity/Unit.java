@@ -280,10 +280,10 @@ public class Unit extends Entity {
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
         if (search == Search.DFS) {
             //System.out.println("using dfs");
-            route = DepthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
+            route = DepthFirstSearch.findPathFrom(getPosition(), this.goal);
         } else if (search == Search.BFS) {
             //System.out.println("using bfs");
-            route = BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
+            route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal);
         } else {
             //System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
@@ -346,24 +346,21 @@ public class Unit extends Entity {
             this.setVisualTransition(null);
         }
     }
-
-    public void showTransition2() {
-        SequentialTransition transition = null;
-        if(search == Search.BFS)
-        {
-            BreadthFirstSearch.Instance().findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
-            transition = renderer.produceRouteVisual(renderer.produceRoute(BreadthFirstSearch.Instance().returnVisited(), this.getPosition()));
-        } else if(search == Search.DFS)
-        {
-            DepthFirstSearch.Instance().findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
-            transition = renderer.produceRouteVisual(renderer.produceRoute(DepthFirstSearch.Instance().returnVisited(), this.getPosition()));
-        } else if(search == Search.A_STAR)
-        {
-            transition = renderer.produceRouteVisual(renderer.produceRoute(AStar.search(this.position, this.getRoute().get(this.getRoute().size()-1)), this.getPosition()));
-        }
-            this.setVisualTransition(transition);
-            transition.play();
-    }
-
-
+//    public void showTransition2() {
+//        SequentialTransition transition = null;
+//        if(search == Search.BFS)
+//        {
+//            BreadthFirstSearch.findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
+//            transition = renderer.produceRouteVisual(renderer.produceRoute(BreadthFirstSearch.Instance().returnVisited(), this.getPosition()));
+//        } else if(search == Search.DFS)
+//        {
+//            DepthFirstSearch.Instance().findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
+//            transition = renderer.produceRouteVisual(renderer.produceRoute(DepthFirstSearch.Instance().returnVisited(), this.getPosition()));
+//        } else if(search == Search.A_STAR)
+//        {
+//            transition = renderer.produceRouteVisual(renderer.produceRoute(AStar.search(this.position, this.getRoute().get(this.getRoute().size()-1)), this.getPosition()));
+//        }
+//            this.setVisualTransition(transition);
+//            transition.play();
+//    }
 }

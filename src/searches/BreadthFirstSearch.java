@@ -14,31 +14,31 @@ import java.util.List;
  */
 public class BreadthFirstSearch {
 
-    private LinkedList<GraphNode> frontier;
-    private ArrayList<GraphNode> visited;
-    private LinkedHashMap<GraphNode, GraphNode> possiblePath;
-    private ArrayList<GraphNode> path;
+//    private LinkedList<GraphNode> frontier;
+//    private ArrayList<GraphNode> visited;
+//    private LinkedHashMap<GraphNode, GraphNode> possiblePath;
+//    private ArrayList<GraphNode> path;
 
-    private static BreadthFirstSearch instance;
+//    private static BreadthFirstSearch instance;
 
     /**
      * Singleton pattern for search
      * As there is only ever 1 instance of BFS,
      * it is efficient and safe to use the singleton pattern
      */
-    public BreadthFirstSearch() {
-        frontier = new LinkedList<>();
-        visited = new ArrayList<>();
-        possiblePath = new LinkedHashMap<>();
-        path = new ArrayList<>();
-    }
+//    public BreadthFirstSearch() {
+//        frontier = new LinkedList<>();
+//        visited = new ArrayList<>();
+//        possiblePath = new LinkedHashMap<>();
+//        path = new ArrayList<>();
+//    }
 
-    public static BreadthFirstSearch Instance() {
-        if (instance == null)
-            instance = new BreadthFirstSearch();
-
-        return instance;
-    }
+//    public static BreadthFirstSearch Instance() {
+//        if (instance == null)
+//            instance = new BreadthFirstSearch();
+//
+//        return instance;
+//    }
 
     /**
      * Finds a path from a start node to the end node using BFS, this utilises a queue which is just a linked list
@@ -48,7 +48,12 @@ public class BreadthFirstSearch {
      * @param endNode   node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
-    public List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+    public static List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+
+        LinkedList<GraphNode> frontier = new LinkedList<>();
+        ArrayList<GraphNode> visited = new ArrayList<>();
+        LinkedHashMap<GraphNode, GraphNode> possiblePath = new LinkedHashMap<>();
+        ArrayList<GraphNode> path = new ArrayList<>();
 
         GraphNode current;
         GraphNode parent;
@@ -91,8 +96,8 @@ public class BreadthFirstSearch {
         return null;
     }
 
-    public ArrayList<GraphNode> returnVisited() {
-        return visited;
-    }
+//    public ArrayList<GraphNode> returnVisited() {
+//        return visited;
+//    }
 
 }

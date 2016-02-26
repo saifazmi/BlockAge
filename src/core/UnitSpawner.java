@@ -1,21 +1,18 @@
 package core;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Logger;
-
 import entity.Entity;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import sceneElements.Images;
 import sceneElements.SpriteImage;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author : First created by Hung Hoang with code by Hung Hoang, and Paul Popa
@@ -29,8 +26,8 @@ public class UnitSpawner {
 
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
-    private int unitPoolCount = 0;
-    private int totalSpawnables = 10;
+    private int unitPoolCount;
+    private int totalSpawnables = 2;
     private int spawnCount = 0;
     private GraphNode goal;
     private int spawnlimit;
@@ -72,13 +69,13 @@ public class UnitSpawner {
      * Sets the 2-way relationship between the sprite and the unit.
      * Adds this newly created unit to the 'Pool' of units
      *
-     * @param graph    The graph the Unit will be on, passed to Unit Constructor
-     * @param goal     The Goal node to which the Unit's search will use, passed to Unit Constructor
+     * @param graph The graph the Unit will be on, passed to Unit Constructor
+     * @param goal  The Goal node to which the Unit's search will use, passed to Unit Constructor
      * @return A new Unit
      */
     private Unit CreateUnit(Graph graph, GraphNode goal) {
         // doing random for now, could return sequence of numbers representing units wanted
-        int index = rndSearchGen.nextInt(3);
+        int index = rndSearchGen.nextInt(1);
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
             image = Images.imageDemon;
@@ -89,10 +86,12 @@ public class UnitSpawner {
         }
         SpriteImage sprite = new SpriteImage(image, null);
         Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
+        LOG.log(Level.INFO, "Unit created");
         sprite.setEntity(unit);
 
         // focus sprite and displays text when clicked on it
         sprite.setOnMouseClicked(e -> {
+            LOG.log(Level.INFO, "in mouse click");
             sprite.requestFocus();
             ArrayList<Entity> units = engine.getEntities();
             for (Entity unit1 : units) {
@@ -123,6 +122,7 @@ public class UnitSpawner {
                     ((Unit) unit1).showTransition();
                 }
             }
+            LOG.log(Level.INFO, "Reached the end of Mouse CLick");
         });
         // adds the units into an array list
         unitPool.add(unit);
@@ -142,8 +142,11 @@ public class UnitSpawner {
             newUnit = CreateUnit(this.graph, this.goal);
         }
         spawnCount++;
+//
+//        if (!engine.getEntities().contains(newUnit)) {
+            engine.getEntities().add(newUnit);
+//        }
 
-        engine.getEntities().add(newUnit);
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
