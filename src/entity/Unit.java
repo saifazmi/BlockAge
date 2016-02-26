@@ -330,7 +330,7 @@ public class Unit extends Entity {
         this.visualTransition = visualTransition;
     }
 
-    public void showTransition2() {
+    public void showTransition() {
         SequentialTransition currentTrans = this.getVisualTransition();
         if (currentTrans == null && this.getRoute() != null) {
             SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
@@ -351,7 +351,7 @@ public class Unit extends Entity {
         }
     }
 
-    public void showTransition() {
+    public void showTransition2() {
         SequentialTransition transition = null;
         if(search == Search.BFS)
         {

@@ -73,7 +73,6 @@ public class UnitSpawner {
      * Adds this newly created unit to the 'Pool' of units
      *
      * @param graph    The graph the Unit will be on, passed to Unit Constructor
-     * @param renderer The Renderer the Unit will render its Sprite to, passed to Unit Constructor
      * @param goal     The Goal node to which the Unit's search will use, passed to Unit Constructor
      * @return A new Unit
      */
@@ -96,43 +95,34 @@ public class UnitSpawner {
         sprite.setOnMouseClicked(e -> {
             sprite.requestFocus();
             ArrayList<Entity> units = engine.getEntities();
-			for(int i=0; i<units.size(); i++) {
-    			if(sprite.getEntity() == units.get(i)) {
-    				GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
-            		GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" + 
-    		    										  "Search:  " + Unit.Search.values()[index] + "\n" +
-    		    										  "Sort:      " + Unit.Sort.values()[index]);
-            		// sets the image pressed for each unit accordingly to the search
-            		if(Unit.Search.values()[index] == Unit.Search.BFS) {
-            			sprite.setImage(Images.imagePressedDemon);
-            			((Unit) units.get(i)).showTransition();
-            		}
-            		else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            			sprite.setImage(Images.imagePressedDk);
-            			((Unit) units.get(i)).showTransition();
-            		}
-            		else {
-            			sprite.setImage(Images.imagePressedBanshee);
-            			((Unit) units.get(i)).showTransition();
-            		}
-    			}
-    			else {
-    				SpriteImage obtainedSprite = units.get(i).getSprite();
+            for (Entity unit1 : units) {
+                if (sprite.getEntity() == unit1) {
+                    GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
+                    GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
+                            "Search:  " + Unit.Search.values()[index] + "\n" +
+                            "Sort:      " + Unit.Sort.values()[index]);
+                    // sets the image pressed for each unit accordingly to the search
+                    if (Unit.Search.values()[index] == Unit.Search.BFS) {
+                        sprite.setImage(Images.imagePressedDemon);
+                    } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
+                        sprite.setImage(Images.imagePressedDk);
+                    } else {
+                        sprite.setImage(Images.imagePressedBanshee);
+                    }
+                    ((Unit) unit1).showTransition();
+                } else {
+                    SpriteImage obtainedSprite = unit1.getSprite();
                     Image image = obtainedSprite.getImage();
-    				if (image.equals(Images.imagePressedDemon)) { 
-    					units.get(i).getSprite().setImage(Images.imageDemon);
-    					((Unit) units.get(i)).showTransition();
-					}
-					else if (image.equals(Images.imagePressedDk)) {
-						units.get(i).getSprite().setImage(Images.imageDk);
-						((Unit) units.get(i)).showTransition();
-					}
-					else if(image.equals(Images.imagePressedBanshee)) {
-						units.get(i).getSprite().setImage(Images.imageBanshee);
-						((Unit) units.get(i)).showTransition();
-					}
-    			}
-			}
+                    if (image.equals(Images.imagePressedDemon)) {
+                        unit1.getSprite().setImage(Images.imageDemon);
+                    } else if (image.equals(Images.imagePressedDk)) {
+                        unit1.getSprite().setImage(Images.imageDk);
+                    } else if (image.equals(Images.imagePressedBanshee)) {
+                        unit1.getSprite().setImage(Images.imageBanshee);
+                    }
+                    ((Unit) unit1).showTransition();
+                }
+            }
         });
         // adds the units into an array list
         unitPool.add(unit);
