@@ -21,7 +21,6 @@ import menus.Menu;
 import menus.MenuHandler;
 import menus.OptionsMenu;
 import menus.PauseMenu;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -173,8 +172,8 @@ public class ElementsHandler {
                     ((Unit) ((SpriteImage) node).getEntity()).showTransition();
                 }
             } else if (k == KeyCode.S) {
-            	ArrayList<Entity> units = engine.getEntities();
-            	System.out.println(units.size());
+                ArrayList<Entity> units = engine.getEntities();
+                System.out.println(units.size());
                 for (int i = 0; i < units.size(); i++) {
                     SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
                     Image image = obtainedSprite.getImage();

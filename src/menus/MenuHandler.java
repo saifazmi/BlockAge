@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 
 /**
  * Handles the menus so that we can easily switch through them
+ *
  * @author : First created by Paul Popa with code by Evgeniy Kim, and Paul Popa
  * @date : 09/02/16, last edited by Paul Popa on 12/02/16
  */

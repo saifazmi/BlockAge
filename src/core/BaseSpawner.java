@@ -11,7 +11,6 @@ import sceneElements.SpriteImage;
 
 import java.io.File;
 import java.util.Random;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -32,8 +31,7 @@ public class BaseSpawner {
     private static BaseSpawner instance = null;
 
     public static BaseSpawner Instance() {
-        if(instance == null)
-        {
+        if (instance == null) {
             instance = new BaseSpawner();
         }
         return instance;

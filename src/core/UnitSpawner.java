@@ -1,10 +1,5 @@
 package core;
 
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Logger;
-
 import entity.Entity;
 import entity.Unit;
 import graph.Graph;
@@ -151,7 +146,7 @@ public class UnitSpawner {
         spawnCount++;
 //
 //        if (!engine.getEntities().contains(newUnit)) {
-            engine.getEntities().add(newUnit);
+        engine.getEntities().add(newUnit);
 //        }
 
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));

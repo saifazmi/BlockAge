@@ -1,7 +1,5 @@
 package menus;
 
-import java.io.File;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
@@ -18,6 +16,7 @@ import javafx.scene.layout.Pane;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 
+import java.io.File;
 
 
 /**
@@ -69,7 +68,7 @@ public class MainMenu implements Menu {
 
         declareElements();
         // NEW GAME BUTTON
-       
+
         b.setButtonProperties(newGameButton, "", Menu.WIDTH / 5 - newGameImage.getWidth() / 2, Menu.HEIGHT / 3,
                 e -> ElementsHandler.handle(e), new ImageView(newGameImage));
         b.addHoverEffect(newGameButton, newGameImageHovered, newGameImage, Menu.WIDTH / 5 - newGameImage.getWidth() / 2, Menu.HEIGHT / 3);
@@ -87,17 +86,18 @@ public class MainMenu implements Menu {
         // ADD ALL BUTTONS TO THE PANE
         mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton);
         Group mainMenuGroup = new Group(mainMenuPane);
-        BackgroundImage myBI= new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "MainMenu.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);;
+        BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "MainMenu.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        ;
         mainMenuPane.setBackground(new Background(myBI));
         mainMenuPane.setPrefWidth(Menu.WIDTH);
         mainMenuPane.setPrefHeight(Menu.HEIGHT);
-        mainMenuPane.widthProperty().addListener(new ChangeListener<Number>() {  
-        	  @Override  
-        	  public void changed(ObservableValue<? extends Number> observable, Number oldWidth, Number newWidth) {  
-        	    System.out.println(newWidth);  
-        	  }  
-        	});  
+        mainMenuPane.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldWidth, Number newWidth) {
+                System.out.println(newWidth);
+            }
+        });
         mainMenuScene = new Scene(mainMenuGroup, Menu.WIDTH, Menu.HEIGHT);
         //mainMenuScene.getStylesheets().add(MainMenu.class.getResource("css/testcss.css").toExternalForm());
     }

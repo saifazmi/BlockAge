@@ -8,7 +8,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
@@ -213,9 +212,8 @@ public class Unit extends Entity {
     public void update() {
         if (completedMove) {
 
-            LOG.log(Level.INFO,"completed move");
-            if (this.nextNode != null)
-            {
+            LOG.log(Level.INFO, "completed move");
+            if (this.nextNode != null) {
                 LOG.log(Level.INFO, "next node is " + this.nextNode);
                 this.position = this.nextNode;
             }
@@ -227,9 +225,9 @@ public class Unit extends Entity {
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
                 //if (xChange + yChange > 1 || xChange + yChange < -1) {
-                 //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
-                 //           "Fatal error, check search implementation: " + this.search.toString());
-                 //   return;
+                //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
+                //           "Fatal error, check search implementation: " + this.search.toString());
+                //   return;
                 //}
                 if (logicalMove(xChange, yChange)) {
                     double nextPixelX = x * this.renderer.getXSpacing();
