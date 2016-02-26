@@ -135,7 +135,7 @@ public class Blockade extends Entity {
         if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
             GraphNode position = CoreEngine.Instance().getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
 
-            System.out.println(position.toString());
+            //System.out.println(position.toString());
             return position;
         }
         return null;

@@ -2,17 +2,17 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
+
 /**
- * @author : First created by Hung Hoang with code by Hung Hoang
- * @date : 06/02/16, last edited by Hung Hoang on 25/02/16
+ * Created by hung on 06/02/16.
  */
 public class DepthFirstSearch {
 
     private Stack<GraphNode> frontier;
     private ArrayList<GraphNode> visited;
+    private LinkedHashMap<GraphNode, GraphNode> possiblePath;
+    private ArrayList<GraphNode> path;
 
     private static DepthFirstSearch instance = null;
 
@@ -24,6 +24,8 @@ public class DepthFirstSearch {
     public DepthFirstSearch() {
         visited = new ArrayList<>();
         frontier = new Stack<>();
+        possiblePath = new LinkedHashMap<>();
+        path = new ArrayList<>();
     }
 
     public static DepthFirstSearch Instance() {
@@ -44,28 +46,36 @@ public class DepthFirstSearch {
     public List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
 
         GraphNode current;
+        GraphNode parent;
+        possiblePath.clear();
         visited.clear();
         frontier.clear();
+        path.clear();
+        //System.out.println("start: " + startNode + ", end: " + endNode);
 
         frontier.push(startNode);
 
-        ArrayList<GraphNode> path = new ArrayList<>();
-
         while (!frontier.isEmpty()) {
             current = frontier.pop();
+            //System.out.println("next to check if goal: " + current);
 
             if (!visited.contains(current) && current.getBlockade() == null) {
+
                 if (current.equals(endNode)) {
-                    path.add(current);
-                    path.remove(0);
+                    while (possiblePath.keySet().contains(current)) {
+                        path.add(current);
+                        parent = possiblePath.get(current);
+                        current = parent;
+                    }
+
+                    Collections.reverse(path);
                     return path;
+
                 } else {
-                    path.add(current);
                     visited.add(current);
-                    frontier.clear();
 
                     current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(n -> frontier.push(n));
-                    /*
+                /*
                         equivalent to:
                     for (GraphNode n : current.getSuccessors()) {
                         if (!visited.contains(n)) {
@@ -73,10 +83,14 @@ public class DepthFirstSearch {
                         }
                     }
                      */
+
+                    for (GraphNode successor : current.getSuccessors()) {
+                        if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
+                            possiblePath.put(successor, current);
+                    }
                 }
             }
         }
-        visited.clear();
 
         return null;
     }

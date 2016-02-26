@@ -22,7 +22,7 @@ public class LambdaStore {
     private static final Logger LOG = Logger.getLogger(LambdaStore.class.getName());
 
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
-        LOG.log(Level.INFO, "Click registered at:  (x, " + e.getX() + "), (y, " + e.getY() + ")");
+        //LOG.log(Level.INFO, "Click registered at:  (x, " + e.getX() + "), (y, " + e.getY() + ")");
         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0, 0), null);
         Image image = ((ImageView) GameInterface.unsortableButton.getGraphic()).getImage();
         SpriteImage spriteImage = new SpriteImage(image, blockadeInstance);
@@ -33,16 +33,16 @@ public class LambdaStore {
         blockadeInstance.setSprite(spriteImage);
         Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
         if (blockade != null) {
-            LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
+            //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
             renderer.drawInitialEntity(blockade);
         } else {
-            LOG.log(Level.INFO, "Blockade creation failed. Request rejected, node has contents.");
+            //LOG.log(Level.INFO, "Blockade creation failed. Request rejected, node has contents.");
         }
     };
 
 
     public EventHandler<MouseEvent> getSceneClickPlaceUnbreakableBlockade() {
-        System.out.println("Blockade Event Handler Created");
+        //System.out.println("Blockade Event Handler Created");
         return sceneClickPlaceUnbreakableBlockade;
     }
 }
