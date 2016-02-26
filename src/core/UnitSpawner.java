@@ -61,7 +61,7 @@ public class UnitSpawner {
 
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
             //CreateUnit(graph, renderer, goal);
-            CreateUnit2(graph, renderer, goal);
+            CreateUnit2(graph, goal);
         }
     }
 
@@ -156,7 +156,7 @@ public class UnitSpawner {
             newUnit = unitPool.remove(0);
         } else {
             //newUnit = CreateUnit(this.graph, this.renderer, this.goal);
-            newUnit = CreateUnit2(this.graph, this.renderer, this.goal);
+            newUnit = CreateUnit2(this.graph, this.goal);
         }
         spawnCount++;
 
@@ -200,14 +200,9 @@ public class UnitSpawner {
         this.spawnlimit = spawnlimit;
     }
 
-    private Unit CreateUnit2(Graph graph, Renderer renderer, GraphNode goal) {
+    private Unit CreateUnit2(Graph graph, GraphNode goal) {
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
-
-
-        // Load the appropriate image for each search
-
-
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
             image = Images.imageDemon;
         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
