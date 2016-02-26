@@ -1,19 +1,21 @@
 package core;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.logging.Logger;
+
+import entity.Entity;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import sceneElements.Images;
 import sceneElements.SpriteImage;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Logger;
 
 /**
  * @author : First created by Hung Hoang with code by Hung Hoang, and Paul Popa
@@ -60,8 +62,7 @@ public class UnitSpawner {
         this.spawnlimit = spawnlimit;
 
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-            //CreateUnit(graph, renderer, goal);
-            CreateUnit2(graph, goal);
+            CreateUnit(graph, goal);
         }
     }
 
@@ -76,26 +77,16 @@ public class UnitSpawner {
      * @param goal     The Goal node to which the Unit's search will use, passed to Unit Constructor
      * @return A new Unit
      */
-    private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
+    private Unit CreateUnit(Graph graph, GraphNode goal) {
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
-        String SEPARATOR = File.separator;
-
-        // Load the appropriate image for each search
-        Image imageDemon = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-        Image imageDk = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 3.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-        Image imageBanshee = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 4.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-
-        Image imagePressedDemon = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0s.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-        Image imagePressedDk = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 3.0s.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-        Image imagePressedBanshee = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 4.0s.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
-            image = imageDemon;
+            image = Images.imageDemon;
         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            image = imageDk;
+            image = Images.imageDk;
         } else {
-            image = imageBanshee;
+            image = Images.imageBanshee;
         }
         SpriteImage sprite = new SpriteImage(image, null);
         Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
@@ -104,41 +95,44 @@ public class UnitSpawner {
         // focus sprite and displays text when clicked on it
         sprite.setOnMouseClicked(e -> {
             sprite.requestFocus();
-            Unit u = (Unit) sprite.getEntity();
-            u.showTransition();
-            GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
-            GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
-                    "Search:  " + Unit.Search.values()[index] + "\n" +
-                    "Sort:      " + Unit.Sort.values()[index]);
-            // sets the image pressed for each unit accordingly to the search
-            if (Unit.Search.values()[index] == Unit.Search.BFS) {
-                sprite.setImage(imagePressedDemon);
-            } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-                sprite.setImage(imagePressedDk);
-            } else {
-                sprite.setImage(imagePressedBanshee);
-            }
-        });
-        // if S key is pressed, the sprite gets unfocused and the text area gets cleared
-        sprite.setOnKeyPressed(e -> {
-            Image img = new Image(sprite.getImage().impl_getUrl().substring(0, sprite.getImage().impl_getUrl().length() - 5) + ".png");
-            ImageView imgView = new ImageView(img);
-            KeyCode k = e.getCode();
-            if (k == KeyCode.S) {
-                System.out.println(engine.getEntities().size());
-                for (int i = 0; i < engine.getEntities().size(); i++) {
-                    System.out.println(engine.getEntities().get(i).getName());
-                    if (engine.getEntities().get(i).getSprite().getImage().impl_getUrl().contains("2.0s")) {
-                        engine.getEntities().get(i).getSprite().setImage(imageDemon);
-                    } else if (engine.getEntities().get(i).getSprite().getImage().impl_getUrl().contains("3.0s")) {
-                        engine.getEntities().get(i).getSprite().setImage(imageDk);
-                    } else if (engine.getEntities().get(i).getSprite().getImage().impl_getUrl().contains("4.0s")) {
-                        engine.getEntities().get(i).getSprite().setImage(imageBanshee);
-                    }
-                }
-                GameInterface.unitDescriptionText.clear();
-                //sets the images back to originals if they are selected
-            }
+            ArrayList<Entity> units = engine.getEntities();
+			for(int i=0; i<units.size(); i++) {
+    			if(sprite.getEntity() == units.get(i)) {
+    				GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
+            		GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" + 
+    		    										  "Search:  " + Unit.Search.values()[index] + "\n" +
+    		    										  "Sort:      " + Unit.Sort.values()[index]);
+            		// sets the image pressed for each unit accordingly to the search
+            		if(Unit.Search.values()[index] == Unit.Search.BFS) {
+            			sprite.setImage(Images.imagePressedDemon);
+            			((Unit) units.get(i)).showTransition();
+            		}
+            		else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
+            			sprite.setImage(Images.imagePressedDk);
+            			((Unit) units.get(i)).showTransition();
+            		}
+            		else {
+            			sprite.setImage(Images.imagePressedBanshee);
+            			((Unit) units.get(i)).showTransition();
+            		}
+    			}
+    			else {
+    				SpriteImage obtainedSprite = units.get(i).getSprite();
+                    Image image = obtainedSprite.getImage();
+    				if (image.equals(Images.imagePressedDemon)) { 
+    					units.get(i).getSprite().setImage(Images.imageDemon);
+    					((Unit) units.get(i)).showTransition();
+					}
+					else if (image.equals(Images.imagePressedDk)) {
+						units.get(i).getSprite().setImage(Images.imageDk);
+						((Unit) units.get(i)).showTransition();
+					}
+					else if(image.equals(Images.imagePressedBanshee)) {
+						units.get(i).getSprite().setImage(Images.imageBanshee);
+						((Unit) units.get(i)).showTransition();
+					}
+    			}
+			}
         });
         // adds the units into an array list
         unitPool.add(unit);
@@ -155,8 +149,7 @@ public class UnitSpawner {
         if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
         } else {
-            //newUnit = CreateUnit(this.graph, this.renderer, this.goal);
-            newUnit = CreateUnit2(this.graph, this.goal);
+            newUnit = CreateUnit(this.graph, this.goal);
         }
         spawnCount++;
 
@@ -198,60 +191,5 @@ public class UnitSpawner {
      */
     public void setSpawnlimit(int spawnlimit) {
         this.spawnlimit = spawnlimit;
-    }
-
-    private Unit CreateUnit2(Graph graph, GraphNode goal) {
-        // doing random for now, could return sequence of numbers representing units wanted
-        int index = rndSearchGen.nextInt(3);
-        if (Unit.Search.values()[index] == Unit.Search.BFS) {
-            image = Images.imageDemon;
-        } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            image = Images.imageDk;
-        } else {
-            image = Images.imageBanshee;
-        }
-        SpriteImage sprite = new SpriteImage(image, null);
-        Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
-        sprite.setEntity(unit);
-
-        // focus sprite and displays text when clicked on it
-        sprite.setOnMouseClicked(e -> {
-            sprite.requestFocus();
-            Unit u = (Unit) sprite.getEntity();
-            u.showTransition();
-            GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
-            GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
-                    "Search:  " + Unit.Search.values()[index] + "\n" +
-                    "Sort:      " + Unit.Sort.values()[index]);
-            // sets the image pressed for each unit accordingly to the search
-            if (Unit.Search.values()[index] == Unit.Search.BFS) {
-                sprite.setImage(Images.imagePressedDemon);
-            } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-                sprite.setImage(Images.imagePressedDk);
-            } else {
-                sprite.setImage(Images.imagePressedBanshee);
-            }
-        });
-        // if S key is pressed, the sprite gets unfocused and the text area gets cleared
-        sprite.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.S) {
-                for (int i = 0; i < engine.getEntities().size(); i++) {
-                    SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
-                    Image image = obtainedSprite.getImage();
-                    if (image.equals(Images.imagePressedDemon)) {
-                        obtainedSprite.setImage(Images.imageDemon);
-                    } else if (image.equals(Images.imagePressedDk)) {
-                        obtainedSprite.setImage(Images.imageDk);
-                    } else if (image.equals(Images.imagePressedBanshee)) {
-                        obtainedSprite.setImage(Images.imageBanshee);
-                    }
-                }
-                GameInterface.unitDescriptionText.clear();
-                //sets the images back to originals if they are selected
-            }
-        });
-        // adds the units into an array list
-        unitPool.add(unit);
-        return unit;
     }
 }

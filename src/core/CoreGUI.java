@@ -1,5 +1,7 @@
 package core;
 
+import java.util.logging.Logger;
+
 /**
  * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, and Paul Popa
  * @date : 28/01/16, last edited by Dominic Walters and Paul Popa on 19/02/16
@@ -7,9 +9,8 @@ package core;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import menus.MenuHandler;
-
-import java.util.logging.Logger;
 
 public class CoreGUI extends Application {
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
