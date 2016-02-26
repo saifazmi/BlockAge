@@ -11,6 +11,7 @@ import entity.Unit;
 import graph.GraphNode;
 import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,6 +26,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author : First created by Paul Popa with code by Dominic Walters, and Paul Popa
+ * @date : 09/02/16, last edited by Paul Popa on 25/02/16
+ */
 public class ElementsHandler {
 
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
@@ -48,7 +53,6 @@ public class ElementsHandler {
             gameRunTime.startGame();
             MenuHandler.setMainGameScene();
             GameInterface gameInterface = new GameInterface();
-            //Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
             Renderer.Instance().initialDraw();
 
@@ -171,13 +175,14 @@ public class ElementsHandler {
             	ArrayList<Entity> units = engine.getEntities();
             	System.out.println(units.size());
                 for (int i = 0; i < units.size(); i++) {
-                    System.out.println(units.get(i).getName());
-                    if (units.get(i).getSprite().getImage().impl_getUrl().contains("2.0s")) {
-                    	units.get(i).getSprite().setImage(UnitSpawner.Instance().getDemonImage());
-                    } else if (units.get(i).getSprite().getImage().impl_getUrl().contains("3.0s")) {
-                    	units.get(i).getSprite().setImage(UnitSpawner.Instance().getDkImage());
-                    } else if (units.get(i).getSprite().getImage().impl_getUrl().contains("4.0s")) {
-                    	units.get(i).getSprite().setImage(UnitSpawner.Instance().getBansheeImage());
+                    SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
+                    Image image = obtainedSprite.getImage();
+                    if (image.equals(Images.imagePressedDemon)) {
+                        obtainedSprite.setImage(Images.imageDemon);
+                    } else if (image.equals(Images.imagePressedDk)) {
+                        obtainedSprite.setImage(Images.imageDk);
+                    } else if (image.equals(Images.imagePressedBanshee)) {
+                        obtainedSprite.setImage(Images.imageBanshee);
                     }
                 }
                 GameInterface.unitDescriptionText.clear();

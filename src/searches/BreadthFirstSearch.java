@@ -9,7 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by hung on 06/02/16.
+ * @author : First created by Hung Hoang with code by Hung Hoang
+ * @date : 06/02/16, last edited by Hung Hoang on 25/02/16
  */
 public class BreadthFirstSearch {
 

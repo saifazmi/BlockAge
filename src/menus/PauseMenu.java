@@ -11,6 +11,10 @@ import sceneElements.ElementsHandler;
 
 import java.io.File;
 
+/**
+ * @author : First created by Paul Popa with code by Paul Popa
+ * @date : 09/02/16, last edited by Paul Popa on 12/02/16
+ */
 public class PauseMenu implements Menu {
 
     public static Button backGameButton, backMainButton;

@@ -3,9 +3,10 @@ package sorts;
 import java.util.ArrayList;
 
 /**
- * Created by decklol on 19/02/16.
- * For indication of what is being sorted on the visual level.
+ * @author : First created by Evgeniy Kim with code by Evgeniy Kim
+ * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
+//For indication of what is being sorted on the visual level.
 public class SortableComponent {
     public ArrayList<Integer> value; //WHOLE ARRAYLIST
     public int comparing1; //INDEX OF WHATS BEING COMPARED

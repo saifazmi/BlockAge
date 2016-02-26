@@ -14,7 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by walte on 16/02/2016.
+ * @author : First created by Dominic Walters with code by Dominic Walters
+ * @date : 16/02/16, last edited by Dominic Walters on 25/02/16
  */
 public class LambdaStore {
     private Renderer renderer = Renderer.Instance();

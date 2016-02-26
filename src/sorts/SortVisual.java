@@ -4,7 +4,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Created by Caitlyn PLS on 19-Feb-16.
+ * @author : First created by Evgeniy Kim with code by Evgeniy Kim
+ * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
 public class SortVisual {
 

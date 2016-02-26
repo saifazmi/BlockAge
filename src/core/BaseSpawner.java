@@ -15,9 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : saif
- * @project : bestRTS
- * @date : 25/02/16
+ * @author : First created by Saif Amzi with code by Anh Pham, and Hung Hoang
+ * @date : 25/02/16, last edited by ___ on
  */
 public class BaseSpawner {
 
@@ -30,9 +29,15 @@ public class BaseSpawner {
     private static String SEPARATOR = File.separator;
 
     private GraphNode goal;
-    private static BaseSpawner instance;
+    private static BaseSpawner instance = null;
 
-    public static BaseSpawner Instance() {return instance;}
+    public static BaseSpawner Instance() {
+        if(instance == null)
+        {
+            instance = new BaseSpawner();
+        }
+        return instance;
+    }
 
     public BaseSpawner() {
         instance = this;

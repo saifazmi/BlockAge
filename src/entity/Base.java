@@ -4,9 +4,8 @@ import graph.GraphNode;
 import sceneElements.SpriteImage;
 
 /**
- * @author : Anh
- * @project : bestRTS
- * @date : 24/02/16
+ * @author : First created by Anh Pham with code by Anh Pham
+ * @date : 24/02/16, last edited by Paul Popa on 23/02/16
  */
 public class Base extends Entity {
 

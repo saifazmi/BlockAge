@@ -1,24 +1,43 @@
-# BestRTS
-Team Name: D3
+BestRTS
+=======
+**Team Name:** D3  
+[Link](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to the Markdown cheat sheet for editing this file.  
 
-## Knows Bugs    
-### Breadth First Search
+Key Bindings  
+------------
+- **P:** pause units
+- **R:** toggle route display  
+
+Knows Bugs    
+----------
+#### Breadth First Search
 - Occasionally can't find a route even though routes are possible.  
 
-### Depth First Search  
+#### Depth First Search  
 - Occasionally can't find a route even though routes are possible.  
 
-### AStar
+#### AStar
 - Occasionally make diagonal moves.  
 
-### Unit  
+#### Unit  
 - Transitions don't work if unit doesn't spawn at (0,0)
 
-### Renderer  
- - Route lines don't draw from the route start, but from the 2nd node
+#### Renderer  
+- Route lines don't draw from the route start, but from the 2nd node
 
-### Overlay  
- - Hovering over the Blockade causes the grid to move (Paul is moving elements around to fix this)  
+#### Overlay  
+- ~~Hovering over the Blockade causes the grid to move (Paul is moving elements around to fix this)~~  
 
-### Renderer   
- - ~~Gambling Error - Occasionally program thinks it isn't on the FX Thread when it is. (Fixed - Duplicate line caused the error)~~
+#### Renderer   
+- ~~Gambling Error - Occasionally program thinks it isn't on the FX 
+hread when it is. (Fixed - Duplicate line caused the error)~~  
+
+Contributors
+------------
+- [Saifullah Azmi](https://github.com/saif-azmi)  
+- [Dominic Walters](https://github.com/domWalters)  
+- [Evgeniy Kim](https://github.com/yev1master)  
+- [Anh Tuan Pham](https://github.com/istatsuki)  
+- [Hung Hoang](https://github.com/ParityB1t)  
+- [Paul Popa](https://github.com/PaulPopa)  
+

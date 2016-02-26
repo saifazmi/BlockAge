@@ -13,9 +13,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * @author : saif
- * @project : bestRTS
- * @date : 28/01/16
+ * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
+ * @date : 28/01/16, last edited by Dominic Walters on 20/02/16
  */
 public class Blockade extends Entity {
     private static final Logger LOG = Logger.getLogger(Blockade.class.getName());

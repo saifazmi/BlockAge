@@ -12,19 +12,20 @@ import graph.GraphNode;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import sceneElements.Images;
 import sceneElements.SpriteImage;
 
 /**
- * Created by hung on 13/02/16.
+ * @author : First created by Hung Hoang with code by Hung Hoang, and Paul Popa
+ * @date : 13/02/16, last edited by Paul Popa on 23/02/16
  */
 public class UnitSpawner {
     private CoreEngine engine = CoreEngine.Instance();
     private Graph graph = engine.getGraph();
     private Renderer renderer = Renderer.Instance();
-
     private static final Logger LOG = Logger.getLogger(UnitSpawner.class.getName());
-    private static String SEPARATOR = File.separator;
 
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
@@ -39,7 +40,6 @@ public class UnitSpawner {
     private String[] descriptions;
     private int cooldown = 60;
     private Image image = null;
-    private Image imageDemon, imageDk, imageBanshee = null;
 
     private static UnitSpawner instance;
 
@@ -62,7 +62,7 @@ public class UnitSpawner {
         this.spawnlimit = spawnlimit;
 
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-            CreateUnit(graph, renderer, goal);
+            CreateUnit(graph, goal);
         }
     }
 
@@ -77,26 +77,16 @@ public class UnitSpawner {
      * @param goal     The Goal node to which the Unit's search will use, passed to Unit Constructor
      * @return A new Unit
      */
-    private Unit CreateUnit(Graph graph, Renderer renderer, GraphNode goal) {
+    private Unit CreateUnit(Graph graph, GraphNode goal) {
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
-        String SEPARATOR = File.separator;
-
-        // Load the appropriate image for each search
-        imageDemon = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-        imageDk = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 3.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-        imageBanshee = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 4.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-
-        Image imagePressedDemon = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 2.0s.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-        Image imagePressedDk = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 3.0s.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-        Image imagePressedBanshee = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unit Sprite 4.0s.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
-            image = imageDemon;
+            image = Images.imageDemon;
         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            image = imageDk;
+            image = Images.imageDk;
         } else {
-            image = imageBanshee;
+            image = Images.imageBanshee;
         }
         SpriteImage sprite = new SpriteImage(image, null);
         Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
@@ -114,29 +104,31 @@ public class UnitSpawner {
     		    										  "Sort:      " + Unit.Sort.values()[index]);
             		// sets the image pressed for each unit accordingly to the search
             		if(Unit.Search.values()[index] == Unit.Search.BFS) {
-            			sprite.setImage(imagePressedDemon);
+            			sprite.setImage(Images.imagePressedDemon);
             			((Unit) units.get(i)).showTransition();
             		}
             		else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            			sprite.setImage(imagePressedDk);
+            			sprite.setImage(Images.imagePressedDk);
             			((Unit) units.get(i)).showTransition();
             		}
             		else {
-            			sprite.setImage(imagePressedBanshee);
+            			sprite.setImage(Images.imagePressedBanshee);
             			((Unit) units.get(i)).showTransition();
             		}
     			}
     			else {
-    				if (units.get(i).getSprite().getImage().impl_getUrl().contains("2.0s")) { 
-    					units.get(i).getSprite().setImage(imageDemon);
+    				SpriteImage obtainedSprite = units.get(i).getSprite();
+                    Image image = obtainedSprite.getImage();
+    				if (image.equals(Images.imagePressedDemon)) { 
+    					units.get(i).getSprite().setImage(Images.imageDemon);
     					((Unit) units.get(i)).showTransition();
 					}
-					else if (units.get(i).getSprite().getImage().impl_getUrl().contains("3.0s")) {
-						units.get(i).getSprite().setImage(imageDk);
+					else if (image.equals(Images.imagePressedDk)) {
+						units.get(i).getSprite().setImage(Images.imageDk);
 						((Unit) units.get(i)).showTransition();
 					}
-					else if(units.get(i).getSprite().getImage().impl_getUrl().contains("4.0s")) {
-						units.get(i).getSprite().setImage(imageBanshee);
+					else if(image.equals(Images.imagePressedBanshee)) {
+						units.get(i).getSprite().setImage(Images.imageBanshee);
 						((Unit) units.get(i)).showTransition();
 					}
     			}
@@ -157,7 +149,7 @@ public class UnitSpawner {
         if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
         } else {
-            newUnit = CreateUnit(graph, renderer, graph.getNodes().get(graph.getNodes().size() - 1));
+            newUnit = CreateUnit(this.graph, this.goal);
         }
         spawnCount++;
 
@@ -199,29 +191,5 @@ public class UnitSpawner {
      */
     public void setSpawnlimit(int spawnlimit) {
         this.spawnlimit = spawnlimit;
-    }
-    
-    /**
-     * Gets the demon Image
-     * @return the image of the demon sprite
-     */
-    public Image getDemonImage() {
-    	return imageDemon;
-    }
-    
-    /**
-     * Gets the death knight Image
-     * @return the image of the death knight sprite
-     */
-    public Image getDkImage() {
-    	return imageDk;
-    }
-    
-    /**
-     * Gets the banshee Image
-     * @return the image of the banshee sprite
-     */
-    public Image getBansheeImage() {
-    	return imageBanshee;
     }
 }

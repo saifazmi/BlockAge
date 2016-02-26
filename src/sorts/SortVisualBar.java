@@ -4,7 +4,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
- * Created by Caitlyn PLS on 19-Feb-16.
+ * @author : First created by Evgeniy Kim with code by Evgeniy Kim
+ * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
 public class SortVisualBar extends Rectangle {
     private int value;

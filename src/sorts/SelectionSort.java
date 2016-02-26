@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by dckxqt on 19-Feb-16.
- * <p>
- * WORKS, visualization logic untested, cant really see until its made
+ * @author : First created by Evgeniy Kim with code by Evgeniy Kim
+ * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
+//WORKS, visualization logic untested, cant really see until its made
 public class SelectionSort {
     /**
      * Selection sort, not sure if functional
