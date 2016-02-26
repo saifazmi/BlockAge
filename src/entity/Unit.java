@@ -282,7 +282,6 @@ public class Unit extends Entity {
             //System.out.println("using bfs");
             route = BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
         } else {
-
             //System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
         }
@@ -324,7 +323,7 @@ public class Unit extends Entity {
         this.visualTransition = visualTransition;
     }
 
-    public void showTransition() {
+    public void showTransition2() {
         SequentialTransition currentTrans = this.getVisualTransition();
         if (currentTrans == null && this.getRoute() != null) {
             SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
@@ -343,5 +342,23 @@ public class Unit extends Entity {
 
             this.setVisualTransition(null);
         }
+    }
+
+    public void showTransition() {
+        SequentialTransition transition = null;
+        if(search == Search.BFS)
+        {
+            BreadthFirstSearch.Instance().findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
+            transition = renderer.produceRouteVisual(renderer.produceRoute(BreadthFirstSearch.Instance().returnVisited(), this.getPosition()));
+        } else if(search == Search.DFS)
+        {
+            DepthFirstSearch.Instance().findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
+            transition = renderer.produceRouteVisual(renderer.produceRoute(DepthFirstSearch.Instance().returnVisited(), this.getPosition()));
+        } else if(search == Search.A_STAR)
+        {
+            transition = renderer.produceRouteVisual(renderer.produceRoute(AStar.search(this.position, this.getRoute().get(this.getRoute().size()-1)), this.getPosition()));
+        }
+            this.setVisualTransition(transition);
+            transition.play();
     }
 }
