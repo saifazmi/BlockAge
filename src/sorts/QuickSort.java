@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by Caitlyn PLS on 19-Feb-16
- * WORKS
- * Underlying IDEA: SortableComponent comes in sets of 3. one for left side, one for pivot, one for right
- * Do with it what you will, i thnk this is safest
+ * @author : First created by Evgeniy Kim with code by Evgeniy Kim
+ * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
 
+/*
+ * Underlying IDEA: SortableComponent comes in sets of 3. one for left side, one for pivot, one for right
+ * Do with it what you will, I think this is safest
+ */
 public class QuickSort {
     ArrayList allStates = new ArrayList<SortableComponent>();
 

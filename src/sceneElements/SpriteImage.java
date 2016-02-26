@@ -6,9 +6,9 @@ import javafx.scene.image.ImageView;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
 /**
- * Created by walte on 05/02/2016.
+ * @author : First created by Dominic Walters with code by Dominic Walters
+ * @date : 05/02/16, last edited by Dominic Walters on 05/02/16
  */
 public class SpriteImage extends ImageView implements FocusListener {
     private Entity entity;

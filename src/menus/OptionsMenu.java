@@ -14,9 +14,11 @@ import sceneElements.LabelProperties;
 
 import java.io.File;
 
+/**
+ * @author : First created by Paul Popa with code by Paul Popa
+ * @date : 09/02/16, last edited by Paul Popa on 12/02/16
+ */
 public class OptionsMenu implements Menu {
-
-
     public static Button yesButtonH, yesButtonS, noButtonH, noButtonS, backButton = null;
     public static Image hintsImage, soundImage, onImage, onImageHovered, offImage, offImageHovered, backImage, backImageHovered = null;
     public static int spaceBetweenText = 100;

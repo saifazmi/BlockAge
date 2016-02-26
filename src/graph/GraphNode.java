@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * @author : saif
- * @project : bestRTS
- * @date : 28/01/16
+ * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
+ * @date : 28/01/16, last edited by Hung Hoang on 02/02/16
  */
 public class GraphNode {
 

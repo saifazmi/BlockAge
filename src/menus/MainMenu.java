@@ -11,6 +11,10 @@ import sceneElements.ElementsHandler;
 
 import java.io.File;
 
+/**
+ * @author : First created by Paul Popa with code by Evgeniy Kim, and Paul Popa
+ * @date : 09/02/16, last edited by Paul Popa on 25/02/16
+ */
 public class MainMenu implements Menu {
 
     public static Button newGameButton, exitButton, optionsButton = null;

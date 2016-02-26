@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
- * Created by Dominic on 11/02/2016.
+ * @author : First created by Dominic Walters with code by Dominic Walters
+ * @date : 11/02/16, last edited by Dominic Walters on 11/02/16
  */
 public class BreakableBlockade extends Blockade {
     private static final Logger LOG = Logger.getLogger(BreakableBlockade.class.getName());

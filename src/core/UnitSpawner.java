@@ -14,7 +14,8 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 /**
- * Created by hung on 13/02/16.
+ * @author : First created by Hung Hoang with code by Hung Hoang, and Paul Popa
+ * @date : 13/02/16, last edited by Paul Popa on 23/02/16
  */
 public class UnitSpawner {
     private CoreEngine engine = CoreEngine.Instance();

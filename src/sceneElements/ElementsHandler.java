@@ -23,6 +23,10 @@ import menus.PauseMenu;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author : First created by Paul Popa with code by Dominic Walters, and Paul Popa
+ * @date : 09/02/16, last edited by Paul Popa on 25/02/16
+ */
 public class ElementsHandler {
 
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
@@ -46,7 +50,6 @@ public class ElementsHandler {
             gameRunTime.startGame();
             MenuHandler.setMainGameScene();
             GameInterface gameInterface = new GameInterface();
-            //Test.test(gameRunTime);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
             Renderer.Instance().initialDraw();
 

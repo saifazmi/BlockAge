@@ -10,11 +10,11 @@ import java.io.File;
 import java.util.logging.Logger;
 
 /**
- * Created by Dominic on 09/02/2016.
+ * @author : First created by Dominic Walters with code by Dominic Walters, and Paul Popa
+ * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
  */
 public class GameRunTime {
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
-    private static String SEPARATOR = File.separator;
 
     private Renderer renderer;
     private CoreEngine engine;
@@ -23,7 +23,6 @@ public class GameRunTime {
     static Scene mainGameScene = null;
 
     private static GameRunTime instance;
-
     public static GameRunTime Instance() {
         return instance;
     }

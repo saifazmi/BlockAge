@@ -19,6 +19,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * @author : First created by Dominic Walters with code by Dominic Walters
+ * @date : 29/01/16, last edited by Dominic Walters on 26/02/16
+ */
 public class Renderer extends Group {
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 

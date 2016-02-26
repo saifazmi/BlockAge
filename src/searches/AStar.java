@@ -13,9 +13,8 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
- * @author : Evgeniy
- * @project : bestRTS
- * @date : 07/02/16
+ * @author : First created by Evgeniy Kim with code by Evgeniy Kim
+ * @date : 07/02/16, last edited by Evgeniy Kim on 20/02/16
  */
 public class AStar {
     /**

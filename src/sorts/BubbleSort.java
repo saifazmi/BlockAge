@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by decklol on 19/02/16.
- * TESTED - WORKS, VIS LOGIC WILL WORK
+ * @author : First created by Evgeniy Kim with code by Evgeniy Kim
+ * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
+//TESTED - WORKS, VIS LOGIC WILL WORK
 public class BubbleSort {
     /**
      * Simple bubble sort. Presumed that only size is passed on
@@ -63,7 +64,7 @@ public class BubbleSort {
      * @return
      */
     public static ArrayList<Integer> getByValue(ArrayList<Integer> list) {
-        ArrayList s = new ArrayList<Integer>(list);
+        ArrayList s = new ArrayList<>(list);
         return s;
     }
 }

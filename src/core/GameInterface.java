@@ -24,6 +24,10 @@ import sceneElements.ElementsHandler;
 import java.io.File;
 import java.io.InputStream;
 
+/**
+ * @author : First created by Paul Popa with code by Paul Popa
+ * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
+ */
 public class GameInterface {
     public static Button fileButton, fileExitButton, helpButton, playButton, pauseButton, unsortableButton, sortableButton;
     public static TextArea unitDescriptionText, textInfoText, algorithmVisualisationText, searchVisualisationText;
