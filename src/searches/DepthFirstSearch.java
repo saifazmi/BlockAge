@@ -8,33 +8,6 @@ import java.util.*;
  * Created by hung on 06/02/16.
  */
 public class DepthFirstSearch {
-
-//    private Stack<GraphNode> frontier;
-//    private ArrayList<GraphNode> visited;
-//    private LinkedHashMap<GraphNode, GraphNode> possiblePath;
-//    private ArrayList<GraphNode> path;
-
-//    private static DepthFirstSearch instance = null;
-
-//    /**
-//     * Singleton pattern for search
-//     * As there is only ever 1 instance of DFS,
-//     * it is efficient and safe to use the singleton pattern
-//     */
-//    public DepthFirstSearch() {
-//        visited = new ArrayList<>();
-//        frontier = new Stack<>();
-//        possiblePath = new LinkedHashMap<>();
-//        path = new ArrayList<>();
-//    }
-
-//    public static DepthFirstSearch Instance() {
-//        if (instance == null)
-//            instance = new DepthFirstSearch();
-//
-//        return instance;
-//    }
-
     /**
      * Finds a path from a start node to the end node using DFS, utilises a stack
      * The returned path should not include the start node
@@ -56,13 +29,11 @@ public class DepthFirstSearch {
         visited.clear();
         frontier.clear();
         path.clear();
-        //System.out.println("start: " + startNode + ", end: " + endNode);
 
         frontier.push(startNode);
 
         while (!frontier.isEmpty()) {
             current = frontier.pop();
-            //System.out.println("next to check if goal: " + current);
 
             if (!visited.contains(current) && current.getBlockade() == null) {
 
@@ -99,8 +70,4 @@ public class DepthFirstSearch {
 
         return null;
     }
-
-//    public ArrayList<GraphNode> returnVisited() {
-//        return visited;
-//    }
 }

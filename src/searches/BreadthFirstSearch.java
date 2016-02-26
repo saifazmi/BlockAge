@@ -13,33 +13,6 @@ import java.util.List;
  * @date : 06/02/16, last edited by Hung Hoang on 25/02/16
  */
 public class BreadthFirstSearch {
-
-//    private LinkedList<GraphNode> frontier;
-//    private ArrayList<GraphNode> visited;
-//    private LinkedHashMap<GraphNode, GraphNode> possiblePath;
-//    private ArrayList<GraphNode> path;
-
-//    private static BreadthFirstSearch instance;
-
-    /**
-     * Singleton pattern for search
-     * As there is only ever 1 instance of BFS,
-     * it is efficient and safe to use the singleton pattern
-     */
-//    public BreadthFirstSearch() {
-//        frontier = new LinkedList<>();
-//        visited = new ArrayList<>();
-//        possiblePath = new LinkedHashMap<>();
-//        path = new ArrayList<>();
-//    }
-
-//    public static BreadthFirstSearch Instance() {
-//        if (instance == null)
-//            instance = new BreadthFirstSearch();
-//
-//        return instance;
-//    }
-
     /**
      * Finds a path from a start node to the end node using BFS, this utilises a queue which is just a linked list
      * The returned path should not include the start node.
@@ -79,13 +52,10 @@ public class BreadthFirstSearch {
                     }
 
                     Collections.reverse(path);
-                    //System.out.println(path);
                     return path;
                 } else {
                     visited.add(current);
                     frontier.addAll(current.getSuccessors());
-
-                    //??
                     for (GraphNode successor : current.getSuccessors()) {
                         if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
                             possiblePath.put(successor, current);
@@ -95,9 +65,4 @@ public class BreadthFirstSearch {
         }
         return null;
     }
-
-//    public ArrayList<GraphNode> returnVisited() {
-//        return visited;
-//    }
-
 }
