@@ -6,10 +6,8 @@ import entity.Blockade;
 import graph.GraphNode;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import sceneElements.Images;
-import sceneElements.SpriteImage;
 
 import java.util.logging.Logger;
 
@@ -34,13 +32,7 @@ public class LambdaStore {
 
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0, 0), null);
-        Image image = Images.unsortableImage1;
-        SpriteImage spriteImage = new SpriteImage(image, blockadeInstance);
-        spriteImage.setFitWidth(renderer.getXSpacing());
-        spriteImage.setFitHeight(renderer.getYSpacing());
-        spriteImage.setPreserveRatio(false);
-        spriteImage.setSmooth(true);
-        blockadeInstance.setSprite(spriteImage);
+        Images.setSpriteProperties(blockadeInstance, Images.unsortableImage1);
         Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
         if (blockade != null) {
             renderer.drawInitialEntity(blockade);

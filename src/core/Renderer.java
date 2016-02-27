@@ -112,16 +112,13 @@ public class Renderer extends Group {
      */
     public void calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
+
         double pixelWidth = scene.getWidth() - GameInterface.rightPaneWidth;
         double pixelHeight = scene.getHeight() - GameInterface.bottomPaneHeight;
-
         int width = Graph.WIDTH;
         int height = Graph.HEIGHT;
-        double xSpacing = pixelWidth / (width);
-        double ySpacing = pixelHeight / (height);
-
-        this.xSpacing = xSpacing;
-        this.ySpacing = ySpacing;
+        this.xSpacing = pixelWidth / (width);
+        this.ySpacing = pixelHeight / (height);
 
         returnList.add((double) width);
         returnList.add((double) height);
@@ -142,10 +139,8 @@ public class Renderer extends Group {
         if (!this.entitiesToDraw.contains(entity)) {
             this.entitiesToDraw.add(entity);
         }
-
-        SpriteImage sprite = entity.getSprite();
         GraphNode node = entity.getPosition();
-
+        SpriteImage sprite = entity.getSprite();
         sprite.setFitWidth(xSpacing);
         sprite.setFitHeight(ySpacing);
         sprite.setX(node.getX() * xSpacing);

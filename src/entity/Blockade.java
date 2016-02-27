@@ -82,14 +82,7 @@ public class Blockade extends Entity {
      */
     public static Blockade createBlockade(MouseEvent e, Blockade blockadeInstance) {
         GraphNode node = calcGraphNode(e);
-        if (node != null) {
-            Blockade blockade = new Blockade(calcId(), blockadeInstance.getName(), calcGraphNode(e), blockadeInstance.getSprite());
-            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getUnits().size() == 0) {
-                blockade.getPosition().setBlockade(blockade);
-                return blockade;
-            }
-        }
-        return null;
+        return placeBlockade(blockadeInstance, node);
     }
 
     /**
@@ -109,7 +102,7 @@ public class Blockade extends Entity {
      * @param e the mouse event ot be considered
      * @return the graphnode created
      */
-    protected static GraphNode calcGraphNode(MouseEvent e) {
+    public static GraphNode calcGraphNode(MouseEvent e) {
         Renderer renderer = Renderer.Instance();
 
         double xSpacing = renderer.getXSpacing();
@@ -132,14 +125,7 @@ public class Blockade extends Entity {
      **/
     public static Blockade randomBlockade(Blockade blockadeInstance) {
         GraphNode node = CoreEngine.Instance().getGraph().nodeWith(blockadeInstance.getPosition());
-        if (node != null && !node.equals(new GraphNode(0, 0))) {
-            Blockade blockade = new Blockade(calcId(), blockadeInstance.getName(), node, blockadeInstance.getSprite());
-            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
-                blockade.getPosition().setBlockade(blockade);
-                return blockade;
-            }
-        }
-        return null;
+        return placeBlockade(blockadeInstance, node);
     }
 
     /**
@@ -157,5 +143,17 @@ public class Blockade extends Entity {
             }
         }
         return max + 1;
+    }
+
+    private static Blockade placeBlockade(Blockade blockadeInstance, GraphNode node)
+    {
+        if (node != null && !node.equals(new GraphNode(0, 0))) {
+            Blockade blockade = new Blockade(calcId(), blockadeInstance.getName(), node, blockadeInstance.getSprite());
+            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
+                blockade.getPosition().setBlockade(blockade);
+                return blockade;
+            }
+        }
+        return null;
     }
 }

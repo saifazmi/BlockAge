@@ -79,7 +79,6 @@ public class CoreEngine {
     public void startGame() {
         running = true;
         startTime = System.nanoTime();
-        // @TODO in case it's not running
         while (running) {
             while (paused) {
                 try {

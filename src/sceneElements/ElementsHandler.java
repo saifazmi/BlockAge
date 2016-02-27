@@ -1,11 +1,6 @@
 package sceneElements;
 
-import core.BaseSpawner;
-import core.CoreEngine;
-import core.GameInterface;
-import core.GameRunTime;
-import core.Renderer;
-import core.UnitSpawner;
+import core.*;
 import entity.Entity;
 import entity.Unit;
 import graph.GraphNode;
@@ -17,11 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lambdastorage.LambdaStore;
-import menus.MainMenu;
-import menus.Menu;
-import menus.MenuHandler;
-import menus.OptionsMenu;
-import menus.PauseMenu;
+import menus.*;
 
 import java.util.ArrayList;
 import java.util.logging.Level;

@@ -178,7 +178,6 @@ public class Unit extends Entity {
      *
      * @param position the position to be checked
      * @return whether the position has a block
-     * //@TODO comment on removing, adding units
      */
     private boolean blockCheck(GraphNode position) {
 
@@ -186,7 +185,6 @@ public class Unit extends Entity {
             this.getPosition().getUnits().remove(this);
             position.getUnits().add(this);
             this.setPosition(position);
-
             return true;
         }
         return false;

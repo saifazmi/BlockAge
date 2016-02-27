@@ -1,6 +1,7 @@
 package sceneElements;
 
 import core.Renderer;
+import entity.Entity;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -48,4 +49,14 @@ public class Images {
     public static final Image soundImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "sound_label.png");
     public static final Image backImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.png");
     public static final Image backImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.hovered.png");
+
+    public static void setSpriteProperties(Entity entity, Image image)
+    {
+        SpriteImage spriteImage = new SpriteImage(image, entity);
+        spriteImage.setFitWidth(renderer.getXSpacing());
+        spriteImage.setFitHeight(renderer.getYSpacing());
+        spriteImage.setPreserveRatio(false);
+        spriteImage.setSmooth(true);
+        entity.setSprite(spriteImage);
+    }
 }
