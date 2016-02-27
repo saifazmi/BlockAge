@@ -65,7 +65,7 @@ public class BaseSpawner {
                 double logicalY = Math.floor(y / ySpacing);
 
                 // checking if the position is within the boundaries
-                if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
+                if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY < Graph.HEIGHT) {
                     // set the goal
                     goal = graph.nodeWith(new GraphNode((int) logicalX, (int) logicalY));
                     System.out.println("goal at " + goal.toString());

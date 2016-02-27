@@ -34,7 +34,6 @@ import java.util.logging.Logger;
 public class ElementsHandler {
 
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
-    private static CoreEngine engine = CoreEngine.Instance();
     public static ButtonProperties b = new ButtonProperties();
     private static Scene scene = GameRunTime.Instance().getScene();
 
@@ -149,6 +148,7 @@ public class ElementsHandler {
     }
 
     public static void handleKeys(KeyEvent event) {
+        CoreEngine engine = CoreEngine.Instance();
         KeyCode k = event.getCode();
         if (MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
             if (k == KeyCode.ESCAPE) {
