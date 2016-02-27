@@ -23,7 +23,6 @@ public class PauseMenu implements Menu {
     private Scene pauseMenuScene = null;
     private ButtonProperties b = null;
     private Image backGameImage, backGameImageHovered, backMainImage, backMainImageHovered;
-    private int spaceBetweenImgH = 50;
 
     private static String SEPARATOR = File.separator;
 
@@ -49,11 +48,12 @@ public class PauseMenu implements Menu {
 
         // NEW GAME BUTTON
         b.setButtonProperties(backGameButton, "", Menu.WIDTH / 2 - backGameImage.getWidth() / 2, Menu.HEIGHT / 3,
-                e -> ElementsHandler.handle(e), new ImageView(backGameImage));
+                ElementsHandler::handle, new ImageView(backGameImage));
         b.addHoverEffect(backGameButton, backGameImageHovered, backGameImage, Menu.WIDTH / 2 - backGameImage.getWidth() / 2, Menu.HEIGHT / 3);
 
+        int spaceBetweenImgH = 50;
         b.setButtonProperties(backMainButton, "", Menu.WIDTH / 2 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH,
-                e -> ElementsHandler.handle(e), new ImageView(backMainImage));
+                ElementsHandler::handle, new ImageView(backMainImage));
         b.addHoverEffect(backMainButton, backMainImageHovered, backMainImage, Menu.WIDTH / 2 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH);
 
         pauseMenuPane.getChildren().addAll(backGameButton, backMainButton);

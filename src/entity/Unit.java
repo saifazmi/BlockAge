@@ -51,18 +51,9 @@ public class Unit extends Entity {
     private GraphNode goal;
     private Search search;
     private Sort sort;
-    private boolean changingRoute = true;
 
     private GraphNode nextNode;
     private boolean completedMove = true;
-    /*
-        Inherited parameters
-            protected final int id;
-            protected String name;
-            protected String description;
-            protected GraphNode position;
-            protected SpriteImage sprite;
-     */
 
     /**
      * Constructor for Unit used by UnitSpawner
@@ -198,7 +189,6 @@ public class Unit extends Entity {
 
             return true;
         }
-        this.changingRoute = true;
         return false;
     }
 
@@ -230,8 +220,8 @@ public class Unit extends Entity {
                 //   return;
                 //}
                 if (logicalMove(xChange, yChange)) {
-                    double nextPixelX = x * this.renderer.getXSpacing();
-                    double nextPixelY = y * this.renderer.getYSpacing();
+                    double nextPixelX = x * renderer.getXSpacing();
+                    double nextPixelY = y * renderer.getYSpacing();
 
                     TranslateTransition transition = new TranslateTransition(SPEED, sprite);
                     transition.setToX(nextPixelX);
@@ -277,18 +267,14 @@ public class Unit extends Entity {
     private void decideRoute() {
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
         if (search == Search.DFS) {
-            //System.out.println("using dfs");
             route = DepthFirstSearch.findPathFrom(getPosition(), this.goal);
         } else if (search == Search.BFS) {
-            //System.out.println("using bfs");
             route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal);
         } else {
-            //System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
         }
         System.out.println(route);
     }
-
 
     /**
      * Gets the search algorithm being used by this unit

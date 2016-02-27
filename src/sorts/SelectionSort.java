@@ -21,9 +21,9 @@ public class SelectionSort {
             return null;
         }
         //return list
-        ArrayList allStates = new ArrayList<SortableComponent>();
+        ArrayList<SortableComponent> allStates = new ArrayList<>();
         //generate  numbers
-        ArrayList state = new ArrayList<Integer>();
+        ArrayList<Integer> state = new ArrayList<>();
         for (int x = 0; x < size; x++) {
             state.add(x);
         }
@@ -34,14 +34,14 @@ public class SelectionSort {
             for (i = j + 1; i < size; i++) {
                 SortableComponent s = new SortableComponent(getByValue(state), min, i, false);
                 allStates.add(s);
-                if ((Integer) state.get(i) < (Integer) state.get(min)) {
+                if (state.get(i) < state.get(min)) {
                     min = i;
                     SortableComponent c = new SortableComponent(getByValue(state), j, i, true);
                     allStates.add(c);
                 }
             }
             if (min != j) { //swapping
-                Integer temp = (Integer) state.get(j);
+                Integer temp = state.get(j);
                 state.set(j, state.get(min));
                 state.set(min, temp);
                 SortableComponent s = new SortableComponent(getByValue(state), min, j, true);
@@ -58,7 +58,6 @@ public class SelectionSort {
      * @return
      */
     public static ArrayList<Integer> getByValue(ArrayList<Integer> list) {
-        ArrayList s = new ArrayList<Integer>(list);
-        return s;
+        return new ArrayList<>(list);
     }
 }
