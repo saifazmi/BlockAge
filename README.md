@@ -7,13 +7,13 @@ Key Bindings
 ------------
 - **SPACE:** pause units
 - **R:** toggle route display  
-- **B:** toggle block palcement  
+- **B:** toggle block placement  
 - **S:** toggle unit selection
 
 Knows Bugs    
 ----------
 #### Base Spawner
-- Base can be placed anywhere (on blockades, off of grid etc)
+- ~~Base can be placed anywhere (on blockades, off of grid etc)~~
 
 #### Breadth First Search
 - ~~Occasionally can't find a route even though routes are possible.~~
@@ -22,7 +22,7 @@ Knows Bugs
 - ~~Occasionally can't find a route even though routes are possible.~~
 
 #### AStar
-- Occasionally make diagonal moves.  
+- ~~Occasionally make diagonal moves.~~
 
 #### Unit  
 - Transitions don't work if unit doesn't spawn at (0,0)
