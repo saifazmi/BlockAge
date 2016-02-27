@@ -146,7 +146,6 @@ public class ElementsHandler {
         if (event.getSource() == GameInterface.pauseButton) {
             engine.setPaused(true);
         }
-
     }
 
     public static void handleKeys(KeyEvent event) {
