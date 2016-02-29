@@ -45,7 +45,7 @@ public class ElementsHandler {
         // Elements from the Main Menu scene
         CoreEngine engine = CoreEngine.Instance();
 
-        if (event.getSource() == MainMenu.newGameButton) {
+        if (event.getSource() == MainMenu.newGameButtonF) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
             engine = CoreEngine.Instance();
@@ -76,10 +76,10 @@ public class ElementsHandler {
             unitSpawnerThread.start();
 
         }
-        if (event.getSource() == MainMenu.optionsButton) {
+        if (event.getSource() == MainMenu.optionsButtonF) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
-        if (event.getSource() == MainMenu.exitButton) {
+        if (event.getSource() == MainMenu.exitButtonF) {
             System.exit(0);
         }
         // End of elements from Main Menu scene
@@ -121,6 +121,27 @@ public class ElementsHandler {
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonS)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonS);
                 OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonS);
+            }
+        }
+        
+        
+        if (event.getSource() == OptionsMenu.yesButtonB) {
+            b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+                    e -> handle(e), new ImageView(OptionsMenu.offImage));
+            b.addHoverEffect(OptionsMenu.noButtonB, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonB)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonB);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonB);
+            }
+        }
+        
+        if (event.getSource() == OptionsMenu.noButtonB) {
+            b.setButtonProperties(OptionsMenu.yesButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+                    e -> handle(e), new ImageView(OptionsMenu.onImage));
+            b.addHoverEffect(OptionsMenu.yesButtonB, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonB)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonB);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonB);
             }
         }
 
@@ -167,25 +188,38 @@ public class ElementsHandler {
                 } else {
                     engine.setPaused(true);
                 }
-            } else if (k == KeyCode.R) {
-                Node node = GameRunTime.getScene().getFocusOwner();
-                if (node instanceof SpriteImage) {
-                    ((Unit) ((SpriteImage) node).getEntity()).showTransition();
-                }
             } else if (k == KeyCode.S) {
             	ArrayList<Entity> units = engine.getEntities();
             	System.out.println(units.size());
+            	boolean checked = false;
+            	Node node = GameRunTime.getScene().getFocusOwner();
                 for (int i = 0; i < units.size(); i++) {
                     SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
                     Image image = obtainedSprite.getImage();
                     if (image.equals(Images.imagePressedDemon)) {
                         obtainedSprite.setImage(Images.imageDemon);
+                        checked = true;
+                        ((Unit) ((SpriteImage) node).getEntity()).showTransition(false);
                     } else if (image.equals(Images.imagePressedDk)) {
                         obtainedSprite.setImage(Images.imageDk);
+                        checked = true;
+                        ((Unit) ((SpriteImage) node).getEntity()).showTransition(false);
                     } else if (image.equals(Images.imagePressedBanshee)) {
                         obtainedSprite.setImage(Images.imageBanshee);
+                        checked = true;
+                        ((Unit) ((SpriteImage) node).getEntity()).showTransition(false);
                     }
                 }
+                /*if (node instanceof SpriteImage && checked == false) {
+                	if (((SpriteImage) node).getImage().equals(Images.imageDemon)) {
+                       ((SpriteImage) node).setImage(Images.imagePressedDemon);
+                    } else if (((SpriteImage) node).getImage().equals(Images.imageDk)) {
+                    	((SpriteImage) node).setImage(Images.imagePressedDk);
+                    } else if (((SpriteImage) node).getImage().equals(Images.imageBanshee)) {
+                    	((SpriteImage) node).setImage(Images.imagePressedBanshee);
+                    }
+                	((Unit) ((SpriteImage) node).getEntity()).showTransition(true);
+                }*/
                 GameInterface.unitDescriptionText.clear();
             }
         }

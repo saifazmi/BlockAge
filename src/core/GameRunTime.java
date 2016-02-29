@@ -2,8 +2,15 @@ package core;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import menus.Menu;
 import sceneElements.ElementsHandler;
 
 import java.io.File;
@@ -19,6 +26,7 @@ public class GameRunTime {
     private Renderer renderer;
     private CoreEngine engine;
     private boolean basePlaced = false;
+    private Pane mainGamePane = null;
 
     static Scene mainGameScene = null;
 
@@ -52,7 +60,13 @@ public class GameRunTime {
     }
 
     public void declareElements() {
-        Pane mainGamePane = new BorderPane();
+        mainGamePane = new BorderPane();
+        mainGamePane.setPrefWidth(CoreGUI.Instance().getWIDTH() - 224);
+        mainGamePane.setPrefHeight(CoreGUI.Instance().getHEIGHT() - 130);
+        String SEPARATOR = File.separator;
+        BackgroundImage myBI= new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "grass_background.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+        		BackgroundSize.DEFAULT);
+        mainGamePane.setBackground(new Background(myBI));
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);

@@ -67,7 +67,7 @@ public class UnitSpawner {
             CreateUnit(graph, goal);
         }
     }
-
+    
     /**
      * Creates a SpriteImage and set up its appropriate listeners for Mouse Click.
      * Create a new Unit with the appropriate search and sort algorithm indicator 'attached'.
@@ -113,19 +113,19 @@ public class UnitSpawner {
                     } else {
                         sprite.setImage(Images.imagePressedBanshee);
                     }
-                    ((Unit) unit1).showTransition();
+                    ((Unit) unit1).showTransition(true);
                 } else {
                     SpriteImage obtainedSprite = unit1.getSprite();
                     Image image = obtainedSprite.getImage();
                     if (image.equals(Images.imagePressedDemon)) {
                         unit1.getSprite().setImage(Images.imageDemon);
-                        ((Unit) unit1).showTransition();
+                        ((Unit) unit1).showTransition(false);
                     } else if (image.equals(Images.imagePressedDk)) {
                         unit1.getSprite().setImage(Images.imageDk);
-                        ((Unit) unit1).showTransition();
+                        ((Unit) unit1).showTransition(false);
                     } else if (image.equals(Images.imagePressedBanshee)) {
                         unit1.getSprite().setImage(Images.imageBanshee);
-                        ((Unit) unit1).showTransition();
+                        ((Unit) unit1).showTransition(false);
                     }
                 }
             }
