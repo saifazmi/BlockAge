@@ -82,14 +82,7 @@ public class Blockade extends Entity {
      */
     public static Blockade createBlockade(MouseEvent e, Blockade blockadeInstance) {
         GraphNode node = calcGraphNode(e);
-        if (node != null) {
-            Blockade blockade = new Blockade(calcId(), blockadeInstance.getName(), calcGraphNode(e), blockadeInstance.getSprite());
-            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getUnits().size() == 0) {
-                blockade.getPosition().setBlockade(blockade);
-                return blockade;
-            }
-        }
-        return null;
+        return placeBlockade(blockadeInstance, node);
     }
 
     /**
@@ -98,64 +91,41 @@ public class Blockade extends Entity {
      * @return the list of blockades
      */
     private static ArrayList<Blockade> getBlockades() {
-
         ArrayList<Blockade> blockades = new ArrayList<>();
         ArrayList<Entity> entities = CoreEngine.Instance().getEntities();
         blockades.addAll(entities.stream().filter(entity -> entity instanceof Blockade).map(entity -> (Blockade) entity).collect(Collectors.toList()));
-        /*
-            Equivalent to:
-            for (Entity entity : entities)
-        {
-            if (entity instanceof Blockade)
-            {
-                blockades.add((Blockade) entity);
-            }
-        }
-         */
         return blockades;
     }
 
     /**
      * Calculates the graphnode representation of a mouse click
-     *
      * @param e the mouse event ot be considered
      * @return the graphnode created
      */
-    protected static GraphNode calcGraphNode(MouseEvent e) {
+    public static GraphNode calcGraphNode(MouseEvent e) {
         Renderer renderer = Renderer.Instance();
 
         double xSpacing = renderer.getXSpacing();
         double ySpacing = renderer.getYSpacing();
         double x = e.getX();
-        double y = e.getY();                //@TODO subtract pane height of pauls menu
+        double y = e.getY();
         double logicalX = Math.floor(x / xSpacing);
         double logicalY = Math.floor(y / ySpacing);
 
         if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
-            GraphNode position = CoreEngine.Instance().getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
-
-            //System.out.println(position.toString());
-            return position;
+            return CoreEngine.Instance().getGraph().nodeWith(new GraphNode((int) logicalX, (int) logicalY));
         }
         return null;
     }
 
-    /*
-     * Method for creating blockage in random GraphNode
-     * @param runtime the current game run time
+    /**
+     * Method for creating blockade in random GraphNode
      * @param blockadeInstance the blockade information to be created
-     * @return blockade the blockade object to be created
-     */
-    public static Blockade randomBlockage(Blockade blockadeInstance) {
+     * @return blockade the blockade created
+     **/
+    public static Blockade randomBlockade(Blockade blockadeInstance) {
         GraphNode node = CoreEngine.Instance().getGraph().nodeWith(blockadeInstance.getPosition());
-        if (node != null && !node.equals(new GraphNode(0, 0))) {
-            Blockade blockade = new Blockade(calcId(), blockadeInstance.getName(), node, blockadeInstance.getSprite());
-            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
-                blockade.getPosition().setBlockade(blockade);
-                return blockade;
-            }
-        }
-        return null;
+        return placeBlockade(blockadeInstance, node);
     }
 
     /**
@@ -173,5 +143,17 @@ public class Blockade extends Entity {
             }
         }
         return max + 1;
+    }
+
+    private static Blockade placeBlockade(Blockade blockadeInstance, GraphNode node)
+    {
+        if (node != null && !node.equals(new GraphNode(0, 0))) {
+            Blockade blockade = new Blockade(calcId(), blockadeInstance.getName(), node, blockadeInstance.getSprite());
+            if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
+                blockade.getPosition().setBlockade(blockade);
+                return blockade;
+            }
+        }
+        return null;
     }
 }

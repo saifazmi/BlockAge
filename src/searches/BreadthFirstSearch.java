@@ -2,11 +2,7 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author : First created by Hung Hoang with code by Hung Hoang

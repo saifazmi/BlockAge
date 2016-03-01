@@ -28,21 +28,24 @@ import java.util.stream.Collectors;
 public class Renderer extends Group {
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 
-    private Scene scene;
+    private Scene scene = GameRunTime.Instance().getScene();
     private List<Entity> entitiesToDraw;
     private double xSpacing;
     private double ySpacing;
     private ArrayList<Double> spacingOutput;
-    private static Renderer instance;
+    private static Renderer instance = null;
 
     public static Renderer Instance() {
+        if(instance == null)
+        {
+            instance = new Renderer();
+        }
         return instance;
     }
 
-    public Renderer(Scene scene) {
+    public Renderer() {
         super();
         instance = this;
-        this.scene = scene;
         this.entitiesToDraw = new ArrayList<>();
     }
 
@@ -61,7 +64,7 @@ public class Renderer extends Group {
      * @return success boolean representing the success of the operation
      */
     public boolean initialDraw() {
-        boolean success = true;
+        boolean success;
         ArrayList<Double> results = spacingOutput;
         int width = (int) (double) results.get(0);
         int height = (int) (double) results.get(1);
@@ -71,10 +74,9 @@ public class Renderer extends Group {
         this.ySpacing = ySpacing;
         double pixelWidth = results.get(4);
         double pixelHeight = results.get(5);
-        success = success && drawLines(xSpacing, ySpacing, pixelWidth, pixelHeight, width, height);
+        success = drawLines(xSpacing, ySpacing, pixelWidth, pixelHeight, width, height);
         return success;
     }
-
     /**
      * Creates the grid lines and adds them to the renderer.
      *
@@ -99,7 +101,6 @@ public class Renderer extends Group {
         }
         return true;
     }
-
     /**
      * Calculates the spacing needed for the grid to fit the space it has been granted.
      *
@@ -114,16 +115,14 @@ public class Renderer extends Group {
      */
     public void calculateSpacing() {
         ArrayList<Double> returnList = new ArrayList<>();
+
         double pixelWidth = scene.getWidth() - GameInterface.rightPaneWidth;
         double pixelHeight = scene.getHeight() - GameInterface.bottomPaneHeight;
-
         int width = Graph.WIDTH;
         int height = Graph.HEIGHT;
-        double xSpacing = pixelWidth / (width);
-        double ySpacing = pixelHeight / (height);
+        this.xSpacing = pixelWidth / (width);
+        this.ySpacing = pixelHeight / (height);
 
-        this.xSpacing = xSpacing;
-        this.ySpacing = ySpacing;
         returnList.add((double) width);
         returnList.add((double) height);
         returnList.add(xSpacing);
@@ -132,7 +131,6 @@ public class Renderer extends Group {
         returnList.add(pixelHeight);
         spacingOutput = returnList;
     }
-
     /**
      * Draws an entity before it starts to move.
      *
@@ -144,10 +142,8 @@ public class Renderer extends Group {
         if (!this.entitiesToDraw.contains(entity)) {
             this.entitiesToDraw.add(entity);
         }
-
-        SpriteImage sprite = entity.getSprite();
         GraphNode node = entity.getPosition();
-
+        SpriteImage sprite = entity.getSprite();
         sprite.setFitWidth(xSpacing);
         sprite.setFitHeight(ySpacing);
         sprite.setX(node.getX() * xSpacing);

@@ -14,16 +14,17 @@ import java.util.logging.Logger;
  */
 public class GameRunTime {
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
-
-    private Renderer renderer;
     private CoreEngine engine;
+
     private boolean basePlaced = false;
-
-    static Scene mainGameScene = null;
-
-    private static GameRunTime instance;
+    private static Scene mainGameScene = null;
+    private static GameRunTime instance = null;
 
     public static GameRunTime Instance() {
+        if(instance == null)
+        {
+            instance = new GameRunTime();
+        }
         return instance;
     }
 
@@ -46,32 +47,25 @@ public class GameRunTime {
                 e.printStackTrace();
             }
         }
-        declareElements();
-        this.renderer = new Renderer(mainGameScene);
-        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
-    }
-
-    public void declareElements()
-    {
         Pane mainGamePane = new BorderPane();
         Group mainGame = new Group(mainGamePane);
-        mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());
+        mainGameScene = new Scene(mainGame, CoreGUI.getWIDTH(), CoreGUI.getHEIGHT());
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
+        new Renderer();
+        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(Renderer.Instance());
     }
 
     /**
      * Returns the main game scene where the game will be played
-     *
      * @return - the main game scene
      */
-    public static Scene getScene() {
+    public Scene getScene() {
         return mainGameScene;
     }
 
     public void startGame() {
-        BaseSpawner baseSpawner = new BaseSpawner();
+        new BaseSpawner();
     }
-
     // to notify the placement of the base
     public void setBasePlaced(boolean basePlaced) {
         this.basePlaced = basePlaced;

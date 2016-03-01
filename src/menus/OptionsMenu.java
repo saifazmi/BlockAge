@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
+import sceneElements.Images;
 import sceneElements.LabelProperties;
 
 import java.io.File;
@@ -53,17 +54,14 @@ public class OptionsMenu implements Menu {
         l = new LabelProperties();
         b = new ButtonProperties();
 
-        onImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "on_button.png");
-        onImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "on_button_hovered.png");
-
-        offImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "off_button.png");
-        offImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "off_button_hovered.png");
-
-        hintsImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "hints_label.png");
-        soundImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "sound_label.png");
-
-        backImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.png");
-        backImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.hovered.png");
+        onImage = Images.onImage;
+        onImageHovered = Images.onImageHovered;
+        offImage = Images.offImage;
+        offImageHovered = Images.offImageHovered;
+        hintsImage = Images.hintsImage;
+        soundImage = Images.soundImage;
+        backImage = Images.backImage;
+        backImageHovered = Images.backImageHovered;
     }
 
     /**
@@ -71,28 +69,28 @@ public class OptionsMenu implements Menu {
      */
     public void initialiseScene() {
         declareElements();
+        double xPos1 = Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText;
+        double xPos2 = Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4;
+        double yPos1 = Menu.HEIGHT / 3;
 
-        b.setButtonProperties(noButtonH, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3,
-                e -> ElementsHandler.handle(e), new ImageView(offImage));
-        b.addHoverEffect(noButtonH, offImageHovered, offImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3);
+        b.setButtonProperties(noButtonH, "", xPos1, yPos1, ElementsHandler::handle, new ImageView(offImage));
+        b.addHoverEffect(noButtonH, offImageHovered, offImage, xPos1, yPos1);
 
-        b.setButtonProperties(noButtonS, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH,
-                e -> ElementsHandler.handle(e), new ImageView(offImage));
-        b.addHoverEffect(noButtonS, offImageHovered, offImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH);
+        b.setButtonProperties(noButtonS, "", xPos1, yPos1 + spaceBetweenImgH, ElementsHandler::handle, new ImageView(offImage));
+        b.addHoverEffect(noButtonS, offImageHovered, offImage, xPos1, yPos1 + spaceBetweenImgH);
 
-        b.setButtonProperties(backButton, "", Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4, Menu.HEIGHT / 1.1,
-                e -> ElementsHandler.handle(e), new ImageView(backImage));
-        b.addHoverEffect(backButton, backImageHovered, backImage, Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4, Menu.HEIGHT / 1.1);
+        b.setButtonProperties(backButton, "", xPos2, Menu.HEIGHT / 1.1, ElementsHandler::handle, new ImageView(backImage));
+        b.addHoverEffect(backButton, backImageHovered, backImage, xPos2, Menu.HEIGHT / 1.1);
 
-        l.setLabelProperties(hintsLabel, "", Menu.WIDTH / 2 - hintsImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3, new ImageView(hintsImage));
-        l.setLabelProperties(soundLabel, "", Menu.WIDTH / 2 - soundImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH, new ImageView(soundImage));
+        l.setLabelProperties(hintsLabel, "", Menu.WIDTH / 2 - hintsImage.getWidth() - spaceBetweenText, yPos1, new ImageView(hintsImage));
+        l.setLabelProperties(soundLabel, "", Menu.WIDTH / 2 - soundImage.getWidth() - spaceBetweenText, yPos1 + spaceBetweenImgH, new ImageView(soundImage));
 
         // To do sound configurations for button as well
         optionsMenuPane.getChildren().addAll(hintsLabel, soundLabel, noButtonH, noButtonS, backButton);
         final Group group = new Group(optionsMenuPane);
 
         optionsMenuScene = new Scene(group, Menu.WIDTH, Menu.HEIGHT, Color.WHITE);
-        optionsMenuScene.setOnKeyPressed(e -> ElementsHandler.handleKeys(e));
+        optionsMenuScene.setOnKeyPressed(ElementsHandler::handleKeys);
     }
 
     /**
