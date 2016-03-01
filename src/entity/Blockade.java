@@ -1,7 +1,6 @@
 package entity;
 
 import core.CoreEngine;
-import core.GameRunTime;
 import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;

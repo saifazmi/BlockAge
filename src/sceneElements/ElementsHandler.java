@@ -6,10 +6,12 @@ import core.GameInterface;
 import core.GameRunTime;
 import core.Renderer;
 import core.UnitSpawner;
+import entity.Entity;
 import entity.Unit;
 import graph.GraphNode;
 import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -20,6 +22,7 @@ import menus.MenuHandler;
 import menus.OptionsMenu;
 import menus.PauseMenu;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,10 +69,9 @@ public class ElementsHandler {
                 }
 
                 LOG.log(Level.INFO, "GOAL found!!!");
-                UnitSpawner spawner = new UnitSpawner(1, goal);
+                UnitSpawner spawner = new UnitSpawner(2, goal);
                 CoreEngine.Instance().setSpawner(spawner);
             });
-
             unitSpawnerThread.start();
 
         }
@@ -158,7 +160,7 @@ public class ElementsHandler {
                 } else {
                     GameRunTime.getScene().setOnMouseClicked(store.getSceneClickPlaceUnbreakableBlockade());
                 }
-            } else if (k == KeyCode.P) {
+            } else if (k == KeyCode.SPACE) {
                 if (engine.isPaused()) {
                     engine.setPaused(false);
                 } else {
@@ -169,6 +171,21 @@ public class ElementsHandler {
                 if (node instanceof SpriteImage) {
                     ((Unit) ((SpriteImage) node).getEntity()).showTransition();
                 }
+            } else if (k == KeyCode.S) {
+                ArrayList<Entity> units = engine.getEntities();
+                System.out.println(units.size());
+                for (int i = 0; i < units.size(); i++) {
+                    SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
+                    Image image = obtainedSprite.getImage();
+                    if (image.equals(Images.imagePressedDemon)) {
+                        obtainedSprite.setImage(Images.imageDemon);
+                    } else if (image.equals(Images.imagePressedDk)) {
+                        obtainedSprite.setImage(Images.imageDk);
+                    } else if (image.equals(Images.imagePressedBanshee)) {
+                        obtainedSprite.setImage(Images.imageBanshee);
+                    }
+                }
+                GameInterface.unitDescriptionText.clear();
             }
         }
     }

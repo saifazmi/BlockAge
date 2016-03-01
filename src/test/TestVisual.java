@@ -99,11 +99,11 @@ public class TestVisual extends Application {
         gx.setCycleCount(1);
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(3));
-        gyy.setFromY(blocks.get(3).getY()-200); //this is how it works...dont ask
+        gyy.setFromY(blocks.get(3).getY() - 200); //this is how it works...dont ask
         gyy.setToY(0);
         gyy.setCycleCount(1);
 
-        SequentialTransition seq = new SequentialTransition(blocks.get(4), tty,ttx,txx,ty,tx,txt,gy,gx,gyy);
+        SequentialTransition seq = new SequentialTransition(blocks.get(4), tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.play();
 
     }

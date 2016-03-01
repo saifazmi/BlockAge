@@ -6,7 +6,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import sceneElements.ElementsHandler;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +22,7 @@ public class GameRunTime {
     static Scene mainGameScene = null;
 
     private static GameRunTime instance;
+
     public static GameRunTime Instance() {
         return instance;
     }

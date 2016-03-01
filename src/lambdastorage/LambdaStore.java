@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**

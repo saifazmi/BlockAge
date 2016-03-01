@@ -2,39 +2,16 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by hung on 06/02/16.
  */
 public class DepthFirstSearch {
-
-    private Stack<GraphNode> frontier;
-    private ArrayList<GraphNode> visited;
-    private LinkedHashMap<GraphNode, GraphNode> possiblePath;
-    private ArrayList<GraphNode> path;
-
-    private static DepthFirstSearch instance = null;
-
-    /**
-     * Singleton pattern for search
-     * As there is only ever 1 instance of DFS,
-     * it is efficient and safe to use the singleton pattern
-     */
-    public DepthFirstSearch() {
-        visited = new ArrayList<>();
-        frontier = new Stack<>();
-        possiblePath = new LinkedHashMap<>();
-        path = new ArrayList<>();
-    }
-
-    public static DepthFirstSearch Instance() {
-        if (instance == null)
-            instance = new DepthFirstSearch();
-
-        return instance;
-    }
-
     /**
      * Finds a path from a start node to the end node using DFS, utilises a stack
      * The returned path should not include the start node
@@ -43,7 +20,12 @@ public class DepthFirstSearch {
      * @param endNode   node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
-    public List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+    public static List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+
+        Stack<GraphNode> frontier = new Stack<>();
+        ArrayList<GraphNode> visited = new ArrayList<>();
+        LinkedHashMap<GraphNode, GraphNode> possiblePath = new LinkedHashMap<>();
+        ArrayList<GraphNode> path = new ArrayList<>();
 
         GraphNode current;
         GraphNode parent;
@@ -51,13 +33,11 @@ public class DepthFirstSearch {
         visited.clear();
         frontier.clear();
         path.clear();
-        //System.out.println("start: " + startNode + ", end: " + endNode);
 
         frontier.push(startNode);
 
         while (!frontier.isEmpty()) {
             current = frontier.pop();
-            //System.out.println("next to check if goal: " + current);
 
             if (!visited.contains(current) && current.getBlockade() == null) {
 
@@ -93,9 +73,5 @@ public class DepthFirstSearch {
         }
 
         return null;
-    }
-
-    public ArrayList<GraphNode> returnVisited() {
-        return visited;
     }
 }

@@ -212,14 +212,11 @@ public class Unit extends Entity {
     public void update() {
         if (completedMove) {
 
-            LOG.log(Level.INFO,"completed move");
-            if (this.nextNode != null)
-            {
+            LOG.log(Level.INFO, "completed move");
+            if (this.nextNode != null) {
                 LOG.log(Level.INFO, "next node is " + this.nextNode);
                 this.position = this.nextNode;
             }
-
-
             if (route.size() > 0) {
                 this.completedMove = false;
                 this.nextNode = this.route.remove(0);
@@ -227,11 +224,11 @@ public class Unit extends Entity {
                 int y = this.nextNode.getY();
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
-                if (xChange + yChange > 1 || xChange + yChange < -1) {
-                    LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
-                            "Fatal error, check search implementation: " + this.search.toString());
-                    return;
-                }
+                //if (xChange + yChange > 1 || xChange + yChange < -1) {
+                //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
+                //           "Fatal error, check search implementation: " + this.search.toString());
+                //   return;
+                //}
                 if (logicalMove(xChange, yChange)) {
                     double nextPixelX = x * this.renderer.getXSpacing();
                     double nextPixelY = y * this.renderer.getYSpacing();
@@ -247,8 +244,6 @@ public class Unit extends Entity {
                     this.completedMove = true;
                 }
             }
-
-
         }
     }
 
@@ -283,16 +278,15 @@ public class Unit extends Entity {
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
         if (search == Search.DFS) {
             //System.out.println("using dfs");
-            route = DepthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
+            route = DepthFirstSearch.findPathFrom(getPosition(), this.goal);
         } else if (search == Search.BFS) {
             //System.out.println("using bfs");
-            route = BreadthFirstSearch.Instance().findPathFrom(getPosition(), this.goal);
+            route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal);
         } else {
-
             //System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
         }
-        //System.out.println(route);
+        System.out.println(route);
     }
 
 
@@ -350,4 +344,21 @@ public class Unit extends Entity {
             this.setVisualTransition(null);
         }
     }
+//    public void showTransition2() {
+//        SequentialTransition transition = null;
+//        if(search == Search.BFS)
+//        {
+//            BreadthFirstSearch.findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
+//            transition = renderer.produceRouteVisual(renderer.produceRoute(BreadthFirstSearch.Instance().returnVisited(), this.getPosition()));
+//        } else if(search == Search.DFS)
+//        {
+//            DepthFirstSearch.Instance().findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
+//            transition = renderer.produceRouteVisual(renderer.produceRoute(DepthFirstSearch.Instance().returnVisited(), this.getPosition()));
+//        } else if(search == Search.A_STAR)
+//        {
+//            transition = renderer.produceRouteVisual(renderer.produceRoute(AStar.search(this.position, this.getRoute().get(this.getRoute().size()-1)), this.getPosition()));
+//        }
+//            this.setVisualTransition(transition);
+//            transition.play();
+//    }
 }
