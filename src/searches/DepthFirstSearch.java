@@ -20,7 +20,7 @@ public class DepthFirstSearch {
      * @param endNode   node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
-    public static List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+    public static List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode, boolean visit) {
 
         Stack<GraphNode> frontier = new Stack<>();
         ArrayList<GraphNode> visited = new ArrayList<>();
@@ -49,8 +49,14 @@ public class DepthFirstSearch {
                     }
 
                     Collections.reverse(path);
-                    return path;
-
+                    if(visit)
+                    {
+                        return visited;
+                    }
+                    else
+                    {
+                        return path;
+                    }
                 } else {
                     visited.add(current);
 

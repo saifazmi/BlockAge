@@ -48,29 +48,15 @@ public class GameRunTime {
         }
         declareElements();
         this.renderer = new Renderer(mainGameScene);
-        rendererSpecificInit();
+        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
     }
 
-    public void declareElements() {
+    public void declareElements()
+    {
         Pane mainGamePane = new BorderPane();
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
-    }
-
-    /**
-     * Renderer specific initialisation that isn't necessary and could be partially removed.
-     */
-    private void rendererSpecificInit() {
-        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
-        {
-            this.renderer.redraw();
-        });
-        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) ->
-        {
-            this.renderer.redraw();
-        });
-        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
     }
 
     /**

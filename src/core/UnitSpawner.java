@@ -108,7 +108,8 @@ public class UnitSpawner {
                     } else {
                         sprite.setImage(Images.imagePressedBanshee);
                     }
-                    ((Unit) unit1).showTransition();
+                    //((Unit) unit1).showTransition();
+                    Renderer.Instance().produceAlgoRouteVisual((Unit)unit1);
                 } else {
                     SpriteImage obtainedSprite = unit1.getSprite();
                     Image image = obtainedSprite.getImage();

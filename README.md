@@ -22,7 +22,7 @@ Knows Bugs
 - ~~Occasionally can't find a route even though routes are possible.~~
 
 #### AStar
-- Occasionally make diagonal moves.  
+- ~~Occasionally make diagonal moves.~~  
 
 #### Unit  
 - Transitions don't work if unit doesn't spawn at (0,0)

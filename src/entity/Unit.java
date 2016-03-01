@@ -277,13 +277,10 @@ public class Unit extends Entity {
     private void decideRoute() {
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
         if (search == Search.DFS) {
-            //System.out.println("using dfs");
-            route = DepthFirstSearch.findPathFrom(getPosition(), this.goal);
+            route = DepthFirstSearch.findPathFrom(getPosition(), this.goal, false);
         } else if (search == Search.BFS) {
-            //System.out.println("using bfs");
-            route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal);
+            route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal, false);
         } else {
-            //System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
         }
         System.out.println(route);
