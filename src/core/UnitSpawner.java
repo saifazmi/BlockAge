@@ -91,6 +91,7 @@ public class UnitSpawner {
         // focus sprite and displays text when clicked on it
         sprite.setOnMouseClicked(e -> {
             sprite.requestFocus();
+            GameRunTime.Instance().setLastClicked(sprite);
             ArrayList<Entity> units = engine.getEntities();
             for (Entity unit1 : units) {
                 if (sprite.getEntity() == unit1) {
@@ -107,7 +108,6 @@ public class UnitSpawner {
                         sprite.setImage(Images.imagePressedBanshee);
                     }
                     //((Unit) unit1).showTransition();
-                    Renderer.Instance().produceAlgoRouteVisual((Unit)unit1);
                 } else {
                     SpriteImage obtainedSprite = unit1.getSprite();
                     ElementsHandler.pressedToNotPressed(obtainedSprite, true);

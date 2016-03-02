@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import sceneElements.ElementsHandler;
+import sceneElements.SpriteImage;
 
 import java.util.logging.Logger;
 
@@ -19,6 +20,7 @@ public class GameRunTime {
     private boolean basePlaced = false;
     private static Scene mainGameScene = null;
     private static GameRunTime instance = null;
+    private SpriteImage lastClicked = null;
 
     public static GameRunTime Instance() {
         if(instance == null)
@@ -74,4 +76,8 @@ public class GameRunTime {
     public boolean isBasePlaced() {
         return basePlaced;
     }
+
+    public SpriteImage getLastClicked() { return lastClicked; }
+
+    public void setLastClicked(SpriteImage lastClicked) { this.lastClicked = lastClicked; }
 }

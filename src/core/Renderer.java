@@ -212,6 +212,7 @@ public class Renderer extends Group {
         List<Line> lines = produceAlgoRoute(unit);
         for (Line line : lines)
         {
+            this.getChildren().add(line);
             line.setOpacity(0.0);
             FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
             trans.getChildren().add(lineTransition);
@@ -242,7 +243,7 @@ public class Renderer extends Group {
         for(GraphNode node : visitedNodes)
         {
             GraphNode drawTo = nodeToDrawTo(node, drawn);
-            System.out.println("Drew line from " + node + " to " + drawTo);
+            drawn.add(node);
             Line line = new Line(this.xSpacing / 2 + node.getX() * xSpacing,
                     this.ySpacing / 2 + node.getY() * ySpacing,
                     this.xSpacing / 2 + drawTo.getX() * xSpacing,
@@ -259,7 +260,7 @@ public class Renderer extends Group {
         for(GraphNode node : successors)
         {
             int temp = drawn.indexOf(node);
-            if(temp >= 0 && temp != Integer.MAX_VALUE && temp < min)
+            if(temp != -1 && temp != Integer.MAX_VALUE && temp < min)
             {
                 min = temp;
             }

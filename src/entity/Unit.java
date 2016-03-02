@@ -308,13 +308,24 @@ public class Unit extends Entity {
         this.visualTransition = visualTransition;
     }
 
-    public void showTransition() {
+    public void showTransition(boolean route) {
         SequentialTransition currentTrans = this.getVisualTransition();
-        if (currentTrans == null && this.getRoute() != null) {
-            SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
-            this.setVisualTransition(transition);
-            transition.play();
-        } else if (currentTrans != null) {
+        if (currentTrans == null && this.getRoute() != null)
+        {
+            if(route)
+            {
+                SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
+                this.setVisualTransition(transition);
+                transition.play();
+            }
+            else
+            {
+                this.setVisualTransition(renderer.produceAlgoRouteVisual(this));
+                this.getVisualTransition().play();
+            }
+        }
+        else if (currentTrans != null)
+        {
             currentTrans.stop();
             ObservableList<Animation> transitions = currentTrans.getChildren();
 
@@ -328,21 +339,4 @@ public class Unit extends Entity {
             this.setVisualTransition(null);
         }
     }
-//    public void showTransition2() {
-//        SequentialTransition transition = null;
-//        if(search == Search.BFS)
-//        {
-//            BreadthFirstSearch.findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
-//            transition = renderer.produceRouteVisual(renderer.produceRoute(BreadthFirstSearch.Instance().returnVisited(), this.getPosition()));
-//        } else if(search == Search.DFS)
-//        {
-//            DepthFirstSearch.Instance().findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
-//            transition = renderer.produceRouteVisual(renderer.produceRoute(DepthFirstSearch.Instance().returnVisited(), this.getPosition()));
-//        } else if(search == Search.A_STAR)
-//        {
-//            transition = renderer.produceRouteVisual(renderer.produceRoute(AStar.search(this.position, this.getRoute().get(this.getRoute().size()-1)), this.getPosition()));
-//        }
-//            this.setVisualTransition(transition);
-//            transition.play();
-//    }
 }

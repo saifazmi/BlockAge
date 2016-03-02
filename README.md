@@ -5,10 +5,11 @@ BestRTS
 
 Key Bindings  
 ------------
-- **SPACE:** pause units
-- **R:** toggle route display  
-- **B:** toggle block placement  
-- **S:** toggle unit selection
+- **SPACE:** Pause the game
+- **R:** Toggle route display
+- **CTRL-R:** Toggle advanced route display
+- **B:** Toggle block placement  
+- **S:** Toggle unit selection
 
 Knows Bugs    
 ----------

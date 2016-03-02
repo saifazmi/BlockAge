@@ -154,10 +154,7 @@ public class ElementsHandler {
                     engine.setPaused(true);
                 }
             } else if (k == KeyCode.R) {
-                Node node = scene.getFocusOwner();
-                if (node instanceof SpriteImage) {
-                    ((Unit) ((SpriteImage) node).getEntity()).showTransition();
-                }
+                ((Unit)GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown());
             } else if (k == KeyCode.S) {
                 ArrayList<Entity> units = engine.getEntities();
                 for (Entity unit : units) {
@@ -183,7 +180,7 @@ public class ElementsHandler {
         }
         if(showTransition && set)
         {
-            ((Unit)sprite.getEntity()).showTransition();
+            ((Unit)sprite.getEntity()).showTransition(true);
         }
     }
 }
