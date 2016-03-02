@@ -2,6 +2,7 @@ package core;
 
 import entity.Base;
 import entity.Blockade;
+import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
 import javafx.event.EventHandler;
@@ -39,68 +40,108 @@ public class BaseSpawner {
 
     public BaseSpawner() {
         instance = this;
-        // create a number of blockade randomly
-        int blockadeNeeded = 10;
-        while (blockadeNeeded > 0) {
-            Random rand = new Random();
-            int randomX = rand.nextInt(Graph.HEIGHT);
-            int randomY = rand.nextInt(Graph.WIDTH);
-            Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
-            Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
-            SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
-            spriteImage1.setFitWidth(renderer.getXSpacing());
-            spriteImage1.setFitHeight(renderer.getYSpacing());
-            spriteImage1.setPreserveRatio(false);
-            spriteImage1.setSmooth(true);
-            blockadeInstance.setSprite(spriteImage1);
-            Blockade blockade = Blockade.randomBlockage(blockadeInstance);
-            if (blockade != null) {
-                renderer.drawInitialEntity(blockade);
-                blockadeNeeded--;
-                //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
+
+        //LOG.log(Level.INFO, "Outside the MouseEvent");
+        // setting function for choosing the goal of the game
+        GameRunTime.getScene().setOnMouseClicked(e -> {
+            //LOG.log(Level.INFO, "Reached the MouseEvent");
+            // get the limitation on where to click to choose the goal
+            double xSpacing = renderer.getXSpacing();
+            double ySpacing = renderer.getYSpacing();
+            double x = e.getX();
+            double y = e.getY();
+            double logicalX = Math.floor(x / xSpacing);
+            double logicalY = Math.floor(y / ySpacing);
+
+            // checking if the position is within the boundaries
+            if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
+                // set the goal
+                goal = graph.nodeWith(new GraphNode((int) logicalX, (int) logicalY));
+                System.out.println("goal at " + goal.toString());
+
+                // make the base
+                Base base = new Base(9999, "Base", goal, null);
+                Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Blockade_sprite.png");
+                SpriteImage spriteImage = new SpriteImage(image, base);
+                spriteImage.setFitWidth(renderer.getXSpacing());
+                spriteImage.setFitHeight(renderer.getYSpacing());
+                spriteImage.setPreserveRatio(false);
+                spriteImage.setSmooth(true);
+                base.setSprite(spriteImage);
+                //LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
+                renderer.drawInitialEntity(base);
+                //place sortable blockades
+                protectBase(base);
+                goal.setBase(base);
+
+                GameRunTime.Instance().setBasePlaced(true);
+
+                // remove the setting function
+                GameRunTime.getScene().setOnMouseClicked(null);
             }
 
-            //LOG.log(Level.INFO, "Outside the MouseEvent");
-            // setting function for choosing the goal of the game
-            GameRunTime.getScene().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
-                    //LOG.log(Level.INFO, "Reached the MouseEvent");
-                    // get the limitation on where to click to choose the goal
-                    double xSpacing = renderer.getXSpacing();
-                    double ySpacing = renderer.getYSpacing();
-                    double x = e.getX();
-                    double y = e.getY();
-                    double logicalX = Math.floor(x / xSpacing);
-                    double logicalY = Math.floor(y / ySpacing);
+        });
 
-                    // checking if the position is within the boundaries
-                    if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
-                        // set the goal
-                        goal = graph.nodeWith(new GraphNode((int) logicalX, (int) logicalY));
-                        System.out.println("goal at " + goal.toString());
+//        // create a number of blockade randomly
+//        int blockadeNeeded = 10;
+//        while (blockadeNeeded > 0) {
+//
+//            Random rand = new Random();
+//            int randomX = rand.nextInt(Graph.HEIGHT);
+//            int randomY = rand.nextInt(Graph.WIDTH);
+//            Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
+//            Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
+//            SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
+//            spriteImage1.setFitWidth(renderer.getXSpacing());
+//            spriteImage1.setFitHeight(renderer.getYSpacing());
+//            spriteImage1.setPreserveRatio(false);
+//            spriteImage1.setSmooth(true);
+//            blockadeInstance.setSprite(spriteImage1);
+//            Blockade blockade = Blockade.randomBlockage(blockadeInstance);
+//            if (blockade != null) {
+//                renderer.drawInitialEntity(blockade);
+//                blockadeNeeded--;
+//                //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
+//            }
+//        }
 
-                        // make the base
-                        Base base = new Base(9999, "Base", goal, null);
-                        Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Blockade_sprite.png");
-                        SpriteImage spriteImage = new SpriteImage(image, base);
-                        spriteImage.setFitWidth(renderer.getXSpacing());
-                        spriteImage.setFitHeight(renderer.getYSpacing());
-                        spriteImage.setPreserveRatio(false);
-                        spriteImage.setSmooth(true);
-                        base.setSprite(spriteImage);
-                        //LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
-                        renderer.drawInitialEntity(base);
-                        goal.setBase(base);
-                        GameRunTime.Instance().setBasePlaced(true);
+    }
 
-                        // remove the setting function
-                        GameRunTime.getScene().setOnMouseClicked(null);
+    private void protectBase(Base base) {
+
+        int row = base.getPosition().getY();
+        int col = base.getPosition().getX();
+
+        for (int i = (row - 1); i <= (row + 1); i++) {
+
+            for (int j = (col - 1); j <= (col + 1); j++) {
+
+                // coordinate should be on grid and not the same as the base
+                if (isOnGrid(base.getPosition()) && !(i == row && j == col)) {
+
+                    SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(row,col), null, null);
+                    Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "sortable_blockage_button.png", 55, 55, false, false);
+                    SpriteImage spriteImage1 = new SpriteImage(image1, sortableBlockadeInstance);
+                    spriteImage1.setFitWidth(renderer.getXSpacing());
+                    spriteImage1.setFitHeight(renderer.getYSpacing());
+                    spriteImage1.setPreserveRatio(false);
+                    spriteImage1.setSmooth(true);
+                    sortableBlockadeInstance.setSprite(spriteImage1);
+                    SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
+                    if (blockade != null) {
+                        renderer.drawInitialEntity(blockade);
+                        //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
                     }
                 }
-            });
+            }
         }
+    }
 
+    private boolean isOnGrid(GraphNode position) {
+        return !((position.getX() < 0 || position.getY() < 0) ||
+                (position.getX() >= Graph.WIDTH || position.getY() >= Graph.HEIGHT));
+
+//        return true;
     }
 
     public GraphNode getGoal() {
