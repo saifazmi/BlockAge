@@ -51,7 +51,6 @@ public class Unit extends Entity {
     private GraphNode goal;
     private Search search;
     private Sort sort;
-    private boolean changingRoute = true;
 
     private GraphNode nextNode;
     private boolean completedMove = true;
@@ -198,7 +197,20 @@ public class Unit extends Entity {
 
             return true;
         }
-        this.changingRoute = true;
+        return false;
+    }
+
+    /**
+     * Checks if the specified graph position has a block associated with it
+     *
+     * @param position the position to be checked
+     * @return whether the position has a block
+     */
+    public boolean blockCheckTest(GraphNode position) {
+
+        if (position.getBlockade() == null) {
+            return true;
+        }
         return false;
     }
 
@@ -248,6 +260,39 @@ public class Unit extends Entity {
     }
 
     /**
+     * for testing
+     */
+    public void updateTest() {
+        if (completedMove) {
+
+            LOG.log(Level.INFO, "completed move");
+            if (this.nextNode != null) {
+                LOG.log(Level.INFO, "next node is " + this.nextNode);
+                this.position = this.nextNode;
+            }
+            if (route.size() > 0) {
+                this.completedMove = false;
+                this.nextNode = this.route.remove(0);
+                int x = this.nextNode.getX();
+                int y = this.nextNode.getY();
+                int xChange = this.nextNode.getX() - this.position.getX();
+                int yChange = this.nextNode.getY() - this.position.getY();
+                //if (xChange + yChange > 1 || xChange + yChange < -1) {
+                //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
+                //           "Fatal error, check search implementation: " + this.search.toString());
+                //   return;
+                //}
+                if (logicalMove(xChange, yChange)) {
+                } else {
+                    decideRoute();
+                    nextNode = null;
+                    this.completedMove = true;
+                }
+            }
+        }
+    }
+
+    /**
      * Does a logical move of the unit in the specified direction, i.e. move it in the graph and change its graph position
      *
      * @param xChange amount of nodes to move in the x axis
@@ -286,7 +331,25 @@ public class Unit extends Entity {
             //System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
         }
-        System.out.println(route);
+        LOG.log(Level.INFO, route.toString());
+    }
+
+    /**
+     * for testing
+     */
+    public void decideRouteTest() {
+        LOG.log(Level.INFO, "my position is " + getPosition().toString());
+        if (search == Search.DFS) {
+            //System.out.println("using dfs");
+            route = DepthFirstSearch.findPathFrom(getPosition(), this.goal);
+        } else if (search == Search.BFS) {
+            //System.out.println("using bfs");
+            route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal);
+        } else {
+            //System.out.println("using astar");
+            route = AStar.search(getPosition(), this.goal);
+        }
+        LOG.log(Level.INFO, route.toString());
     }
 
 
