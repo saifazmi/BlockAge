@@ -7,6 +7,7 @@ import graph.GraphNode;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 
 import java.io.File;
@@ -41,8 +42,13 @@ public class BaseSpawner {
 
     public BaseSpawner() {
         instance = this;
+        int blockadeNeeded = 0;
         // create a number of blockade randomly
-        int blockadeNeeded = 10;
+        if(ElementsHandler.options.getInitialBlockades() == true) {
+        	blockadeNeeded = 10;
+        } else {
+        	blockadeNeeded = 0;
+        }
         while (blockadeNeeded > 0) {
             Random rand = new Random();
             int randomX = rand.nextInt(Graph.HEIGHT);
@@ -61,48 +67,47 @@ public class BaseSpawner {
                 blockadeNeeded--;
                 //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
             }
-
-            //LOG.log(Level.INFO, "Outside the MouseEvent");
-            // setting function for choosing the goal of the game
-            GameRunTime.getScene().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
-                    //LOG.log(Level.INFO, "Reached the MouseEvent");
-                    // get the limitation on where to click to choose the goal
-                    double xSpacing = renderer.getXSpacing();
-                    double ySpacing = renderer.getYSpacing();
-                    double x = e.getX();
-                    double y = e.getY();
-                    double logicalX = Math.floor(x / xSpacing);
-                    double logicalY = Math.floor(y / ySpacing);
-
-                    // checking if the position is within the boundaries
-                    if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
-                        // set the goal
-                        goal = graph.nodeWith(new GraphNode((int) logicalX, (int) logicalY));
-                        System.out.println("goal at " + goal.toString());
-
-                        // make the base
-                        Base base = new Base(9999, "Base", goal, null);
-                        Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Blockade_sprite.png");
-                        SpriteImage spriteImage = new SpriteImage(image, base);
-                        spriteImage.setFitWidth(renderer.getXSpacing());
-                        spriteImage.setFitHeight(renderer.getYSpacing());
-                        spriteImage.setPreserveRatio(false);
-                        spriteImage.setSmooth(true);
-                        base.setSprite(spriteImage);
-                        //LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
-                        renderer.drawInitialEntity(base);
-                        goal.setBase(base);
-                        GameRunTime.Instance().setBasePlaced(true);
-
-                        // remove the setting function
-                        GameRunTime.getScene().setOnMouseClicked(null);
-                    }
-                }
-            });
         }
 
+        //LOG.log(Level.INFO, "Outside the MouseEvent");
+        // setting function for choosing the goal of the game
+        GameRunTime.getScene().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                //LOG.log(Level.INFO, "Reached the MouseEvent");
+                // get the limitation on where to click to choose the goal
+                double xSpacing = renderer.getXSpacing();
+                double ySpacing = renderer.getYSpacing();
+                double x = e.getX();
+                double y = e.getY();
+                double logicalX = Math.floor(x / xSpacing);
+                double logicalY = Math.floor(y / ySpacing);
+
+                // checking if the position is within the boundaries
+                if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
+                    // set the goal
+                    goal = graph.nodeWith(new GraphNode((int) logicalX, (int) logicalY));
+                    System.out.println("goal at " + goal.toString());
+
+                    // make the base
+                    Base base = new Base(9999, "Base", goal, null);
+                    Image image = new Image(SEPARATOR + "sprites" + SEPARATOR + "Blockade_sprite.png");
+                    SpriteImage spriteImage = new SpriteImage(image, base);
+                    spriteImage.setFitWidth(renderer.getXSpacing());
+                    spriteImage.setFitHeight(renderer.getYSpacing());
+                    spriteImage.setPreserveRatio(false);
+                    spriteImage.setSmooth(true);
+                    base.setSprite(spriteImage);
+                    //LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
+                    renderer.drawInitialEntity(base);
+                    goal.setBase(base);
+                    GameRunTime.Instance().setBasePlaced(true);
+
+                    // remove the setting function
+                    GameRunTime.getScene().setOnMouseClicked(null);
+                }
+            }
+        });
     }
 
     public GraphNode getGoal() {

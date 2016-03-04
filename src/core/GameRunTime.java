@@ -61,10 +61,10 @@ public class GameRunTime {
 
     public void declareElements() {
         mainGamePane = new BorderPane();
-        mainGamePane.setPrefWidth(CoreGUI.Instance().getWIDTH() - 224);
-        mainGamePane.setPrefHeight(CoreGUI.Instance().getHEIGHT() - 130);
+        mainGamePane.setPrefWidth(CoreGUI.Instance().getWIDTH() - 324);
+        mainGamePane.setPrefHeight(CoreGUI.Instance().getHEIGHT());
         String SEPARATOR = File.separator;
-        BackgroundImage myBI= new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "grass_background.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+        BackgroundImage myBI= new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "hell_background.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
         		BackgroundSize.DEFAULT);
         mainGamePane.setBackground(new Background(myBI));
         Group mainGame = new Group(mainGamePane);

@@ -58,7 +58,6 @@ public class MainMenu implements Menu {
         exitButtonF = new Button();
         b = new ButtonProperties();
 
-
         newGameImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "NewGame.png");
         newGameImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "NewGamSel.png");
 
@@ -116,9 +115,9 @@ public class MainMenu implements Menu {
         fadingPane.setPrefHeight(Menu.HEIGHT);
         
         // Fade transition of the main image
-        FadeTransition ft = new FadeTransition(Duration.millis(1000), fadingPane);
+        FadeTransition ft = new FadeTransition(Duration.millis(2000), fadingPane);
         ft.setFromValue(1.0);
-        ft.setToValue(0.2);
+        ft.setToValue(0.1);
         ft.setCycleCount(4);
         ft.setAutoReverse(true);
         ft.play();
