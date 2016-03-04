@@ -3,6 +3,7 @@ package core;
 import entity.Entity;
 import graph.Graph;
 import graph.GraphNode;
+import sound.SoundManager;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -79,6 +80,11 @@ public class CoreEngine {
     public void startGame() {
         running = true;
         startTime = System.nanoTime();
+        // added for sound
+        SoundManager.Instance().startSoundtrack();
+        //
+
+        // @TODO in case it's not running
         while (running) {
             while (paused) {
                 try {
@@ -95,6 +101,8 @@ public class CoreEngine {
                 this.slept = true;
             }
         }
+
+
     }
     /**
      * Checks if its time to update,
