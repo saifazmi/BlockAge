@@ -21,7 +21,7 @@ public class BreadthFirstSearch {
      * @param endNode   node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
-    public static List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+    public static List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode, boolean visit) {
 
         LinkedList<GraphNode> frontier = new LinkedList<>();
         ArrayList<GraphNode> visited = new ArrayList<>();
@@ -30,10 +30,6 @@ public class BreadthFirstSearch {
 
         GraphNode current;
         GraphNode parent;
-        possiblePath.clear();
-        frontier.clear();
-        visited.clear();
-        path.clear();
 
         frontier.add(startNode);
 
@@ -52,7 +48,11 @@ public class BreadthFirstSearch {
                     }
 
                     Collections.reverse(path);
-                    return path;
+                    if (visit) {
+                        return visited;
+                    } else {
+                        return path;
+                    }
                 } else {
                     visited.add(current);
                     frontier.addAll(current.getSuccessors());
