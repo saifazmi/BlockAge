@@ -308,9 +308,9 @@ public class Unit extends Entity {
         this.visualTransition = visualTransition;
     }
 
-    public void showTransition(boolean route) {
+    public void showTransition(boolean route, boolean show) {
         SequentialTransition currentTrans = this.getVisualTransition();
-        if (currentTrans == null && this.getRoute() != null)
+        if (currentTrans == null && this.getRoute() != null && show)
         {
             if(route)
             {
@@ -324,7 +324,7 @@ public class Unit extends Entity {
                 this.getVisualTransition().play();
             }
         }
-        else if (currentTrans != null)
+        else if (currentTrans != null && !show)
         {
             currentTrans.stop();
             ObservableList<Animation> transitions = currentTrans.getChildren();
@@ -335,7 +335,6 @@ public class Unit extends Entity {
                 Line line = (Line) trans.getNode();
                 line.setOpacity(0.0);
             }
-
             this.setVisualTransition(null);
         }
     }

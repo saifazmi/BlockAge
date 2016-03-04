@@ -6,6 +6,7 @@ import graph.Graph;
 import graph.GraphNode;
 import javafx.scene.image.Image;
 import sceneElements.Images;
+import sceneElements.ElementsHandler;
 
 import java.util.Random;
 import java.util.logging.Logger;
@@ -33,7 +34,7 @@ public class BaseSpawner {
     public BaseSpawner() {
         instance = this;
         spawnBlockades(100);
-
+        System.out.println("Spawned all the blockades");
         runTime.getScene().setOnMouseClicked(e -> {
             goal = Blockade.calcGraphNode(e);
             Base base = new Base(9999, "Base", goal, null);
@@ -50,18 +51,20 @@ public class BaseSpawner {
         return goal;
     }
 
-    private void spawnBlockades(int count)
-    {
-        while (count > 0) {
-            Random rand = new Random();
-            int randomX = rand.nextInt(Graph.HEIGHT);
-            int randomY = rand.nextInt(Graph.WIDTH);
-            Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
-            Images.setSpriteProperties(blockadeInstance, Images.unsortableImage1);
-            Blockade blockade = Blockade.randomBlockade(blockadeInstance);
-            if (blockade != null) {
-                renderer.drawInitialEntity(blockade);
-                count--;
+    private void spawnBlockades(int count) {
+        if (ElementsHandler.options.getInitialBlockades()) {
+            while (count > 0) {
+                System.out.println("Blockade " + count);
+                Random rand = new Random();
+                int randomX = rand.nextInt(Graph.HEIGHT);
+                int randomY = rand.nextInt(Graph.WIDTH);
+                Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
+                Images.setSpriteProperties(blockadeInstance, Images.unsortableImage1);
+                Blockade blockade = Blockade.randomBlockade(blockadeInstance);
+                if (blockade != null) {
+                    renderer.drawInitialEntity(blockade);
+                    count--;
+                }
             }
         }
     }

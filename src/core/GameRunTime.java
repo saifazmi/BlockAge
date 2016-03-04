@@ -2,11 +2,18 @@ package core;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -16,7 +23,6 @@ import java.util.logging.Logger;
 public class GameRunTime {
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
     private CoreEngine engine;
-
     private boolean basePlaced = false;
     private static Scene mainGameScene = null;
     private static GameRunTime instance = null;
@@ -50,6 +56,16 @@ public class GameRunTime {
             }
         }
         Pane mainGamePane = new BorderPane();
+
+        mainGamePane = new BorderPane();
+        mainGamePane.setPrefWidth(CoreGUI.getWIDTH() - 324);
+        mainGamePane.setPrefHeight(CoreGUI.getHEIGHT());
+
+        String SEPARATOR = File.separator;
+        BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "hell_background.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        //mainGamePane.setBackground(new Background(myBI));
+
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.getWIDTH(), CoreGUI.getHEIGHT());
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);

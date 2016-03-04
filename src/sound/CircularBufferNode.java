@@ -8,8 +8,7 @@ public class CircularBufferNode<M> {
     private M value;
     private CircularBufferNode<M> next;
 
-    public CircularBufferNode(M data)
-    {
+    public CircularBufferNode(M data) {
         this.value = data;
     }
 

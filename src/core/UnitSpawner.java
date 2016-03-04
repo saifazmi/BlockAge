@@ -12,6 +12,7 @@ import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -89,31 +90,33 @@ public class UnitSpawner {
         sprite.setEntity(unit);
 
         // focus sprite and displays text when clicked on it
-        sprite.setOnMouseClicked(e -> {
-            sprite.requestFocus();
-            GameRunTime.Instance().setLastClicked(sprite);
-            ArrayList<Entity> units = engine.getEntities();
-            for (Entity unit1 : units) {
-                if (sprite.getEntity() == unit1) {
-                    GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
-                    GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
-                            "Search:  " + Unit.Search.values()[index] + "\n" +
-                            "Sort:      " + Unit.Sort.values()[index]);
-                    // sets the image pressed for each unit accordingly to the search
-                    if (Unit.Search.values()[index] == Unit.Search.BFS) {
-                        sprite.setImage(Images.imagePressedDemon);
-                    } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-                        sprite.setImage(Images.imagePressedDk);
+        if (ElementsHandler.options.getShowPath()) {
+            sprite.setOnMouseClicked(e -> {
+                sprite.requestFocus();
+                GameRunTime.Instance().setLastClicked(sprite);
+                ArrayList<Entity> units = engine.getEntities();
+                for (Entity unit1 : units) {
+                    if (sprite.getEntity() == unit1) {
+                        GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
+                        GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
+                                "Search:  " + Unit.Search.values()[index] + "\n" +
+                                "Sort:      " + Unit.Sort.values()[index]);
+                        // sets the image pressed for each unit accordingly to the search
+                        if (Unit.Search.values()[index] == Unit.Search.BFS) {
+                            sprite.setImage(Images.imagePressedDemon);
+                        } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
+                            sprite.setImage(Images.imagePressedDk);
+                        } else {
+                            sprite.setImage(Images.imagePressedBanshee);
+                        }
+                        //((Unit) unit1).showTransition();
                     } else {
-                        sprite.setImage(Images.imagePressedBanshee);
+                        SpriteImage obtainedSprite = unit1.getSprite();
+                        ElementsHandler.pressedToNotPressed(obtainedSprite);
                     }
-                    //((Unit) unit1).showTransition();
-                } else {
-                    SpriteImage obtainedSprite = unit1.getSprite();
-                    ElementsHandler.pressedToNotPressed(obtainedSprite, true);
                 }
-            }
-        });
+            });
+        }
         // adds the units into an array list
         unitPool.add(unit);
         return unit;

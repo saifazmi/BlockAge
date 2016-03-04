@@ -1,11 +1,18 @@
 package menus;
 
+import javafx.animation.FadeTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 import sceneElements.Images;
@@ -16,8 +23,10 @@ import sceneElements.Images;
  */
 
 public class MainMenu implements Menu {
-    public static Button newGameButton, exitButton, optionsButton = null;
+
+    public static Button newGameButton, exitButton, optionsButton, newGameButtonF, exitButtonF, optionsButtonF = null;
     private Pane mainMenuPane = null;
+    private Pane fadingPane = null;
     private Scene mainMenuScene = null;
     private ButtonProperties b = null;
     private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered = null;
@@ -32,9 +41,13 @@ public class MainMenu implements Menu {
     public void declareElements() {
 
         mainMenuPane = new Pane();
+        fadingPane = new Pane();
         newGameButton = new Button();
         optionsButton = new Button();
         exitButton = new Button();
+        newGameButtonF = new Button();
+        optionsButtonF = new Button();
+        exitButtonF = new Button();
         b = new ButtonProperties();
 
         newGameImage = Images.newGameImage;
@@ -59,12 +72,47 @@ public class MainMenu implements Menu {
         b.setButtonProperties(optionsButton, "", xPos(optionsImage), Menu.HEIGHT / 3 + spaceBetweenImgH, ElementsHandler::handle, new ImageView(optionsImage));
         b.addHoverEffect(optionsButton, optionsImageHovered, optionsImage, xPos(optionsImage), Menu.HEIGHT / 3 + spaceBetweenImgH);
         // EXIT BUTTON
-        b.setButtonProperties(exitButton, "", xPos(exitImage), Menu.HEIGHT / 3 + spaceBetweenImgH * 2, ElementsHandler::handle, new ImageView(exitImage));
-        b.addHoverEffect(exitButton, exitImageHovered, exitImage, xPos(exitImage), Menu.HEIGHT / 3 + spaceBetweenImgH * 2);
+        b.setButtonProperties(exitButton, "", Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2,
+                e -> ElementsHandler.handle(e), new ImageView(exitImage));
+        b.addHoverEffect(exitButton, exitImageHovered, exitImage, Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2);
+
+
+        // NEW GAME BUTTON FADED
+        b.setButtonProperties(newGameButtonF, "", Menu.WIDTH / 5 - newGameImage.getWidth() / 2, Menu.HEIGHT / 3,
+                e -> ElementsHandler.handle(e), new ImageView(newGameImage));
+        b.addHoverEffect(newGameButtonF, newGameImageHovered, newGameImage, Menu.WIDTH / 5 - newGameImage.getWidth() / 2, Menu.HEIGHT / 3);
+
+        // OPTIONS BUTTON FADED
+        b.setButtonProperties(optionsButtonF, "", Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH,
+                e -> ElementsHandler.handle(e), new ImageView(optionsImage));
+        b.addHoverEffect(optionsButtonF, optionsImageHovered, optionsImage, Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH);
+
+        // EXIT BUTTON FADED
+        b.setButtonProperties(exitButtonF, "", Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2,
+                e -> ElementsHandler.handle(e), new ImageView(exitImage));
+        b.addHoverEffect(exitButtonF, exitImageHovered, exitImage, Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2);
+
         // ADD ALL BUTTONS TO THE PANE
-        mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton);
+        fadingPane.getChildren().addAll(newGameButtonF, optionsButtonF, exitButtonF);
+        BackgroundImage myBIF = new BackgroundImage(new Image(Images.SEPARATOR + "sprites" + Images.SEPARATOR + "MainMenuFade.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        fadingPane.setBackground(new Background(myBIF));
+        fadingPane.setPrefWidth(Menu.WIDTH);
+        fadingPane.setPrefHeight(Menu.HEIGHT);
+
+        // Fade transition of the main image
+        FadeTransition ft = new FadeTransition(Duration.millis(2000), fadingPane);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.1);
+        ft.setCycleCount(4);
+        ft.setAutoReverse(true);
+        ft.play();
+        ft.setOnFinished(e -> ft.play());
+
+        mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton, fadingPane);
         Group mainMenuGroup = new Group(mainMenuPane);
-        BackgroundImage myBI = new BackgroundImage(Images.backgroundDarkPortal, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage myBI = new BackgroundImage(Images.backgroundMainMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
         mainMenuPane.setBackground(new Background(myBI));
         mainMenuPane.setPrefWidth(Menu.WIDTH);
         mainMenuPane.setPrefHeight(Menu.HEIGHT);

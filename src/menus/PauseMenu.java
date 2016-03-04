@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
+import sceneElements.Images;
 
 import java.io.File;
 
@@ -24,8 +25,6 @@ public class PauseMenu implements Menu {
     private ButtonProperties b = null;
     private Image backGameImage, backGameImageHovered, backMainImage, backMainImageHovered;
 
-    private static String SEPARATOR = File.separator;
-
     public PauseMenu() {
         initialiseScene();
     }
@@ -35,12 +34,10 @@ public class PauseMenu implements Menu {
         backGameButton = new Button();
         backMainButton = new Button();
         b = new ButtonProperties();
-
-        backGameImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "resume_game_button.png");
-        backGameImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "resume_game_button_hovered.png");
-
-        backMainImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "quit_button.png");
-        backMainImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "quit_button_hovered.png");
+        backGameImage = Images.backGameImage;
+        backGameImageHovered = Images.backGameImageHovered;
+        backMainImage = Images.backMainImage;
+        backMainImageHovered = Images.backMainImageHovered;
     }
 
     public void initialiseScene() {

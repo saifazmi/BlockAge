@@ -36,19 +36,26 @@ public class Images {
     public static final Image optionsImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "OptionsSel.png");
     public static final Image exitImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Quit.png");
     public static final Image exitImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "QuitSel.png");
-    public static final Image unsortableImage2 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, true, true);
-    public static final Image sortableImage2 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 2.0.png", 55, 55, true, true);
+    public static final Image unsortableImage2 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
+    public static final Image sortableImage2 = new Image(SEPARATOR + "sprites" + SEPARATOR + "sortableBlock640.png", 55, 55, true, true);
     //background images
-    public static final Image backgroundDarkPortal = new Image(SEPARATOR + "sprites" + SEPARATOR + "MainMenu.png");
+    public static final Image backgroundMainMenu = new Image(SEPARATOR + "sprites" + SEPARATOR + "MainMenu.png");
+    public static final Image backgroundOptionsMenu = new Image(SEPARATOR + "sprites" + SEPARATOR + "OptionsMenu.png");
     //options images
-    public static final Image onImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "on_button.png");
-    public static final Image onImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "on_button_hovered.png");
-    public static final Image offImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "off_button.png");
-    public static final Image offImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "off_button_hovered.png");
-    public static final Image hintsImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "hints_label.png");
-    public static final Image soundImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "sound_label.png");
-    public static final Image backImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.png");
-    public static final Image backImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "back_button.hovered.png");
+    public static final Image onImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "On.png", 395, 55, true, true);
+    public static final Image onImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "OnSel.png", 395, 55, true, true);
+    public static final Image offImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Off.png", 395, 55, true, true);
+    public static final Image offImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "OffSel.png", 395, 55, true, true);
+    public static final Image showSearchImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Show-Search.png", 395, 183, true, true);
+    public static final Image soundImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Sound.png", 395, 55, true, true);
+    public static final Image blockadeImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "No-Start-Blockades.png", 550, 0, true, true);
+    public static final Image backImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Back.png", 395, 55, true, true);
+    public static final Image backImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "BackSel.png", 395, 55, true, true);
+    //in game pause menu
+    public static final Image backGameImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "resume_game_button.png");
+    public static final Image backGameImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "resume_game_button_hovered.png");
+    public static final Image backMainImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "quit_button.png");
+    public static final Image backMainImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "quit_button_hovered.png");
 
     public static void setSpriteProperties(Entity entity, Image image)
     {

@@ -7,7 +7,7 @@ Key Bindings
 ------------
 - **SPACE:** Pause the game
 - **R:** Toggle route display
-- **CTRL-R:** Toggle advanced route display
+- **SHIFT-R:** Toggle advanced route display
 - **B:** Toggle block placement  
 - **S:** Toggle unit selection
 

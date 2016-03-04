@@ -22,13 +22,8 @@ public class DepthFirstSearch {
         ArrayList<GraphNode> visited = new ArrayList<>();
         LinkedHashMap<GraphNode, GraphNode> possiblePath = new LinkedHashMap<>();
         ArrayList<GraphNode> path = new ArrayList<>();
-
         GraphNode current;
         GraphNode parent;
-        possiblePath.clear();
-        visited.clear();
-        frontier.clear();
-        path.clear();
 
         frontier.push(startNode);
 
@@ -56,15 +51,7 @@ public class DepthFirstSearch {
                 } else {
                     visited.add(current);
 
-                    current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(n -> frontier.push(n));
-                /*
-                        equivalent to:
-                    for (GraphNode n : current.getSuccessors()) {
-                        if (!visited.contains(n)) {
-                            frontier.push(n);
-                        }
-                    }
-                     */
+                    current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(frontier::push);
 
                     for (GraphNode successor : current.getSuccessors()) {
                         if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
