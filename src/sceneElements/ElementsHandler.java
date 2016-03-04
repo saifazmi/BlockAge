@@ -16,11 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lambdastorage.LambdaStore;
-import menus.MainMenu;
-import menus.Menu;
-import menus.MenuHandler;
-import menus.OptionsMenu;
-import menus.PauseMenu;
+import menus.*;
+import sun.applet.Main;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -142,6 +139,11 @@ public class ElementsHandler {
         }
         if (event.getSource() == GameInterface.pauseButton) {
             engine.setPaused(true);
+        }
+
+        if (event.getSource() == MainMenu.mapEditorButton)
+        {
+            MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
         }
 
     }

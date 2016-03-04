@@ -26,12 +26,12 @@ import java.io.File;
 
 public class MainMenu implements Menu {
 
-    public static Button newGameButton, exitButton, optionsButton = null;
+    public static Button newGameButton, exitButton, optionsButton, mapEditorButton = null;
 
     private Pane mainMenuPane = null;
     private Scene mainMenuScene = null;
     private ButtonProperties b = null;
-    private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered = null;
+    private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered, mapEditorImage, mapEditorHovered = null;
     private int spaceBetweenImgH = 70;
     String SEPARATOR = File.separator;
 
@@ -48,6 +48,7 @@ public class MainMenu implements Menu {
         newGameButton = new Button();
         optionsButton = new Button();
         exitButton = new Button();
+        mapEditorButton = new Button();
         b = new ButtonProperties();
 
 
@@ -59,6 +60,9 @@ public class MainMenu implements Menu {
 
         exitImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Quit.png");
         exitImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "QuitSel.png");
+
+        mapEditorImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "MapEditor.png");
+        mapEditorHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "MapEditorSel.png");
     }
 
     /**
@@ -83,8 +87,13 @@ public class MainMenu implements Menu {
                 e -> ElementsHandler.handle(e), new ImageView(exitImage));
         b.addHoverEffect(exitButton, exitImageHovered, exitImage, Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2);
 
+        //Map Editor Button
+        b.setButtonProperties(mapEditorButton, "", Menu.WIDTH / 5 - mapEditorImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 3,
+                e -> ElementsHandler.handle(e), new ImageView(mapEditorImage));
+        b.addHoverEffect(mapEditorButton, mapEditorHovered, mapEditorImage, Menu.WIDTH / 5 - mapEditorImage.getWidth() / 2,  Menu.HEIGHT / 3 + spaceBetweenImgH * 3);
+
         // ADD ALL BUTTONS TO THE PANE
-        mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton);
+        mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton, mapEditorButton);
         Group mainMenuGroup = new Group(mainMenuPane);
         BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "MainMenu.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
