@@ -46,7 +46,9 @@ public class TestVisualLive extends Application {
                      loc = 40 + (30*pos);}
             if(x==0) loc=10;
             block.relocate(loc, HEIGHT - (x * 15) - 50); //trying to make it state0
+
             sortPane.getChildren().add(block);
+            block.setNewX(block.getLayoutX());
             blocks.add(block);
         }
         animatePath = new SequentialTransition();
@@ -136,10 +138,12 @@ public class TestVisualLive extends Application {
      * @param: int block2 second block id
      */
     public void swapTwo(int block1, int block2) {
-        double oldY = blocks.get(block1).getLayoutY();
         double oldX = blocks.get(block1).getLayoutX();
-        double oldSecondY = blocks.get(block2).getLayoutY();
+        double oldY = blocks.get(block1).getLayoutY();
         double oldSecondX = blocks.get(block2).getLayoutX();
+        double oldSecondY = blocks.get(block2).getLayoutY();
+
+
         TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
         tty.setToY(-100);
@@ -176,6 +180,12 @@ public class TestVisualLive extends Application {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
         gyy.setCycleCount(1);
+
+        //update both block logical X
+        blocks.get(block2).setLayoutX(oldSecondX);
+        blocks.get(block1).setLayoutX(oldX);
+        //System.out.println("First block x: " + oldX);
+        //System.out.println("Second block x: " +oldSecondX);
         animatePath.getChildren().add(tty);
         animatePath.getChildren().add(ttx);
         animatePath.getChildren().add(txy);

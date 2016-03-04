@@ -1,7 +1,6 @@
 package test;
 
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -20,6 +19,7 @@ public class TestVisual extends Application {
     public int HEIGHT = 300;
     public int WIDTH = 400;
     private static ArrayList<SortVisualBar> blocks = new ArrayList<SortVisualBar>();
+    SequentialTransition seq = new SequentialTransition();
 
     public void start(Stage stage) {
         //store blocks somewhere
@@ -49,7 +49,9 @@ public class TestVisual extends Application {
         stage.sizeToScene();
         stage.show();
         // trying to move block
-        swapFF(1,10);
+        swapFF(10,1);
+        swapFF(10,3);
+        seq.play();
 
 
     }
@@ -70,8 +72,6 @@ public class TestVisual extends Application {
         double oldSecondY = blocks.get(block2).getLayoutY();
         double oldSecondX = blocks.get(block2).getLayoutX();
 
-        System.out.println(oldX);
-        System.out.println(oldSecondX);
         // first block , 3 transitions
         TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
@@ -118,12 +118,23 @@ public class TestVisual extends Application {
         gx.setCycleCount(1);
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        gyy.setFromY(-200); //this is how it works...dont ask
+        gyy.setFromY( -200); //this is how it works...dont ask
         gyy.setToY(0);
         gyy.setCycleCount(1);
-
-        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty,ttx,txx,ty,tx,txt,gy,gx,gyy);
-        seq.play();
+        seq.getChildren().add(tty);
+        seq.getChildren().add(ttx);
+        seq.getChildren().add(txx);
+        seq.getChildren().add(ty);
+        seq.getChildren().add(tx);
+        seq.getChildren().add(txt);
+        seq.getChildren().add(gy);
+        seq.getChildren().add(gx);
+        seq.getChildren().add(gyy);
+        //getchildren add a dummy one that just updates stuff :)
+        DummyTransition dummy = new DummyTransition(blocks.get(block1),blocks.get(block2),oldSecondX,oldX);
+        seq.getChildren().add(dummy);
+        //blocks.get(block1).setLayoutX(oldSecondX);
+        //blocks.get(block2).setLayoutX(oldX);
 
     }
 }

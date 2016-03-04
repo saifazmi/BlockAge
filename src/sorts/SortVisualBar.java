@@ -9,6 +9,25 @@ import javafx.scene.shape.Rectangle;
  */
 public class SortVisualBar extends Rectangle {
     private int value;
+    private double newX;
+    private double newY;
+
+    public double getNewX() {
+        return newX;
+    }
+
+    public void setNewX(double newX) {
+        this.newX = newX;
+    }
+
+    public double getNewY() {
+        return newY;
+    }
+
+    public void setNewY(double newY) {
+        this.newY = newY;
+    }
+
 
     public SortVisualBar(double width, double height, Paint fill, int value) {
         super(width, height, fill);
