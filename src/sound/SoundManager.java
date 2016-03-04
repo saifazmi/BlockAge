@@ -19,35 +19,30 @@ public class SoundManager {
     private static SoundManager instance;
     private boolean paused = true;
 
-    public static SoundManager Instance()
-    {
+    public static SoundManager Instance() {
         if (instance == null)
             instance = new SoundManager();
 
         return instance;
     }
 
-    public SoundManager()
-    {
+    public SoundManager() {
         URL soundPaths[] = {getClass().getResource(SEPARATOR + "sound" + SEPARATOR + "Spell.mp3"), getClass().getResource(SEPARATOR + "sound" + SEPARATOR + "a_ninja_among_culturachippers.mp3")};
 
         soundtracks = new CircularBufferNode[2];
 
-        for (int i = 0; i < soundtracks.length; i++)
-        {
+        for (int i = 0; i < soundtracks.length; i++) {
             soundtracks[i] = new CircularBufferNode<>(new MediaPlayer(new Media(soundPaths[i].toString())));
         }
 
-        for (int i = 0; i < soundtracks.length - 1; i++)
-        {
-            soundtracks[i].setNext(soundtracks[i+1]);
+        for (int i = 0; i < soundtracks.length - 1; i++) {
+            soundtracks[i].setNext(soundtracks[i + 1]);
         }
 
         soundtracks[soundtracks.length - 1].setNext(soundtracks[0]);
         //System.out.println(soundtracks[soundtracks.length - 1].getValue().getMedia().toString() + " next now: " + soundtracks[0].getValue().getMedia().toString());
 
-        for (int i = 0; i < soundtracks.length; i++)
-        {
+        for (int i = 0; i < soundtracks.length; i++) {
             final int finalI = i;
             soundtracks[i].getValue().setOnEndOfMedia(() ->
             {
@@ -59,20 +54,17 @@ public class SoundManager {
 
     }
 
-    public void startSoundtrack()
-    {
+    public void startSoundtrack() {
         paused = false;
         soundtracks[0].getValue().play();
     }
 
-    public void resumeSoudtrack()
-    {
+    public void resumeSoudtrack() {
         paused = false;
         currentMPointer.getValue().play();
     }
 
-    public void pauseSoundtrack()
-    {
+    public void pauseSoundtrack() {
         paused = true;
         currentMPointer.getValue().pause();
     }

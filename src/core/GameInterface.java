@@ -30,11 +30,11 @@ import java.io.InputStream;
  */
 public class GameInterface {
     public static Button fileButton, fileExitButton, helpButton, playButton, pauseButton, unsortableButton, sortableButton;
-    public static TextArea unitDescriptionText, textInfoText, algorithmVisualisationText, searchVisualisationText;
-    public static int bottomPaneHeight = 130;
-    public static int rightPaneWidth = 224;
+    public static TextArea unitDescriptionText, textInfoText, algorithmVisualisationText, sortVisualisationText;
+    public static int bottomPaneHeight = 0;
+    public static int rightPaneWidth = 324;
     public static Font bellotaFont;
-    private Label unitDescriptionLabel, textInfoLabel, algorithmVisualisationLabel, searchVisualisationLabel, blockadesLabel, sortLabel;
+    private Label unitDescriptionLabel, textInfoLabel, algorithmVisualisationLabel, sortVisualisationLabel, blockadesLabel, sortLabel;
     private HBox bottomMenuBox, rightMenuPlayPause, sortingBox;
     private VBox rightMenuBox, unitBox, textBox;
     private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
@@ -74,14 +74,14 @@ public class GameInterface {
         unitDescriptionLabel = new Label();
         textInfoLabel = new Label();
         algorithmVisualisationLabel = new Label();
-        searchVisualisationLabel = new Label();
+        sortVisualisationLabel = new Label();
         blockadesLabel = new Label();
         sortLabel = new Label();
 
         unitDescriptionText = new TextArea();
         textInfoText = new TextArea();
         algorithmVisualisationText = new TextArea();
-        searchVisualisationText = new TextArea();
+        sortVisualisationText = new TextArea();
 
         fileButton = new Button();
         helpButton = new Button();
@@ -98,7 +98,7 @@ public class GameInterface {
         pauseImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "pause_button_hovered.png");
 
         unsortableImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
-        sortableImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 2.0.png", 55, 55, false, false);
+        sortableImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "sortableBlock640.png", 55, 55, false, false);
 
         unsortableButton.setOnMouseClicked(e ->
         {
@@ -116,11 +116,6 @@ public class GameInterface {
      * Constructs the bottom Pane of the scene
      */
     public void bottomPane() {
-        unitDescriptionLabel.setText("Unit Description");
-        unitDescriptionLabel.setFont(bellotaFont);
-        unitDescriptionText.setPrefSize(300, 80);
-        unitDescriptionText.setEditable(false);
-
         textInfoLabel.setText("Text Info");
         textInfoLabel.setFont(bellotaFont);
         textInfoText.setPrefSize(300, 80);
@@ -136,18 +131,16 @@ public class GameInterface {
                 e -> ElementsHandler.handle(e), new ImageView(pauseImage));
         b.addHoverEffect(pauseButton, pauseImageHovered, pauseImage, 0, 0);
 
-        unitBox.getChildren().addAll(unitDescriptionLabel, unitDescriptionText);
-        unitBox.setAlignment(Pos.TOP_LEFT);
+
         textBox.getChildren().addAll(textInfoLabel, textInfoText);
         textBox.setAlignment(Pos.TOP_LEFT);
         rightMenuPlayPause.getChildren().addAll(playButton, pauseButton);
-        rightMenuPlayPause.setAlignment(Pos.BOTTOM_CENTER);
         bottomMenuBox.setAlignment(Pos.CENTER);
-        bottomMenuBox.getChildren().addAll(unitBox, textBox, rightMenuPlayPause);
+        //bottomMenuBox.getChildren().addAll(textBox, rightMenuPlayPause);
         bottomMenuBox.setSpacing(20);
         //bottomMenuBox.setStyle("-fx-border-color: red;"); // testpurpose
 
-        bottomMenuBox.heightProperty().addListener(new ChangeListener<Number>() {
+        unitBox.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldWidth, Number newWidth) {
                 System.out.println("ADAFAA" + newWidth);
@@ -161,15 +154,19 @@ public class GameInterface {
      * Constructs the right Pane of the scene
      */
     public void rightPane() {
-        algorithmVisualisationLabel.setText("Search Visualisation");
-        algorithmVisualisationLabel.setFont(bellotaFont);
-        algorithmVisualisationText.setPrefSize(200, 170);
-        algorithmVisualisationText.setEditable(false);
+        //UNIT DESCRIPTION PANE
+        unitDescriptionLabel.setText("Unit Description");
+        unitDescriptionLabel.setFont(bellotaFont);
+        unitDescriptionText.setPrefSize(300, 80);
+        unitDescriptionText.setEditable(false);
 
-        searchVisualisationLabel.setText("Sort Visualisation");
-        searchVisualisationLabel.setFont(bellotaFont);
-        searchVisualisationText.setPrefSize(200, 170);
-        searchVisualisationText.setEditable(false);
+        unitBox.getChildren().addAll(unitDescriptionLabel, unitDescriptionText);
+
+        //SORT VISUALISATION PANE
+        sortVisualisationLabel.setText("Sort Visualisation");
+        sortVisualisationLabel.setFont(bellotaFont);
+        sortVisualisationText.setPrefSize(200, 150);
+        sortVisualisationText.setEditable(false);
 
         blockadesLabel.setText("Blockades");
         blockadesLabel.setFont(bellotaFont);
@@ -203,7 +200,7 @@ public class GameInterface {
 
         // add everything to the pane
         sortingBox.getChildren().addAll(unsortableButton, sortableButton);
-        rightMenuBox.getChildren().addAll(algorithmVisualisationLabel, algorithmVisualisationText, searchVisualisationLabel, searchVisualisationText, blockadesLabel, sortingBox);
+        rightMenuBox.getChildren().addAll(unitBox, sortVisualisationLabel, sortVisualisationText, rightMenuPlayPause, blockadesLabel, sortingBox);
         rightMenuBox.setSpacing(10);
         BorderPane.setMargin(rightMenuBox, new Insets(12, 12, 12, 12));
         ((BorderPane) ((Group) GameRunTime.getScene().getRoot()).getChildren().get(0)).setRight(rightMenuBox);

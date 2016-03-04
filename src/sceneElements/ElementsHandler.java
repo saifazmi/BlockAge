@@ -19,6 +19,7 @@ import lambdastorage.LambdaStore;
 import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
+import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
 
@@ -33,7 +34,9 @@ import java.util.logging.Logger;
 public class ElementsHandler {
 
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
-    public static ButtonProperties b = new ButtonProperties();
+    private static ButtonProperties b = new ButtonProperties();
+
+    public static Options options = new Options();
 
     /**
      * Handles the events for the buttons
@@ -44,7 +47,7 @@ public class ElementsHandler {
         // Elements from the Main Menu scene
         CoreEngine engine = CoreEngine.Instance();
 
-        if (event.getSource() == MainMenu.newGameButton) {
+        if (event.getSource() == MainMenu.newGameButtonF) {
             // Create grid for the game we'll play
             GameRunTime gameRunTime = new GameRunTime();
             engine = CoreEngine.Instance();
@@ -75,51 +78,76 @@ public class ElementsHandler {
             unitSpawnerThread.start();
 
         }
-        if (event.getSource() == MainMenu.optionsButton) {
+        if (event.getSource() == MainMenu.optionsButtonF) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
-        if (event.getSource() == MainMenu.exitButton) {
+        if (event.getSource() == MainMenu.exitButtonF) {
             System.exit(0);
         }
         // End of elements from Main Menu scene
 
         // Elements from the Options Menu scene
-        if (event.getSource() == OptionsMenu.yesButtonH) {
-            b.setButtonProperties(OptionsMenu.noButtonH, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
+        if (event.getSource() == OptionsMenu.yesButtonSearch) {
+            options.setPath(false);
+            b.setButtonProperties(OptionsMenu.noButtonSearch, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
                     e -> handle(e), new ImageView(OptionsMenu.offImage));
-            b.addHoverEffect(OptionsMenu.noButtonH, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
-            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonH)) {
-                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonH);
-                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonH);
+            b.addHoverEffect(OptionsMenu.noButtonSearch, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonSearch)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonSearch);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonSearch);
             }
         }
-        if (event.getSource() == OptionsMenu.noButtonH) {
-            b.setButtonProperties(OptionsMenu.yesButtonH, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
+        if (event.getSource() == OptionsMenu.noButtonSearch) {
+            options.setPath(true);
+            b.setButtonProperties(OptionsMenu.yesButtonSearch, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
                     e -> handle(e), new ImageView(OptionsMenu.onImage));
-            b.addHoverEffect(OptionsMenu.yesButtonH, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
-            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonH)) {
-                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonH);
-                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonH);
+            b.addHoverEffect(OptionsMenu.yesButtonSearch, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonSearch)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonSearch);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonSearch);
             }
         }
 
-        if (event.getSource() == OptionsMenu.yesButtonS) {
-            b.setButtonProperties(OptionsMenu.noButtonS, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
+        if (event.getSource() == OptionsMenu.yesButtonSound) {
+            b.setButtonProperties(OptionsMenu.noButtonSound, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
                     e -> handle(e), new ImageView(OptionsMenu.offImage));
-            b.addHoverEffect(OptionsMenu.noButtonS, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH);
-            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonS)) {
-                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonS);
-                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonS);
+            b.addHoverEffect(OptionsMenu.noButtonSound, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonSound)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonSound);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonSound);
             }
         }
 
-        if (event.getSource() == OptionsMenu.noButtonS) {
-            b.setButtonProperties(OptionsMenu.yesButtonS, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
+        if (event.getSource() == OptionsMenu.noButtonSound) {
+            b.setButtonProperties(OptionsMenu.yesButtonSound, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
                     e -> handle(e), new ImageView(OptionsMenu.onImage));
-            b.addHoverEffect(OptionsMenu.yesButtonS, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH);
-            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonS)) {
-                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonS);
-                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonS);
+            b.addHoverEffect(OptionsMenu.yesButtonSound, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonSound)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonSound);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonSound);
+            }
+        }
+
+
+        if (event.getSource() == OptionsMenu.yesButtonB) {
+            options.setInitialBlockades(false);
+            b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+                    e -> handle(e), new ImageView(OptionsMenu.offImage));
+            b.addHoverEffect(OptionsMenu.noButtonB, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonB)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonB);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonB);
+            }
+        }
+
+        if (event.getSource() == OptionsMenu.noButtonB) {
+            options.setInitialBlockades(true);
+            b.setButtonProperties(OptionsMenu.yesButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+                    e -> handle(e), new ImageView(OptionsMenu.onImage));
+            b.addHoverEffect(OptionsMenu.yesButtonB, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonB)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonB);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonB);
             }
         }
 
@@ -166,25 +194,39 @@ public class ElementsHandler {
                 } else {
                     engine.setPaused(true);
                 }
-            } else if (k == KeyCode.R) {
-                Node node = GameRunTime.getScene().getFocusOwner();
-                if (node instanceof SpriteImage) {
-                    ((Unit) ((SpriteImage) node).getEntity()).showTransition();
-                }
             } else if (k == KeyCode.S) {
                 ArrayList<Entity> units = engine.getEntities();
                 System.out.println(units.size());
+                boolean checked = false;
+                Node node = GameRunTime.getScene().getFocusOwner();
+
                 for (int i = 0; i < units.size(); i++) {
                     SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
                     Image image = obtainedSprite.getImage();
                     if (image.equals(Images.imagePressedDemon)) {
                         obtainedSprite.setImage(Images.imageDemon);
+                        checked = true;
+                        ((Unit) ((SpriteImage) node).getEntity()).showTransition(false);
                     } else if (image.equals(Images.imagePressedDk)) {
                         obtainedSprite.setImage(Images.imageDk);
+                        checked = true;
+                        ((Unit) ((SpriteImage) node).getEntity()).showTransition(false);
                     } else if (image.equals(Images.imagePressedBanshee)) {
                         obtainedSprite.setImage(Images.imageBanshee);
+                        checked = true;
+                        ((Unit) ((SpriteImage) node).getEntity()).showTransition(false);
                     }
                 }
+                /*if (node instanceof SpriteImage && checked == false) {
+                    if (((SpriteImage) node).getImage().equals(Images.imageDemon)) {
+                       ((SpriteImage) node).setImage(Images.imagePressedDemon);
+                    } else if (((SpriteImage) node).getImage().equals(Images.imageDk)) {
+                    	((SpriteImage) node).setImage(Images.imagePressedDk);
+                    } else if (((SpriteImage) node).getImage().equals(Images.imageBanshee)) {
+                    	((SpriteImage) node).setImage(Images.imagePressedBanshee);
+                    }
+                	((Unit) ((SpriteImage) node).getEntity()).showTransition(true);
+                }*/
                 GameInterface.unitDescriptionText.clear();
             }
         }
