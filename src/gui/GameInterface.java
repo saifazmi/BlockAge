@@ -1,5 +1,6 @@
-package core;
+package gui;
 
+import core.GameRunTime;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -51,7 +52,7 @@ public class GameInterface {
      * Loads the font for labels/buttons
      */
     public void loadFont() {
-        InputStream fontStream = GameInterface.class.getResourceAsStream(".." + SEPARATOR + "fonts" + SEPARATOR + "Bellota-Bold.otf");
+        InputStream fontStream = GameInterface.class.getResourceAsStream("" + SEPARATOR + "fonts" + SEPARATOR + "Bellota-Bold.otf");
         if (fontStream == null) {
             System.out.println("No font at that path");
         }

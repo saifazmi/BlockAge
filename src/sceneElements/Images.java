@@ -1,10 +1,9 @@
 package sceneElements;
 
-import core.Renderer;
 import entity.Entity;
+import gui.Renderer;
 import javafx.scene.image.Image;
 
-import javax.net.ssl.SSLProtocolException;
 import java.io.File;
 
 /**
@@ -44,8 +43,8 @@ public class Images {
     public static final Image optionsImageHovered = new Image(sprites + buttons + "Options_Hover.png");
     public static final Image exitImage = new Image(sprites + buttons + "Quit_Idle.png");
     public static final Image exitImageHovered = new Image(sprites + buttons + "Quit_Hover.png");
-    public static final Image unsortableImage2 = new Image(sprites + entities + blockades + "Blockade_UnSortable.png", 55, 55, false, false);
-    public static final Image sortableImage2 = new Image(sprites + entities + blockades + "Blockade_Sortable.png", 55, 55, true, true);
+    public static final Image unsortableImage2 = new Image(sprites + entities + blockades + "Blockade_UnSortable.png", 55, 55, false, true);
+    public static final Image sortableImage2 = new Image(sprites + entities + blockades + "Blockade_Sortable.png", 55, 55, false, true);
     //background images
     public static final Image backgroundMainMenu = new Image(sprites + backgrounds + "MainMenu_Idle.png");
     public static final Image backgroundMainMenuGlow = new Image(sprites + backgrounds + "MainMenu_Glow.png");

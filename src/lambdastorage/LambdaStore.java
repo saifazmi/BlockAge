@@ -1,9 +1,9 @@
 package lambdastorage;
 
 import core.GameRunTime;
-import core.Renderer;
 import entity.Blockade;
 import graph.GraphNode;
+import gui.Renderer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
