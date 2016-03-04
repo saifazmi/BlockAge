@@ -1,10 +1,5 @@
 package core;
 
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Logger;
-
 import entity.Entity;
 import entity.Unit;
 import graph.Graph;
@@ -68,7 +63,7 @@ public class UnitSpawner {
             CreateUnit(graph, goal);
         }
     }
-    
+
     /**
      * Creates a SpriteImage and set up its appropriate listeners for Mouse Click.
      * Create a new Unit with the appropriate search and sort algorithm indicator 'attached'.
@@ -96,43 +91,43 @@ public class UnitSpawner {
         sprite.setEntity(unit);
 
         // focus sprite and displays text when clicked on it
-        if(ElementsHandler.options.getShowPath() == true) {
-	        sprite.setOnMouseClicked(e -> {
-	            LOG.log(Level.INFO, "in mouse click");
-	            sprite.requestFocus();
-	            ArrayList<Entity> units = engine.getEntities();
-	            for (Entity unit1 : units) {
-	                if (sprite.getEntity() == unit1) {
-	                    GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
-	                    GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
-	                            "Search:  " + Unit.Search.values()[index] + "\n" +
-	                            "Sort:      " + Unit.Sort.values()[index]);
-	                    // sets the image pressed for each unit accordingly to the search
-	                    if (Unit.Search.values()[index] == Unit.Search.BFS) {
-	                        sprite.setImage(Images.imagePressedDemon);
-	                    } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-	                        sprite.setImage(Images.imagePressedDk);
-	                    } else {
-	                        sprite.setImage(Images.imagePressedBanshee);
-	                    }
-	                    ((Unit) unit1).showTransition(true);
-	                } else {
-	                    SpriteImage obtainedSprite = unit1.getSprite();
-	                    Image image = obtainedSprite.getImage();
-	                    if (image.equals(Images.imagePressedDemon)) {
-	                        unit1.getSprite().setImage(Images.imageDemon);
-	                        ((Unit) unit1).showTransition(false);
-	                    } else if (image.equals(Images.imagePressedDk)) {
-	                        unit1.getSprite().setImage(Images.imageDk);
-	                        ((Unit) unit1).showTransition(false);
-	                    } else if (image.equals(Images.imagePressedBanshee)) {
-	                        unit1.getSprite().setImage(Images.imageBanshee);
-	                        ((Unit) unit1).showTransition(false);
-	                    }
-	                }
-	            }
-	            LOG.log(Level.INFO, "Reached the end of Mouse CLick");
-	        });
+        if (ElementsHandler.options.getShowPath() == true) {
+            sprite.setOnMouseClicked(e -> {
+                LOG.log(Level.INFO, "in mouse click");
+                sprite.requestFocus();
+                ArrayList<Entity> units = engine.getEntities();
+                for (Entity unit1 : units) {
+                    if (sprite.getEntity() == unit1) {
+                        GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
+                        GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
+                                "Search:  " + Unit.Search.values()[index] + "\n" +
+                                "Sort:      " + Unit.Sort.values()[index]);
+                        // sets the image pressed for each unit accordingly to the search
+                        if (Unit.Search.values()[index] == Unit.Search.BFS) {
+                            sprite.setImage(Images.imagePressedDemon);
+                        } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
+                            sprite.setImage(Images.imagePressedDk);
+                        } else {
+                            sprite.setImage(Images.imagePressedBanshee);
+                        }
+                        ((Unit) unit1).showTransition(true);
+                    } else {
+                        SpriteImage obtainedSprite = unit1.getSprite();
+                        Image image = obtainedSprite.getImage();
+                        if (image.equals(Images.imagePressedDemon)) {
+                            unit1.getSprite().setImage(Images.imageDemon);
+                            ((Unit) unit1).showTransition(false);
+                        } else if (image.equals(Images.imagePressedDk)) {
+                            unit1.getSprite().setImage(Images.imageDk);
+                            ((Unit) unit1).showTransition(false);
+                        } else if (image.equals(Images.imagePressedBanshee)) {
+                            unit1.getSprite().setImage(Images.imageBanshee);
+                            ((Unit) unit1).showTransition(false);
+                        }
+                    }
+                }
+                LOG.log(Level.INFO, "Reached the end of Mouse CLick");
+            });
         }
         // adds the units into an array list
         unitPool.add(unit);
@@ -154,7 +149,7 @@ public class UnitSpawner {
         spawnCount++;
 //
 //        if (!engine.getEntities().contains(newUnit)) {
-            engine.getEntities().add(newUnit);
+        engine.getEntities().add(newUnit);
 //        }
 
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));

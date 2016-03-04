@@ -154,12 +154,12 @@ public class GameInterface {
      * Constructs the right Pane of the scene
      */
     public void rightPane() {
-    	//UNIT DESCRIPTION PANE
+        //UNIT DESCRIPTION PANE
         unitDescriptionLabel.setText("Unit Description");
         unitDescriptionLabel.setFont(bellotaFont);
         unitDescriptionText.setPrefSize(300, 80);
         unitDescriptionText.setEditable(false);
-        
+
         unitBox.getChildren().addAll(unitDescriptionLabel, unitDescriptionText);
 
         //SORT VISUALISATION PANE

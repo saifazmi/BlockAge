@@ -10,7 +10,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import menus.Menu;
 import sceneElements.ElementsHandler;
 
 import java.io.File;
@@ -31,6 +30,7 @@ public class GameRunTime {
     static Scene mainGameScene = null;
 
     private static GameRunTime instance;
+
     public static GameRunTime Instance() {
         return instance;
     }
@@ -64,8 +64,8 @@ public class GameRunTime {
         mainGamePane.setPrefWidth(CoreGUI.Instance().getWIDTH() - 324);
         mainGamePane.setPrefHeight(CoreGUI.Instance().getHEIGHT());
         String SEPARATOR = File.separator;
-        BackgroundImage myBI= new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "hell_background.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-        		BackgroundSize.DEFAULT);
+        BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "hell_background.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
         mainGamePane.setBackground(new Background(myBI));
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());

@@ -70,7 +70,7 @@ public class OptionsMenu implements Menu {
         showSearchImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Show-Search.png", 395, 183, true, true);
         soundImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Sound.png", 395, 55, true, true);
         blockadeImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "No-Start-Blockades.png", 550, 0, true, true);
-        
+
         backImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "Back.png", 395, 55, true, true);
         backImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "BackSel.png", 395, 55, true, true);
     }
@@ -90,7 +90,7 @@ public class OptionsMenu implements Menu {
         b.setButtonProperties(noButtonSound, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH,
                 e -> ElementsHandler.handle(e), new ImageView(offImage));
         b.addHoverEffect(noButtonSound, offImageHovered, offImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH);
-        
+
         // Set properties for the on/off BLOCKADES button
         b.setButtonProperties(noButtonB, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 e -> ElementsHandler.handle(e), new ImageView(offImage));
@@ -108,7 +108,7 @@ public class OptionsMenu implements Menu {
 
         // To do sound configurations for button as well
         optionsMenuPane.getChildren().addAll(hintsLabel, soundLabel, blockadeLabel, noButtonSearch, noButtonSound, noButtonB, backButton);
-        BackgroundImage myBI= new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "OptionsMenu.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+        BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "OptionsMenu.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         optionsMenuPane.setBackground(new Background(myBI));
         optionsMenuPane.setPrefWidth(Menu.WIDTH);

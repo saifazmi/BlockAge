@@ -1,9 +1,5 @@
 package sceneElements;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import core.BaseSpawner;
 import core.CoreEngine;
 import core.GameInterface;
@@ -27,6 +23,10 @@ import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author : First created by Paul Popa with code by Dominic Walters, and Paul Popa
  * @date : 09/02/16, last edited by Paul Popa on 25/02/16
@@ -35,7 +35,7 @@ public class ElementsHandler {
 
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
     private static ButtonProperties b = new ButtonProperties();
-    
+
     public static Options options = new Options();
 
     /**
@@ -88,7 +88,7 @@ public class ElementsHandler {
 
         // Elements from the Options Menu scene
         if (event.getSource() == OptionsMenu.yesButtonSearch) {
-        	options.setPath(false);
+            options.setPath(false);
             b.setButtonProperties(OptionsMenu.noButtonSearch, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
                     e -> handle(e), new ImageView(OptionsMenu.offImage));
             b.addHoverEffect(OptionsMenu.noButtonSearch, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
@@ -98,7 +98,7 @@ public class ElementsHandler {
             }
         }
         if (event.getSource() == OptionsMenu.noButtonSearch) {
-        	options.setPath(true);
+            options.setPath(true);
             b.setButtonProperties(OptionsMenu.yesButtonSearch, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
                     e -> handle(e), new ImageView(OptionsMenu.onImage));
             b.addHoverEffect(OptionsMenu.yesButtonSearch, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
@@ -127,10 +127,10 @@ public class ElementsHandler {
                 OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonSound);
             }
         }
-        
-        
+
+
         if (event.getSource() == OptionsMenu.yesButtonB) {
-        	options.setInitialBlockades(false);
+            options.setInitialBlockades(false);
             b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
                     e -> handle(e), new ImageView(OptionsMenu.offImage));
             b.addHoverEffect(OptionsMenu.noButtonB, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
@@ -139,9 +139,9 @@ public class ElementsHandler {
                 OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonB);
             }
         }
-        
+
         if (event.getSource() == OptionsMenu.noButtonB) {
-        	options.setInitialBlockades(true);
+            options.setInitialBlockades(true);
             b.setButtonProperties(OptionsMenu.yesButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
                     e -> handle(e), new ImageView(OptionsMenu.onImage));
             b.addHoverEffect(OptionsMenu.yesButtonB, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
@@ -195,10 +195,11 @@ public class ElementsHandler {
                     engine.setPaused(true);
                 }
             } else if (k == KeyCode.S) {
-            	ArrayList<Entity> units = engine.getEntities();
-            	System.out.println(units.size());
-            	boolean checked = false;
-            	Node node = GameRunTime.getScene().getFocusOwner();
+                ArrayList<Entity> units = engine.getEntities();
+                System.out.println(units.size());
+                boolean checked = false;
+                Node node = GameRunTime.getScene().getFocusOwner();
+
                 for (int i = 0; i < units.size(); i++) {
                     SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
                     Image image = obtainedSprite.getImage();
@@ -217,7 +218,7 @@ public class ElementsHandler {
                     }
                 }
                 /*if (node instanceof SpriteImage && checked == false) {
-                	if (((SpriteImage) node).getImage().equals(Images.imageDemon)) {
+                    if (((SpriteImage) node).getImage().equals(Images.imageDemon)) {
                        ((SpriteImage) node).setImage(Images.imagePressedDemon);
                     } else if (((SpriteImage) node).getImage().equals(Images.imageDk)) {
                     	((SpriteImage) node).setImage(Images.imagePressedDk);

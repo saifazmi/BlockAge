@@ -12,7 +12,6 @@ import sceneElements.SpriteImage;
 
 import java.io.File;
 import java.util.Random;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -33,8 +32,7 @@ public class BaseSpawner {
     private static BaseSpawner instance = null;
 
     public static BaseSpawner Instance() {
-        if(instance == null)
-        {
+        if (instance == null) {
             instance = new BaseSpawner();
         }
         return instance;
@@ -44,10 +42,10 @@ public class BaseSpawner {
         instance = this;
         int blockadeNeeded = 0;
         // create a number of blockade randomly
-        if(ElementsHandler.options.getInitialBlockades() == true) {
-        	blockadeNeeded = 10;
+        if (ElementsHandler.options.getInitialBlockades() == true) {
+            blockadeNeeded = 10;
         } else {
-        	blockadeNeeded = 0;
+            blockadeNeeded = 0;
         }
         while (blockadeNeeded > 0) {
             Random rand = new Random();
