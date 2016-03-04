@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 public class SortableBlockade extends Blockade {
 
     private static final Logger LOG = Logger.getLogger(SortableBlockade.class.getName());
-
     private static final int SORT_ELEMENT_QTY = 10;
 
     private int[] toSortArray;

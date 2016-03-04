@@ -39,7 +39,7 @@ public class DepthFirstSearch {
         while (!frontier.isEmpty()) {
             current = frontier.pop();
 
-            if (!visited.contains(current) && current.getBlockade() == null) {
+            if (!visited.contains(current) && (current.getBlockade() == null || current.getBlockade().isBreakable())) {
 
                 if (current.equals(endNode)) {
                     while (possiblePath.keySet().contains(current)) {

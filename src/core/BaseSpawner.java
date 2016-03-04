@@ -1,6 +1,7 @@
 package core;
 
 import entity.Base;
+import entity.Blockade;
 import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
@@ -8,6 +9,7 @@ import javafx.scene.image.Image;
 import sceneElements.SpriteImage;
 
 import java.io.File;
+import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -76,30 +78,29 @@ public class BaseSpawner {
                 GameRunTime.getScene().setOnMouseClicked(null);
             }
 
-        });
+            // create a number of blockade randomly
+            int blockadeNeeded = 10;
+            while (blockadeNeeded > 0) {
 
-//        // create a number of blockade randomly
-//        int blockadeNeeded = 10;
-//        while (blockadeNeeded > 0) {
-//
-//            Random rand = new Random();
-//            int randomX = rand.nextInt(Graph.HEIGHT);
-//            int randomY = rand.nextInt(Graph.WIDTH);
-//            Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
-//            Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
-//            SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
-//            spriteImage1.setFitWidth(renderer.getXSpacing());
-//            spriteImage1.setFitHeight(renderer.getYSpacing());
-//            spriteImage1.setPreserveRatio(false);
-//            spriteImage1.setSmooth(true);
-//            blockadeInstance.setSprite(spriteImage1);
-//            Blockade blockade = Blockade.randomBlockage(blockadeInstance);
-//            if (blockade != null) {
-//                renderer.drawInitialEntity(blockade);
-//                blockadeNeeded--;
-//                //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
-//            }
-//        }
+                Random rand = new Random();
+                int randomX = rand.nextInt(Graph.HEIGHT);
+                int randomY = rand.nextInt(Graph.WIDTH);
+                Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
+                Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
+                SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
+                spriteImage1.setFitWidth(renderer.getXSpacing());
+                spriteImage1.setFitHeight(renderer.getYSpacing());
+                spriteImage1.setPreserveRatio(false);
+                spriteImage1.setSmooth(true);
+                blockadeInstance.setSprite(spriteImage1);
+                Blockade blockade = Blockade.randomBlockage(blockadeInstance);
+                if (blockade != null) {
+                    renderer.drawInitialEntity(blockade);
+                    blockadeNeeded--;
+                    //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
+                }
+            }
+        });
 
     }
 
