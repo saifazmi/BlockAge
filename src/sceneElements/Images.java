@@ -28,7 +28,7 @@ public class Images {
     public static final Image unsortableImage1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
     public static final Image sortableImage1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 2.0.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
     //base images
-    public static final Image base = new Image(SEPARATOR + "sprites" + SEPARATOR + "base.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+    public static final Image base = new Image(SEPARATOR + "sprites" + SEPARATOR + "Base.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
     //menu images
     public static final Image newGameImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "NewGame.png");
     public static final Image newGameImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "NewGamSel.png");
