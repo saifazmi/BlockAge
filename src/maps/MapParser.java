@@ -1,9 +1,10 @@
 package maps;
 
-import core.Renderer;
+import gui.Renderer;
 import entity.Blockade;
 import graph.GraphNode;
 import javafx.scene.image.Image;
+import sceneElements.Images;
 import sceneElements.SpriteImage;
 
 import java.io.BufferedReader;
@@ -40,14 +41,14 @@ public class MapParser {
                     if (blockPresent == 1)
                     {
                         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(x, y), null);
-                        Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "Unsortable blokage 1.0.png", 55, 55, false, false);
+                        Image image1 = Images.unsortableImage1;
                         SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
                         spriteImage1.setFitWidth(Renderer.Instance().getXSpacing());
                         spriteImage1.setFitHeight(Renderer.Instance().getYSpacing());
                         spriteImage1.setPreserveRatio(false);
                         spriteImage1.setSmooth(true);
                         blockadeInstance.setSprite(spriteImage1);
-                        Blockade blockade = Blockade.randomBlockage(blockadeInstance);
+                        Blockade blockade = Blockade.randomBlockade(blockadeInstance);
                         if (blockade != null)
                         {
                             Renderer.Instance().drawInitialEntity(blockade);
