@@ -1,8 +1,12 @@
 package entity;
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
-import gui.Renderer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
@@ -14,10 +18,6 @@ import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
-
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
