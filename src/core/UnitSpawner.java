@@ -4,6 +4,8 @@ import entity.Entity;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
+import gui.GameInterface;
+import gui.Renderer;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;

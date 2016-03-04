@@ -27,7 +27,7 @@ public class SoundManager {
     }
 
     public SoundManager() {
-        URL soundPaths[] = {getClass().getResource(SEPARATOR + "sound" + SEPARATOR + "Spell.mp3"), getClass().getResource(SEPARATOR + "sound" + SEPARATOR + "a_ninja_among_culturachippers.mp3")};
+        URL soundPaths[] = {getClass().getResource("Spell.mp3"), getClass().getResource("a_ninja_among_culturachippers.mp3")};
 
         soundtracks = new CircularBufferNode[2];
 

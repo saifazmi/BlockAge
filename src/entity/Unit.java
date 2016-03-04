@@ -1,8 +1,8 @@
 package entity;
 
-import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import gui.Renderer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
@@ -212,11 +212,6 @@ public class Unit extends Entity {
                 int y = this.nextNode.getY();
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
-                //if (xChange + yChange > 1 || xChange + yChange < -1) {
-                //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
-                //           "Fatal error, check search implementation: " + this.search.toString());
-                //   return;
-                //}
                 if (logicalMove(xChange, yChange)) {
                     double nextPixelX = x * renderer.getXSpacing();
                     double nextPixelY = y * renderer.getYSpacing();
@@ -225,6 +220,24 @@ public class Unit extends Entity {
                     transition.setToX(nextPixelX);
                     transition.setToY(nextPixelY);
                     transition.setOnFinished(e -> this.completedMove = true);
+                    double rotate = 0;
+                    if(xChange == 1)
+                    {
+                        rotate = 270;
+                    }
+                    else if (xChange == -1)
+                    {
+                        rotate = 90;
+                    }
+                    if(yChange == 1)
+                    {
+                        rotate = 0;
+                    }
+                    else if(yChange == -1)
+                    {
+                        rotate = 180;
+                    }
+                    this.getSprite().setRotate(rotate);
                     transition.play();
                 } else {
                     decideRoute();

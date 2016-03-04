@@ -1,9 +1,9 @@
 package entity;
 
 import core.CoreEngine;
-import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import gui.Renderer;
 import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
