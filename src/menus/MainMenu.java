@@ -94,8 +94,7 @@ public class MainMenu implements Menu {
 
         // ADD ALL BUTTONS TO THE PANE
         fadingPane.getChildren().addAll(newGameButtonF, optionsButtonF, exitButtonF);
-        BackgroundImage myBIF = new BackgroundImage(new Image(Images.SEPARATOR + "sprites" + Images.SEPARATOR + "MainMenuFade.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        BackgroundImage myBIF = new BackgroundImage(Images.backgroundMainMenuGlow, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         fadingPane.setBackground(new Background(myBIF));
         fadingPane.setPrefWidth(Menu.WIDTH);
         fadingPane.setPrefHeight(Menu.HEIGHT);

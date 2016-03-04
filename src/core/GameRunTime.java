@@ -60,8 +60,7 @@ public class GameRunTime {
         mainGamePane.setPrefHeight(CoreGUI.getHEIGHT());
 
         String SEPARATOR = File.separator;
-        BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "hell_background.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        //BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "background" + SEPARATOR + "Main.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
         //mainGamePane.setBackground(new Background(myBI));
 
         Group mainGame = new Group(mainGamePane);
