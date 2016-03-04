@@ -1,8 +1,8 @@
 package entity;
 
-import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import gui.Renderer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;

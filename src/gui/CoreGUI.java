@@ -1,5 +1,6 @@
-package core;
+package gui;
 
+import core.CoreEngine;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import menus.MenuHandler;

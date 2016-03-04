@@ -5,10 +5,10 @@ import entity.Blockade;
 import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
+import gui.Renderer;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
 import sceneElements.Images;
-import sceneElements.SpriteImage;
 
 import java.util.Random;
 import java.util.logging.Logger;
@@ -64,17 +64,10 @@ public class BaseSpawner {
                 if (isOnGrid(base) && !(i == row && j == col)) {
 
                     SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(i, j), null, null);
-                    Image image1 = new Image(Images.SEPARATOR + "sprites" + Images.SEPARATOR + "entities" + Images.SEPARATOR + "blockades" + Images.SEPARATOR + "Blockade_Sortable.png", 55, 55, false, false);
-                    SpriteImage spriteImage1 = new SpriteImage(image1, sortableBlockadeInstance);
-                    spriteImage1.setFitWidth(renderer.getXSpacing());
-                    spriteImage1.setFitHeight(renderer.getYSpacing());
-                    spriteImage1.setPreserveRatio(false);
-                    spriteImage1.setSmooth(true);
-                    sortableBlockadeInstance.setSprite(spriteImage1);
+                    Images.setSpriteProperties(sortableBlockadeInstance, Images.sortableImage1);
                     SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
                     if (blockade != null) {
                         renderer.drawInitialEntity(blockade);
-                        //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
                     }
                 }
             }

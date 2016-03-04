@@ -2,13 +2,13 @@ package sceneElements;
 
 import core.BaseSpawner;
 import core.CoreEngine;
-import core.GameInterface;
 import core.GameRunTime;
-import core.Renderer;
 import core.UnitSpawner;
 import entity.Entity;
 import entity.Unit;
 import graph.GraphNode;
+import gui.GameInterface;
+import gui.Renderer;
 import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

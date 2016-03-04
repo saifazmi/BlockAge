@@ -1,5 +1,7 @@
-package core;
+package gui;
 
+import core.BaseSpawner;
+import core.GameRunTime;
 import entity.Entity;
 import entity.Unit;
 import graph.Graph;
