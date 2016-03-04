@@ -310,22 +310,16 @@ public class Unit extends Entity {
 
     public void showTransition(boolean route, boolean show) {
         SequentialTransition currentTrans = this.getVisualTransition();
-        if (currentTrans == null && this.getRoute() != null && show)
-        {
-            if(route)
-            {
+        if (currentTrans == null && this.getRoute() != null && show) {
+            if (route) {
                 SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
                 this.setVisualTransition(transition);
                 transition.play();
-            }
-            else
-            {
+            } else {
                 this.setVisualTransition(renderer.produceAlgoRouteVisual(this));
                 this.getVisualTransition().play();
             }
-        }
-        else if (currentTrans != null && !show)
-        {
+        } else if (currentTrans != null && !show) {
             currentTrans.stop();
             ObservableList<Animation> transitions = currentTrans.getChildren();
 

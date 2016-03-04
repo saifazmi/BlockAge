@@ -119,8 +119,7 @@ public class MainMenu implements Menu {
         mainMenuScene = new Scene(mainMenuGroup, Menu.WIDTH, Menu.HEIGHT);
     }
 
-    private double xPos(Image image)
-    {
+    private double xPos(Image image) {
         return Menu.WIDTH / 5 - image.getWidth() / 2;
     }
 

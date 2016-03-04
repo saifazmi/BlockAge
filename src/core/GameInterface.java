@@ -1,7 +1,5 @@
 package core;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -177,6 +175,7 @@ public class GameInterface {
 
     /**
      * Handles the blockades appropriately
+     *
      * @param button - the button to be handled
      * @param text   - the text the label will have
      */

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public class Blockade extends Entity {
     private static final Logger LOG = Logger.getLogger(Blockade.class.getName());
-    private boolean breakable;
+    protected boolean breakable;
 
     /**
      * Constructor
@@ -69,7 +69,7 @@ public class Blockade extends Entity {
      *
      * @param breakable the boolean to set breakable to
      */
-    public void setBreakable(boolean breakable) {
+    protected void setBreakable(boolean breakable) {
         this.breakable = breakable;
     }
 
@@ -99,6 +99,7 @@ public class Blockade extends Entity {
 
     /**
      * Calculates the graphnode representation of a mouse click
+     *
      * @param e the mouse event ot be considered
      * @return the graphnode created
      */
@@ -120,6 +121,7 @@ public class Blockade extends Entity {
 
     /**
      * Method for creating blockade in random GraphNode
+     *
      * @param blockadeInstance the blockade information to be created
      * @return blockade the blockade created
      **/
@@ -145,8 +147,7 @@ public class Blockade extends Entity {
         return max + 1;
     }
 
-    private static Blockade placeBlockade(Blockade blockadeInstance, GraphNode node)
-    {
+    private static Blockade placeBlockade(Blockade blockadeInstance, GraphNode node) {
         if (node != null && !node.equals(new GraphNode(0, 0))) {
             Blockade blockade = new Blockade(calcId(), blockadeInstance.getName(), node, blockadeInstance.getSprite());
             if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {

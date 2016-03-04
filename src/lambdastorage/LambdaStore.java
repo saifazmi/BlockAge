@@ -21,10 +21,8 @@ public class LambdaStore {
     private static final Logger LOG = Logger.getLogger(LambdaStore.class.getName());
     private static LambdaStore instance = null;
 
-    public static LambdaStore Instance()
-    {
-        if(instance == null)
-        {
+    public static LambdaStore Instance() {
+        if (instance == null) {
             instance = new LambdaStore();
         }
         return instance;
@@ -43,8 +41,7 @@ public class LambdaStore {
         return sceneClickPlaceUnbreakableBlockade;
     }
 
-    public void setBlockadeClickEvent()
-    {
+    public void setBlockadeClickEvent() {
         if (scene.getOnMouseClicked() != null && scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade())) {
             scene.setOnMouseClicked(null);
         } else {

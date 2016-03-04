@@ -2,7 +2,11 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author : First created by Hung Hoang with code by Hung Hoang
@@ -32,7 +36,7 @@ public class BreadthFirstSearch {
         while (!frontier.isEmpty()) {
 
             current = frontier.poll();
-            if (!visited.contains(current) && current.getBlockade() == null) {
+            if (!visited.contains(current) && (current.getBlockade() == null || current.getBlockade().isBreakable())) {
 
                 if (current.equals(endNode)) {
 
@@ -44,12 +48,9 @@ public class BreadthFirstSearch {
                     }
 
                     Collections.reverse(path);
-                    if(visit)
-                    {
+                    if (visit) {
                         return visited;
-                    }
-                    else
-                    {
+                    } else {
                         return path;
                     }
                 } else {

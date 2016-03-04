@@ -2,7 +2,11 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by hung on 06/02/16.
@@ -30,7 +34,7 @@ public class DepthFirstSearch {
         while (!frontier.isEmpty()) {
             current = frontier.pop();
 
-            if (!visited.contains(current) && current.getBlockade() == null) {
+            if (!visited.contains(current) && (current.getBlockade() == null || current.getBlockade().isBreakable())) {
 
                 if (current.equals(endNode)) {
                     while (possiblePath.keySet().contains(current)) {
@@ -40,12 +44,9 @@ public class DepthFirstSearch {
                     }
 
                     Collections.reverse(path);
-                    if(visit)
-                    {
+                    if (visit) {
                         return visited;
-                    }
-                    else
-                    {
+                    } else {
                         return path;
                     }
                 } else {

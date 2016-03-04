@@ -4,9 +4,6 @@ import entity.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-
 /**
  * @author : First created by Dominic Walters with code by Dominic Walters
  * @date : 05/02/16, last edited by Dominic Walters on 05/02/16

@@ -3,7 +3,6 @@ package core;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
@@ -29,8 +28,7 @@ public class GameRunTime {
     private SpriteImage lastClicked = null;
 
     public static GameRunTime Instance() {
-        if(instance == null)
-        {
+        if (instance == null) {
             instance = new GameRunTime();
         }
         return instance;
@@ -75,6 +73,7 @@ public class GameRunTime {
 
     /**
      * Returns the main game scene where the game will be played
+     *
      * @return - the main game scene
      */
     public Scene getScene() {
@@ -84,6 +83,7 @@ public class GameRunTime {
     public void startGame() {
         new BaseSpawner();
     }
+
     // to notify the placement of the base
     public void setBasePlaced(boolean basePlaced) {
         this.basePlaced = basePlaced;
@@ -93,7 +93,11 @@ public class GameRunTime {
         return basePlaced;
     }
 
-    public SpriteImage getLastClicked() { return lastClicked; }
+    public SpriteImage getLastClicked() {
+        return lastClicked;
+    }
 
-    public void setLastClicked(SpriteImage lastClicked) { this.lastClicked = lastClicked; }
+    public void setLastClicked(SpriteImage lastClicked) {
+        this.lastClicked = lastClicked;
+    }
 }

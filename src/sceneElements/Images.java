@@ -57,8 +57,7 @@ public class Images {
     public static final Image backMainImage = new Image(SEPARATOR + "sprites" + SEPARATOR + "quit_button.png");
     public static final Image backMainImageHovered = new Image(SEPARATOR + "sprites" + SEPARATOR + "quit_button_hovered.png");
 
-    public static void setSpriteProperties(Entity entity, Image image)
-    {
+    public static void setSpriteProperties(Entity entity, Image image) {
         SpriteImage spriteImage = new SpriteImage(image, entity);
         spriteImage.setFitWidth(renderer.getXSpacing());
         spriteImage.setFitHeight(renderer.getYSpacing());

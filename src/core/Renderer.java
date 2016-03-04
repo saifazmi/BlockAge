@@ -19,7 +19,6 @@ import searches.DepthFirstSearch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * @author : First created by Dominic Walters with code by Dominic Walters
@@ -36,8 +35,7 @@ public class Renderer extends Group {
     private static Renderer instance = null;
 
     public static Renderer Instance() {
-        if(instance == null)
-        {
+        if (instance == null) {
             instance = new Renderer();
         }
         return instance;
@@ -77,6 +75,7 @@ public class Renderer extends Group {
         success = drawLines(xSpacing, ySpacing, pixelWidth, pixelHeight, width, height);
         return success;
     }
+
     /**
      * Creates the grid lines and adds them to the renderer.
      *
@@ -101,6 +100,7 @@ public class Renderer extends Group {
         }
         return true;
     }
+
     /**
      * Calculates the spacing needed for the grid to fit the space it has been granted.
      *
@@ -131,6 +131,7 @@ public class Renderer extends Group {
         returnList.add(pixelHeight);
         spacingOutput = returnList;
     }
+
     /**
      * Draws an entity before it starts to move.
      *
@@ -210,8 +211,7 @@ public class Renderer extends Group {
     public SequentialTransition produceAlgoRouteVisual(Unit unit) {
         SequentialTransition trans = new SequentialTransition();
         List<Line> lines = produceAlgoRoute(unit);
-        for (Line line : lines)
-        {
+        for (Line line : lines) {
             this.getChildren().add(line);
             line.setOpacity(0.0);
             FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
@@ -220,28 +220,21 @@ public class Renderer extends Group {
         return trans;
     }
 
-    private List<Line> produceAlgoRoute(Unit unit)
-    {
+    private List<Line> produceAlgoRoute(Unit unit) {
         List<Line> lines = new ArrayList<>();
         List<GraphNode> visitedNodes = null;
-        if(unit.getSearch() == Unit.Search.BFS)
-        {
+        if (unit.getSearch() == Unit.Search.BFS) {
             visitedNodes = BreadthFirstSearch.findPathFrom(unit.getPosition(), BaseSpawner.Instance().getGoal(), true);
-        }
-        else if (unit.getSearch() == Unit.Search.DFS)
-        {
+        } else if (unit.getSearch() == Unit.Search.DFS) {
             visitedNodes = DepthFirstSearch.findPathFrom(unit.getPosition(), BaseSpawner.Instance().getGoal(), true);
-        }
-        else if (unit.getSearch() == Unit.Search.A_STAR)
-        {
+        } else if (unit.getSearch() == Unit.Search.A_STAR) {
             visitedNodes = null;
         }
 
         List<GraphNode> drawn = new ArrayList<>();
         drawn.add(visitedNodes.remove(0));
 
-        for(GraphNode node : visitedNodes)
-        {
+        for (GraphNode node : visitedNodes) {
             GraphNode drawTo = nodeToDrawTo(node, drawn);
             drawn.add(node);
             Line line = new Line(this.xSpacing / 2 + node.getX() * xSpacing,
@@ -253,15 +246,12 @@ public class Renderer extends Group {
         return lines;
     }
 
-    private GraphNode nodeToDrawTo(GraphNode from, List<GraphNode> drawn)
-    {
+    private GraphNode nodeToDrawTo(GraphNode from, List<GraphNode> drawn) {
         List<GraphNode> successors = from.getSuccessors();
         int min = Integer.MAX_VALUE;
-        for(GraphNode node : successors)
-        {
+        for (GraphNode node : successors) {
             int temp = drawn.indexOf(node);
-            if(temp != -1 && temp != Integer.MAX_VALUE && temp < min)
-            {
+            if (temp != -1 && temp != Integer.MAX_VALUE && temp < min) {
                 min = temp;
             }
         }

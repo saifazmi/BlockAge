@@ -2,11 +2,13 @@ package core;
 
 import entity.Base;
 import entity.Blockade;
+import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
 import javafx.scene.image.Image;
-import sceneElements.Images;
 import sceneElements.ElementsHandler;
+import sceneElements.Images;
+import sceneElements.SpriteImage;
 
 import java.util.Random;
 import java.util.logging.Logger;
@@ -32,9 +34,8 @@ public class BaseSpawner {
     }
 
     public BaseSpawner() {
+
         instance = this;
-        spawnBlockades(100);
-        System.out.println("Spawned all the blockades");
         runTime.getScene().setOnMouseClicked(e -> {
             goal = Blockade.calcGraphNode(e);
             Base base = new Base(9999, "Base", goal, null);
@@ -43,8 +44,46 @@ public class BaseSpawner {
             renderer.drawInitialEntity(base);
             goal.setBase(base);
             runTime.setBasePlaced(true);
+            protectBase(goal);
+            spawnBlockades(100);
             runTime.getScene().setOnMouseClicked(null);
         });
+
+    }
+
+    private void protectBase(GraphNode base) {
+
+        int row = base.getX();
+        int col = base.getY();
+
+        for (int i = (row - 1); i <= (row + 1); i++) {
+
+            for (int j = (col - 1); j <= (col + 1); j++) {
+
+                // coordinate should be on grid and not the same as the base
+                if (isOnGrid(base) && !(i == row && j == col)) {
+
+                    SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(i, j), null, null);
+                    Image image1 = new Image(Images.SEPARATOR + "sprites" + Images.SEPARATOR + "sortable_blockage_button.png", 55, 55, false, false);
+                    SpriteImage spriteImage1 = new SpriteImage(image1, sortableBlockadeInstance);
+                    spriteImage1.setFitWidth(renderer.getXSpacing());
+                    spriteImage1.setFitHeight(renderer.getYSpacing());
+                    spriteImage1.setPreserveRatio(false);
+                    spriteImage1.setSmooth(true);
+                    sortableBlockadeInstance.setSprite(spriteImage1);
+                    SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
+                    if (blockade != null) {
+                        renderer.drawInitialEntity(blockade);
+                        //LOG.log(Level.INFO, "Blockade created at: (x, " + blockade.getPosition().getX() + "), (y, " + blockade.getPosition().getY() + ")");
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isOnGrid(GraphNode position) {
+        return !((position.getX() < 0 || position.getY() < 0) ||
+                (position.getX() >= Graph.WIDTH || position.getY() >= Graph.HEIGHT));
     }
 
     public GraphNode getGoal() {

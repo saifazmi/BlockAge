@@ -10,8 +10,6 @@ import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 import sceneElements.Images;
 
-import java.io.File;
-
 /**
  * @author : First created by Paul Popa with code by Paul Popa
  * @date : 09/02/16, last edited by Paul Popa on 12/02/16
