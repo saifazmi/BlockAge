@@ -85,7 +85,7 @@ public class CoreEngine {
         running = true;
         startTime = System.nanoTime();
         // added for sound
-        SoundManager.Instance().startSoundtrack();
+        //SoundManager.Instance().startSoundtrack();
         //
 
         // @TODO in case it's not running
