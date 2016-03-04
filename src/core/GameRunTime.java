@@ -1,11 +1,15 @@
 package core;
 
+import gui.CoreGUI;
+import gui.Renderer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import sceneElements.ElementsHandler;
+import sceneElements.SpriteImage;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -14,16 +18,16 @@ import java.util.logging.Logger;
  */
 public class GameRunTime {
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
-
-    private Renderer renderer;
     private CoreEngine engine;
     private boolean basePlaced = false;
-
-    static Scene mainGameScene = null;
-
-    private static GameRunTime instance;
+    private static Scene mainGameScene = null;
+    private static GameRunTime instance = null;
+    private SpriteImage lastClicked = null;
 
     public static GameRunTime Instance() {
+        if (instance == null) {
+            instance = new GameRunTime();
+        }
         return instance;
     }
 
@@ -46,31 +50,21 @@ public class GameRunTime {
                 e.printStackTrace();
             }
         }
-        declareElements();
-        this.renderer = new Renderer(mainGameScene);
-        rendererSpecificInit();
-    }
-
-    public void declareElements() {
         Pane mainGamePane = new BorderPane();
-        Group mainGame = new Group(mainGamePane);
-        mainGameScene = new Scene(mainGame, CoreGUI.Instance().getWIDTH(), CoreGUI.Instance().getHEIGHT());
-        mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
-    }
 
-    /**
-     * Renderer specific initialisation that isn't necessary and could be partially removed.
-     */
-    private void rendererSpecificInit() {
-        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
-        {
-            this.renderer.redraw();
-        });
-        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) ->
-        {
-            this.renderer.redraw();
-        });
-        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(this.renderer);
+        mainGamePane = new BorderPane();
+        mainGamePane.setPrefWidth(CoreGUI.getWIDTH() - 324);
+        mainGamePane.setPrefHeight(CoreGUI.getHEIGHT());
+
+        String SEPARATOR = File.separator;
+        //BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "background" + SEPARATOR + "Main.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
+        //mainGamePane.setBackground(new Background(myBI));
+
+        Group mainGame = new Group(mainGamePane);
+        mainGameScene = new Scene(mainGame, CoreGUI.getWIDTH(), CoreGUI.getHEIGHT());
+        mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
+        new Renderer();
+        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(Renderer.Instance());
     }
 
     /**
@@ -78,12 +72,12 @@ public class GameRunTime {
      *
      * @return - the main game scene
      */
-    public static Scene getScene() {
+    public Scene getScene() {
         return mainGameScene;
     }
 
     public void startGame() {
-        BaseSpawner baseSpawner = new BaseSpawner();
+        new BaseSpawner();
     }
 
     // to notify the placement of the base
@@ -93,5 +87,13 @@ public class GameRunTime {
 
     public boolean isBasePlaced() {
         return basePlaced;
+    }
+
+    public SpriteImage getLastClicked() {
+        return lastClicked;
+    }
+
+    public void setLastClicked(SpriteImage lastClicked) {
+        this.lastClicked = lastClicked;
     }
 }

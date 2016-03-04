@@ -71,7 +71,7 @@ public class AStar {
 
             visited.add(n);
             for (GraphNode s : n.getSuccessors()) {
-                if (!visited.contains(s) && s.getBlockade() == null) {
+                if (!visited.contains(s) && (s.getBlockade() == null || s.getBlockade().isBreakable())) {
                     int cost = D.get(n) + distance(n, s);
                     if (!pending.contains(s) || cost < D.get(s)) {
                         pred.put(s, n);

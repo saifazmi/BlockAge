@@ -1,8 +1,8 @@
 package entity;
 
-import core.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import gui.Renderer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
@@ -51,18 +51,9 @@ public class Unit extends Entity {
     private GraphNode goal;
     private Search search;
     private Sort sort;
-    private boolean changingRoute = true;
 
     private GraphNode nextNode;
     private boolean completedMove = true;
-    /*
-        Inherited parameters
-            protected final int id;
-            protected String name;
-            protected String description;
-            protected GraphNode position;
-            protected SpriteImage sprite;
-     */
 
     /**
      * Constructor for Unit used by UnitSpawner
@@ -187,7 +178,6 @@ public class Unit extends Entity {
      *
      * @param position the position to be checked
      * @return whether the position has a block
-     * //@TODO comment on removing, adding units
      */
     private boolean blockCheck(GraphNode position) {
 
@@ -195,10 +185,8 @@ public class Unit extends Entity {
             this.getPosition().getUnits().remove(this);
             position.getUnits().add(this);
             this.setPosition(position);
-
             return true;
         }
-        this.changingRoute = true;
         return false;
     }
 
@@ -224,19 +212,32 @@ public class Unit extends Entity {
                 int y = this.nextNode.getY();
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
-                //if (xChange + yChange > 1 || xChange + yChange < -1) {
-                //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
-                //           "Fatal error, check search implementation: " + this.search.toString());
-                //   return;
-                //}
                 if (logicalMove(xChange, yChange)) {
-                    double nextPixelX = x * this.renderer.getXSpacing();
-                    double nextPixelY = y * this.renderer.getYSpacing();
+                    double nextPixelX = x * renderer.getXSpacing();
+                    double nextPixelY = y * renderer.getYSpacing();
 
                     TranslateTransition transition = new TranslateTransition(SPEED, sprite);
                     transition.setToX(nextPixelX);
                     transition.setToY(nextPixelY);
                     transition.setOnFinished(e -> this.completedMove = true);
+                    double rotate = 0;
+                    if(xChange == 1)
+                    {
+                        rotate = 270;
+                    }
+                    else if (xChange == -1)
+                    {
+                        rotate = 90;
+                    }
+                    if(yChange == 1)
+                    {
+                        rotate = 0;
+                    }
+                    else if(yChange == -1)
+                    {
+                        rotate = 180;
+                    }
+                    this.getSprite().setRotate(rotate);
                     transition.play();
                 } else {
                     decideRoute();
@@ -277,18 +278,14 @@ public class Unit extends Entity {
     private void decideRoute() {
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
         if (search == Search.DFS) {
-            //System.out.println("using dfs");
-            route = DepthFirstSearch.findPathFrom(getPosition(), this.goal);
+            route = DepthFirstSearch.findPathFrom(getPosition(), this.goal, false);
         } else if (search == Search.BFS) {
-            //System.out.println("using bfs");
-            route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal);
+            route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal, false);
         } else {
-            //System.out.println("using astar");
             route = AStar.search(getPosition(), this.goal);
         }
         System.out.println(route);
     }
-
 
     /**
      * Gets the search algorithm being used by this unit
@@ -324,13 +321,18 @@ public class Unit extends Entity {
         this.visualTransition = visualTransition;
     }
 
-    public void showTransition() {
+    public void showTransition(boolean route, boolean show) {
         SequentialTransition currentTrans = this.getVisualTransition();
-        if (currentTrans == null && this.getRoute() != null) {
-            SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
-            this.setVisualTransition(transition);
-            transition.play();
-        } else if (currentTrans != null) {
+        if (currentTrans == null && this.getRoute() != null && show) {
+            if (route) {
+                SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
+                this.setVisualTransition(transition);
+                transition.play();
+            } else {
+                this.setVisualTransition(renderer.produceAlgoRouteVisual(this));
+                this.getVisualTransition().play();
+            }
+        } else if (currentTrans != null && !show) {
             currentTrans.stop();
             ObservableList<Animation> transitions = currentTrans.getChildren();
 
@@ -340,25 +342,7 @@ public class Unit extends Entity {
                 Line line = (Line) trans.getNode();
                 line.setOpacity(0.0);
             }
-
             this.setVisualTransition(null);
         }
     }
-//    public void showTransition2() {
-//        SequentialTransition transition = null;
-//        if(search == Search.BFS)
-//        {
-//            BreadthFirstSearch.findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
-//            transition = renderer.produceRouteVisual(renderer.produceRoute(BreadthFirstSearch.Instance().returnVisited(), this.getPosition()));
-//        } else if(search == Search.DFS)
-//        {
-//            DepthFirstSearch.Instance().findPathFrom(this.position, this.getRoute().get(this.getRoute().size()-1));
-//            transition = renderer.produceRouteVisual(renderer.produceRoute(DepthFirstSearch.Instance().returnVisited(), this.getPosition()));
-//        } else if(search == Search.A_STAR)
-//        {
-//            transition = renderer.produceRouteVisual(renderer.produceRoute(AStar.search(this.position, this.getRoute().get(this.getRoute().size()-1)), this.getPosition()));
-//        }
-//            this.setVisualTransition(transition);
-//            transition.play();
-//    }
 }
