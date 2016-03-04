@@ -1,17 +1,13 @@
 package core;
 
 import entity.Base;
-import entity.Blockade;
 import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
 import java.io.File;
-import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -71,8 +67,8 @@ public class BaseSpawner {
                 //LOG.log(Level.INFO, "Base created at: (x, " + base.getPosition().getX() + "), (y, " + base.getPosition().getY() + ")");
                 renderer.drawInitialEntity(base);
                 //place sortable blockades
-                protectBase(base);
                 goal.setBase(base);
+                protectBase(goal);
 
                 GameRunTime.Instance().setBasePlaced(true);
 
@@ -107,19 +103,19 @@ public class BaseSpawner {
 
     }
 
-    private void protectBase(Base base) {
+    private void protectBase(GraphNode base) {
 
-        int row = base.getPosition().getY();
-        int col = base.getPosition().getX();
+        int row = base.getX();
+        int col = base.getY();
 
         for (int i = (row - 1); i <= (row + 1); i++) {
 
             for (int j = (col - 1); j <= (col + 1); j++) {
 
                 // coordinate should be on grid and not the same as the base
-                if (isOnGrid(base.getPosition()) && !(i == row && j == col)) {
+                if (isOnGrid(base) && !(i == row && j == col)) {
 
-                    SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(row,col), null, null);
+                    SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(i, j), null, null);
                     Image image1 = new Image(SEPARATOR + "sprites" + SEPARATOR + "sortable_blockage_button.png", 55, 55, false, false);
                     SpriteImage spriteImage1 = new SpriteImage(image1, sortableBlockadeInstance);
                     spriteImage1.setFitWidth(renderer.getXSpacing());

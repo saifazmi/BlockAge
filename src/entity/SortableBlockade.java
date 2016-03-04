@@ -2,10 +2,10 @@ package entity;
 
 import core.CoreEngine;
 import graph.GraphNode;
-import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -24,11 +24,7 @@ public class SortableBlockade extends Blockade {
     public SortableBlockade(int id, String name, GraphNode position, SpriteImage sprite, int[] toSortArray) {
         super(id, name, position, sprite);
         this.toSortArray = toSortArray;
-    }
-
-    public SortableBlockade(int id, String name, String description, GraphNode position, SpriteImage sprite, int[] toSortArray) {
-        super(id, name, description, position, sprite);
-        this.toSortArray = toSortArray;
+        setBreakable(true);
     }
 
     public static SortableBlockade create(SortableBlockade sortableBlockadeInstance) {
@@ -51,8 +47,22 @@ public class SortableBlockade extends Blockade {
         for (int i = 0; i < SORT_ELEMENT_QTY; i++) {
             toSortArr[i] = generator.nextInt(SORT_ELEMENT_QTY);
         }
-
+        LOG.log(Level.INFO, arrayToString(toSortArr));
         return toSortArr;
+    }
+
+    private static String arrayToString(int[] array) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("ARRAY = [");
+
+        for (int a : array) {
+            sb.append(Integer.toString(a));
+            sb.append(";");
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 
     public int[] getToSortArray() {

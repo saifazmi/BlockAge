@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public class Blockade extends Entity {
     private static final Logger LOG = Logger.getLogger(Blockade.class.getName());
-    private boolean breakable;
+    protected boolean breakable;
 
     /**
      * Constructor
@@ -69,7 +69,7 @@ public class Blockade extends Entity {
      *
      * @param breakable the boolean to set breakable to
      */
-    public void setBreakable(boolean breakable) {
+    protected void setBreakable(boolean breakable) {
         this.breakable = breakable;
     }
 
