@@ -64,7 +64,7 @@ public class BaseSpawner {
                 if (isOnGrid(base) && !(i == row && j == col)) {
 
                     SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(i, j), null, null);
-                    Image image1 = new Image(Images.SEPARATOR + "sprites" + Images.SEPARATOR + "sortable_blockage_button.png", 55, 55, false, false);
+                    Image image1 = new Image(Images.SEPARATOR + "sprites" + Images.SEPARATOR + "entities" + Images.SEPARATOR + "blockades" + Images.SEPARATOR + "Blockade_Sortable.png", 55, 55, false, false);
                     SpriteImage spriteImage1 = new SpriteImage(image1, sortableBlockadeInstance);
                     spriteImage1.setFitWidth(renderer.getXSpacing());
                     spriteImage1.setFitHeight(renderer.getYSpacing());
