@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lambdastorage.LambdaStore;
+import maps.MapEditorInterface;
 import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
@@ -183,6 +184,10 @@ public class ElementsHandler {
         if (event.getSource() == MainMenu.mapEditorButton)
         {
             MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
+        }
+        if (event.getSource() == MapEditorInterface.saveButton)
+        {
+
         }
     }
 

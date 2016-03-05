@@ -60,8 +60,8 @@ public class MainMenu implements Menu {
         optionsImageHovered = Images.optionsImageHovered;
         exitImage = Images.exitImage;
         exitImageHovered = Images.exitImageHovered;
-        mapEditorImage = Images.blockadeImage;
-        mapEditorHovered = Images.sortableImage1;
+        mapEditorImage = Images.mapEditorImage;
+        mapEditorHovered = Images.mapEditorImageHovered;
     }
 
     /**
@@ -119,7 +119,7 @@ public class MainMenu implements Menu {
         ft.play();
         ft.setOnFinished(e -> ft.play());
 
-        mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton, fadingPane);
+        mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton, fadingPane, mapEditorButton);
 
         Group mainMenuGroup = new Group(mainMenuPane);
         BackgroundImage myBI = new BackgroundImage(Images.backgroundMainMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);

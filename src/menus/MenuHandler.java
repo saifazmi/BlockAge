@@ -3,6 +3,7 @@ package menus;
 import core.GameRunTime;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import maps.MapEditor;
 
 /**
  * Handles the menus so that we can easily switch through them

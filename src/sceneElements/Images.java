@@ -45,6 +45,8 @@ public class Images {
     public static final Image exitImageHovered = new Image(sprites + buttons + "Quit_Hover.png");
     public static final Image unsortableImage2 = new Image(sprites + entities + blockades + "Blockade_UnSortable.png", 55, 55, false, true);
     public static final Image sortableImage2 = new Image(sprites + entities + blockades + "Blockade_Sortable.png", 55, 55, false, true);
+    public static final Image mapEditorImage = new Image(sprites + buttons + "MapEditor.png");
+    public static final Image mapEditorImageHovered = new Image(sprites + buttons + "MapEditor_Hover.png");
     //background images
     public static final Image backgroundMainMenu = new Image(sprites + backgrounds + "MainMenu_Idle.png");
     public static final Image backgroundMainMenuGlow = new Image(sprites + backgrounds + "MainMenu_Glow.png");
@@ -64,6 +66,9 @@ public class Images {
     public static final Image backGameImageHovered = new Image(sprites + buttons + "ResumeGame_Hover.png");
     public static final Image backMainImage = new Image(sprites + buttons + "Quit_Idle.png");
     public static final Image backMainImageHovered = new Image(sprites + buttons + "Quit_Hover.png");
+    // map editor
+    public static final Image saveMapImage = new Image(sprites + buttons + "Save.png");
+    public static final Image backFromEditor = new Image(sprites + buttons + "Back-small.png");
 
     public static void setSpriteProperties(Entity entity, Image image) {
         SpriteImage spriteImage = new SpriteImage(image, entity);
