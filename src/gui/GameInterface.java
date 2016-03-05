@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import lambdastorage.LambdaStore;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.Images;
+import sceneElements.ImageStore;
 
 import java.io.File;
 import java.io.InputStream;
@@ -93,12 +93,12 @@ public class GameInterface {
         sortableButton = new Button();
         b = new ButtonProperties();
         //Images
-        playImage = Images.playImage;
-        playImageHovered = Images.playImageHovered;
-        pauseImage = Images.pauseImage;
-        pauseImageHovered = Images.pauseImageHovered;
-        unsortableImage = Images.unsortableImage2;
-        sortableImage = Images.sortableImage2;
+        playImage = ImageStore.playImage;
+        playImageHovered = ImageStore.playImageHovered;
+        pauseImage = ImageStore.pauseImage;
+        pauseImageHovered = ImageStore.pauseImageHovered;
+        unsortableImage = ImageStore.unsortableImage2;
+        sortableImage = ImageStore.sortableImage2;
 
     }
 
