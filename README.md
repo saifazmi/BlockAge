@@ -15,7 +15,7 @@ Knows Bugs
 ----------
 #### Base Spawner
 - ~~Base can be placed anywhere (on blockades, off of grid etc)~~
-- Base defence rendering outside the grid in edge cases.
+- ~~Base defence rendering outside the grid in edge cases.~~
 
 #### Breadth First Search
 - ~~Occasionally can't find a route even though routes are possible.~~
