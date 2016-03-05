@@ -4,14 +4,15 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.net.URL;
 
 /**
  * Created by hung on 01/03/16.
  */
 public class SoundManager {
-
-    private final String AUDIO_RESOURES = "/resources/audio/";
+    private final String SEPARATOR = File.separator;
+    private final String AUDIO_RESOURES = SEPARATOR + "resources" + SEPARATOR + "audio" + SEPARATOR;
 
     private CircularBufferNode<MediaPlayer> soundtracks[];
     private CircularBufferNode<MediaPlayer> currentMPointer;

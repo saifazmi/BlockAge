@@ -52,7 +52,7 @@ public class GameInterface {
      * Loads the font for labels/buttons
      */
     public void loadFont() {
-        InputStream fontStream = GameInterface.class.getResourceAsStream("" + SEPARATOR + "resources/fonts" + SEPARATOR + "Bellota-Bold.otf");
+        InputStream fontStream = GameInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "Bellota-Bold.otf");
         if (fontStream == null) {
             System.out.println("No font at that path");
         }
