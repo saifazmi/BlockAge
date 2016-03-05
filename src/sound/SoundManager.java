@@ -4,7 +4,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.net.URL;
 
 /**
@@ -12,7 +11,7 @@ import java.net.URL;
  */
 public class SoundManager {
 
-    private static String SEPARATOR = File.separator;
+    private final String AUDIO_RESOURES = "/resources/audio/";
 
     private CircularBufferNode<MediaPlayer> soundtracks[];
     private CircularBufferNode<MediaPlayer> currentMPointer;
@@ -27,7 +26,7 @@ public class SoundManager {
     }
 
     public SoundManager() {
-        URL soundPaths[] = {getClass().getResource("Spell.mp3"), getClass().getResource("a_ninja_among_culturachippers.mp3")};
+        URL soundPaths[] = {getClass().getResource(AUDIO_RESOURES + "Spell.mp3"), getClass().getResource(AUDIO_RESOURES + "a_ninja_among_culturachippers.mp3")};
 
         soundtracks = new CircularBufferNode[2];
 
