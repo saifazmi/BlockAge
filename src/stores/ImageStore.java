@@ -1,8 +1,9 @@
-package sceneElements;
+package stores;
 
 import entity.Entity;
 import gui.Renderer;
 import javafx.scene.image.Image;
+import sceneElements.SpriteImage;
 
 import java.io.File;
 

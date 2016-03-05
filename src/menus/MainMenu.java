@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.ImageStore;
+import stores.ImageStore;
 
 /**
  * @author : First created by Paul Popa with code by Evgeniy Kim, and Paul Popa

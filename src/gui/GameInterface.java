@@ -15,10 +15,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import lambdastorage.LambdaStore;
+import stores.LambdaStore;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.ImageStore;
+import stores.ImageStore;
 
 import java.io.File;
 import java.io.InputStream;

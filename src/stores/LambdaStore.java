@@ -1,4 +1,4 @@
-package lambdastorage;
+package stores;
 
 import core.GameRunTime;
 import entity.Blockade;
@@ -7,7 +7,6 @@ import gui.Renderer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import sceneElements.ImageStore;
 
 import java.util.logging.Logger;
 
