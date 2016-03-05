@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.ImageStore;
+import stores.ImageStore;
 import sceneElements.LabelProperties;
 
 /**

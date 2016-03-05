@@ -9,7 +9,7 @@ import gui.Renderer;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
-import sceneElements.ImageStore;
+import stores.ImageStore;
 import sceneElements.SpriteImage;
 
 import java.util.ArrayList;

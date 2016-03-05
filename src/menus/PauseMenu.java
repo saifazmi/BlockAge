@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.ImageStore;
+import stores.ImageStore;
 
 /**
  * @author : First created by Paul Popa with code by Paul Popa

@@ -8,7 +8,7 @@ import graph.GraphNode;
 import gui.Renderer;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
-import sceneElements.ImageStore;
+import stores.ImageStore;
 
 import java.util.Random;
 import java.util.logging.Logger;
