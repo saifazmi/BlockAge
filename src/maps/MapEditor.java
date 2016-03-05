@@ -25,6 +25,8 @@ public class MapEditor implements Menu {
     private Renderer mapEditorRenderer;
     private Graph mapEditorGraph;
 
+    private MapEditorInterface mapEditorInterface;
+
     // General Map Editor manager for scene, renderer and events
     public MapEditor()
     {
@@ -39,7 +41,7 @@ public class MapEditor implements Menu {
         Group mapEditor = new Group(mapEditorPane);
         mapEditorScene = new Scene(mapEditor, CoreGUI.getWIDTH(),CoreGUI.getHEIGHT());
         ((BorderPane) ((Group) mapEditorScene.getRoot()).getChildren().get(0)).setCenter(mapEditorRenderer);
-        new MapEditorInterface(mapEditorScene);
+        mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
     }
 
@@ -58,6 +60,11 @@ public class MapEditor implements Menu {
         }
     }
 
+    public Graph getGraph()
+    {
+        return mapEditorGraph;
+    }
+
     // think about erasing blocks as wel
     private final EventHandler<MouseEvent> sceneClickPlaceBlockade = e -> {
         Blockade blockadeInstance = new Blockade(0, "Blockade", new GraphNode(0, 0), null);
@@ -69,6 +76,10 @@ public class MapEditor implements Menu {
         }
     };
 
+    public MapEditorInterface getInterface()
+    {
+        return mapEditorInterface;
+    }
 
     @Override
     public Scene getScene() {

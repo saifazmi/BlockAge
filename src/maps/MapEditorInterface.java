@@ -9,11 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import sceneElements.ButtonProperties;
 import sceneElements.Images;
-import java.io.File;
-import java.io.InputStream;
 
 /**
  * Created by hung on 05/03/16.
@@ -21,17 +18,17 @@ import java.io.InputStream;
 public class MapEditorInterface {
 
     private Scene scene;
-    private static String SEPARATOR = File.separator;
-    private HBox rightMenuSaveBack, rightMenuInstructions;
-    private VBox rightMenu;
+    private HBox rightMenuSaveBack;
+    private VBox rightMenu, rightMenuText;
     public static Button saveButton, backButton;
     private ButtonProperties b;
     private Image saveButtonImage, backButtonImage;
-    private javafx.scene.control.TextArea instructions;
-    EditorParser parser = new EditorParser();
+    private TextArea instructions, fileNameBox;
+    private EditorParser parser;
 
-    public MapEditorInterface(Scene mapEditorScene)
+    public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor)
     {
+        parser = new EditorParser(mapEditor);
         scene = mapEditorScene;
         declareElements();
         rightPane();
@@ -42,18 +39,20 @@ public class MapEditorInterface {
 
         b.setButtonProperties(backButton, "", 0, 0, parser::handle, new ImageView(backButtonImage));
 
-        instructions.setText("Click on rectangle node to create blockades. Press save to save your current configuration or back to cancel.");
-        instructions.setPrefSize(300, 80);
+        instructions.setText("Click on rectangle node to create blockades. Enter the map's name and press save to save your current configuration or back to cancel.");
+        instructions.setPrefSize(300, 60);
         instructions.setEditable(false);
         instructions.setWrapText(true);
 
-        //dunno how spacing works yet
-        rightMenuInstructions.getChildren().add(instructions);
+        fileNameBox.setPrefSize(300, 13);
 
-        rightMenuSaveBack.getChildren().addAll(saveButton,backButton);
+        //dunno how spacing works yet
+        rightMenuText.getChildren().addAll(fileNameBox, instructions);
+
+        rightMenuSaveBack.getChildren().addAll(saveButton, backButton);
         rightMenuSaveBack.setSpacing(0);
 
-        rightMenu.getChildren().addAll(rightMenuSaveBack, rightMenuInstructions);
+        rightMenu.getChildren().addAll(rightMenuSaveBack, rightMenuText);
 
         ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenu);
     }
@@ -61,7 +60,7 @@ public class MapEditorInterface {
     private void declareElements() {
         // HBoxes & VBoxes
         rightMenuSaveBack = new HBox();
-        rightMenuInstructions = new HBox();
+        rightMenuText = new VBox();
         rightMenu = new VBox();
 
         // Images
@@ -72,9 +71,15 @@ public class MapEditorInterface {
         saveButton = new Button();
         backButton = new Button();
 
-        //Labels
+        //Text areas
         instructions = new TextArea();
+        fileNameBox = new TextArea();
 
         b = new ButtonProperties();
+    }
+
+    public String getFileName()
+    {
+        return fileNameBox.getText();
     }
 }
