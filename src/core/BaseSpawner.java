@@ -20,9 +20,9 @@ import java.util.logging.Logger;
 public class BaseSpawner {
 
     private static final Logger LOG = Logger.getLogger(BaseSpawner.class.getName());
+
     private Renderer renderer = Renderer.Instance();
     private GameRunTime runTime = GameRunTime.Instance();
-
     private GraphNode goal;
     private static BaseSpawner instance = null;
 
@@ -63,7 +63,7 @@ public class BaseSpawner {
             for (int j = (col - 1); j <= (col + 1); j++) {
 
                 // coordinate should be on grid and not the same as the base
-                if (isOnGrid(i,j) && !(i == row && j == col)) {
+                if (isOnGrid(i, j) && !(i == row && j == col)) {
 
                     SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(i, j), null, null);
                     ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);

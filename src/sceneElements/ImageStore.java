@@ -12,7 +12,7 @@ import java.io.File;
 public class ImageStore {
     private static final Renderer renderer = Renderer.Instance();
     public static final String SEPARATOR = File.separator;
-    private static final String sprites = SEPARATOR + "sprites" + SEPARATOR;
+    private static final String sprites = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
     private static final String entities = "entities" + SEPARATOR;
     private static final String units = "units" + SEPARATOR;
     private static final String blockades = "blockades" + SEPARATOR;
