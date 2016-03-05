@@ -33,7 +33,6 @@ public class MenuHandler {
      *
      * @param primaryStage - our primary stage
      */
-    //@SuppressWarnings("static-access")
     public MenuHandler(Stage primaryStage) {
         MenuHandler.primaryStage = primaryStage;
         setScenes();
@@ -49,7 +48,7 @@ public class MenuHandler {
     }
 
     public static void setMainGameScene() {
-        sceneList[MAIN_GAME] = GameRunTime.getScene();
+        sceneList[MAIN_GAME] = GameRunTime.Instance().getScene();
     }
 
     /**
