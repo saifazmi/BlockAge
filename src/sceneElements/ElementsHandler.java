@@ -210,14 +210,14 @@ public class ElementsHandler {
 
     public static void pressedToNotPressed(SpriteImage sprite) {
         Image image = sprite.getImage();
-        if (image.equals(Images.imagePressedDemon)) {
-            sprite.setImage(Images.imageDemon);
+        if (image.equals(ImageStore.imagePressedDemon)) {
+            sprite.setImage(ImageStore.imageDemon);
             ((Unit) sprite.getEntity()).showTransition(false, false);
-        } else if (image.equals(Images.imagePressedDk)) {
-            sprite.setImage(Images.imageDk);
+        } else if (image.equals(ImageStore.imagePressedDk)) {
+            sprite.setImage(ImageStore.imageDk);
             ((Unit) sprite.getEntity()).showTransition(false, false);
-        } else if (image.equals(Images.imagePressedBanshee)) {
-            sprite.setImage(Images.imageBanshee);
+        } else if (image.equals(ImageStore.imagePressedBanshee)) {
+            sprite.setImage(ImageStore.imageBanshee);
             ((Unit) sprite.getEntity()).showTransition(false, false);
         }
     }

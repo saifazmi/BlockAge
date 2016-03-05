@@ -9,7 +9,7 @@ import java.io.File;
 /**
  * Created by dominic on 26/02/16.
  */
-public class Images {
+public class ImageStore {
     private static final Renderer renderer = Renderer.Instance();
     public static final String SEPARATOR = File.separator;
     private static final String sprites = SEPARATOR + "sprites" + SEPARATOR;
