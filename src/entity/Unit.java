@@ -220,24 +220,6 @@ public class Unit extends Entity {
                     transition.setToX(nextPixelX);
                     transition.setToY(nextPixelY);
                     transition.setOnFinished(e -> this.completedMove = true);
-                    double rotate = 0;
-                    if(xChange == 1)
-                    {
-                        rotate = 270;
-                    }
-                    else if (xChange == -1)
-                    {
-                        rotate = 90;
-                    }
-                    if(yChange == 1)
-                    {
-                        rotate = 0;
-                    }
-                    else if(yChange == -1)
-                    {
-                        rotate = 180;
-                    }
-                    this.getSprite().setRotate(rotate);
                     transition.play();
                 } else {
                     decideRoute();
@@ -257,20 +239,25 @@ public class Unit extends Entity {
      */
     private boolean logicalMove(int xChange, int yChange) {
         boolean success;
-
+        double rotate;
         if (xChange == 0) {
             if (yChange > 0) {
                 success = moveDown();
+                rotate = 0;
             } else {
                 success = moveUp();
+                rotate = 180;
             }
         } else {
             if (xChange > 0) {
                 success = moveRight();
+                rotate = 270;
             } else {
                 success = moveLeft();
+                rotate = 90;
             }
         }
+        this.getSprite().setRotate(rotate);
         return success;
     }
 
