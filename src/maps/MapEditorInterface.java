@@ -1,16 +1,22 @@
 package maps;
 
+import gui.GameInterface;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import sceneElements.ButtonProperties;
 import sceneElements.Images;
+
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * Created by hung on 05/03/16.
@@ -23,11 +29,16 @@ public class MapEditorInterface {
     public static Button saveButton, backButton;
     private ButtonProperties b;
     private Image saveButtonImage, backButtonImage;
-    private TextArea instructions, fileNameBox;
+    private TextArea instructions, fileNameBox, saveStatus;
+    private Label instructionLabel, saveStatusLabel, fileNameLabel;
     private EditorParser parser;
+    private Font bellotaFont;
+    private String SEPARATOR = File.separator;
+
 
     public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor)
     {
+        loadFont();
         parser = new EditorParser(mapEditor);
         scene = mapEditorScene;
         declareElements();
@@ -44,10 +55,23 @@ public class MapEditorInterface {
         instructions.setEditable(false);
         instructions.setWrapText(true);
 
+        instructionLabel.setFont(bellotaFont);
+        instructionLabel.setText("Instructions");
+
         fileNameBox.setPrefSize(300, 13);
 
+        fileNameLabel.setFont(bellotaFont);
+        fileNameLabel.setText("File Name");
+
+        saveStatus.setPrefSize(300, 13);
+        saveStatus.setEditable(false);
+
+        saveStatusLabel.setFont(bellotaFont);
+        saveStatusLabel.setText("Save Status");
+        saveStatus.setEditable(false);
+
         //dunno how spacing works yet
-        rightMenuText.getChildren().addAll(fileNameBox, instructions);
+        rightMenuText.getChildren().addAll(fileNameLabel, fileNameBox, saveStatusLabel, saveStatus, instructionLabel,instructions);
 
         rightMenuSaveBack.getChildren().addAll(saveButton, backButton);
         rightMenuSaveBack.setSpacing(0);
@@ -74,6 +98,12 @@ public class MapEditorInterface {
         //Text areas
         instructions = new TextArea();
         fileNameBox = new TextArea();
+        saveStatus = new TextArea();
+
+        //Label
+        instructionLabel = new Label();
+        saveStatusLabel = new Label();
+        fileNameLabel = new Label();
 
         b = new ButtonProperties();
     }
@@ -81,5 +111,18 @@ public class MapEditorInterface {
     public String getFileName()
     {
         return fileNameBox.getText();
+    }
+
+    public TextArea getSaveStatusBox()
+    {
+        return saveStatus;
+    }
+
+    private void loadFont() {
+        InputStream fontStream = MapEditorInterface.class.getResourceAsStream("" + SEPARATOR + "fonts" + SEPARATOR + "Bellota-Bold.otf");
+        if (fontStream == null) {
+            System.out.println("No font at that path");
+        }
+        bellotaFont = Font.loadFont(fontStream, 17);
     }
 }

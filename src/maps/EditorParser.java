@@ -9,8 +9,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * Created by hung on 05/03/16.
@@ -50,9 +48,12 @@ public class EditorParser {
         {
             try {
 
+                boolean newDirectory = false;
+
                 File saveDir = new File(SAVE_DIRECTORY);
 
                 if (!saveDir.exists()) {
+                    newDirectory = true;
                     saveDir.mkdir();
                 }
 
@@ -83,13 +84,19 @@ public class EditorParser {
                             }
                         }
                     }
-                    writer.newLine();// work?
+                    writer.newLine();
                 }
 
+                if (newDirectory)
+                {
+                    editor.getInterface().getSaveStatusBox().setText("New directory created at " + SAVE_DIRECTORY + ", map saved: " + fileName);
+                }
+                editor.getInterface().getSaveStatusBox().setText("map saved: " + SAVE_DIRECTORY + fileName);
+
                 writer.close();
+
             } catch (IOException e) {
-                System.out.println("save fail");
-                System.out.println(e.getMessage());
+                editor.getInterface().getSaveStatusBox().setText("Save failed, game error");
                 //notify user
             }
         }
