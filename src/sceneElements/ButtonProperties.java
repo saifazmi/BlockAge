@@ -6,6 +6,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import maps.MapEditorInterface;
 
 /**
  * @author : First created by Paul Popa with code by Paul Popa
@@ -65,6 +66,27 @@ public class ButtonProperties {
         button.setOnMouseExited(event ->
         {
             setButtonProperties(button, "", posX, posY, e -> ElementsHandler.handle(e), new ImageView(hoverImageOut));
+            button.getScene().setCursor(Cursor.DEFAULT);
+        });
+    }
+
+    /**
+     * Adds hover effect as above, but for buttons in the map editor interface
+     * @param button
+     * @param hoverImageIn
+     * @param hoverImageOut
+     */
+    public void addHoverEffect2(Button button, Image hoverImageIn, Image hoverImageOut, double posX, double posY)
+    {
+        button.setOnMousePressed(event -> button.getScene().setCursor(Cursor.DEFAULT));
+        button.setOnMouseEntered(event ->
+        {
+            setButtonProperties(button, "", posX, posY, e -> MapEditorInterface.handle(e), new ImageView(hoverImageIn));
+            button.getScene().setCursor(Cursor.HAND);
+        });
+        button.setOnMouseExited(event ->
+        {
+            setButtonProperties(button, "", posX, posY, e -> MapEditorInterface.handle(e), new ImageView(hoverImageOut));
             button.getScene().setCursor(Cursor.DEFAULT);
         });
     }

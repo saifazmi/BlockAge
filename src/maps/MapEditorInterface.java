@@ -1,6 +1,7 @@
 package maps;
 
 import gui.GameInterface;
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import menus.MenuHandler;
 import sceneElements.ButtonProperties;
 import sceneElements.Images;
 
@@ -28,10 +30,10 @@ public class MapEditorInterface {
     private VBox rightMenu, rightMenuText;
     public static Button saveButton, backButton;
     private ButtonProperties b;
-    private Image saveButtonImage, backButtonImage;
+    private Image saveButtonImage, backButtonImage, saveButtonImageHover, backButtonImageHover;
     private TextArea instructions, fileNameBox, saveStatus;
     private Label instructionLabel, saveStatusLabel, fileNameLabel;
-    private EditorParser parser;
+    private static EditorParser parser;
     private Font bellotaFont;
     private String SEPARATOR = File.separator;
 
@@ -46,9 +48,12 @@ public class MapEditorInterface {
     }
 
     private void rightPane() {
-        b.setButtonProperties(saveButton, "", 0, 0, parser::handle, new ImageView(saveButtonImage));
 
-        b.setButtonProperties(backButton, "", 0, 0, parser::handle, new ImageView(backButtonImage));
+        b.setButtonProperties(saveButton, "", 0, 0, e -> handle(e), new ImageView(saveButtonImage));
+        b.addHoverEffect2(saveButton, saveButtonImageHover, saveButtonImage, 0, 0);
+
+        b.setButtonProperties(backButton, "", 0, 0, e -> handle(e), new ImageView(backButtonImage));
+        b.addHoverEffect2(backButton, backButtonImageHover, backButtonImage, 0, 0);
 
         instructions.setText("Click on rectangle node to create blockades. Enter the map's name and press save to save your current configuration or back to cancel.");
         instructions.setPrefSize(300, 60);
@@ -81,6 +86,17 @@ public class MapEditorInterface {
         ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenu);
     }
 
+    public static void handle(ActionEvent event) {
+        if (event.getSource() == MapEditorInterface.saveButton)
+        {
+            parser.saveToUserFile();
+        }
+        if (event.getSource() == MapEditorInterface.backButton)
+        {
+            MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        }
+    }
+
     private void declareElements() {
         // HBoxes & VBoxes
         rightMenuSaveBack = new HBox();
@@ -89,7 +105,9 @@ public class MapEditorInterface {
 
         // Images
         saveButtonImage = Images.saveMapImage;
+        saveButtonImageHover = Images.saveMapImageHovered;
         backButtonImage = Images.backFromEditor;
+        backButtonImageHover = Images.backFromEditorHovered;
 
         //Buttons
         saveButton = new Button();

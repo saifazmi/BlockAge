@@ -68,7 +68,13 @@ public class Images {
     public static final Image backMainImageHovered = new Image(sprites + buttons + "Quit_Hover.png");
     // map editor
     public static final Image saveMapImage = new Image(sprites + buttons + "Save.png");
+    public static final Image saveMapImageHovered = new Image(sprites + buttons + "Save_Hovered.png");
     public static final Image backFromEditor = new Image(sprites + buttons + "Back-small.png");
+    public static final Image backFromEditorHovered = new Image(sprites + buttons + "Back-small_Hovered.png");
+    public static final Image overwriteYes = new Image(sprites + buttons + "Yes.png");
+    public static final Image overwriteYesHovered = new Image(sprites + buttons + "Yes_Hovered.png");
+    public static final Image overwriteNo = new Image(sprites + buttons + "No.png");
+    public static final Image overwriteNoHovered = new Image(sprites + buttons + "No_Hovered.png");
 
     public static void setSpriteProperties(Entity entity, Image image) {
         SpriteImage spriteImage = new SpriteImage(image, entity);
