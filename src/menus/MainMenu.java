@@ -25,13 +25,13 @@ import sceneElements.Images;
 public class MainMenu implements Menu {
 
 
-    public static Button newGameButton, exitButton, optionsButton, newGameButtonF, exitButtonF, optionsButtonF, mapEditorButton = null;
+    public static Button newGameButton, exitButton, optionsButton, newGameButtonF, exitButtonF, optionsButtonF, mapEditorButton, customMapButton = null;
 
     private Pane mainMenuPane = null;
     private Pane fadingPane = null;
     private Scene mainMenuScene = null;
     private ButtonProperties b = null;
-    private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered, mapEditorImage, mapEditorHovered = null;
+    private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered, mapEditorImage, mapEditorHovered, customMapImage= null;
 
 
     public MainMenu() {
@@ -53,6 +53,7 @@ public class MainMenu implements Menu {
         optionsButtonF = new Button();
         exitButtonF = new Button();
         b = new ButtonProperties();
+        customMapButton = new Button();
 
         newGameImage = Images.newGameImage;
         newGameImageHovered = Images.newGameImageHovered;
@@ -62,6 +63,7 @@ public class MainMenu implements Menu {
         exitImageHovered = Images.exitImageHovered;
         mapEditorImage = Images.mapEditorImage;
         mapEditorHovered = Images.mapEditorImageHovered;
+        customMapImage = Images.newGameImageHovered;
     }
 
     /**
@@ -102,6 +104,10 @@ public class MainMenu implements Menu {
         b.setButtonProperties(mapEditorButton, "", Menu.WIDTH / 5 - mapEditorImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 3,
                 e -> ElementsHandler.handle(e), new ImageView(mapEditorImage));
         b.addHoverEffect(mapEditorButton, mapEditorHovered, mapEditorImage, Menu.WIDTH / 5 - mapEditorImage.getWidth() / 2,  Menu.HEIGHT / 3 + spaceBetweenImgH * 3);
+
+        // custom map chooser
+        b.setButtonProperties(customMapButton, "", Menu.WIDTH / 5 - customMapImage.getWidth() / 2, Menu.HEIGHT /3 + spaceBetweenImgH * 4,
+                e ->ElementsHandler.handle(e), new ImageView(customMapImage));
 
         // ADD ALL BUTTONS TO THE PANE
         fadingPane.getChildren().addAll(newGameButtonF, optionsButtonF, exitButtonF);

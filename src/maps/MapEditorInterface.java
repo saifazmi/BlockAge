@@ -1,6 +1,5 @@
 package maps;
 
-import gui.GameInterface;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,9 +9,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import menus.MenuHandler;
 import sceneElements.ButtonProperties;
 import sceneElements.Images;
@@ -25,6 +27,11 @@ import java.io.InputStream;
  */
 public class MapEditorInterface {
 
+    //for popup
+    private Stage popUpStage;
+    private Image yesImage, noImage, yesImageHover, noImageHover;
+
+    //For the scene itself
     private Scene scene;
     private HBox rightMenuSaveBack;
     private VBox rightMenu, rightMenuText;
@@ -45,6 +52,7 @@ public class MapEditorInterface {
         scene = mapEditorScene;
         declareElements();
         rightPane();
+        setUpPopUp();
     }
 
     private void rightPane() {
@@ -142,5 +150,55 @@ public class MapEditorInterface {
             System.out.println("No font at that path");
         }
         bellotaFont = Font.loadFont(fontStream, 17);
+    }
+
+    private void setUpPopUp() {
+        popUpStage = new Stage();
+
+        GridPane messagePanel = new GridPane();
+        VBox layout = new VBox();
+        HBox buttons = new HBox();
+
+        Label message = new Label();
+        Button yes = new Button();
+        Button no = new Button();
+        yesImage = Images.overwriteYes;
+        noImage = Images.overwriteNo;
+        yesImageHover = Images.overwriteYesHovered;
+        noImageHover = Images.overwriteNoHovered;
+
+        ButtonProperties b = new ButtonProperties();
+
+        b.setButtonProperties(yes, "", 0, 0, event -> {
+            parser.setOverwrite(true);
+            popUpStage.hide();
+        }, new ImageView(yesImage));
+        //b.addHoverEffect2(yes,yesImageHover,yesImage,0,0);
+
+        b.setButtonProperties(no, "", 0, 0, event -> {
+            parser.setOverwrite(false);
+            popUpStage.hide();
+        }, new ImageView(noImage));
+        //b.addHoverEffect2(no,noImageHover,noImage,0,0);
+
+        buttons.getChildren().addAll(yes, no);
+        layout.getChildren().addAll(message, buttons);
+
+        message.setText("that map already exist, overwrite existing map?");
+
+        messagePanel.getChildren().addAll(layout);
+        Scene popUpScene = new Scene(messagePanel);
+
+        popUpStage.setScene(popUpScene);
+        popUpStage.initModality(Modality.APPLICATION_MODAL);
+        popUpStage.hide();
+        popUpStage.setOnCloseRequest(event -> {
+            parser.setOverwrite(false);
+        });
+    }
+
+    public Stage getPopUpStage()
+    {
+        return popUpStage;
     }
 }
