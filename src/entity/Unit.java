@@ -221,24 +221,51 @@ public class Unit extends Entity {
                     transition.setToY(nextPixelY);
                     transition.setOnFinished(e -> this.completedMove = true);
                     double rotate = 0;
-                    if(xChange == 1)
-                    {
+                    if (xChange == 1) {
                         rotate = 270;
-                    }
-                    else if (xChange == -1)
-                    {
+                    } else if (xChange == -1) {
                         rotate = 90;
                     }
-                    if(yChange == 1)
-                    {
+                    if (yChange == 1) {
                         rotate = 0;
-                    }
-                    else if(yChange == -1)
-                    {
+                    } else if (yChange == -1) {
                         rotate = 180;
                     }
                     this.getSprite().setRotate(rotate);
                     transition.play();
+                } else {
+                    decideRoute();
+                    nextNode = null;
+                    this.completedMove = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * for testing
+     */
+    public void updateTest() {
+        if (completedMove) {
+
+            LOG.log(Level.INFO, "completed move");
+            if (this.nextNode != null) {
+                LOG.log(Level.INFO, "next node is " + this.nextNode);
+                this.position = this.nextNode;
+            }
+            if (route.size() > 0) {
+                this.completedMove = false;
+                this.nextNode = this.route.remove(0);
+                int x = this.nextNode.getX();
+                int y = this.nextNode.getY();
+                int xChange = this.nextNode.getX() - this.position.getX();
+                int yChange = this.nextNode.getY() - this.position.getY();
+                //if (xChange + yChange > 1 || xChange + yChange < -1) {
+                //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
+                //           "Fatal error, check search implementation: " + this.search.toString());
+                //   return;
+                //}
+                if (logicalMove(xChange, yChange)) {
                 } else {
                     decideRoute();
                     nextNode = null;
@@ -284,7 +311,7 @@ public class Unit extends Entity {
         } else {
             route = AStar.search(getPosition(), this.goal);
         }
-        System.out.println(route);
+        LOG.log(Level.INFO, route.toString());
     }
 
     /**

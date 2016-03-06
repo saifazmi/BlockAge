@@ -1,4 +1,4 @@
-package lambdastorage;
+package stores;
 
 import core.GameRunTime;
 import entity.Blockade;
@@ -7,7 +7,6 @@ import gui.Renderer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import sceneElements.Images;
 
 import java.util.logging.Logger;
 
@@ -15,11 +14,16 @@ import java.util.logging.Logger;
  * @author : First created by Dominic Walters with code by Dominic Walters
  * @date : 16/02/16, last edited by Dominic Walters on 25/02/16
  */
-public class LambdaStore {
+public final class LambdaStore {
+
+    private static final Logger LOG = Logger.getLogger(LambdaStore.class.getName());
+
     private Renderer renderer = Renderer.Instance();
     private Scene scene = GameRunTime.Instance().getScene();
-    private static final Logger LOG = Logger.getLogger(LambdaStore.class.getName());
     private static LambdaStore instance = null;
+
+    private LambdaStore() {
+    }
 
     public static LambdaStore Instance() {
         if (instance == null) {
@@ -30,7 +34,7 @@ public class LambdaStore {
 
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0, 0), null);
-        Images.setSpriteProperties(blockadeInstance, Images.unsortableImage1);
+        ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
         Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
         if (blockade != null) {
             renderer.drawInitialEntity(blockade);

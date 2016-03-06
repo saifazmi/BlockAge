@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.Images;
+import stores.ImageStore;
 
 /**
  * @author : First created by Paul Popa with code by Paul Popa
@@ -32,10 +32,10 @@ public class PauseMenu implements Menu {
         backGameButton = new Button();
         backMainButton = new Button();
         b = new ButtonProperties();
-        backGameImage = Images.backGameImage;
-        backGameImageHovered = Images.backGameImageHovered;
-        backMainImage = Images.backMainImage;
-        backMainImageHovered = Images.backMainImageHovered;
+        backGameImage = ImageStore.backGameImage;
+        backGameImageHovered = ImageStore.backGameImageHovered;
+        backMainImage = ImageStore.backMainImage;
+        backMainImageHovered = ImageStore.backMainImageHovered;
     }
 
     public void initialiseScene() {

@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 public class CoreGUI extends Application {
 
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
+    public static final int HEIGHT = 720;
+    public static final int WIDTH = 1280;
 
     public static void main(String[] args) {
         launch(args);
@@ -33,13 +35,5 @@ public class CoreGUI extends Application {
             System.exit(0);
         });
         primaryStage.show();
-    }
-
-    public static int getHEIGHT() {
-        return 720;
-    }
-
-    public static int getWIDTH() {
-        return 1280;
     }
 }

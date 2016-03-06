@@ -6,14 +6,12 @@ import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
 import gui.Renderer;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import maps.MapParser;
-import sceneElements.SpriteImage;
-import java.io.*;
 import sceneElements.ElementsHandler;
-import sceneElements.Images;
+import stores.ImageStore;
+
+import java.io.*;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -24,10 +22,13 @@ import java.util.logging.Logger;
 public class BaseSpawner {
 
     private static final Logger LOG = Logger.getLogger(BaseSpawner.class.getName());
+
     private Renderer renderer = Renderer.Instance();
     private GameRunTime runTime = GameRunTime.Instance();
 
+    // may not be need
     private String SEPARATOR = File.separator;
+
 
     private GraphNode goal;
     private static BaseSpawner instance = null;
@@ -44,14 +45,17 @@ public class BaseSpawner {
         runTime.getScene().setOnMouseClicked(e -> {
             goal = Blockade.calcGraphNode(e);
             Base base = new Base(9999, "Base", goal, null);
-            Image image = Images.base;
-            Images.setSpriteProperties(base, image);
+            Image image = ImageStore.base;
+            ImageStore.setSpriteProperties(base, image);
             renderer.drawInitialEntity(base);
             goal.setBase(base);
             runTime.setBasePlaced(true);
+            // surround the base with sortable blockades.
             protectBase(goal);
+
             //spawnBlockades(100);
             generateBlockades();
+
             runTime.getScene().setOnMouseClicked(null);
         });
 
@@ -77,10 +81,10 @@ public class BaseSpawner {
             for (int j = (col - 1); j <= (col + 1); j++) {
 
                 // coordinate should be on grid and not the same as the base
-                if (isOnGrid(base) && !(i == row && j == col)) {
+                if (isOnGrid(i, j) && !(i == row && j == col)) {
 
                     SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(i, j), null, null);
-                    Images.setSpriteProperties(sortableBlockadeInstance, Images.sortableImage1);
+                    ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
                     SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
                     if (blockade != null) {
                         renderer.drawInitialEntity(blockade);
@@ -90,10 +94,10 @@ public class BaseSpawner {
         }
     }
 
-    private boolean isOnGrid(GraphNode position) {
-        return !((position.getX() < 0 || position.getY() < 0) ||
-                (position.getX() >= Graph.WIDTH || position.getY() >= Graph.HEIGHT));
+    private boolean isOnGrid(int row, int col) {
 
+        return !((row < 0 || col < 0 ||
+                row >= Graph.HEIGHT || col >= Graph.WIDTH));
     }
 
     public GraphNode getGoal() {
@@ -108,7 +112,7 @@ public class BaseSpawner {
                 int randomX = rand.nextInt(Graph.HEIGHT);
                 int randomY = rand.nextInt(Graph.WIDTH);
                 Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
-                Images.setSpriteProperties(blockadeInstance, Images.unsortableImage1);
+                ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
                 Blockade blockade = Blockade.randomBlockade(blockadeInstance);
                 if (blockade != null) {
                     renderer.drawInitialEntity(blockade);

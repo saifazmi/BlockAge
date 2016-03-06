@@ -11,8 +11,8 @@ import java.net.URL;
  * Created by hung on 01/03/16.
  */
 public class SoundManager {
-
-    private static String SEPARATOR = File.separator;
+    private final String SEPARATOR = File.separator;
+    private final String AUDIO_RESOURES = SEPARATOR + "resources" + SEPARATOR + "audio" + SEPARATOR;
 
     private CircularBufferNode<MediaPlayer> soundtracks[];
     private CircularBufferNode<MediaPlayer> currentMPointer;
@@ -22,12 +22,11 @@ public class SoundManager {
     public static SoundManager Instance() {
         if (instance == null)
             instance = new SoundManager();
-
         return instance;
     }
 
     public SoundManager() {
-        URL soundPaths[] = {getClass().getResource("Spell.mp3"), getClass().getResource("a_ninja_among_culturachippers.mp3")};
+        URL soundPaths[] = {getClass().getResource(AUDIO_RESOURES + "Spell.mp3"), getClass().getResource(AUDIO_RESOURES + "a_ninja_among_culturachippers.mp3")};
 
         soundtracks = new CircularBufferNode[2];
 

@@ -17,7 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import menus.MenuHandler;
 import sceneElements.ButtonProperties;
-import sceneElements.Images;
+import stores.ImageStore;
 
 import java.io.File;
 import java.io.InputStream;
@@ -112,10 +112,10 @@ public class MapEditorInterface {
         rightMenu = new VBox();
 
         // Images
-        saveButtonImage = Images.saveMapImage;
-        saveButtonImageHover = Images.saveMapImageHovered;
-        backButtonImage = Images.backFromEditor;
-        backButtonImageHover = Images.backFromEditorHovered;
+        saveButtonImage = ImageStore.saveMapImage;
+        saveButtonImageHover = ImageStore.saveMapImageHovered;
+        backButtonImage = ImageStore.backFromEditor;
+        backButtonImageHover = ImageStore.backFromEditorHovered;
 
         //Buttons
         saveButton = new Button();
@@ -162,10 +162,10 @@ public class MapEditorInterface {
         Label message = new Label();
         Button yes = new Button();
         Button no = new Button();
-        yesImage = Images.overwriteYes;
-        noImage = Images.overwriteNo;
-        yesImageHover = Images.overwriteYesHovered;
-        noImageHover = Images.overwriteNoHovered;
+        yesImage = ImageStore.overwriteYes;
+        noImage = ImageStore.overwriteNo;
+        yesImageHover = ImageStore.overwriteYesHovered;
+        noImageHover = ImageStore.overwriteNoHovered;
 
         ButtonProperties b = new ButtonProperties();
 
