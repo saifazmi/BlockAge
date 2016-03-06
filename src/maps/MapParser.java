@@ -18,7 +18,6 @@ public class MapParser {
 
     private BufferedReader reader;
     private String row;
-    private static String SEPARATOR = File.separator;
 
     //args is portability, teacher can just give student map files
     public MapParser(BufferedReader reader)

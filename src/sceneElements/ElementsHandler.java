@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import maps.MapChooserInterface;
 import stores.ImageStore;
 import stores.LambdaStore;
 import menus.MainMenu;
@@ -186,7 +187,7 @@ public class ElementsHandler {
         }
         if (event.getSource() == MainMenu.customMapButton)
         {
-
+            MapChooserInterface.showChooser();
         }
     }
 

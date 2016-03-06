@@ -26,6 +26,7 @@ public class MapEditor implements Menu {
     private Graph mapEditorGraph;
 
     private MapEditorInterface mapEditorInterface;
+    private MapChooserInterface mapChooserInterface;
 
     // General Map Editor manager for scene, renderer and events
     public MapEditor()
@@ -43,6 +44,9 @@ public class MapEditor implements Menu {
         ((BorderPane) ((Group) mapEditorScene.getRoot()).getChildren().get(0)).setCenter(mapEditorRenderer);
         mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
+
+        //seperate, just put here for the moment
+        mapChooserInterface = new MapChooserInterface();
     }
 
     private void createGraph() {
