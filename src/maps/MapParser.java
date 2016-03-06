@@ -4,8 +4,8 @@ import gui.Renderer;
 import entity.Blockade;
 import graph.GraphNode;
 import javafx.scene.image.Image;
-import sceneElements.Images;
 import sceneElements.SpriteImage;
+import stores.ImageStore;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +41,7 @@ public class MapParser {
                     if (blockPresent == 1)
                     {
                         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(x, y), null);
-                        Image image1 = Images.unsortableImage1;
+                        Image image1 = ImageStore.unsortableImage1;
                         SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
                         spriteImage1.setFitWidth(Renderer.Instance().getXSpacing());
                         spriteImage1.setFitHeight(Renderer.Instance().getYSpacing());

@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import menus.Menu;
-import sceneElements.Images;
+import stores.ImageStore;
 
 /**
  * Created by hung on 04/03/16.
@@ -39,7 +39,7 @@ public class MapEditor implements Menu {
         //initialiseScene();
         mapEditorPane = new BorderPane();
         Group mapEditor = new Group(mapEditorPane);
-        mapEditorScene = new Scene(mapEditor, CoreGUI.getWIDTH(),CoreGUI.getHEIGHT());
+        mapEditorScene = new Scene(mapEditor, CoreGUI.WIDTH,CoreGUI.HEIGHT);
         ((BorderPane) ((Group) mapEditorScene.getRoot()).getChildren().get(0)).setCenter(mapEditorRenderer);
         mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
@@ -68,7 +68,7 @@ public class MapEditor implements Menu {
     // think about erasing blocks as wel
     private final EventHandler<MouseEvent> sceneClickPlaceBlockade = e -> {
         Blockade blockadeInstance = new Blockade(0, "Blockade", new GraphNode(0, 0), null);
-        Images.setSpriteProperties(blockadeInstance, Images.unsortableImage1);
+        ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
         Blockade blockade = Blockade.mapBlockade(e, blockadeInstance, mapEditorRenderer, mapEditorGraph);
         if (blockade != null) {
             mapEditorRenderer.drawInitialEntity(blockade);
@@ -80,7 +80,7 @@ public class MapEditor implements Menu {
     {
         return mapEditorInterface;
     }
-
+    public Renderer getRenderer() { return mapEditorRenderer; }
     @Override
     public Scene getScene() {
         return mapEditorScene;

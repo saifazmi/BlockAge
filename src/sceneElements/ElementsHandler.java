@@ -186,7 +186,7 @@ public class ElementsHandler {
         }
         if (event.getSource() == MainMenu.customMapButton)
         {
-            
+
         }
     }
 

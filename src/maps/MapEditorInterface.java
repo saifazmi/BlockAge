@@ -145,7 +145,7 @@ public class MapEditorInterface {
     }
 
     private void loadFont() {
-        InputStream fontStream = MapEditorInterface.class.getResourceAsStream("" + SEPARATOR + "fonts" + SEPARATOR + "Bellota-Bold.otf");
+        InputStream fontStream = MapEditorInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "Bellota-Bold.otf");
         if (fontStream == null) {
             System.out.println("No font at that path");
         }

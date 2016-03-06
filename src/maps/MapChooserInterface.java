@@ -10,4 +10,6 @@ public class MapChooserInterface {
 
     private Stage mapChooseStage;
     private Scene mapChooseScene;
+
+
 }
