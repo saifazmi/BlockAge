@@ -14,11 +14,16 @@ import java.util.logging.Logger;
  * @author : First created by Dominic Walters with code by Dominic Walters
  * @date : 16/02/16, last edited by Dominic Walters on 25/02/16
  */
-public class LambdaStore {
+public final class LambdaStore {
+
+    private static final Logger LOG = Logger.getLogger(LambdaStore.class.getName());
+
     private Renderer renderer = Renderer.Instance();
     private Scene scene = GameRunTime.Instance().getScene();
-    private static final Logger LOG = Logger.getLogger(LambdaStore.class.getName());
     private static LambdaStore instance = null;
+
+    private LambdaStore() {
+    }
 
     public static LambdaStore Instance() {
         if (instance == null) {

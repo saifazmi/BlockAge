@@ -28,6 +28,7 @@ Knows Bugs
 
 #### Unit  
 - Transitions don't work if unit doesn't spawn at (0,0)
+- If boxed in the unit stops moving and the game crashes.
 
 #### Renderer  
 - ~~Route lines don't draw from the route start, but from the 2nd node~~
