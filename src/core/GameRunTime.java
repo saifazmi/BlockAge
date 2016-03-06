@@ -53,15 +53,15 @@ public class GameRunTime {
         Pane mainGamePane = new BorderPane();
 
         mainGamePane = new BorderPane();
-        mainGamePane.setPrefWidth(CoreGUI.getWIDTH() - 324);
-        mainGamePane.setPrefHeight(CoreGUI.getHEIGHT());
+        mainGamePane.setPrefWidth(CoreGUI.WIDTH - 324);
+        mainGamePane.setPrefHeight(CoreGUI.HEIGHT);
 
         String SEPARATOR = File.separator;
         //BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "background" + SEPARATOR + "Main.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
         //mainGamePane.setBackground(new Background(myBI));
 
         Group mainGame = new Group(mainGamePane);
-        mainGameScene = new Scene(mainGame, CoreGUI.getWIDTH(), CoreGUI.getHEIGHT());
+        mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
         new Renderer();
         ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(Renderer.Instance());

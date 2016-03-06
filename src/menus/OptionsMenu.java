@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.Images;
+import stores.ImageStore;
 import sceneElements.LabelProperties;
 
 /**
@@ -58,15 +58,15 @@ public class OptionsMenu implements Menu {
         l = new LabelProperties();
         b = new ButtonProperties();
 
-        onImage = Images.onImage;
-        onImageHovered = Images.onImageHovered;
-        offImage = Images.offImage;
-        offImageHovered = Images.offImageHovered;
-        showSearchImage = Images.showSearchImage;
-        soundImage = Images.soundImage;
-        blockadeImage = Images.blockadeImage;
-        backImage = Images.backImage;
-        backImageHovered = Images.backImageHovered;
+        onImage = ImageStore.onImage;
+        onImageHovered = ImageStore.onImageHovered;
+        offImage = ImageStore.offImage;
+        offImageHovered = ImageStore.offImageHovered;
+        showSearchImage = ImageStore.showSearchImage;
+        soundImage = ImageStore.soundImage;
+        blockadeImage = ImageStore.blockadeImage;
+        backImage = ImageStore.backImage;
+        backImageHovered = ImageStore.backImageHovered;
     }
 
     /**
@@ -104,7 +104,7 @@ public class OptionsMenu implements Menu {
 
         // To do sound configurations for button as well
         optionsMenuPane.getChildren().addAll(hintsLabel, soundLabel, blockadeLabel, noButtonSearch, noButtonSound, noButtonB, backButton);
-        BackgroundImage myBI = new BackgroundImage(Images.backgroundOptionsMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+        BackgroundImage myBI = new BackgroundImage(ImageStore.backgroundOptionsMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         optionsMenuPane.setBackground(new Background(myBI));
         optionsMenuPane.setPrefWidth(Menu.WIDTH);

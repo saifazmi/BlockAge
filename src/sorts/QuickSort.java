@@ -35,7 +35,16 @@ public class QuickSort {
         }
         Collections.shuffle(state);
 
+        //added for testing
+        SortableComponent b = new SortableComponent(state, 0, 0, false);
+        allStates.add(b);
+
         ArrayList<Integer> out = quickSort(state);
+
+        //added for testing
+        SortableComponent a = new SortableComponent(out, 0, 0, false);
+        allStates.add(a);
+
         return allStates;
 
     }
