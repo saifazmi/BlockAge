@@ -22,7 +22,6 @@ public class SoundManager {
     public static SoundManager Instance() {
         if (instance == null)
             instance = new SoundManager();
-
         return instance;
     }
 
