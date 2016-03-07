@@ -90,4 +90,24 @@ public class ButtonProperties {
             button.getScene().setCursor(Cursor.DEFAULT);
         });
     }
+
+    /**
+     * Simple enlargement of image inside Button
+     * @param button
+     */
+    public void addHoverEffect3(Button button) {
+        button.setOnMousePressed(event -> button.getScene().setCursor(Cursor.DEFAULT));
+        button.setOnMouseEntered(event ->
+        {
+            button.getGraphic().setScaleX(1.02);
+            button.getGraphic().setScaleY(1.02);
+            button.getScene().setCursor(Cursor.HAND);
+        });
+        button.setOnMouseExited(event ->
+        {
+            button.getGraphic().setScaleX(1);
+            button.getGraphic().setScaleY(1);
+            button.getScene().setCursor(Cursor.DEFAULT);
+        });
+    }
 }
