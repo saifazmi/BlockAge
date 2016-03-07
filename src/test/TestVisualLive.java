@@ -48,7 +48,6 @@ public class TestVisualLive extends Application {
             block.relocate(loc, HEIGHT - (x * 15) - 50); //trying to make it state0
 
             sortPane.getChildren().add(block);
-            block.setNewX(block.getLayoutX());
             blocks.add(block);
         }
         animatePath = new SequentialTransition();

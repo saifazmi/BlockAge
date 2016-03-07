@@ -2,6 +2,8 @@ package test;
 
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -21,6 +23,7 @@ public class TestVisual extends Application {
     private static ArrayList<SortVisualBar> blocks = new ArrayList<SortVisualBar>();
     SequentialTransition seq = new SequentialTransition();
 
+    public double[] locations = new double[10];
     public void start(Stage stage) {
         //store blocks somewhere
         Pane canvas = new Pane();
@@ -40,8 +43,11 @@ public class TestVisual extends Application {
             canvas.getChildren().add(block);
             blocks.add(block);
         }
-        //System.out.println(counterx);
-        //System.out.println(countery);
+        //hardcoding positions
+        for(int x = 0 ; x<10;x++){
+            locations[x]=40+(x*30);
+        }
+        calibratePositions();
         Scene scene = new Scene(new Group(canvas));
         stage = new Stage();
         stage.setTitle("TEST");
@@ -49,11 +55,23 @@ public class TestVisual extends Application {
         stage.sizeToScene();
         stage.show();
         // trying to move block
-        swapFF(10,1);
-        swapFF(10,3);
+        swapFF(1,10);
+        //swapFF(1,10);
         seq.play();
 
-
+    }
+    //sets each block's logical position according to it's coordinate on Layout. should still be 40 70..+30s
+    public void calibratePositions(){
+        for(int x=0 ; x<blocks.size();x++){
+            blocks.get(x).setLogicalPosition(findLogicalLocation(blocks.get(x).getLayoutX()));
+        }
+    }
+    //returns logical pos of coordinate
+    public int findLogicalLocation(double s){
+        for(int x = 0 ; x<10;x++){
+            if(locations[x]==s)return x;
+        }
+        return -1;
     }
 
     public static void main(String[] args) {
@@ -65,76 +83,83 @@ public class TestVisual extends Application {
      * Make transition, add to constructor of SequentialTransition
      */
     public void swapFF(int block1, int block2) {
+        SortVisualBar b1 = blocks.get(block1);
+        SortVisualBar b2 = blocks.get(block2);
+        //newX confirmed works for first case always
+        int b1LogPos = b1.getLogicalPosition();
+        int b2LogPos = b2.getLogicalPosition();
+        System.out.println("ten logical position "+ b2LogPos);
 
-        double oldY = blocks.get(block1).getLayoutY();
-        double oldX = blocks.get(block1).getLayoutX();
+        //new way
+        //each sortvisualbar is connected to it's correct number, when swapping
+        //assing a logical position to direct correct placement
+        Timeline b1Up = new Timeline();
+        b1Up.setCycleCount(1);
+        final KeyValue kv = new KeyValue(b1.yProperty(), -200);
+        final KeyFrame kf = new KeyFrame(Duration.millis(250), kv);
+        b1Up.getKeyFrames().add(kf);
 
-        double oldSecondY = blocks.get(block2).getLayoutY();
-        double oldSecondX = blocks.get(block2).getLayoutX();
+        Timeline b1L = new Timeline();
+        b1L.setCycleCount(1);
+        final KeyValue kvL = new KeyValue(b1.xProperty(), -locations[b1LogPos]);
+        final KeyFrame kfL = new KeyFrame(Duration.millis(250), kvL);
+        b1L.getKeyFrames().add(kfL);
 
-        // first block , 3 transitions
-        TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        tty.setFromY(0);
-        tty.setToY(-100);
-        tty.setCycleCount(1);
+        Timeline b2Up = new Timeline();
+        b2Up.setCycleCount(1);
+        final KeyValue kv2 = new KeyValue(b2.yProperty(), -200);
+        final KeyFrame kf2 = new KeyFrame(Duration.millis(250), kv2);
+        b2Up.getKeyFrames().add(kf2);
 
-        TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        ttx.setFromX(0);
-        ttx.setToX(-oldX);//was -200
-        ttx.setCycleCount(1);
+        Timeline b2R = new Timeline();
+        b2R.setCycleCount(1);
+        final KeyValue kv2R = new KeyValue(b2.xProperty(), -(locations[b2LogPos] - locations[b1LogPos]));
+        final KeyFrame kf2R = new KeyFrame(Duration.millis(250), kv2R);
+        b2R.getKeyFrames().add(kf2R);
 
-        TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        txx.setFromY(-100);
-        txx.setToY(0);
-        txx.setCycleCount(1);
-        // second block, take note of values on the last transitions of each one
-        //you can change the dimensions as you wish, easier to navigate if you have some sort of class-wide var for sizes
+        Timeline b2Down = new Timeline();
+        b2Down.setCycleCount(1);
+        final KeyValue kv2D = new KeyValue(b2.yProperty(), 0);
+        final KeyFrame kf2D = new KeyFrame(Duration.millis(250), kv2D);
+        b2Down.getKeyFrames().add(kf2D);
 
 
-        TranslateTransition ty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
-        ty.setFromY(0);
-        ty.setToY(-200);
-        ty.setCycleCount(1);
+        Timeline b1R = new Timeline();
+        b1R.setCycleCount(1);
+        final KeyValue kvR = new KeyValue(b1.xProperty(), locations[b2LogPos]-40);
+        final KeyFrame kfR = new KeyFrame(Duration.millis(250), kvR);
+        b1R.getKeyFrames().add(kfR);
 
-        TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
-        tx.setFromX(0);
-        tx.setToX(- (oldSecondX - (oldX))  );//always left
-        tx.setCycleCount(1);
+        Timeline b1Down = new Timeline();
+        b1Down.setCycleCount(1);
+        final KeyValue kvD = new KeyValue(b1.yProperty(), 0);
+        final KeyFrame kfD = new KeyFrame(Duration.millis(250), kvD);
+        b1Down.getKeyFrames().add(kfD);
 
-        TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
-        txt.setFromY(-200);
-        txt.setToY(0);
-        txt.setCycleCount(1);
+        b1.setLogicalPosition(b2LogPos);
+        b2.setLogicalPosition(b1LogPos);
+        b1Down.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                seq = new SequentialTransition();
 
-        //last 3
-        TranslateTransition gy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        gy.setFromY(0);
-        gy.setToY(-200);
-        gy.setCycleCount(1);
+                if(block1!=3){
+                    swapFF(3,10);
+                    b1.setX(locations[b2LogPos]);
+                    b2.setX(locations[b1LogPos]);
+                    seq.play();
+                }
+            }
+        });
+        //sync problem, real X doesnt change for next transition prepared.
 
-        TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        gx.setFromX(-oldX);
-        gx.setToX(oldSecondX-oldX);//old distance-  width - gap
-        gx.setCycleCount(1);
-
-        TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        gyy.setFromY( -200); //this is how it works...dont ask
-        gyy.setToY(0);
-        gyy.setCycleCount(1);
-        seq.getChildren().add(tty);
-        seq.getChildren().add(ttx);
-        seq.getChildren().add(txx);
-        seq.getChildren().add(ty);
-        seq.getChildren().add(tx);
-        seq.getChildren().add(txt);
-        seq.getChildren().add(gy);
-        seq.getChildren().add(gx);
-        seq.getChildren().add(gyy);
-        //getchildren add a dummy one that just updates stuff :)
-        DummyTransition dummy = new DummyTransition(blocks.get(block1),blocks.get(block2),oldSecondX,oldX);
-        seq.getChildren().add(dummy);
-        //blocks.get(block1).setLayoutX(oldSecondX);
-        //blocks.get(block2).setLayoutX(oldX);
+        seq.getChildren().add(b1Up);
+        seq.getChildren().add(b1L);
+        seq.getChildren().add(b2Up);
+        seq.getChildren().add(b2R);
+        seq.getChildren().add(b2Down);
+        seq.getChildren().add(b1R);
+        seq.getChildren().add(b1Down);
 
     }
 }
