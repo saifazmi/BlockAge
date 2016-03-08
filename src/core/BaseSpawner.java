@@ -6,6 +6,7 @@ import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
 import gui.Renderer;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
 import stores.ImageStore;
@@ -34,8 +35,8 @@ public class BaseSpawner {
         return instance;
     }
 
-    private BaseSpawner() {
-
+    public BaseSpawner() {
+        instance = this;
         runTime.getScene().setOnMouseClicked(e -> {
             goal = Blockade.calcGraphNode(e);
             Base base = new Base(9999, "Base", goal, null);
@@ -49,7 +50,6 @@ public class BaseSpawner {
             // generate 100 random blockades.
             spawnBlockades(100);
             runTime.getScene().setOnMouseClicked(null);
-            generated = true;
         });
 
     }
