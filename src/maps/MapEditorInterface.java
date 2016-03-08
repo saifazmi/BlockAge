@@ -97,6 +97,7 @@ public class MapEditorInterface {
     public static void handle(ActionEvent event) {
         if (event.getSource() == MapEditorInterface.saveButton)
         {
+            System.out.println("saving file");
             parser.saveToUserFile();
         }
         if (event.getSource() == MapEditorInterface.backButton)

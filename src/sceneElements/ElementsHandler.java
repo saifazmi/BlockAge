@@ -187,7 +187,7 @@ public class ElementsHandler {
         }
         if (event.getSource() == MainMenu.customMapButton)
         {
-            MapChooserInterface.showChooser();
+            MapChooserInterface.Instance().showChooser();
         }
     }
 

@@ -31,28 +31,32 @@ public class MapChooserInterface {
     private final String SEPERATOR = File.separator;
     private static Stage mapChooseStage;
     private Scene mapChooseScene;
+    private HBox images;
     private ArrayList<VBox> mapImages;
     private ArrayList<String> mapNames;
     private double oldHValue = 0;
 
-    public MapChooserInterface()
+    private static MapChooserInterface instance;
+
+    public static MapChooserInterface Instance()
+    {
+        if (instance == null)
+            instance = new MapChooserInterface();
+
+        return instance;
+    }
+
+    private MapChooserInterface()
     {
         mapChooseStage = new Stage();
 
-        HBox images = new HBox();
+        images = new HBox();
 
         String dir = System.getProperty("user.home");
         SAVE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
 
-        getMapImages();
-
-        for (int i = 0; i < mapImages.size(); i++)
-        {
-            images.getChildren().add(mapImages.get(i));
-        }
-
-        images.setSpacing(50);
+        setUpMapImages();
 
         ScrollPane scroller = new ScrollPane(images);
         scroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -63,6 +67,20 @@ public class MapChooserInterface {
         mapChooseStage.setScene(mapChooseScene);
         mapChooseStage.initModality(Modality.APPLICATION_MODAL);
         mapChooseStage.hide();
+    }
+
+    private void setUpMapImages() {
+
+        images.getChildren().clear();
+
+        getMapImages();
+
+        for (int i = 0; i < mapImages.size(); i++)
+        {
+            images.getChildren().add(mapImages.get(i));
+        }
+
+        images.setSpacing(50);
     }
 
     private void mapSelectScrolling(ScrollPane scroller, ScrollEvent e) {
@@ -83,8 +101,9 @@ public class MapChooserInterface {
         }
     }
 
-    public static void showChooser()
+    public void showChooser()
     {
+        setUpMapImages();
         mapChooseStage.showAndWait();
     }
 

@@ -44,9 +44,6 @@ public class MapEditor implements Menu {
         ((BorderPane) ((Group) mapEditorScene.getRoot()).getChildren().get(0)).setCenter(mapEditorRenderer);
         mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
-
-        //seperate, just put here for the moment
-        mapChooserInterface = new MapChooserInterface();
     }
 
     private void createGraph() {

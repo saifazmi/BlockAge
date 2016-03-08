@@ -45,6 +45,12 @@ public class EditorParser {
         }
         else
         {
+
+            if (invalidName(editor.getInterface().getFileName()))
+                return;
+
+            System.out.println("attempt save now");
+
             try {
 
                 boolean newDirectory = false;
@@ -129,7 +135,20 @@ public class EditorParser {
                 editor.getInterface().getSaveStatusBox().setText("Save failed, game error");
                 //notify user
             }
+            finally {
+                overwrite = true;
+            }
         }
+    }
+
+    private boolean invalidName(String fileName) {
+        if (fileName.contains("."))
+        {
+            editor.getInterface().getSaveStatusBox().setText("File name can only be contain alphanumerical characters, no special symbols allowed");
+            return true;
+        }
+
+        return false;
     }
 
     public void setOverwrite(boolean overwrite)
