@@ -130,10 +130,8 @@ public class TestVisual extends Application {
 
 
                 if(block1!=10){
-                    //b1.setLayoutX(oldX-oldSecondX);
-                    //b2.setLayoutX(oldSecondX+oldX);
-                    b1.relocate(310,b1.getLayoutY());
-                    b2.relocate(100,b2.getLayoutY());
+                    b1.relocate(oldSecondX,b1.getLayoutY());
+                    b2.relocate(oldX,b2.getLayoutY());
                     swapFF(10,3);
 
                 }
