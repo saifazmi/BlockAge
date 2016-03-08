@@ -15,14 +15,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import stores.ImageStore;
-import stores.LambdaStore;
 import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
 import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
+import stores.ImageStore;
+import stores.LambdaStore;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
