@@ -9,8 +9,8 @@ import gui.Renderer;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
-import stores.ImageStore;
 import sceneElements.SpriteImage;
+import stores.ImageStore;
 
 import java.util.ArrayList;
 import java.util.Random;
