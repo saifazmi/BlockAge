@@ -6,6 +6,7 @@ import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
 import gui.Renderer;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
 import stores.ImageStore;
@@ -24,6 +25,7 @@ public class BaseSpawner {
     private Renderer renderer = Renderer.Instance();
     private GameRunTime runTime = GameRunTime.Instance();
     private GraphNode goal;
+    
     private static BaseSpawner instance = null;
 
     public static BaseSpawner Instance() {
@@ -34,7 +36,6 @@ public class BaseSpawner {
     }
 
     public BaseSpawner() {
-
         instance = this;
         runTime.getScene().setOnMouseClicked(e -> {
             goal = Blockade.calcGraphNode(e);
@@ -59,13 +60,18 @@ public class BaseSpawner {
         int col = base.getY();
 
         for (int i = (row - 1); i <= (row + 1); i++) {
-
             for (int j = (col - 1); j <= (col + 1); j++) {
-
                 // coordinate should be on grid and not the same as the base
                 if (isOnGrid(i, j) && !(i == row && j == col)) {
 
-                    SortableBlockade sortableBlockadeInstance = new SortableBlockade(1, "Sortable Blockade", new GraphNode(i, j), null, null);
+                    SortableBlockade sortableBlockadeInstance = new SortableBlockade(
+                            0,
+                            "Sortable Blockade",
+                            new GraphNode(i, j),
+                            null,
+                            null
+                    );
+
                     ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
                     SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
                     if (blockade != null) {
@@ -93,7 +99,14 @@ public class BaseSpawner {
                 Random rand = new Random();
                 int randomX = rand.nextInt(Graph.HEIGHT);
                 int randomY = rand.nextInt(Graph.WIDTH);
-                Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(randomX, randomY), null);
+
+                Blockade blockadeInstance = new Blockade(
+                        1,
+                        "Blockade",
+                        new GraphNode(randomX, randomY),
+                        null
+                );
+
                 ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
                 Blockade blockade = Blockade.randomBlockade(blockadeInstance);
                 if (blockade != null) {

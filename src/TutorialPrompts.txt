@@ -1,0 +1,21 @@
+This game is intended for educational use.
+
+The aim of the game is to delay the enemy units from reaching your base for as long as possible.
+
+You can do this by placing blockades to prevent the movement of the units, and force them to reassess their route.
+
+The game utilises 3 different searching algorithms: BFS, DFS, and A*.
+
+For now we will only use the indestructible blockade.
+
+You have access to two blockades: sortable and unsortable.
+
+Sortable blockades can be 'sorted' by the units in order to break through them. This takes time, so these are best used to slow the units early on.
+
+At the start of the game you have to place your base on the grid by clicking. It will spawn surrounded by sortable blockades.
+
+The grid will then randomly generate some blockades.
+
+The game will then start, and you will be able to place blockades.
+
+Keybinds can be found on separate documentation.
