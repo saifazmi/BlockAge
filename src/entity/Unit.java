@@ -309,7 +309,7 @@ public class Unit extends Entity {
         } else if (search == Search.BFS) {
             route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal, false);
         } else {
-            route = AStar.search(getPosition(), this.goal);
+            route = AStar.search(getPosition(), this.goal, false);
         }
         LOG.log(Level.INFO, route.toString());
     }

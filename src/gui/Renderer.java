@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
+import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
 
@@ -230,7 +231,7 @@ public class Renderer extends Group {
         } else if (unit.getSearch() == Unit.Search.DFS) {
             visitedNodes = DepthFirstSearch.findPathFrom(unit.getPosition(), BaseSpawner.Instance().getGoal(), true);
         } else if (unit.getSearch() == Unit.Search.A_STAR) {
-            visitedNodes = null;
+            visitedNodes = AStar.search(unit.getPosition(), BaseSpawner.Instance().getGoal(), true);
         }
 
         List<GraphNode> drawn = new ArrayList<>();

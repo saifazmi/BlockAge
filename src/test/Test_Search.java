@@ -45,7 +45,7 @@ public class Test_Search {
         //graph made, do your test
 
 
-        List<GraphNode> path = AStar.search(startNode, goalNode);
+        List<GraphNode> path = AStar.search(startNode, goalNode, false);
 
         assert path != null;
         for (GraphNode aPath : path) {

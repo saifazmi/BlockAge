@@ -157,7 +157,7 @@ public class TestNGTesting {
     public void aStarSearchTesting() {
         GraphNode startPoint = graph.nodeWith(new GraphNode(1, 2));
         GraphNode endPoint = graph.nodeWith(new GraphNode(19, 19));
-        List<GraphNode> route = AStar.search(startPoint, endPoint);
+        List<GraphNode> route = AStar.search(startPoint, endPoint, false);
 
         boolean passed = validRoute(route, endPoint);
 

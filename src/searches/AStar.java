@@ -2,15 +2,7 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
@@ -24,7 +16,7 @@ public class AStar {
      * @param goal  Goal Node
      * @return
      */
-    public static List<GraphNode> search(GraphNode start, GraphNode goal) {
+    public static List<GraphNode> search(GraphNode start, GraphNode goal, boolean visit) {
 
         Set<GraphNode> visited = new LinkedHashSet<>();
         Map<GraphNode, GraphNode> pred = new LinkedHashMap<>();
@@ -52,8 +44,17 @@ public class AStar {
             if (n.equals(goal)) {
                 ArrayList<GraphNode> pathList = new ArrayList<>(); // make list, add goal first
                 if (start == goal) {
-                    pathList.add(start);
-                    return pathList;
+                    //@TODO
+                    if(visit)
+                    {
+                        return new ArrayList<>(visited);
+                    }
+                    else
+                    {
+                        pathList.add(start);
+                        return pathList;
+                    }
+
                 } else {//not first, add goal
                     pathList.add(n);
                     n = pred.get(n); //get the one before goal
