@@ -20,7 +20,6 @@ import sceneElements.ElementsHandler;
 import stores.ImageStore;
 import stores.LambdaStore;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -28,6 +27,7 @@ import java.io.InputStream;
  * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
  */
 public class GameInterface {
+    private final String SEPARATOR = "/";
     private Scene scene = GameRunTime.Instance().getScene();
     public static int bottomPaneHeight = 0;
     public static int rightPaneWidth = 324;
@@ -42,7 +42,6 @@ public class GameInterface {
     private Pane sortVisualisationPane;
     private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
     private ButtonProperties b;
-    private static String SEPARATOR = File.separator;
 
     public GameInterface() {
         loadFont();
