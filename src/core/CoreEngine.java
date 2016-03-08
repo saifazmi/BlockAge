@@ -84,9 +84,6 @@ public class CoreEngine {
     public void startGame() {
         running = true;
         startTime = System.nanoTime();
-        // added for sound
-        //SoundManager.Instance().startSoundtrack();
-        //
 
         // @TODO in case it's not running
         while (running) {
@@ -105,8 +102,6 @@ public class CoreEngine {
                 this.slept = true;
             }
         }
-
-
     }
 
     /**

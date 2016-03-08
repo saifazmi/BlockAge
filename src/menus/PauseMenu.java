@@ -16,12 +16,12 @@ import sceneElements.Images;
  */
 public class PauseMenu implements Menu {
 
-    public static Button backGameButton, backMainButton;
+    public static Button backGameButton, optionsButton, backMainButton;
 
     private Pane pauseMenuPane = null;
     private Scene pauseMenuScene = null;
     private ButtonProperties b = null;
-    private Image backGameImage, backGameImageHovered, backMainImage, backMainImageHovered;
+    private Image backGameImage, backGameImageHovered, optionsImage, optionsImageHovered, backMainImage, backMainImageHovered;
 
     public PauseMenu() {
         initialiseScene();
@@ -30,10 +30,13 @@ public class PauseMenu implements Menu {
     public void declareElements() {
         pauseMenuPane = new Pane();
         backGameButton = new Button();
+        optionsButton = new Button();
         backMainButton = new Button();
         b = new ButtonProperties();
         backGameImage = Images.backGameImage;
         backGameImageHovered = Images.backGameImageHovered;
+        optionsImage = Images.optionsImage;
+        optionsImageHovered = Images.optionsImageHovered;
         backMainImage = Images.backMainImage;
         backMainImageHovered = Images.backMainImageHovered;
     }
@@ -41,17 +44,20 @@ public class PauseMenu implements Menu {
     public void initialiseScene() {
         declareElements();
 
-        // NEW GAME BUTTON
+        // BACK GAME BUTTON
         b.setButtonProperties(backGameButton, "", Menu.WIDTH / 2 - backGameImage.getWidth() / 2, Menu.HEIGHT / 3,
                 ElementsHandler::handle, new ImageView(backGameImage));
         b.addHoverEffect(backGameButton, backGameImageHovered, backGameImage, Menu.WIDTH / 2 - backGameImage.getWidth() / 2, Menu.HEIGHT / 3);
 
-        int spaceBetweenImgH = 50;
-        b.setButtonProperties(backMainButton, "", Menu.WIDTH / 2 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH,
+        int spaceBetweenImgH = 70;
+        b.setButtonProperties(optionsButton, "", Menu.WIDTH / 2 - optionsImage.getWidth() / 2,  Menu.HEIGHT/ 3 + spaceBetweenImgH,
+        		ElementsHandler::handle, new ImageView(optionsImage));
+        b.addHoverEffect(optionsButton, optionsImageHovered, optionsImage, Menu.WIDTH / 2 - optionsImage.getWidth() / 2,  Menu.HEIGHT/ 3 + spaceBetweenImgH);
+        b.setButtonProperties(backMainButton, "", Menu.WIDTH / 2 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 ElementsHandler::handle, new ImageView(backMainImage));
-        b.addHoverEffect(backMainButton, backMainImageHovered, backMainImage, Menu.WIDTH / 2 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH);
+        b.addHoverEffect(backMainButton, backMainImageHovered, backMainImage, Menu.WIDTH / 2 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH);
 
-        pauseMenuPane.getChildren().addAll(backGameButton, backMainButton);
+        pauseMenuPane.getChildren().addAll(backGameButton, optionsButton, backMainButton);
         Group mainMenuGroup = new Group(pauseMenuPane);
         pauseMenuScene = new Scene(mainMenuGroup, Menu.WIDTH, Menu.HEIGHT);
     }
