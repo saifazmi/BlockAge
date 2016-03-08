@@ -10,7 +10,6 @@ import graph.GraphNode;
 import gui.GameInterface;
 import gui.Renderer;
 import javafx.event.Event;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -35,8 +34,8 @@ import java.util.logging.Logger;
 public class ElementsHandler {
 
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
-    private static Scene scene = GameRunTime.Instance().getScene();
     private static ButtonProperties b = new ButtonProperties();
+    private static CoreEngine engine = CoreEngine.Instance();
 
     public static Options options = new Options();
 
@@ -47,48 +46,11 @@ public class ElementsHandler {
      */
     public static void handle(Event event) {
         // Elements from the Main Menu scene
-        CoreEngine engine = CoreEngine.Instance();
-
         if (event.getSource() == MainMenu.newGameButtonF) {
-            // Create grid for the game we'll play
-            System.out.println("Start game");
-            GameRunTime gameRunTime = new GameRunTime();
-            engine = CoreEngine.Instance();
-            engine.setPaused(false);
-            Renderer.Instance().calculateSpacing();
-            System.out.println("Spacing calculated");
-            gameRunTime.startGame();
-            System.out.println("Game started");
-            MenuHandler.setMainGameScene();
-            System.out.println("Scene set");
-            new GameInterface();
-            System.out.println("Interface made");
-            MenuHandler.switchScene(MenuHandler.MAIN_GAME);
-            Renderer.Instance().initialDraw();
-
-            Thread unitSpawnerThread = new Thread(() -> {
-
-                GraphNode goal = BaseSpawner.Instance().getGoal();
-                while (goal == null) {
-                    try {
-                        goal = BaseSpawner.Instance().getGoal();
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        LOG.log(Level.SEVERE, e.toString(), e);
-                    }
-                }
-
-                LOG.log(Level.INFO, "GOAL found!!!");
-                UnitSpawner spawner = new UnitSpawner(2, goal);
-                CoreEngine.Instance().setSpawner(spawner);
-            });
-            unitSpawnerThread.start();
-
-        }
-        if (event.getSource() == MainMenu.optionsButtonF) {
+            startGame();
+        } else if (event.getSource() == MainMenu.optionsButtonF) {
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
-        }
-        if (event.getSource() == MainMenu.exitButtonF) {
+        } else if (event.getSource() == MainMenu.exitButtonF) {
             System.exit(0);
         }
         // End of elements from Main Menu scene
@@ -97,7 +59,7 @@ public class ElementsHandler {
         if (event.getSource() == OptionsMenu.yesButtonSearch) {
             options.setPath(false);
             b.setButtonProperties(OptionsMenu.noButtonSearch, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
-                    e -> handle(e), new ImageView(OptionsMenu.offImage));
+                    ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
             b.addHoverEffect(OptionsMenu.noButtonSearch, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonSearch)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonSearch);
@@ -107,7 +69,7 @@ public class ElementsHandler {
         if (event.getSource() == OptionsMenu.noButtonSearch) {
             options.setPath(true);
             b.setButtonProperties(OptionsMenu.yesButtonSearch, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
-                    e -> handle(e), new ImageView(OptionsMenu.onImage));
+                    ElementsHandler::handle, new ImageView(OptionsMenu.onImage));
             b.addHoverEffect(OptionsMenu.yesButtonSearch, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonSearch)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonSearch);
@@ -117,7 +79,7 @@ public class ElementsHandler {
 
         if (event.getSource() == OptionsMenu.yesButtonSound) {
             b.setButtonProperties(OptionsMenu.noButtonSound, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
-                    e -> handle(e), new ImageView(OptionsMenu.offImage));
+                    ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
             b.addHoverEffect(OptionsMenu.noButtonSound, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonSound)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonSound);
@@ -127,7 +89,7 @@ public class ElementsHandler {
 
         if (event.getSource() == OptionsMenu.noButtonSound) {
             b.setButtonProperties(OptionsMenu.yesButtonSound, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
-                    e -> handle(e), new ImageView(OptionsMenu.onImage));
+                    ElementsHandler::handle, new ImageView(OptionsMenu.onImage));
             b.addHoverEffect(OptionsMenu.yesButtonSound, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonSound)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonSound);
@@ -139,7 +101,7 @@ public class ElementsHandler {
         if (event.getSource() == OptionsMenu.yesButtonB) {
             options.setInitialBlockades(false);
             b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
-                    e -> handle(e), new ImageView(OptionsMenu.offImage));
+                    ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
             b.addHoverEffect(OptionsMenu.noButtonB, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonB)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonB);
@@ -150,7 +112,7 @@ public class ElementsHandler {
         if (event.getSource() == OptionsMenu.noButtonB) {
             options.setInitialBlockades(true);
             b.setButtonProperties(OptionsMenu.yesButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
-                    e -> handle(e), new ImageView(OptionsMenu.onImage));
+                    ElementsHandler::handle, new ImageView(OptionsMenu.onImage));
             b.addHoverEffect(OptionsMenu.yesButtonB, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonB)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonB);
@@ -221,6 +183,42 @@ public class ElementsHandler {
             sprite.setImage(ImageStore.imageBanshee);
             ((Unit) sprite.getEntity()).showTransition(false, false);
         }
+    }
+
+    private static void startGame()
+    {
+        // Create grid for the game we'll play
+        System.out.println("Start game");
+        GameRunTime gameRunTime = new GameRunTime();
+        engine = CoreEngine.Instance();
+        engine.setPaused(true);
+        Renderer.Instance().calculateSpacing();
+        System.out.println("Spacing calculated");
+        gameRunTime.startGame();
+        System.out.println("Game started");
+        MenuHandler.setMainGameScene();
+        System.out.println("Scene set");
+        new GameInterface();
+        System.out.println("Interface made");
+        MenuHandler.switchScene(MenuHandler.MAIN_GAME);
+        Renderer.Instance().initialDraw();
+        Thread unitSpawnerThread = new Thread(() -> {
+            GraphNode goal = BaseSpawner.Instance().getGoal();
+            while (goal == null) {
+                try {
+                    goal = BaseSpawner.Instance().getGoal();
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    LOG.log(Level.SEVERE, e.toString(), e);
+                }
+            }
+
+            LOG.log(Level.INFO, "GOAL found!!!");
+            UnitSpawner spawner = new UnitSpawner(2, goal);
+            CoreEngine.Instance().setSpawner(spawner);
+            engine.setPaused(false);
+        });
+        unitSpawnerThread.start();
     }
 }
 
