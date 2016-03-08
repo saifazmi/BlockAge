@@ -20,26 +20,21 @@ public class DepthFirstSearch {
      * @param endNode   node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
-    public static List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode) {
+    public static List<GraphNode> findPathFrom(GraphNode startNode, GraphNode endNode, boolean visit) {
 
         Stack<GraphNode> frontier = new Stack<>();
         ArrayList<GraphNode> visited = new ArrayList<>();
         LinkedHashMap<GraphNode, GraphNode> possiblePath = new LinkedHashMap<>();
         ArrayList<GraphNode> path = new ArrayList<>();
-
         GraphNode current;
         GraphNode parent;
-        possiblePath.clear();
-        visited.clear();
-        frontier.clear();
-        path.clear();
 
         frontier.push(startNode);
 
         while (!frontier.isEmpty()) {
             current = frontier.pop();
 
-            if (!visited.contains(current) && current.getBlockade() == null) {
+            if (!visited.contains(current) && (current.getBlockade() == null || current.getBlockade().isBreakable())) {
 
                 if (current.equals(endNode)) {
                     while (possiblePath.keySet().contains(current)) {
@@ -49,20 +44,15 @@ public class DepthFirstSearch {
                     }
 
                     Collections.reverse(path);
-                    return path;
-
+                    if (visit) {
+                        return visited;
+                    } else {
+                        return path;
+                    }
                 } else {
                     visited.add(current);
 
-                    current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(n -> frontier.push(n));
-                /*
-                        equivalent to:
-                    for (GraphNode n : current.getSuccessors()) {
-                        if (!visited.contains(n)) {
-                            frontier.push(n);
-                        }
-                    }
-                     */
+                    current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(frontier::push);
 
                     for (GraphNode successor : current.getSuccessors()) {
                         if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
