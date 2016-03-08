@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * @author : First created by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- *
+ * <p>
  * PRESET SIZE OF 10, 1 block for invisible spot
  */
 public class SortVisual {
@@ -26,17 +26,17 @@ public class SortVisual {
     public Pane sortPane;
 
     public SortVisual(int sortID) {
-        if(sortID<0 || sortID>2) {
+        if (sortID < 0 || sortID > 2) {
             LOG.log(Level.SEVERE, "WRONG INPUT (Expected 0-2)");
         }
         //prepare sortables
-        if(sortID == 0){ //bubble
+        if (sortID == 0) { //bubble
             sorts = BubbleSort.sort(10);
         }
-        if(sortID == 1){ //selection
+        if (sortID == 1) { //selection
             sorts = SelectionSort.sort(10);
         }
-        if(sortID == 2){ //quick
+        if (sortID == 2) { //quick
             QuickSort q = new QuickSort();
             sorts = q.sort(10); //most tentative one
         }
@@ -46,7 +46,7 @@ public class SortVisual {
         //make blocks
         blocks = new ArrayList<SortVisualBar>();
         for (double x = 0; x < 11; x++) {              //width  //height
-            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.LIGHTBLUE, (int) x-1); //-1 because extra invis block, so 1 holds 0...etc
+            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.LIGHTBLUE, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
             //attempting to reorder according to 0th sort state during creation
             block.relocate(10 + (x * 30), HEIGHT - (x * 15) - 50); //COMPLETE CORRECT COORDS   for reference not counting invis block, 40 70 100 130 160 190 220 250 280 310
             sortPane.getChildren().add(block);
@@ -58,14 +58,16 @@ public class SortVisual {
 
         //animatePath.play();
     }
+
     /**
      * Gets the block corresponding to the value
+     *
      * @param value
      * @return block
      */
-    public int findBlock(int value){ // assumed never input -1
-        for(int x=1; x<blocks.size();x++){ //-1 is invis
-            if(blocks.get(x).getValue() == value){
+    public int findBlock(int value) { // assumed never input -1
+        for (int x = 1; x < blocks.size(); x++) { //-1 is invis
+            if (blocks.get(x).getValue() == value) {
                 return x;
             }
         }
@@ -75,12 +77,12 @@ public class SortVisual {
     /**
      * Generates the SequentialTransition
      */
-    public void prepareTransitions(){
-        int count=0;
-        while(count<sorts.size()){
-            Tuple x = findSwapped(sorts.get(count),count);
-            if(x.getFirst() != -1 && x.getSecond() != -1){
-                swapTwo(findBlock(x.getFirst()),findBlock(x.getSecond())); //use findBlock to get block corresponding to logical value
+    public void prepareTransitions() {
+        int count = 0;
+        while (count < sorts.size()) {
+            Tuple x = findSwapped(sorts.get(count), count);
+            if (x.getFirst() != -1 && x.getSecond() != -1) {
+                swapTwo(findBlock(x.getFirst()), findBlock(x.getSecond())); //use findBlock to get block corresponding to logical value
             }
             count++;
         }
@@ -89,30 +91,33 @@ public class SortVisual {
 
     /**
      * Finds what needs to be swapped LOGICALLY
+     *
      * @param sortState
      * @param currentID
      * @return Tuple
      */
-    public Tuple findSwapped(SortableComponent sortState,int currentID){
-        int first=-1;//flag for no swap
-        int second=-1;
-        if(sortState.swapped) {
-            SortableComponent previous = sorts.get(currentID-1);
+    public Tuple findSwapped(SortableComponent sortState, int currentID) {
+        int first = -1;//flag for no swap
+        int second = -1;
+        if (sortState.swapped) {
+            SortableComponent previous = sorts.get(currentID - 1);
             for (int x = 0; x < sortState.getValue().size(); x++) {
-                if(first==-1 && previous.getValue().get(x) != sortState.getValue().get(x)){
+                if (first == -1 && previous.getValue().get(x) != sortState.getValue().get(x)) {
                     first = x; //0 is
                 }
-                if(previous.getValue().get(x) != sortState.getValue().get(x)){
+                if (previous.getValue().get(x) != sortState.getValue().get(x)) {
                     second = x;
                 }
             }
         }
-        return new Tuple(first,second);
+        return new Tuple(first, second);
     }
+
     /**
      * General Pattern:
      * Make transition, add to animatePath
      * USAGE: input blocks from 1-10
+     *
      * @param: int block1 first block id
      * @param: int block2 second block id
      */
@@ -152,7 +157,7 @@ public class SortVisual {
 
         TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
-        tx.setToX(- (oldSecondX - (oldX))  );//always left
+        tx.setToX(-(oldSecondX - (oldX)));//always left
         tx.setCycleCount(1);
 
         TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
@@ -168,7 +173,7 @@ public class SortVisual {
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
-        gx.setToX(oldSecondX-oldX);//old distance-  width - gap
+        gx.setToX(oldSecondX - oldX);//old distance-  width - gap
         gx.setCycleCount(1);
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));

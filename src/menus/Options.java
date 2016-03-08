@@ -1,5 +1,7 @@
 package menus;
 
+import sound.SoundManager;
+
 public class Options {
 
     private boolean showDescription = true;
@@ -36,6 +38,18 @@ public class Options {
         this.initialBlockades = initialBlockades;
     }
 
+    /**
+     * Turns the sound on or off
+     *
+     * @param sound - sets the sound on or off
+     */
+    public void setSound(boolean sound) {
+        if (sound == false) {
+            SoundManager.Instance().pauseSoundtrack();
+        } else {
+            SoundManager.Instance().startSoundtrack();
+        }
+    }
 
     /**
      * Gets if the description of a unit will be shown or not
@@ -63,5 +77,4 @@ public class Options {
     public boolean getInitialBlockades() {
         return initialBlockades;
     }
-
 }

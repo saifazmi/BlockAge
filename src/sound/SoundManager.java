@@ -69,7 +69,8 @@ public class SoundManager {
 
     public void pauseSoundtrack() {
         paused = true;
-        currentMPointer.getValue().pause();
+        soundtracks[0].getValue().pause();
+        //currentMPointer.getValue().pause();
     }
 
     public boolean isPaused() {

@@ -5,11 +5,9 @@ import gui.Renderer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 /**

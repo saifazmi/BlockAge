@@ -78,6 +78,7 @@ public class ElementsHandler {
         }
 
         if (event.getSource() == OptionsMenu.yesButtonSound) {
+            options.setSound(false);
             b.setButtonProperties(OptionsMenu.noButtonSound, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
             b.addHoverEffect(OptionsMenu.noButtonSound, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH);
@@ -88,6 +89,7 @@ public class ElementsHandler {
         }
 
         if (event.getSource() == OptionsMenu.noButtonSound) {
+            options.setSound(true);
             b.setButtonProperties(OptionsMenu.yesButtonSound, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle, new ImageView(OptionsMenu.onImage));
             b.addHoverEffect(OptionsMenu.yesButtonSound, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH);
@@ -120,15 +122,21 @@ public class ElementsHandler {
             }
         }
 
-        if (event.getSource() == OptionsMenu.backButton) {
+        if (event.getSource() == OptionsMenu.backButton && MenuHandler.lastScene == MenuHandler.MAIN_MENU) {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        }
+        if (event.getSource() == OptionsMenu.backButton && MenuHandler.lastScene == MenuHandler.PAUSE_MENU) {
+            MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
         }
         // End of elements from Options Menu scene
 
         // Elements from the Pause Menu scene
         if (event.getSource() == PauseMenu.backGameButton) {
-            //engine.setPaused(false);
+            CoreEngine.Instance().setPaused(false);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
+        }
+        if (event.getSource() == PauseMenu.optionsButton) {
+            MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
             engine.setRunning(false);
@@ -157,7 +165,7 @@ public class ElementsHandler {
                 } else {
                     engine.setPaused(true);
                 }
-            } else if (k == KeyCode.R) {
+            } else if (k == KeyCode.R && options.getShowPath() == true) {
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), false);
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {
@@ -185,8 +193,7 @@ public class ElementsHandler {
         }
     }
 
-    private static void startGame()
-    {
+    private static void startGame() {
         // Create grid for the game we'll play
         System.out.println("Start game");
         GameRunTime gameRunTime = new GameRunTime();

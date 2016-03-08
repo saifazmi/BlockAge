@@ -17,13 +17,11 @@ import sorts.SortableComponent;
 import sorts.Tuple;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author : First created by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- *
+ * <p>
  * TEST CLASS
  */
 //TODO: size stuff and shadowplay
@@ -39,16 +37,18 @@ public class TestVisualLive extends Application {
         sorts = BubbleSort.sort(10);
         Pane sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: black;");
-        sortPane.setPrefSize(WIDTH,HEIGHT);
+        sortPane.setPrefSize(WIDTH, HEIGHT);
         //make blocks
         blocks = new ArrayList<SortVisualBar>();
         for (double x = 0; x < 11; x++) {              //width  //height
-            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.RED, (int) x-1); //-1 because extra invis block, so 1 holds 0...etc
+            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.RED, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
             int loc = 40;
-            if(x!=0){int pos = find(x-1);
-                    System.out.println(pos);
-                     loc = 40 + (30*pos);}
-            if(x==0) loc=10;
+            if (x != 0) {
+                int pos = find(x - 1);
+                System.out.println(pos);
+                loc = 40 + (30 * pos);
+            }
+            if (x == 0) loc = 10;
             block.relocate(loc, HEIGHT - (x * 15) - 50); //trying to make it state0
 
             sortPane.getChildren().add(block);
@@ -65,16 +65,18 @@ public class TestVisualLive extends Application {
         playSeq();
     }
 
-    public void playSeq(){
+    public void playSeq() {
 
     }
+
     public static void main(String[] args) {
         Application.launch(args);
     }
-    private int find(double s){
+
+    private int find(double s) {
         ArrayList<Integer> state = sorts.get(0).getValue();
-        for(int x=0;x<state.size();x++){
-            if(state.get(x) == s){
+        for (int x = 0; x < state.size(); x++) {
+            if (state.get(x) == s) {
                 return x;
             }
         }
@@ -83,12 +85,13 @@ public class TestVisualLive extends Application {
 
     /**
      * Gets the block corresponding to the value
+     *
      * @param value
      * @return block
      */
-    public int findBlock(int value){ // assumed never input -1
-        for(int x=1; x<blocks.size();x++){ //-1 is invis
-            if(blocks.get(x).getValue() == value){
+    public int findBlock(int value) { // assumed never input -1
+        for (int x = 1; x < blocks.size(); x++) { //-1 is invis
+            if (blocks.get(x).getValue() == value) {
                 return x;
             }
         }
@@ -98,12 +101,12 @@ public class TestVisualLive extends Application {
     /**
      * Generates the SequentialTransition
      */
-    public void prepareTransitions(){
-        int count=0;
-        while(count<sorts.size()){
-            Tuple x = findSwapped(sorts.get(count),count);
-            if(x.getFirst() != -1 && x.getSecond() != -1){
-                swapTwo(findBlock(x.getFirst()),findBlock(x.getSecond())); //use findBlock to get block corresponding to logical value
+    public void prepareTransitions() {
+        int count = 0;
+        while (count < sorts.size()) {
+            Tuple x = findSwapped(sorts.get(count), count);
+            if (x.getFirst() != -1 && x.getSecond() != -1) {
+                swapTwo(findBlock(x.getFirst()), findBlock(x.getSecond())); //use findBlock to get block corresponding to logical value
             }
             count++;
         }
@@ -112,30 +115,33 @@ public class TestVisualLive extends Application {
 
     /**
      * Finds what needs to be swapped LOGICALLY
+     *
      * @param sortState
      * @param currentID
      * @return Tuple
      */
-    public Tuple findSwapped(SortableComponent sortState,int currentID){
-        int first=-1;//flag for no swap
-        int second=-1;
-        if(sortState.swapped) {
-            SortableComponent previous = sorts.get(currentID-1);
+    public Tuple findSwapped(SortableComponent sortState, int currentID) {
+        int first = -1;//flag for no swap
+        int second = -1;
+        if (sortState.swapped) {
+            SortableComponent previous = sorts.get(currentID - 1);
             for (int x = 0; x < sortState.getValue().size(); x++) {
-                if(first==-1 && previous.getValue().get(x) != sortState.getValue().get(x)){
+                if (first == -1 && previous.getValue().get(x) != sortState.getValue().get(x)) {
                     first = x; //0 is
                 }
-                if(previous.getValue().get(x) != sortState.getValue().get(x)){
+                if (previous.getValue().get(x) != sortState.getValue().get(x)) {
                     second = x;
                 }
             }
         }
-        return new Tuple(first,second);
+        return new Tuple(first, second);
     }
+
     /**
      * General Pattern:
      * Make transition, add to animatePath
      * USAGE: input blocks from 1-10
+     *
      * @param: int block1 first block id
      * @param: int block2 second block id
      */
@@ -175,7 +181,7 @@ public class TestVisualLive extends Application {
 
         TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
-        tx.setToX(- (oldSecondX - (oldX))  );//always left
+        tx.setToX(-(oldSecondX - (oldX)));//always left
         tx.setCycleCount(1);
 
         TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
@@ -191,7 +197,7 @@ public class TestVisualLive extends Application {
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
-        gx.setToX(oldSecondX-oldX);//old distance-  width - gap
+        gx.setToX(oldSecondX - oldX);//old distance-  width - gap
         gx.setCycleCount(1);
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
@@ -203,16 +209,16 @@ public class TestVisualLive extends Application {
             public void handle(ActionEvent event) {
 
 
-                if(block1!=10){
-                    b1.relocate(oldSecondX,b1.getLayoutY());
-                    b2.relocate(oldX,b2.getLayoutY());
+                if (block1 != 10) {
+                    b1.relocate(oldSecondX, b1.getLayoutY());
+                    b2.relocate(oldX, b2.getLayoutY());
                     playSeq();
 
                 }
             }
         });
 
-        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty,ttx,txx,ty,tx,txt,gy,gx,gyy);
+        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
     }
 
 }

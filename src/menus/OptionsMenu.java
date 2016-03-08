@@ -30,7 +30,7 @@ public class OptionsMenu implements Menu {
     public static Pane optionsMenuPane = null;
 
     private Scene optionsMenuScene = null;
-    private Label hintsLabel, soundLabel, blockadeLabel = null;
+    private Label searchLabel, soundLabel, blockadeLabel = null;
     private LabelProperties l = null;
     private ButtonProperties b = null;
 
@@ -50,7 +50,7 @@ public class OptionsMenu implements Menu {
         noButtonB = new Button();
         backButton = new Button();
 
-        hintsLabel = new Label();
+        searchLabel = new Label();
         soundLabel = new Label();
         blockadeLabel = new Label();
 
@@ -78,9 +78,9 @@ public class OptionsMenu implements Menu {
         double xPos2 = Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4;
         double yPos1 = Menu.HEIGHT / 3;
         // Set properties for the on/off SEARCH button
-        b.setButtonProperties(noButtonSearch, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3,
-                ElementsHandler::handle, new ImageView(offImage));
-        b.addHoverEffect(noButtonSearch, offImageHovered, offImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3);
+        b.setButtonProperties(yesButtonSearch, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3,
+                ElementsHandler::handle, new ImageView(onImage));
+        b.addHoverEffect(yesButtonSearch, onImageHovered, onImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3);
 
         // Set properties for the on/off SOUND button
         b.setButtonProperties(noButtonSound, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH,
@@ -88,9 +88,9 @@ public class OptionsMenu implements Menu {
         b.addHoverEffect(noButtonSound, offImageHovered, offImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH);
 
         // Set properties for the on/off BLOCKADES button
-        b.setButtonProperties(noButtonB, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
-                ElementsHandler::handle, new ImageView(offImage));
-        b.addHoverEffect(noButtonB, offImageHovered, offImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH);
+        b.setButtonProperties(yesButtonB, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
+                ElementsHandler::handle, new ImageView(onImage));
+        b.addHoverEffect(yesButtonB, onImageHovered, onImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH);
 
         // Set properties for the back button
         b.setButtonProperties(backButton, "", Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4, Menu.HEIGHT / 1.2,
@@ -98,12 +98,12 @@ public class OptionsMenu implements Menu {
         b.addHoverEffect(backButton, backImageHovered, backImage, Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4, Menu.HEIGHT / 1.2);
 
         // Set labels with images
-        l.setLabelProperties(hintsLabel, "", Menu.WIDTH / 1.75 - showSearchImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3, new ImageView(showSearchImage));
+        l.setLabelProperties(searchLabel, "", Menu.WIDTH / 1.75 - showSearchImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3, new ImageView(showSearchImage));
         l.setLabelProperties(soundLabel, "", Menu.WIDTH / 1.75 - soundImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH, new ImageView(soundImage));
         l.setLabelProperties(blockadeLabel, "", Menu.WIDTH / 1.75 - blockadeImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH, new ImageView(blockadeImage));
 
         // To do sound configurations for button as well
-        optionsMenuPane.getChildren().addAll(hintsLabel, soundLabel, blockadeLabel, noButtonSearch, noButtonSound, noButtonB, backButton);
+        optionsMenuPane.getChildren().addAll(searchLabel, soundLabel, blockadeLabel, yesButtonSearch, noButtonSound, yesButtonB, backButton);
         BackgroundImage myBI = new BackgroundImage(ImageStore.backgroundOptionsMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         optionsMenuPane.setBackground(new Background(myBI));

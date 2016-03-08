@@ -11,7 +11,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.SortVisual;
 import sorts.SortVisualBar;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class TestVisual extends Application {
         stage.sizeToScene();
         stage.show();
         // trying to move block
-        swapFF(3,10);
+        swapFF(3, 10);
 
 
     }
@@ -101,7 +100,7 @@ public class TestVisual extends Application {
 
         TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
-        tx.setToX(- (oldSecondX - (oldX))  );//always left
+        tx.setToX(-(oldSecondX - (oldX)));//always left
         tx.setCycleCount(1);
 
         TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
@@ -117,7 +116,7 @@ public class TestVisual extends Application {
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
-        gx.setToX(oldSecondX-oldX);//old distance-  width - gap
+        gx.setToX(oldSecondX - oldX);//old distance-  width - gap
         gx.setCycleCount(1);
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
@@ -129,16 +128,16 @@ public class TestVisual extends Application {
             public void handle(ActionEvent event) {
 
 
-                if(block1!=10){
-                    b1.relocate(oldSecondX,b1.getLayoutY());
-                    b2.relocate(oldX,b2.getLayoutY());
-                    swapFF(10,3);
+                if (block1 != 10) {
+                    b1.relocate(oldSecondX, b1.getLayoutY());
+                    b2.relocate(oldX, b2.getLayoutY());
+                    swapFF(10, 3);
 
                 }
             }
         });
 
-        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty,ttx,txx,ty,tx,txt,gy,gx,gyy);
+        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.play();
 
     }

@@ -9,11 +9,12 @@ public class Tuple {
     private int second;
 
 
-    public Tuple(int first, int second){
+    public Tuple(int first, int second) {
         this.first = first;
         this.second = second;
 
     }
+
     public int getSecond() {
         return second;
     }
@@ -21,6 +22,7 @@ public class Tuple {
     public void setSecond(int second) {
         this.second = second;
     }
+
     public int getFirst() {
         return first;
     }

@@ -2,7 +2,15 @@ package searches;
 
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
@@ -46,12 +54,9 @@ public class AStar {
                 ArrayList<GraphNode> pathList = new ArrayList<>(); // make list, add goal first
                 if (start == goal) {
                     //@TODO
-                    if(visit)
-                    {
+                    if (visit) {
                         return new ArrayList<>(visited);
-                    }
-                    else
-                    {
+                    } else {
                         pathList.add(start);
                         return pathList;
                     }
@@ -66,12 +71,9 @@ public class AStar {
                     }
                     // pathList.add(start);		//add first
                     Collections.reverse(pathList);
-                    if(visit)
-                    {
+                    if (visit) {
                         return new ArrayList<>(visited);
-                    }
-                    else
-                    {
+                    } else {
                         return pathList;
                     }
                 }

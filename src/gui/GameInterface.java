@@ -2,7 +2,6 @@ package gui;
 
 import core.GameRunTime;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import sceneElements.ButtonProperties;
@@ -29,14 +29,17 @@ import java.io.InputStream;
  */
 public class GameInterface {
     private Scene scene = GameRunTime.Instance().getScene();
-    public static Button fileButton, fileExitButton, helpButton, playButton, pauseButton, unsortableButton, sortableButton;
-    public static TextArea unitDescriptionText, textInfoText, algorithmVisualisationText, sortVisualisationText;
     public static int bottomPaneHeight = 0;
     public static int rightPaneWidth = 324;
+
+    public static Button playButton, pauseButton, unsortableButton, sortableButton;
+    public static TextArea unitDescriptionText;
     public static Font bellotaFont;
-    private Label unitDescriptionLabel, textInfoLabel, algorithmVisualisationLabel, sortVisualisationLabel, blockadesLabel, sortLabel;
-    private HBox bottomMenuBox, rightMenuPlayPause, sortingBox;
-    private VBox rightMenuBox, unitBox, textBox;
+
+    private Label unitDescriptionLabel, sortVisualisationLabel, blockadesLabel, sortLabel;
+    private HBox rightMenuPlayPause, sortingBox;
+    private VBox rightMenuBox, unitBox;
+    private Pane sortVisualisationPane;
     private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
     private ButtonProperties b;
     private static String SEPARATOR = File.separator;
@@ -45,7 +48,6 @@ public class GameInterface {
         loadFont();
         declareElements();
         rightPane();
-        bottomPane();
     }
 
     /**
@@ -64,29 +66,21 @@ public class GameInterface {
      */
     public void declareElements() {
         //HBoxes
-        bottomMenuBox = new HBox();
         rightMenuPlayPause = new HBox();
         sortingBox = new HBox();
         //VBoxes
         rightMenuBox = new VBox();
         unitBox = new VBox();
-        textBox = new VBox();
         //Labels
         unitDescriptionLabel = new Label();
-        textInfoLabel = new Label();
-        algorithmVisualisationLabel = new Label();
         sortVisualisationLabel = new Label();
         blockadesLabel = new Label();
         sortLabel = new Label();
         //Text Areas
         unitDescriptionText = new TextArea();
-        textInfoText = new TextArea();
-        algorithmVisualisationText = new TextArea();
+        //Panes
+        sortVisualisationPane = new Pane();
         //Buttons
-        sortVisualisationText = new TextArea();
-
-        fileButton = new Button();
-        helpButton = new Button();
         playButton = new Button();
         pauseButton = new Button();
         unsortableButton = new Button();
@@ -100,35 +94,6 @@ public class GameInterface {
         unsortableImage = ImageStore.unsortableImage2;
         sortableImage = ImageStore.sortableImage2;
 
-    }
-
-    /**
-     * Constructs the bottom Pane of the scene
-     */
-    public void bottomPane() {
-        textInfoLabel.setText("Text Info");
-        textInfoLabel.setFont(bellotaFont);
-        textInfoText.setPrefSize(300, 80);
-        textInfoText.setEditable(false);
-
-        // Set the properties for the play button
-        b.setButtonProperties(playButton, "", 0, 0, ElementsHandler::handle, new ImageView(playImage));
-        b.addHoverEffect(playButton, playImageHovered, playImage, 0, 0);
-
-        // Set the properties for the pause button
-        b.setButtonProperties(pauseButton, "", 0, 0, ElementsHandler::handle, new ImageView(pauseImage));
-        b.addHoverEffect(pauseButton, pauseImageHovered, pauseImage, 0, 0);
-
-
-        textBox.getChildren().addAll(textInfoLabel, textInfoText);
-        textBox.setAlignment(Pos.TOP_LEFT);
-        rightMenuPlayPause.getChildren().addAll(playButton, pauseButton);
-        bottomMenuBox.setAlignment(Pos.CENTER);
-        //bottomMenuBox.getChildren().addAll(textBox, rightMenuPlayPause);
-        bottomMenuBox.setSpacing(20);
-
-        BorderPane.setMargin(bottomMenuBox, new Insets(12, 12, 12, 12));
-        ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setBottom(bottomMenuBox);
     }
 
     /**
@@ -146,13 +111,23 @@ public class GameInterface {
         //SORT VISUALISATION PANE
         sortVisualisationLabel.setText("Sort Visualisation");
         sortVisualisationLabel.setFont(bellotaFont);
-        sortVisualisationText.setPrefSize(200, 150);
-        sortVisualisationText.setEditable(false);
+        sortVisualisationPane.setPrefSize(200, 150);
+        sortVisualisationPane.setStyle("-fx-border-color: gray");
+
+        // Set the properties for the play button
+        b.setButtonProperties(playButton, "", 0, 0, ElementsHandler::handle, new ImageView(playImage));
+        b.addHoverEffect(playButton, playImageHovered, playImage, 0, 0);
+
+        // Set the properties for the pause button
+        b.setButtonProperties(pauseButton, "", 0, 0, ElementsHandler::handle, new ImageView(pauseImage));
+        b.addHoverEffect(pauseButton, pauseImageHovered, pauseImage, 0, 0);
+
+        rightMenuPlayPause.getChildren().addAll(playButton, pauseButton);
 
         blockadesLabel.setText("Blockades");
         blockadesLabel.setFont(bellotaFont);
 
-        sortLabel.setText("Error");
+        sortLabel.setText("");
         sortLabel.setFont(bellotaFont);
 
         // Set the properties for the unsortable button
@@ -168,7 +143,7 @@ public class GameInterface {
 
         // add everything to the pane
         sortingBox.getChildren().addAll(unsortableButton, sortableButton);
-        rightMenuBox.getChildren().addAll(unitBox, sortVisualisationLabel, sortVisualisationText, rightMenuPlayPause, blockadesLabel, sortingBox);
+        rightMenuBox.getChildren().addAll(unitBox, sortVisualisationLabel, sortVisualisationPane, rightMenuPlayPause, blockadesLabel, sortingBox);
         rightMenuBox.setSpacing(10);
         BorderPane.setMargin(rightMenuBox, new Insets(12, 12, 12, 12));
         ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenuBox);

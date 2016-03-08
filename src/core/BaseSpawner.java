@@ -6,7 +6,6 @@ import entity.SortableBlockade;
 import graph.Graph;
 import graph.GraphNode;
 import gui.Renderer;
-import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
 import stores.ImageStore;
@@ -25,7 +24,7 @@ public class BaseSpawner {
     private Renderer renderer = Renderer.Instance();
     private GameRunTime runTime = GameRunTime.Instance();
     private GraphNode goal;
-    
+
     private static BaseSpawner instance = null;
 
     public static BaseSpawner Instance() {
