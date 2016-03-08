@@ -1,12 +1,8 @@
 package entity;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import gui.Renderer;
 import graph.Graph;
 import graph.GraphNode;
+import gui.Renderer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
@@ -18,6 +14,10 @@ import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
@@ -220,25 +220,40 @@ public class Unit extends Entity {
                     transition.setToX(nextPixelX);
                     transition.setToY(nextPixelY);
                     transition.setOnFinished(e -> this.completedMove = true);
-                    double rotate = 0;
-                    if(xChange == 1)
-                    {
-                        rotate = 270;
-                    }
-                    else if (xChange == -1)
-                    {
-                        rotate = 90;
-                    }
-                    if(yChange == 1)
-                    {
-                        rotate = 0;
-                    }
-                    else if(yChange == -1)
-                    {
-                        rotate = 180;
-                    }
-                    this.getSprite().setRotate(rotate);
                     transition.play();
+                } else {
+                    decideRoute();
+                    nextNode = null;
+                    this.completedMove = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * for testing
+     */
+    public void updateTest() {
+        if (completedMove) {
+
+            LOG.log(Level.INFO, "completed move");
+            if (this.nextNode != null) {
+                LOG.log(Level.INFO, "next node is " + this.nextNode);
+                this.position = this.nextNode;
+            }
+            if (route.size() > 0) {
+                this.completedMove = false;
+                this.nextNode = this.route.remove(0);
+                int x = this.nextNode.getX();
+                int y = this.nextNode.getY();
+                int xChange = this.nextNode.getX() - this.position.getX();
+                int yChange = this.nextNode.getY() - this.position.getY();
+                //if (xChange + yChange > 1 || xChange + yChange < -1) {
+                //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
+                //           "Fatal error, check search implementation: " + this.search.toString());
+                //   return;
+                //}
+                if (logicalMove(xChange, yChange)) {
                 } else {
                     decideRoute();
                     nextNode = null;
@@ -257,20 +272,25 @@ public class Unit extends Entity {
      */
     private boolean logicalMove(int xChange, int yChange) {
         boolean success;
-
+        double rotate;
         if (xChange == 0) {
             if (yChange > 0) {
                 success = moveDown();
+                rotate = 0;
             } else {
                 success = moveUp();
+                rotate = 180;
             }
         } else {
             if (xChange > 0) {
                 success = moveRight();
+                rotate = 270;
             } else {
                 success = moveLeft();
+                rotate = 90;
             }
         }
+        this.getSprite().setRotate(rotate);
         return success;
     }
 
@@ -282,9 +302,9 @@ public class Unit extends Entity {
         } else if (search == Search.BFS) {
             route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal, false);
         } else {
-            route = AStar.search(getPosition(), this.goal);
+            route = AStar.search(getPosition(), this.goal, false);
         }
-        System.out.println(route);
+        LOG.log(Level.INFO, route.toString());
     }
 
     /**

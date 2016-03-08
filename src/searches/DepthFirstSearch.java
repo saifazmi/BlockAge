@@ -45,6 +45,7 @@ public class DepthFirstSearch {
 
                     Collections.reverse(path);
                     if (visit) {
+                        visited.add(endNode);
                         return visited;
                     } else {
                         return path;

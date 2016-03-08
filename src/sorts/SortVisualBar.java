@@ -10,6 +10,16 @@ import javafx.scene.shape.Rectangle;
 public class SortVisualBar extends Rectangle {
     private int value;
 
+    public int getLogicalPosition() {
+        return logicalPosition;
+    }
+
+    public void setLogicalPosition(int logicalPosition) {
+        this.logicalPosition = logicalPosition;
+    }
+
+    private int logicalPosition;
+
     public SortVisualBar(double width, double height, Paint fill, int value) {
         super(width, height, fill);
         this.value = value;

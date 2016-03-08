@@ -9,8 +9,8 @@ import gui.Renderer;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
-import sceneElements.Images;
 import sceneElements.SpriteImage;
+import stores.ImageStore;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,6 +38,7 @@ public class UnitSpawner {
     private String[] names;
     private String[] descriptions;
     private int cooldown = 60;
+
 
     private static UnitSpawner instance;
 
@@ -80,11 +81,11 @@ public class UnitSpawner {
         Image image;
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
-            image = Images.imageDemon;
+            image = ImageStore.imageDemon;
         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            image = Images.imageDk;
+            image = ImageStore.imageDk;
         } else {
-            image = Images.imageBanshee;
+            image = ImageStore.imageBanshee;
         }
         SpriteImage sprite = new SpriteImage(image, null);
         Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
@@ -104,11 +105,11 @@ public class UnitSpawner {
                                 "Sort:      " + Unit.Sort.values()[index]);
                         // sets the image pressed for each unit accordingly to the search
                         if (Unit.Search.values()[index] == Unit.Search.BFS) {
-                            sprite.setImage(Images.imagePressedDemon);
+                            sprite.setImage(ImageStore.imagePressedDemon);
                         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-                            sprite.setImage(Images.imagePressedDk);
+                            sprite.setImage(ImageStore.imagePressedDk);
                         } else {
-                            sprite.setImage(Images.imagePressedBanshee);
+                            sprite.setImage(ImageStore.imagePressedBanshee);
                         }
                         //((Unit) unit1).showTransition();
                     } else {

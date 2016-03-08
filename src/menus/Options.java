@@ -43,14 +43,13 @@ public class Options {
      *
      * @param sound - sets the sound on or off
      */
-	public void setSound(boolean sound) {
-		if(sound == false) {
+    public void setSound(boolean sound) {
+        if (sound == false) {
             SoundManager.Instance().pauseSoundtrack();
-		}
-		else {
-			SoundManager.Instance().startSoundtrack();
-		}
-	}
+        } else {
+            SoundManager.Instance().startSoundtrack();
+        }
+    }
 
     /**
      * Gets if the description of a unit will be shown or not

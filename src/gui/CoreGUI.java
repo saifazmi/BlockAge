@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 public class CoreGUI extends Application {
 
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
+    public static final int HEIGHT = 720;
+    public static final int WIDTH = 1280;
 
     public static void main(String[] args) {
         launch(args);
@@ -22,7 +24,7 @@ public class CoreGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        MenuHandler menuHandler = new MenuHandler(primaryStage);
+        new MenuHandler(primaryStage);
         MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         primaryStage.setOnCloseRequest(e -> {
             CoreEngine engine = CoreEngine.Instance();
@@ -33,13 +35,5 @@ public class CoreGUI extends Application {
             System.exit(0);
         });
         primaryStage.show();
-    }
-
-    public static int getHEIGHT() {
-        return 720;
-    }
-
-    public static int getWIDTH() {
-        return 1280;
     }
 }

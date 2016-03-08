@@ -15,7 +15,7 @@ Knows Bugs
 ----------
 #### Base Spawner
 - ~~Base can be placed anywhere (on blockades, off of grid etc)~~
-- Base defence rendering outside the grid in edge cases.
+- ~~Base defence rendering outside the grid in edge cases.~~
 
 #### Breadth First Search
 - ~~Occasionally can't find a route even though routes are possible.~~
@@ -28,6 +28,7 @@ Knows Bugs
 
 #### Unit  
 - Transitions don't work if unit doesn't spawn at (0,0)
+- If boxed in the unit stops moving and the game crashes.
 
 #### Renderer  
 - ~~Route lines don't draw from the route start, but from the 2nd node~~

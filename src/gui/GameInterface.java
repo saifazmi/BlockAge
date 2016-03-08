@@ -2,7 +2,6 @@ package gui;
 
 import core.GameRunTime;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -16,10 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import lambdastorage.LambdaStore;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.Images;
+import stores.ImageStore;
+import stores.LambdaStore;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,11 +31,11 @@ public class GameInterface {
     private Scene scene = GameRunTime.Instance().getScene();
     public static int bottomPaneHeight = 0;
     public static int rightPaneWidth = 324;
-    
+
     public static Button playButton, pauseButton, unsortableButton, sortableButton;
     public static TextArea unitDescriptionText;
     public static Font bellotaFont;
-    
+
     private Label unitDescriptionLabel, sortVisualisationLabel, blockadesLabel, sortLabel;
     private HBox rightMenuPlayPause, sortingBox;
     private VBox rightMenuBox, unitBox;
@@ -55,7 +54,7 @@ public class GameInterface {
      * Loads the font for labels/buttons
      */
     public void loadFont() {
-        InputStream fontStream = GameInterface.class.getResourceAsStream("../" + SEPARATOR + "fonts" + SEPARATOR + "Bellota-Bold.otf");
+        InputStream fontStream = GameInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "Bellota-Bold.otf");
         if (fontStream == null) {
             System.out.println("No font at that path");
         }
@@ -88,12 +87,13 @@ public class GameInterface {
         sortableButton = new Button();
         b = new ButtonProperties();
         //Images
-        playImage = Images.playImage;
-        playImageHovered = Images.playImageHovered;
-        pauseImage = Images.pauseImage;
-        pauseImageHovered = Images.pauseImageHovered;
-        unsortableImage = Images.unsortableImage2;
-        sortableImage = Images.sortableImage2;
+        playImage = ImageStore.playImage;
+        playImageHovered = ImageStore.playImageHovered;
+        pauseImage = ImageStore.pauseImage;
+        pauseImageHovered = ImageStore.pauseImageHovered;
+        unsortableImage = ImageStore.unsortableImage2;
+        sortableImage = ImageStore.sortableImage2;
+
     }
 
     /**
@@ -113,7 +113,7 @@ public class GameInterface {
         sortVisualisationLabel.setFont(bellotaFont);
         sortVisualisationPane.setPrefSize(200, 150);
         sortVisualisationPane.setStyle("-fx-border-color: gray");
-        
+
         // Set the properties for the play button
         b.setButtonProperties(playButton, "", 0, 0, ElementsHandler::handle, new ImageView(playImage));
         b.addHoverEffect(playButton, playImageHovered, playImage, 0, 0);
@@ -121,7 +121,7 @@ public class GameInterface {
         // Set the properties for the pause button
         b.setButtonProperties(pauseButton, "", 0, 0, ElementsHandler::handle, new ImageView(pauseImage));
         b.addHoverEffect(pauseButton, pauseImageHovered, pauseImage, 0, 0);
-        
+
         rightMenuPlayPause.getChildren().addAll(playButton, pauseButton);
 
         blockadesLabel.setText("Blockades");

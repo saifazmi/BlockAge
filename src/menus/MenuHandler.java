@@ -63,10 +63,10 @@ public class MenuHandler {
 
         sceneList[scene].getRoot().setVisible(true);
         sceneList[scene].getRoot().setDisable(false);
-        
+
         lastScene = currentScene;
         currentScene = scene;
-        
+
         primaryStage.setScene(sceneList[scene]);
     }
 }

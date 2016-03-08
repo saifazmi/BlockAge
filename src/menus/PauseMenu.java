@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
-import sceneElements.Images;
+import stores.ImageStore;
 
 /**
  * @author : First created by Paul Popa with code by Paul Popa
@@ -33,12 +33,13 @@ public class PauseMenu implements Menu {
         optionsButton = new Button();
         backMainButton = new Button();
         b = new ButtonProperties();
-        backGameImage = Images.backGameImage;
-        backGameImageHovered = Images.backGameImageHovered;
-        optionsImage = Images.optionsImage;
-        optionsImageHovered = Images.optionsImageHovered;
-        backMainImage = Images.backMainImage;
-        backMainImageHovered = Images.backMainImageHovered;
+
+        backGameImage = ImageStore.backGameImage;
+        backGameImageHovered = ImageStore.backGameImageHovered;
+        optionsImage = ImageStore.optionsImage;
+        optionsImageHovered = ImageStore.optionsImageHovered;
+        backMainImage = ImageStore.backMainImage;
+        backMainImageHovered = ImageStore.backMainImageHovered;
     }
 
     public void initialiseScene() {
@@ -50,9 +51,9 @@ public class PauseMenu implements Menu {
         b.addHoverEffect(backGameButton, backGameImageHovered, backGameImage, Menu.WIDTH / 2 - backGameImage.getWidth() / 2, Menu.HEIGHT / 3);
 
         int spaceBetweenImgH = 70;
-        b.setButtonProperties(optionsButton, "", Menu.WIDTH / 2 - optionsImage.getWidth() / 2,  Menu.HEIGHT/ 3 + spaceBetweenImgH,
-        		ElementsHandler::handle, new ImageView(optionsImage));
-        b.addHoverEffect(optionsButton, optionsImageHovered, optionsImage, Menu.WIDTH / 2 - optionsImage.getWidth() / 2,  Menu.HEIGHT/ 3 + spaceBetweenImgH);
+        b.setButtonProperties(optionsButton, "", Menu.WIDTH / 2 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH,
+                ElementsHandler::handle, new ImageView(optionsImage));
+        b.addHoverEffect(optionsButton, optionsImageHovered, optionsImage, Menu.WIDTH / 2 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH);
         b.setButtonProperties(backMainButton, "", Menu.WIDTH / 2 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 ElementsHandler::handle, new ImageView(backMainImage));
         b.addHoverEffect(backMainButton, backMainImageHovered, backMainImage, Menu.WIDTH / 2 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH);
