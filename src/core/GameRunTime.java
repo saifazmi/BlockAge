@@ -71,7 +71,7 @@ public class GameRunTime {
     }
 
     public void startGame() {
-        new BaseSpawner();
+        BaseSpawner.Instance();
     }
 
     // to notify the placement of the base
