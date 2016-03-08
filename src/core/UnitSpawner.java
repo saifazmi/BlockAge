@@ -81,11 +81,11 @@ public class UnitSpawner {
         Image image;
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
-            image = ImageStore.imageDemon;
+        	image = ImageStore.imageDemon;
         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            image = ImageStore.imageDk;
+        	image = ImageStore.imageDk;
         } else {
-            image = ImageStore.imageBanshee;
+        	image = ImageStore.imageBanshee;
         }
         SpriteImage sprite = new SpriteImage(image, null);
         Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
@@ -105,11 +105,11 @@ public class UnitSpawner {
                                 "Sort:      " + Unit.Sort.values()[index]);
                         // sets the image pressed for each unit accordingly to the search
                         if (Unit.Search.values()[index] == Unit.Search.BFS) {
-                            sprite.setImage(ImageStore.imagePressedDemon);
+                        	sprite.setImage(ImageStore.imagePressedDemon);
                         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-                            sprite.setImage(ImageStore.imagePressedDk);
+                        	sprite.setImage(ImageStore.imagePressedDk);
                         } else {
-                            sprite.setImage(ImageStore.imagePressedBanshee);
+                        	sprite.setImage(ImageStore.imagePressedBanshee);
                         }
                         //((Unit) unit1).showTransition();
                     } else {
