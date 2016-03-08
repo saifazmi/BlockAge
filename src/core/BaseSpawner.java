@@ -49,6 +49,7 @@ public class BaseSpawner {
             // generate 100 random blockades.
             spawnBlockades(100);
             runTime.getScene().setOnMouseClicked(null);
+            generated = true;
         });
 
     }

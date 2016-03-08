@@ -42,6 +42,7 @@ public class AStar {
             GraphNode n = pending.poll();// dequeue with smallest f value;
 
             if (n.equals(goal)) {
+                visited.add(n);
                 ArrayList<GraphNode> pathList = new ArrayList<>(); // make list, add goal first
                 if (start == goal) {
                     //@TODO
@@ -65,7 +66,14 @@ public class AStar {
                     }
                     // pathList.add(start);		//add first
                     Collections.reverse(pathList);
-                    return pathList;
+                    if(visit)
+                    {
+                        return new ArrayList<>(visited);
+                    }
+                    else
+                    {
+                        return pathList;
+                    }
                 }
 
             }
