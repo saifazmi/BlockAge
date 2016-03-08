@@ -3,12 +3,15 @@ package test;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sorts.SortVisual;
 import sorts.SortVisualBar;
 
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ public class TestVisual extends Application {
         stage.sizeToScene();
         stage.show();
         // trying to move block
-        swapFF(1,10);
+        swapFF(3,10);
 
 
     }
@@ -64,10 +67,10 @@ public class TestVisual extends Application {
      */
     public void swapFF(int block1, int block2) {
 
-        double oldY = blocks.get(block1).getLayoutY();
-        double oldX = blocks.get(block1).getLayoutX();
+        SortVisualBar b1 = blocks.get(block1);
+        SortVisualBar b2 = blocks.get(block2);
 
-        double oldSecondY = blocks.get(block2).getLayoutY();
+        double oldX = blocks.get(block1).getLayoutX();
         double oldSecondX = blocks.get(block2).getLayoutX();
 
         System.out.println(oldX);
@@ -121,6 +124,21 @@ public class TestVisual extends Application {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
         gyy.setCycleCount(1);
+        gyy.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+
+                if(block1!=10){
+                    //b1.setLayoutX(oldX-oldSecondX);
+                    //b2.setLayoutX(oldSecondX+oldX);
+                    b1.relocate(310,b1.getLayoutY());
+                    b2.relocate(100,b2.getLayoutY());
+                    swapFF(10,3);
+
+                }
+            }
+        });
 
         SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty,ttx,txx,ty,tx,txt,gy,gx,gyy);
         seq.play();
