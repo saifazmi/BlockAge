@@ -3,6 +3,8 @@ package test;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -24,22 +26,24 @@ import java.util.logging.Logger;
  *
  * TEST CLASS
  */
+//TODO: size stuff and shadowplay
 public class TestVisualLive extends Application {
     public int HEIGHT = 300;
     public int WIDTH = 400;
     private static ArrayList<SortVisualBar> blocks;
     private ArrayList<SortableComponent> sorts;
-    public SequentialTransition animatePath;
+    private ArrayList<SequentialTransition> seq;
 
     public void start(Stage stage) {
+        seq = new ArrayList<SequentialTransition>();
         sorts = BubbleSort.sort(10);
         Pane sortPane = new Pane();
-        sortPane.setStyle("-fx-background-color: white;");
+        sortPane.setStyle("-fx-background-color: black;");
         sortPane.setPrefSize(WIDTH,HEIGHT);
         //make blocks
         blocks = new ArrayList<SortVisualBar>();
         for (double x = 0; x < 11; x++) {              //width  //height
-            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.LIGHTBLUE, (int) x-1); //-1 because extra invis block, so 1 holds 0...etc
+            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.RED, (int) x-1); //-1 because extra invis block, so 1 holds 0...etc
             int loc = 40;
             if(x!=0){int pos = find(x-1);
                     System.out.println(pos);
@@ -50,7 +54,6 @@ public class TestVisualLive extends Application {
             sortPane.getChildren().add(block);
             blocks.add(block);
         }
-        animatePath = new SequentialTransition();
         prepareTransitions();//makes new seqTransition
         Scene scene = new Scene(new Group(sortPane));
         stage = new Stage();
@@ -58,12 +61,12 @@ public class TestVisualLive extends Application {
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        animatePath.play();
+
+        playSeq();
+    }
+
+    public void playSeq(){
+
     }
     public static void main(String[] args) {
         Application.launch(args);
@@ -137,63 +140,79 @@ public class TestVisualLive extends Application {
      * @param: int block2 second block id
      */
     public void swapTwo(int block1, int block2) {
+
+        SortVisualBar b1 = blocks.get(block1);
+        SortVisualBar b2 = blocks.get(block2);
+
         double oldX = blocks.get(block1).getLayoutX();
-        double oldY = blocks.get(block1).getLayoutY();
         double oldSecondX = blocks.get(block2).getLayoutX();
-        double oldSecondY = blocks.get(block2).getLayoutY();
 
-
+        System.out.println(oldX);
+        System.out.println(oldSecondX);
+        // first block , 3 transitions
         TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
         tty.setToY(-100);
         tty.setCycleCount(1);
+
         TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         ttx.setFromX(0);
         ttx.setToX(-oldX);//was -200
         ttx.setCycleCount(1);
-        TranslateTransition txy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        txy.setFromY(-100);
-        txy.setToY(0);
-        txy.setCycleCount(1);
+
+        TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
+        txx.setFromY(-100);
+        txx.setToY(0);
+        txx.setCycleCount(1);
+        // second block, take note of values on the last transitions of each one
+        //you can change the dimensions as you wish, easier to navigate if you have some sort of class-wide var for sizes
+
+
         TranslateTransition ty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         ty.setFromY(0);
         ty.setToY(-200);
         ty.setCycleCount(1);
+
         TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
         tx.setToX(- (oldSecondX - (oldX))  );//always left
         tx.setCycleCount(1);
+
         TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         txt.setFromY(-200);
         txt.setToY(0);
         txt.setCycleCount(1);
+
+        //last 3
         TranslateTransition gy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gy.setFromY(0);
         gy.setToY(-200);
         gy.setCycleCount(1);
+
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
         gx.setToX(oldSecondX-oldX);//old distance-  width - gap
         gx.setCycleCount(1);
+
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
         gyy.setCycleCount(1);
+        gyy.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
-        //update both block logical X
-        blocks.get(block2).setLayoutX(oldSecondX);
-        blocks.get(block1).setLayoutX(oldX);
-        //System.out.println("First block x: " + oldX);
-        //System.out.println("Second block x: " +oldSecondX);
-        animatePath.getChildren().add(tty);
-        animatePath.getChildren().add(ttx);
-        animatePath.getChildren().add(txy);
-        animatePath.getChildren().add(ty);
-        animatePath.getChildren().add(tx);
-        animatePath.getChildren().add(txt);
-        animatePath.getChildren().add(gy);
-        animatePath.getChildren().add(gx);
-        animatePath.getChildren().add(gyy);
+
+                if(block1!=10){
+                    b1.relocate(oldSecondX,b1.getLayoutY());
+                    b2.relocate(oldX,b2.getLayoutY());
+                    playSeq();
+
+                }
+            }
+        });
+
+        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty,ttx,txx,ty,tx,txt,gy,gx,gyy);
     }
 
 }
