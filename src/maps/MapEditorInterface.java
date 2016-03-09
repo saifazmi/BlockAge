@@ -35,20 +35,21 @@ public class MapEditorInterface {
     private Scene scene;
     private HBox rightMenuSaveBack;
     private VBox rightMenu, rightMenuText;
-    public static Button saveButton, backButton;
+    public static Button saveButton, backButton, clearButton;
     private ButtonProperties b;
-    private Image saveButtonImage, backButtonImage, saveButtonImageHover, backButtonImageHover;
+    private Image saveButtonImage, backButtonImage, saveButtonImageHover, backButtonImageHover, clearButtonImage, clearButtonImageHover;
     private TextArea instructions, fileNameBox, saveStatus;
     private Label instructionLabel, saveStatusLabel, fileNameLabel;
     private static EditorParser parser;
     private Font bellotaFont;
     private String SEPARATOR = File.separator;
-
+    private static MapEditor mapEditor;
 
     public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor)
     {
+        this.mapEditor = mapEditor;
         loadFont();
-        parser = new EditorParser(mapEditor);
+        parser = new EditorParser(this.mapEditor);
         scene = mapEditorScene;
         declareElements();
         rightPane();
@@ -62,6 +63,9 @@ public class MapEditorInterface {
 
         b.setButtonProperties(backButton, "", 0, 0, e -> handle(e), new ImageView(backButtonImage));
         b.addHoverEffect2(backButton, backButtonImageHover, backButtonImage, 0, 0);
+
+        b.setButtonProperties(clearButton, "", 0, 0, e -> handle(e), new ImageView(clearButtonImage));
+        b.addHoverEffect2(clearButton, clearButtonImageHover, clearButtonImage,0,0);
 
         instructions.setText("Click on rectangle node to create blockades. Enter the map's name and press save to save your current configuration or back to cancel.");
         instructions.setPrefSize(300, 60);
@@ -89,7 +93,7 @@ public class MapEditorInterface {
         rightMenuSaveBack.getChildren().addAll(saveButton, backButton);
         rightMenuSaveBack.setSpacing(0);
 
-        rightMenu.getChildren().addAll(rightMenuSaveBack, rightMenuText);
+        rightMenu.getChildren().addAll(rightMenuSaveBack, rightMenuText,clearButton);
 
         ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenu);
     }
@@ -97,12 +101,15 @@ public class MapEditorInterface {
     public static void handle(ActionEvent event) {
         if (event.getSource() == MapEditorInterface.saveButton)
         {
-            System.out.println("saving file");
             parser.saveToUserFile();
         }
         if (event.getSource() == MapEditorInterface.backButton)
         {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        }
+        if (event.getSource() == MapEditorInterface.clearButton)
+        {
+            mapEditor.clearNodes();
         }
     }
 
@@ -117,10 +124,13 @@ public class MapEditorInterface {
         saveButtonImageHover = ImageStore.saveMapImageHovered;
         backButtonImage = ImageStore.backFromEditor;
         backButtonImageHover = ImageStore.backFromEditorHovered;
+        clearButtonImage = ImageStore.clear;
+        clearButtonImageHover = ImageStore.clearHovered;
 
         //Buttons
         saveButton = new Button();
         backButton = new Button();
+        clearButton = new Button();
 
         //Text areas
         instructions = new TextArea();

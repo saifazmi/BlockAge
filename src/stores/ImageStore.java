@@ -83,6 +83,8 @@ public final class ImageStore {
     public static final Image overwriteYesHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Yes_Hovered.png");
     public static final Image overwriteNo = new Image(SPRITE_RESOURCES + BUTTONS + "No.png");
     public static final Image overwriteNoHovered = new Image(SPRITE_RESOURCES + BUTTONS + "No_Hovered.png");
+    public static final Image clear = new Image(SPRITE_RESOURCES + BUTTONS + "Clear.png");
+    public static final Image clearHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Clear_Hovered.png");
 
     public static void setSpriteProperties(Entity entity, Image image) {
         SpriteImage spriteImage = new SpriteImage(image, entity);

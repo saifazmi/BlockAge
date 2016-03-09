@@ -107,7 +107,7 @@ public class MapChooserInterface {
         mapChooseStage.showAndWait();
     }
 
-    public static String getChosenMap() {
+    public String getChosenMap() {
         System.out.println(SAVE_DIRECTORY + chosenMap);
         return SAVE_DIRECTORY + chosenMap;
     }

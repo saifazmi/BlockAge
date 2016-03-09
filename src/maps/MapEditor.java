@@ -86,4 +86,13 @@ public class MapEditor implements Menu {
     public Scene getScene() {
         return mapEditorScene;
     }
+
+    public void clearNodes() {
+        for (int i = 0; i < mapEditorGraph.getNodes().size(); i++)
+        {
+            mapEditorGraph.getNodes().get(i).setBlockade(null);
+        }
+
+        //mapEditorRenderer.drawInitialEntity()
+    }
 }

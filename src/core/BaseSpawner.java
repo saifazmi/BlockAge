@@ -8,6 +8,7 @@ import graph.GraphNode;
 import gui.Renderer;
 import javafx.scene.image.Image;
 import maps.MapChooserInterface;
+import maps.MapEditor;
 import maps.MapParser;
 import sceneElements.ElementsHandler;
 import stores.ImageStore;
@@ -63,12 +64,25 @@ public class BaseSpawner {
     }
 
     private void generateBlockades() {
-        File mapFile = new File(MapChooserInterface.getChosenMap());
+
         InputStream in = null;
-        try {
-            in = new FileInputStream(mapFile);
-        } catch (FileNotFoundException e) {
-            //error out
+        File mapFile = null;
+
+        if (MapChooserInterface.Instance().getChosenMap() == null)
+        {
+            Random mapRndGen = new Random();
+            in = MapEditor.class.getResourceAsStream("map" + mapRndGen.nextInt(1) + ".txt");
+
+        }
+        else
+        {
+            mapFile = new File(MapChooserInterface.Instance().getChosenMap());
+
+            try {
+                in = new FileInputStream(mapFile);
+            } catch (FileNotFoundException e) {
+                //error out
+            }
         }
 
         Reader fReader = new InputStreamReader(in);
