@@ -27,11 +27,11 @@ import java.io.InputStream;
  */
 public class MapEditorInterface {
 
-    //for popup
+    //for popup Scene
     private Stage popUpStage;
     private Image yesImage, noImage, yesImageHover, noImageHover;
 
-    //For the scene itself
+    //For the Map Editing scene itself
     private Scene scene;
     private HBox rightMenuSaveBack;
     private VBox rightMenu, rightMenuText;
