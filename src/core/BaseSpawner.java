@@ -68,15 +68,18 @@ public class BaseSpawner {
         InputStream in = null;
         File mapFile = null;
 
-        if (MapChooserInterface.Instance().getChosenMap() == null)
+        String chosenMap = MapChooserInterface.Instance().getChosenMap();
+
+        //assured because map will always end with .txt
+        if (chosenMap.endsWith("null"))
         {
             Random mapRndGen = new Random();
-            in = MapEditor.class.getResourceAsStream("map" + mapRndGen.nextInt(1) + ".txt");
-
+            String map = "map" + mapRndGen.nextInt(1) + ".txt";
+            in = MapEditor.class.getResourceAsStream(map);
         }
         else
         {
-            mapFile = new File(MapChooserInterface.Instance().getChosenMap());
+            mapFile = new File(chosenMap);
 
             try {
                 in = new FileInputStream(mapFile);
