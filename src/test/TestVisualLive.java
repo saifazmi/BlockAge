@@ -1,62 +1,86 @@
-package sorts;
+package test;
 
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import sorts.BubbleSort;
+import sorts.SortVisualBar;
+import sorts.SortableComponent;
+import sorts.Tuple;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author : First created by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  * <p>
- * PRESET SIZE OF 10, 1 block for invisible spot
+ * TEST CLASS
  */
-public class SortVisual {
-    private static final Logger LOG = Logger.getLogger(SortVisual.class.getName());
+//TODO: size stuff and shadowplay
+public class TestVisualLive extends Application {
     public int HEIGHT = 300;
     public int WIDTH = 400;
     private static ArrayList<SortVisualBar> blocks;
     private ArrayList<SortableComponent> sorts;
-    public SequentialTransition animatePath;
-    public Pane sortPane;
+    private ArrayList<SequentialTransition> seq;
 
-    public SortVisual(int sortID) {
-        if (sortID < 0 || sortID > 2) {
-            LOG.log(Level.SEVERE, "WRONG INPUT (Expected 0-2)");
-        }
-        //prepare sortables
-        if (sortID == 0) { //bubble
-            sorts = BubbleSort.sort(10);
-        }
-        if (sortID == 1) { //selection
-            sorts = SelectionSort.sort(10);
-        }
-        if (sortID == 2) { //quick
-            QuickSort q = new QuickSort();
-            sorts = q.sort(10); //most tentative one
-        }
-
-        sortPane = new Pane();
-        sortPane.setStyle("-fx-background-color: white;");
+    public void start(Stage stage) {
+        seq = new ArrayList<SequentialTransition>();
+        sorts = BubbleSort.sort(10);
+        Pane sortPane = new Pane();
+        sortPane.setStyle("-fx-background-color: black;");
+        sortPane.setPrefSize(WIDTH, HEIGHT);
         //make blocks
         blocks = new ArrayList<SortVisualBar>();
         for (double x = 0; x < 11; x++) {              //width  //height
-            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.LIGHTBLUE, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
-            //attempting to reorder according to 0th sort state during creation
-            block.relocate(10 + (x * 30), HEIGHT - (x * 15) - 50); //COMPLETE CORRECT COORDS   for reference not counting invis block, 40 70 100 130 160 190 220 250 280 310
+            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.RED, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
+            int loc = 40;
+            if (x != 0) {
+                int pos = find(x - 1);
+                System.out.println(pos);
+                loc = 40 + (30 * pos);
+            }
+            if (x == 0) loc = 10;
+            block.relocate(loc, HEIGHT - (x * 15) - 50); //trying to make it state0
+
             sortPane.getChildren().add(block);
             blocks.add(block);
         }
-
-        animatePath = new SequentialTransition();
         prepareTransitions();//makes new seqTransition
+        Scene scene = new Scene(new Group(sortPane));
+        stage = new Stage();
+        stage.setTitle("TEST");
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.show();
 
-        //animatePath.play();
+        playSeq();
+    }
+
+    public void playSeq() {
+
+    }
+
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
+
+    private int find(double s) {
+        ArrayList<Integer> state = sorts.get(0).getValue();
+        for (int x = 0; x < state.size(); x++) {
+            if (state.get(x) == s) {
+                return x;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -122,11 +146,11 @@ public class SortVisual {
      * @param: int block2 second block id
      */
     public void swapTwo(int block1, int block2) {
-        //contextual swap, one thing to consider is TODO: test for moves on the same block even though it was moved before relevant transition
-        double oldY = blocks.get(block1).getLayoutY();
-        double oldX = blocks.get(block1).getLayoutX();
 
-        double oldSecondY = blocks.get(block2).getLayoutY();
+        SortVisualBar b1 = blocks.get(block1);
+        SortVisualBar b2 = blocks.get(block2);
+
+        double oldX = blocks.get(block1).getLayoutX();
         double oldSecondX = blocks.get(block2).getLayoutX();
 
         System.out.println(oldX);
@@ -142,10 +166,10 @@ public class SortVisual {
         ttx.setToX(-oldX);//was -200
         ttx.setCycleCount(1);
 
-        TranslateTransition txy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
-        txy.setFromY(-100);
-        txy.setToY(0);
-        txy.setCycleCount(1);
+        TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
+        txx.setFromY(-100);
+        txx.setToY(0);
+        txx.setCycleCount(1);
         // second block, take note of values on the last transitions of each one
         //you can change the dimensions as you wish, easier to navigate if you have some sort of class-wide var for sizes
 
@@ -180,16 +204,21 @@ public class SortVisual {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
         gyy.setCycleCount(1);
+        gyy.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
-        animatePath.getChildren().add(tty);
-        animatePath.getChildren().add(ttx);
-        animatePath.getChildren().add(txy);
-        animatePath.getChildren().add(ty);
-        animatePath.getChildren().add(tx);
-        animatePath.getChildren().add(txt);
-        animatePath.getChildren().add(gy);
-        animatePath.getChildren().add(gx);
-        animatePath.getChildren().add(gyy);
+
+                if (block1 != 10) {
+                    b1.relocate(oldSecondX, b1.getLayoutY());
+                    b2.relocate(oldX, b2.getLayoutY());
+                    playSeq();
+
+                }
+            }
+        });
+
+        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
     }
 
 }

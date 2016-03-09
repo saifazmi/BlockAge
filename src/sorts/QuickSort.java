@@ -21,7 +21,7 @@ public class QuickSort {
      * @param size
      * @return
      */
-    public ArrayList<Integer> sort(int size) {
+    public ArrayList<SortableComponent> sort(int size) {
         if (size < 3) {
             System.out.println("SORT: Input too low, returned null");
             return null;

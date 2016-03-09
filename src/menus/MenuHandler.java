@@ -33,6 +33,7 @@ public class MenuHandler {
     public final static int MAP_EDITOR = 4;
 
     public static int currentScene = MAIN_MENU;
+    public static int lastScene = MAIN_MENU;
 
     /**
      * Initialises the stage to be the same used for all scenes
@@ -70,7 +71,9 @@ public class MenuHandler {
         sceneList[scene].getRoot().setVisible(true);
         sceneList[scene].getRoot().setDisable(false);
 
+        lastScene = currentScene;
         currentScene = scene;
+
         primaryStage.setScene(sceneList[scene]);
     }
 }

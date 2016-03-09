@@ -5,11 +5,9 @@ import gui.Renderer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -50,21 +48,15 @@ public class GameRunTime {
                 e.printStackTrace();
             }
         }
-        Pane mainGamePane = new BorderPane();
-
-        mainGamePane = new BorderPane();
+        BorderPane mainGamePane = new BorderPane();
         mainGamePane.setPrefWidth(CoreGUI.WIDTH - 324);
         mainGamePane.setPrefHeight(CoreGUI.HEIGHT);
-
-        String SEPARATOR = File.separator;
-        //BackgroundImage myBI = new BackgroundImage(new Image(SEPARATOR + "sprites" + SEPARATOR + "background" + SEPARATOR + "Main.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
-        //mainGamePane.setBackground(new Background(myBI));
 
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
         new Renderer();
-        ((BorderPane) ((Group) mainGameScene.getRoot()).getChildren().get(0)).setCenter(Renderer.Instance());
+        mainGamePane.setCenter(Renderer.Instance());
     }
 
     /**

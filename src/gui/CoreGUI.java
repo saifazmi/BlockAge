@@ -24,7 +24,7 @@ public class CoreGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        MenuHandler menuHandler = new MenuHandler(primaryStage);
+        new MenuHandler(primaryStage);
         MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         primaryStage.setOnCloseRequest(e -> {
             CoreEngine engine = CoreEngine.Instance();

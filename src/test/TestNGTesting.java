@@ -51,8 +51,8 @@ public class TestNGTesting {
         }
 
         // set blockade at (10,10)
-        ArrayList<Integer> positions = new ArrayList<>(Arrays.asList(10,10,19,17,17,17,17,18,17,19));
-        for(int i = 0; i < positions.size()/2; i++) {
+        ArrayList<Integer> positions = new ArrayList<>(Arrays.asList(10, 10, 19, 17, 17, 17, 17, 18, 17, 19));
+        for (int i = 0; i < positions.size() / 2; i++) {
             SpriteImage sprite = new SpriteImage(null, null);
             GraphNode node = graph.nodeWith(new GraphNode(positions.get(2 * i), positions.get(2 * i + 1)));
             Blockade blockade = new Blockade(i, "TestBlock", node, sprite);
@@ -60,7 +60,7 @@ public class TestNGTesting {
             blockade.getPosition().setBlockade(blockade);
             this.testBlockades.add(blockade);
         }
-      return graph;
+        return graph;
     }
 
     /**
@@ -68,8 +68,8 @@ public class TestNGTesting {
      *
      * @param xStart the X-coordinate of the starting position of the unit
      * @param yStart the Y-coordinate of the starting position of the unit
-     * @param xGoal the X-coordinate of the goal of the unit
-     * @param yGoal the Y-coordinate of the goal of the unit
+     * @param xGoal  the X-coordinate of the goal of the unit
+     * @param yGoal  the Y-coordinate of the goal of the unit
      */
     public void createUnit(int xStart, int yStart, int xGoal, int yGoal) {
 
@@ -90,28 +90,27 @@ public class TestNGTesting {
      *
      * @param route
      * @param goal
-     *
      * @return valid true if the route is valid, false otherwise
      */
     public boolean validRoute(List<GraphNode> route, GraphNode goal) {
         boolean valid = true;
 
         // check if the route is directing a the goal
-        if(route.get(route.size() - 1) != goal) {
+        if (route.get(route.size() - 1) != goal) {
             valid = false;
         }
 
         // check if the nodes are not blockade
-        for(int i = 0; i < route.size() && valid; i++) {
+        for (int i = 0; i < route.size() && valid; i++) {
             GraphNode node = route.get(i);
-            if(node.getBlockade() != null) {
+            if (node.getBlockade() != null) {
                 valid = false;
             }
             // check if it is possible to move from one node to the next node in the route.
-            else if(i < (route.size() - 1)) {
+            else if (i < (route.size() - 1)) {
                 List<GraphNode> successors = node.getSuccessors();
-                if(!successors.contains(route.get(i+1))) {
-                    valid =false;
+                if (!successors.contains(route.get(i + 1))) {
+                    valid = false;
                 }
             }
         }
@@ -157,7 +156,7 @@ public class TestNGTesting {
     public void aStarSearchTesting() {
         GraphNode startPoint = graph.nodeWith(new GraphNode(1, 2));
         GraphNode endPoint = graph.nodeWith(new GraphNode(19, 19));
-        List<GraphNode> route = AStar.search(startPoint, endPoint);
+        List<GraphNode> route = AStar.search(startPoint, endPoint, false);
 
         boolean passed = validRoute(route, endPoint);
 
@@ -169,7 +168,6 @@ public class TestNGTesting {
      * Check if the list is sorted
      *
      * @param states all the states got from the sort mechanism
-     *
      * @return passed true if sorted, false otherwise
      */
     public boolean sortTest(ArrayList<SortableComponent> states) {
@@ -178,7 +176,7 @@ public class TestNGTesting {
         ArrayList<Integer> sorted = states.get(states.size() - 1).getValue();
 
         // If the initial state is already sorted, do the sorting with another list
-        while(initial.equals(sorted)) {
+        while (initial.equals(sorted)) {
             states = BubbleSort.sort(initial.size());
             initial = states.get(0).getValue();
             sorted = states.get(0).getValue();
@@ -186,9 +184,9 @@ public class TestNGTesting {
 
         // Check if the list is sorted
         boolean passed = true;
-        for(int i = 0; i < sorted.size() && passed; i++) {
+        for (int i = 0; i < sorted.size() && passed; i++) {
             int a = sorted.get(i);
-            if(a != i) {
+            if (a != i) {
                 passed = false;
             }
         }
@@ -248,7 +246,7 @@ public class TestNGTesting {
 
         boolean blockade = true;
 
-        for(int i = 0; i < testBlockades.size() && blockade; i++) {
+        for (int i = 0; i < testBlockades.size() && blockade; i++) {
             //blockade = !testUnit.blockCheckTest(testBlockades.get(i).getPosition());
         }
         Assert.assertEquals(blockade, true);
@@ -509,13 +507,13 @@ public class TestNGTesting {
      */
     @Test
     public void graphNodeGetSuccessors() {
-        GraphNode node = graph.nodeWith(new GraphNode(4,5));
-        ArrayList<GraphNode> successors = (ArrayList<GraphNode>)node.getSuccessors();
+        GraphNode node = graph.nodeWith(new GraphNode(4, 5));
+        ArrayList<GraphNode> successors = (ArrayList<GraphNode>) node.getSuccessors();
         ArrayList<GraphNode> successors_check = new ArrayList<GraphNode>();
-        successors_check.add(graph.nodeWith(new GraphNode(3,5)));
-        successors_check.add(graph.nodeWith(new GraphNode(4,4)));
-        successors_check.add(graph.nodeWith(new GraphNode(4,6)));
-        successors_check.add(graph.nodeWith(new GraphNode(5,5)));
+        successors_check.add(graph.nodeWith(new GraphNode(3, 5)));
+        successors_check.add(graph.nodeWith(new GraphNode(4, 4)));
+        successors_check.add(graph.nodeWith(new GraphNode(4, 6)));
+        successors_check.add(graph.nodeWith(new GraphNode(5, 5)));
 
         Assert.assertEquals(successors, successors_check);
     }

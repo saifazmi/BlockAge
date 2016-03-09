@@ -9,8 +9,8 @@ import gui.Renderer;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import sceneElements.ElementsHandler;
-import stores.ImageStore;
 import sceneElements.SpriteImage;
+import stores.ImageStore;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,6 +38,7 @@ public class UnitSpawner {
     private String[] names;
     private String[] descriptions;
     private int cooldown = 60;
+
 
     private static UnitSpawner instance;
 
