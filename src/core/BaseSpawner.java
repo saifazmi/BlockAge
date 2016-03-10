@@ -56,8 +56,8 @@ public class BaseSpawner {
             // surround the base with sortable blockades.
             protectBase(goal);
 
-            //spawnBlockades(100);
-            generateBlockades();
+            spawnBlockades(100);
+            //generateBlockades();
 
             runTime.getScene().setOnMouseClicked(null);
         });

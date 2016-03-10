@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
 import searches.AStar;
@@ -215,10 +216,28 @@ public class Renderer extends Group {
         SequentialTransition trans = new SequentialTransition();
         List<Line> lines = produceAlgoRoute(unit);
         for (Line line : lines) {
+            Rectangle rect = new Rectangle(xSpacing, ySpacing);
+            rect.setFill(Color.GREEN);
+            rect.setOpacity(0.0);
+            rect.setX(line.getStartX() - xSpacing/2);
+            rect.setY(line.getStartY() - ySpacing/2);
+            if(!this.getChildren().contains(rect))
+            {
+                this.getChildren().add(rect);
+            }
             this.getChildren().add(line);
             line.setOpacity(0.0);
+            FadeTransition rectIn = buildFadeAnimation(25.0, 0.0, 1.0, rect);
             FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
-            trans.getChildren().add(lineTransition);
+            FadeTransition rectOut = buildFadeAnimation(25.0, 1.0, 0.0, rect);
+            trans.getChildren().addAll(rectIn, lineTransition, rectOut);
+            if(lines.get(lines.size() - 1).equals(line))
+            {
+                rect.setFill(Color.ORANGE);
+                FadeTransition rectIn2 = buildFadeAnimation(1000.0, 0.0, 1.0, rect);
+                FadeTransition rectOut2 = buildFadeAnimation(1000.0, 1.0, 0.0, rect);
+                trans.getChildren().addAll(rectIn2, rectOut2);
+            }
         }
         return trans;
     }

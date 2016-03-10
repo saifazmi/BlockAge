@@ -172,14 +172,14 @@ public class ElementsHandler {
                 engine.setPaused(true);
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
             } else if (k == KeyCode.B) {
-                LambdaStore.Instance().setBlockadeClickEvent();
+                LambdaStore.Instance().setBlockadeClickEvent(event.isShiftDown());
             } else if (k == KeyCode.SPACE) {
                 if (engine.isPaused()) {
                     engine.setPaused(false);
                 } else {
                     engine.setPaused(true);
                 }
-            } else if (k == KeyCode.R && options.getShowPath() == true) {
+            } else if (k == KeyCode.R && options.getShowPath()) {
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), false);
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {

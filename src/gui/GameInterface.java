@@ -133,12 +133,13 @@ public class GameInterface {
         b.setButtonProperties(unsortableButton, "", 0, 0, ElementsHandler::handle, new ImageView(unsortableImage));
         b.addHoverEffect(unsortableButton, unsortableImage, unsortableImage, 0, 0);
         handleSort(unsortableButton, "Unsortable blockade");
-        unsortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent());
+        unsortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent(false));
 
         // Set the properties for the sortable button
         b.setButtonProperties(sortableButton, "", 0, 0, ElementsHandler::handle, new ImageView(sortableImage));
         b.addHoverEffect(sortableButton, sortableImage, sortableImage, 0, 0);
         handleSort(sortableButton, "Sortable blockade");
+        sortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent(true));
 
         // add everything to the pane
         sortingBox.getChildren().addAll(unsortableButton, sortableButton);

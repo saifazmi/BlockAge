@@ -9,6 +9,7 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
 import searches.AStar;
@@ -359,8 +360,15 @@ public class Unit extends Entity {
             for (Animation transition : transitions) {
 
                 FadeTransition trans = (FadeTransition) transition;
-                Line line = (Line) trans.getNode();
-                line.setOpacity(0.0);
+                if(trans.getNode() instanceof Line)
+                {
+                    Line line = (Line) trans.getNode();
+                    line.setOpacity(0.0);
+                } else if(trans.getNode() instanceof Rectangle) {
+                    Rectangle rect = (Rectangle)trans.getNode();
+                    rect.setOpacity(0.0);
+                }
+
             }
             this.setVisualTransition(null);
         }
