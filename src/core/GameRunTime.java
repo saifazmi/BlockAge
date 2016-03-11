@@ -65,6 +65,8 @@ public class GameRunTime {
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
         mainGameScene.setFill(Color.web("#2C642C"));
+        BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
         new Renderer();
         mainGamePane.setCenter(Renderer.Instance());
