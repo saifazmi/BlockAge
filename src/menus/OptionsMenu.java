@@ -6,12 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
@@ -27,10 +22,11 @@ public class OptionsMenu implements Menu {
     public static Image showSearchImage, soundImage, blockadeImage, onImage, onImageHovered, offImage, offImageHovered, backImage, backImageHovered = null;
     public static int spaceBetweenText = 100;
     public static int spaceBetweenImgH = 50;
+    public static Label searchLabel, soundLabel, blockadeLabel = null;
     public static Pane optionsMenuPane = null;
 
     private Scene optionsMenuScene = null;
-    private Label searchLabel, soundLabel, blockadeLabel = null;
+
     private LabelProperties l = null;
     private ButtonProperties b = null;
 

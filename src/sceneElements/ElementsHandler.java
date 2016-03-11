@@ -17,14 +17,13 @@ import javafx.scene.input.KeyEvent;
 import maps.MapChooserInterface;
 import stores.ImageStore;
 import stores.LambdaStore;
+
 import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
 import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
-
-
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -49,11 +48,17 @@ public class ElementsHandler {
      */
     public static void handle(Event event) {
         // Elements from the Main Menu scene
-        if (event.getSource() == MainMenu.newGameButtonF) {
+        if (event.getSource() == MainMenu.newGameButton) {
             startGame();
-        } else if (event.getSource() == MainMenu.optionsButtonF) {
+        } else if (event.getSource() == MainMenu.optionsButton) {
+        	OptionsMenu.blockadeLabel.setVisible(true);
+        	OptionsMenu.noButtonB.setVisible(true);
+        	OptionsMenu.yesButtonB.setVisible(true);
+        	OptionsMenu.blockadeLabel.setDisable(false);
+        	OptionsMenu.noButtonB.setDisable(false);
+        	OptionsMenu.yesButtonB.setDisable(false);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
-        } else if (event.getSource() == MainMenu.exitButtonF) {
+        } else if (event.getSource() == MainMenu.exitButton) {
             System.exit(0);
         }
         // End of elements from Main Menu scene
@@ -61,6 +66,11 @@ public class ElementsHandler {
         // Elements from the Options Menu scene
         if (event.getSource() == OptionsMenu.yesButtonSearch) {
             options.setPath(false);
+            ArrayList<Entity> units = engine.getEntities();
+            for (int i = 0; i < units.size(); i++) {
+                SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
+                pressedToNotPressed(obtainedSprite);
+            }
             b.setButtonProperties(OptionsMenu.noButtonSearch, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3,
                     ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
             b.addHoverEffect(OptionsMenu.noButtonSearch, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3);
@@ -102,7 +112,6 @@ public class ElementsHandler {
             }
         }
 
-
         if (event.getSource() == OptionsMenu.yesButtonB) {
             options.setInitialBlockades(false);
             b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
@@ -135,10 +144,16 @@ public class ElementsHandler {
 
         // Elements from the Pause Menu scene
         if (event.getSource() == PauseMenu.backGameButton) {
-            CoreEngine.Instance().setPaused(false);
+            CoreEngine.Instance().setPaused(true);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.optionsButton) {
+        	OptionsMenu.blockadeLabel.setVisible(false);
+        	OptionsMenu.noButtonB.setVisible(false);
+        	OptionsMenu.yesButtonB.setVisible(false);
+        	OptionsMenu.blockadeLabel.setDisable(true);
+        	OptionsMenu.noButtonB.setDisable(true);
+        	OptionsMenu.yesButtonB.setDisable(true);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
@@ -170,14 +185,14 @@ public class ElementsHandler {
                 engine.setPaused(true);
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
             } else if (k == KeyCode.B) {
-                LambdaStore.Instance().setBlockadeClickEvent();
+                LambdaStore.Instance().setBlockadeClickEvent(event.isShiftDown());
             } else if (k == KeyCode.SPACE) {
                 if (engine.isPaused()) {
                     engine.setPaused(false);
                 } else {
                     engine.setPaused(true);
                 }
-            } else if (k == KeyCode.R && options.getShowPath() == true) {
+            } else if (k == KeyCode.R && options.getShowPath()) {
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), false);
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {

@@ -4,7 +4,6 @@ import core.CoreEngine;
 import graph.Graph;
 import graph.GraphNode;
 import gui.Renderer;
-import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 

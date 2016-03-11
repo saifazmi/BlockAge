@@ -1,14 +1,13 @@
 package maps;
 
-import gui.Renderer;
 import entity.Blockade;
 import graph.GraphNode;
+import gui.Renderer;
 import javafx.scene.image.Image;
 import sceneElements.SpriteImage;
 import stores.ImageStore;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 
 /**

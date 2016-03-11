@@ -6,12 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
@@ -25,7 +20,7 @@ import stores.ImageStore;
 public class MainMenu implements Menu {
 
 
-    public static Button newGameButton, exitButton, optionsButton, newGameButtonF, exitButtonF, optionsButtonF, mapEditorButton, customGameButton;
+    public static Button newGameButton, exitButton, optionsButton, mapEditorButton, customGameButton;
 
     private Pane mainMenuPane = null;
     private Pane fadingPane = null;
@@ -49,9 +44,6 @@ public class MainMenu implements Menu {
         optionsButton = new Button();
         exitButton = new Button();
         mapEditorButton = new Button();
-        newGameButtonF = new Button();
-        optionsButtonF = new Button();
-        exitButtonF = new Button();
         b = new ButtonProperties();
         customGameButton = new Button();
 
@@ -85,22 +77,6 @@ public class MainMenu implements Menu {
                 e -> ElementsHandler.handle(e), new ImageView(exitImage));
         b.addHoverEffect(exitButton, exitImageHovered, exitImage, Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2);
 
-
-        // NEW GAME BUTTON FADED
-        b.setButtonProperties(newGameButtonF, "", Menu.WIDTH / 5 - newGameImage.getWidth() / 2, Menu.HEIGHT / 3,
-                e -> ElementsHandler.handle(e), new ImageView(newGameImage));
-        b.addHoverEffect(newGameButtonF, newGameImageHovered, newGameImage, Menu.WIDTH / 5 - newGameImage.getWidth() / 2, Menu.HEIGHT / 3);
-
-        // OPTIONS BUTTON FADED
-        b.setButtonProperties(optionsButtonF, "", Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH,
-                e -> ElementsHandler.handle(e), new ImageView(optionsImage));
-        b.addHoverEffect(optionsButtonF, optionsImageHovered, optionsImage, Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH);
-
-        // EXIT BUTTON FADED
-        b.setButtonProperties(exitButtonF, "", Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2,
-                e -> ElementsHandler.handle(e), new ImageView(exitImage));
-        b.addHoverEffect(exitButtonF, exitImageHovered, exitImage, Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2);
-
         //Map Editor Button
         b.setButtonProperties(mapEditorButton, "", Menu.WIDTH / 5 - mapEditorImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 3,
                 e -> ElementsHandler.handle(e), new ImageView(mapEditorImage));
@@ -111,14 +87,13 @@ public class MainMenu implements Menu {
                 e ->ElementsHandler.handle(e), new ImageView(customMapImage));
 
         // ADD ALL BUTTONS TO THE PANE
-        fadingPane.getChildren().addAll(newGameButtonF, optionsButtonF, exitButtonF);
         BackgroundImage myBIF = new BackgroundImage(ImageStore.backgroundMainMenuGlow, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         fadingPane.setBackground(new Background(myBIF));
         fadingPane.setPrefWidth(Menu.WIDTH);
         fadingPane.setPrefHeight(Menu.HEIGHT);
 
         // Fade transition of the main image
-        FadeTransition ft = new FadeTransition(Duration.millis(2000), fadingPane);
+        FadeTransition ft = new FadeTransition(Duration.millis(4000), fadingPane);
         ft.setFromValue(1.0);
         ft.setToValue(0.1);
         ft.setCycleCount(4);
@@ -126,7 +101,7 @@ public class MainMenu implements Menu {
         ft.play();
         ft.setOnFinished(e -> ft.play());
 
-        mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton, fadingPane, mapEditorButton, customMapButton);
+        mainMenuPane.getChildren().addAll(fadingPane, newGameButton, optionsButton, exitButton, mapEditorButton, customMapButton);
 
         Group mainMenuGroup = new Group(mainMenuPane);
         BackgroundImage myBI = new BackgroundImage(ImageStore.backgroundMainMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -167,24 +142,8 @@ public class MainMenu implements Menu {
         b.addHoverEffect(exitButton, exitImageHovered, exitImage, Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 4);
 
 
-        // NEW GAME BUTTON FADED
-        b.setButtonProperties(newGameButtonF, "", Menu.WIDTH / 5 - newGameImage.getWidth() / 2, Menu.HEIGHT / 3,
-                e -> ElementsHandler.handle(e), new ImageView(newGameImage));
-        b.addHoverEffect(newGameButtonF, newGameImageHovered, newGameImage, Menu.WIDTH / 5 - newGameImage.getWidth() / 2, Menu.HEIGHT / 3);
-
-        // OPTIONS BUTTON FADED
-        b.setButtonProperties(optionsButtonF, "", Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2,
-                e -> ElementsHandler.handle(e), new ImageView(optionsImage));
-        b.addHoverEffect(optionsButtonF, optionsImageHovered, optionsImage, Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 2);
-
-        // EXIT BUTTON FADED
-        b.setButtonProperties(exitButtonF, "", Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 4,
-                e -> ElementsHandler.handle(e), new ImageView(exitImage));
-        b.addHoverEffect(exitButtonF, exitImageHovered, exitImage, Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 4);
-
 
         // ADD ALL BUTTONS TO THE PANE
-        fadingPane.getChildren().addAll(newGameButtonF, optionsButtonF, exitButtonF);
         BackgroundImage myBIF = new BackgroundImage(ImageStore.backgroundMainMenuGlow, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         fadingPane.setBackground(new Background(myBIF));
         fadingPane.setPrefWidth(Menu.WIDTH);
@@ -199,7 +158,7 @@ public class MainMenu implements Menu {
         ft.play();
         ft.setOnFinished(e -> ft.play());
 
-        mainMenuPane.getChildren().addAll(newGameButton, optionsButton, exitButton, fadingPane, mapEditorButton, customGameButton);
+        mainMenuPane.getChildren().addAll(fadingPane, newGameButton, optionsButton, exitButton, mapEditorButton, customGameButton);
 
         Group mainMenuGroup = new Group(mainMenuPane);
         BackgroundImage myBI = new BackgroundImage(ImageStore.backgroundMainMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);

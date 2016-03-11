@@ -1,6 +1,6 @@
 package gui;
 
-import core.BaseSpawner;
+import core.CoreEngine;
 import core.GameRunTime;
 import entity.Entity;
 import entity.Unit;
@@ -8,20 +8,22 @@ import graph.Graph;
 import graph.GraphNode;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.Transition;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import sceneElements.SpriteImage;
-import searches.AStar;
-import searches.BreadthFirstSearch;
-import searches.DepthFirstSearch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * @author : First created by Dominic Walters with code by Dominic Walters
@@ -79,6 +81,36 @@ public class Renderer extends Group {
         return success;
     }
 
+    public Node remove(Node node) {
+        if(this.getChildren().contains(node))
+        {
+            LOG.log(Level.INFO, "Deleted " + node.toString());
+            this.getChildren().remove(node);
+            return node;
+        } else {
+            return null;
+        }
+    }
+
+    public void clear() {
+        ObservableList list = this.getChildren();
+        for(Object object : list) {
+            Node node = (Node) object;
+            remove(node);
+        }
+    }
+
+    public void redraw()
+    {
+        //@TODO redundant, will break transitions on resize
+//        if(CoreEngine.Instance().isPaused()) {
+//            this.getChildren().clear();
+//            calculateSpacing();
+//            initialDraw();
+//            entitiesToDraw.forEach(this::drawInitialEntity);
+//        }
+    }
+
     /**
      * Creates the grid lines and adds them to the renderer.
      *
@@ -93,12 +125,12 @@ public class Renderer extends Group {
     public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
         for (int i = 0; i < xAccumulator + 1; i++) {
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
-            line.setStroke(Color.LIGHTGREY);
+            line.setStroke(Color.web("#201616"));
             this.getChildren().add(line);
         }
         for (int i = 0; i < yAccumulator + 1; i++) {
             Line line = new Line(0, ySpacing * i, width, ySpacing * i);
-            line.setStroke(Color.LIGHTGREY);
+            line.setStroke(Color.web("#201616"));
             this.getChildren().add(line);
         }
         return true;
@@ -179,6 +211,7 @@ public class Renderer extends Group {
                         this.ySpacing / 2 + start.getY() * ySpacing,
                         this.xSpacing / 2 + end.getX() * xSpacing,
                         this.ySpacing / 2 + end.getY() * ySpacing);
+                line.setStrokeWidth(4.0);
                 lines.add(line);
             } else {
                 i = route.size();
@@ -215,24 +248,53 @@ public class Renderer extends Group {
         SequentialTransition trans = new SequentialTransition();
         List<Line> lines = produceAlgoRoute(unit);
         for (Line line : lines) {
+            Rectangle rect = new Rectangle(xSpacing, ySpacing);
+            rect.setFill(Color.GREEN);
+            rect.setOpacity(0.0);
+            rect.setX(line.getStartX() - xSpacing/2);
+            rect.setY(line.getStartY() - ySpacing/2);
+            if(!this.getChildren().contains(rect))
+            {
+                this.getChildren().add(rect);
+            }
             this.getChildren().add(line);
             line.setOpacity(0.0);
+            FadeTransition rectIn = buildFadeAnimation(25.0, 0.0, 1.0, rect);
             FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
-            trans.getChildren().add(lineTransition);
+            FadeTransition rectOut = buildFadeAnimation(25.0, 1.0, 0.0, rect);
+            trans.getChildren().addAll(rectIn, lineTransition, rectOut);
         }
+        Rectangle rect = new Rectangle(xSpacing, ySpacing);
+        rect.setOpacity(0.0);
+        rect.setFill(Color.ORANGE);
+        rect.setX(lines.get(lines.size() - 1).getStartX() - xSpacing/2);
+        rect.setY(lines.get(lines.size() - 1).getStartY() - ySpacing/2);
+        this.getChildren().add(rect);
+        FadeTransition rectIn2 = buildFadeAnimation(1000.0, 0.0, 1.0, rect);
+        FadeTransition rectOut2 = buildFadeAnimation(1000.0, 1.0, 0.0, rect);
+
+        //lines.stream().filter(routeLines::contains).forEach(line -> line.setFill(Color.GREEN));
+        trans.getChildren().addAll(rectIn2, rectOut2);
+        trans.setOnFinished(e ->
+        {
+            //@TODO doesn't work
+            List<Line> routeLines = produceRoute(unit.getRoute());
+            for(Line line : routeLines) {
+                //remove(line);
+                line.setFill(Color.GREEN);
+                line.setStrokeWidth(10);
+                this.getChildren().add(line);
+                LOG.log(Level.INFO, "Added green route line");
+            }
+            produceRouteVisual(routeLines).play();
+        });
         return trans;
     }
 
     private List<Line> produceAlgoRoute(Unit unit) {
         List<Line> lines = new ArrayList<>();
-        List<GraphNode> visitedNodes = null;
-        if (unit.getSearch() == Unit.Search.BFS) {
-            visitedNodes = BreadthFirstSearch.findPathFrom(unit.getPosition(), BaseSpawner.Instance().getGoal(), true);
-        } else if (unit.getSearch() == Unit.Search.DFS) {
-            visitedNodes = DepthFirstSearch.findPathFrom(unit.getPosition(), BaseSpawner.Instance().getGoal(), true);
-        } else if (unit.getSearch() == Unit.Search.A_STAR) {
-            visitedNodes = AStar.search(unit.getPosition(), BaseSpawner.Instance().getGoal(), true);
-        }
+        List<GraphNode> temp = unit.getVisited();
+        List<GraphNode> visitedNodes = hardCopy(temp);
 
         List<GraphNode> drawn = new ArrayList<>();
         drawn.add(visitedNodes.remove(0));
@@ -244,6 +306,7 @@ public class Renderer extends Group {
                     this.ySpacing / 2 + node.getY() * ySpacing,
                     this.xSpacing / 2 + drawTo.getX() * xSpacing,
                     this.ySpacing / 2 + drawTo.getY() * ySpacing);
+            line.setStrokeWidth(4.0);
             lines.add(line);
         }
         return lines;
@@ -254,10 +317,12 @@ public class Renderer extends Group {
         int min = Integer.MAX_VALUE;
         for (GraphNode node : successors) {
             int temp = drawn.indexOf(node);
-            if (temp != -1 && temp != Integer.MAX_VALUE && temp < min) {
+            if (temp != -1 && temp < min) {
                 min = temp;
             }
         }
         return drawn.get(min);
     }
+
+    private <A> List<A> hardCopy(List<A> list) { return list.stream().collect(Collectors.toList()); }
 }

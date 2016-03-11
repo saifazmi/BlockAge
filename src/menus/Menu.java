@@ -1,5 +1,6 @@
 package menus;
 
+import gui.CoreGUI;
 import javafx.scene.Scene;
 
 /**
@@ -9,8 +10,8 @@ import javafx.scene.Scene;
  * @date : 09/02/16, last edited by Paul Popa on 09/02/16
  */
 public interface Menu {
-    int WIDTH = 1280;
-    int HEIGHT = 720;
+    Integer WIDTH = CoreGUI.WIDTH;
+    Integer HEIGHT = CoreGUI.HEIGHT;
 
     Scene getScene();
 }
