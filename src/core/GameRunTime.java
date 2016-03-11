@@ -57,6 +57,15 @@ public class GameRunTime {
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
         new Renderer();
         mainGamePane.setCenter(Renderer.Instance());
+
+        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
+        {
+            Renderer.Instance().redraw();
+        });
+        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) ->
+        {
+            Renderer.Instance().redraw();
+        });
     }
 
     /**

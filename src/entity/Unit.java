@@ -45,6 +45,7 @@ public class Unit extends Entity {
     }
 
     private List<GraphNode> route;
+    private List<GraphNode> visited;
 
     private SequentialTransition visualTransition;
 
@@ -245,17 +246,9 @@ public class Unit extends Entity {
             if (route.size() > 0) {
                 this.completedMove = false;
                 this.nextNode = this.route.remove(0);
-                int x = this.nextNode.getX();
-                int y = this.nextNode.getY();
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
-                //if (xChange + yChange > 1 || xChange + yChange < -1) {
-                //   LOG.log(Level.SEVERE, "Route has dictated a path that moves more than one grid square at a time. " +
-                //           "Fatal error, check search implementation: " + this.search.toString());
-                //   return;
-                //}
-                if (logicalMove(xChange, yChange)) {
-                } else {
+                if (!logicalMove(xChange, yChange)) {
                     decideRoute();
                     nextNode = null;
                     this.completedMove = true;
@@ -299,11 +292,11 @@ public class Unit extends Entity {
     private void decideRoute() {
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
         if (search == Search.DFS) {
-            route = DepthFirstSearch.findPathFrom(getPosition(), this.goal, false);
+            DepthFirstSearch.findPathFrom(this, this.goal);
         } else if (search == Search.BFS) {
-            route = BreadthFirstSearch.findPathFrom(getPosition(), this.goal, false);
+            BreadthFirstSearch.findPathFrom(this, this.goal);
         } else {
-            route = AStar.search(getPosition(), this.goal, false);
+            AStar.search(this, this.goal);
         }
         LOG.log(Level.INFO, route.toString());
     }
@@ -342,6 +335,10 @@ public class Unit extends Entity {
         this.visualTransition = visualTransition;
     }
 
+    public List<GraphNode> getVisited() { return visited; }
+
+    public void setVisited(List<GraphNode> visited) { this.visited = visited; }
+
     public void showTransition(boolean route, boolean show) {
         SequentialTransition currentTrans = this.getVisualTransition();
         if (currentTrans == null && this.getRoute() != null && show) {
@@ -356,21 +353,31 @@ public class Unit extends Entity {
         } else if (currentTrans != null && !show) {
             currentTrans.stop();
             ObservableList<Animation> transitions = currentTrans.getChildren();
-
             for (Animation transition : transitions) {
-
-                FadeTransition trans = (FadeTransition) transition;
-                if(trans.getNode() instanceof Line)
-                {
-                    Line line = (Line) trans.getNode();
-                    line.setOpacity(0.0);
-                } else if(trans.getNode() instanceof Rectangle) {
-                    Rectangle rect = (Rectangle)trans.getNode();
-                    rect.setOpacity(0.0);
+                if (transition instanceof FadeTransition) {
+                    FadeTransition trans = (FadeTransition) transition;
+                    nullObject(trans.getNode());
+                } else if (transition instanceof SequentialTransition) {
+                    SequentialTransition trans = (SequentialTransition) transition;
+                    ObservableList<Animation> transitions2 = trans.getChildren();
+                    for (Animation transition2 : transitions2) {
+                        FadeTransition trans2 = (FadeTransition) transition2;
+                        nullObject(trans2.getNode());
+                    }
                 }
-
+                this.setVisualTransition(null);
             }
-            this.setVisualTransition(null);
+        }
+    }
+
+    private void nullObject(Object object)
+    {
+        if (object instanceof Line) {
+            Line line = (Line) object;
+            line.setOpacity(0.0);
+        } else if (object instanceof Rectangle) {
+            Rectangle rect = (Rectangle) object;
+            rect.setOpacity(0.0);
         }
     }
 }

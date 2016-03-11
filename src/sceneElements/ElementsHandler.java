@@ -14,19 +14,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
 import maps.MapChooserInterface;
+import menus.*;
 import stores.ImageStore;
 import stores.LambdaStore;
-
-import menus.MainMenu;
-import menus.Menu;
-import menus.MenuHandler;
-import menus.Options;
-import menus.OptionsMenu;
-import menus.PauseMenu;
-
-
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -137,7 +128,7 @@ public class ElementsHandler {
 
         // Elements from the Pause Menu scene
         if (event.getSource() == PauseMenu.backGameButton) {
-            CoreEngine.Instance().setPaused(false);
+            //CoreEngine.Instance().setPaused(false);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.optionsButton) {
