@@ -69,9 +69,9 @@ public class GameRunTime {
         final String SEPARATOR = File.separator;
         final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
-        Image grassBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "GrassBackground.png");
+        Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
 
-        BackgroundImage myBIF = new BackgroundImage(grassBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         mainGamePane.setBackground(new Background(myBIF));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
         new Renderer();
