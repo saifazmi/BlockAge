@@ -52,7 +52,7 @@ public class EndGameMenu implements Menu {
 
     public void initialiseScene() {
         declareElements();
-
+        //@TODO: Change font to basis33.ttf and make it yellow.
         l.setLabelProperties(scoreLabel, "", Menu.WIDTH / 5 - 210, Menu.HEIGHT / 3, null);
         scoreLabel.setFont(Font.font("Verdana", 70));
         scoreLabel.setTextFill(Color.YELLOWGREEN);
