@@ -233,6 +233,7 @@ public class Unit extends Entity {
                 }
             }
             else if (this.getPosition() == goal) {
+                nextNode = null;
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -242,6 +243,7 @@ public class Unit extends Entity {
                 });
             }
             else {
+                nextNode = null;
                 CoreEngine.Instance().setPaused(true);
                 CoreEngine.Instance().halveScore();
                 Platform.runLater(new Runnable() {
