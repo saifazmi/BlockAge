@@ -1,13 +1,23 @@
 package core;
 
 import gui.CoreGUI;
+import gui.GameInterface;
 import gui.Renderer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
+import stores.ImageStore;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 /**
@@ -49,11 +59,12 @@ public class GameRunTime {
             }
         }
         BorderPane mainGamePane = new BorderPane();
-        mainGamePane.setPrefWidth(CoreGUI.WIDTH - 324);
+        mainGamePane.setPrefWidth(CoreGUI.WIDTH - GameInterface.rightPaneWidth);
         mainGamePane.setPrefHeight(CoreGUI.HEIGHT);
 
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
+        mainGameScene.setFill(Color.web("#2C642C"));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
         new Renderer();
         mainGamePane.setCenter(Renderer.Instance());

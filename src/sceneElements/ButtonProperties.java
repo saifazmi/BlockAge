@@ -61,11 +61,15 @@ public class ButtonProperties {
         {
             setButtonProperties(button, "", posX, posY, e -> ElementsHandler.handle(e), new ImageView(hoverImageIn));
             button.getScene().setCursor(Cursor.HAND);
+            button.setScaleX(1.1);
+            button.setScaleY(1.1);
         });
         button.setOnMouseExited(event ->
         {
             setButtonProperties(button, "", posX, posY, e -> ElementsHandler.handle(e), new ImageView(hoverImageOut));
             button.getScene().setCursor(Cursor.DEFAULT);
+            button.setScaleX(1);
+            button.setScaleY(1);
         });
     }
 }
