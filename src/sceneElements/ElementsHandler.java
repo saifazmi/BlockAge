@@ -161,6 +161,7 @@ public class ElementsHandler {
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
         }
+
         if (event.getSource() == GameInterface.pauseButton) {
             engine.setPaused(true);
         }

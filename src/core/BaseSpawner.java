@@ -35,7 +35,7 @@ public class BaseSpawner {
     private GameRunTime runTime = GameRunTime.Instance();
 
     // may not be need
-    private final String SEPARATOR = File.separator;
+    private final String SEPARATOR = "/";
     private final String MAP_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "maps" + SEPARATOR;
 
     private GraphNode goal;
