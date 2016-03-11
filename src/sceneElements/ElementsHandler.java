@@ -15,15 +15,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import maps.MapChooserInterface;
-import stores.ImageStore;
-import stores.LambdaStore;
-
 import menus.MainMenu;
 import menus.Menu;
 import menus.MenuHandler;
 import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
+import stores.ImageStore;
+import stores.LambdaStore;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -51,12 +50,12 @@ public class ElementsHandler {
         if (event.getSource() == MainMenu.newGameButton) {
             startGame();
         } else if (event.getSource() == MainMenu.optionsButton) {
-        	OptionsMenu.blockadeLabel.setVisible(true);
-        	OptionsMenu.noButtonB.setVisible(true);
-        	OptionsMenu.yesButtonB.setVisible(true);
-        	OptionsMenu.blockadeLabel.setDisable(false);
-        	OptionsMenu.noButtonB.setDisable(false);
-        	OptionsMenu.yesButtonB.setDisable(false);
+            OptionsMenu.blockadeLabel.setVisible(true);
+            OptionsMenu.noButtonB.setVisible(true);
+            OptionsMenu.yesButtonB.setVisible(true);
+            OptionsMenu.blockadeLabel.setDisable(false);
+            OptionsMenu.noButtonB.setDisable(false);
+            OptionsMenu.yesButtonB.setDisable(false);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         } else if (event.getSource() == MainMenu.exitButton) {
             System.exit(0);
@@ -148,12 +147,12 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.optionsButton) {
-        	OptionsMenu.blockadeLabel.setVisible(false);
-        	OptionsMenu.noButtonB.setVisible(false);
-        	OptionsMenu.yesButtonB.setVisible(false);
-        	OptionsMenu.blockadeLabel.setDisable(true);
-        	OptionsMenu.noButtonB.setDisable(true);
-        	OptionsMenu.yesButtonB.setDisable(true);
+            OptionsMenu.blockadeLabel.setVisible(false);
+            OptionsMenu.noButtonB.setVisible(false);
+            OptionsMenu.yesButtonB.setVisible(false);
+            OptionsMenu.blockadeLabel.setDisable(true);
+            OptionsMenu.noButtonB.setDisable(true);
+            OptionsMenu.yesButtonB.setDisable(true);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
@@ -167,12 +166,10 @@ public class ElementsHandler {
             engine.setPaused(true);
         }
 
-        if (event.getSource() == MainMenu.mapEditorButton)
-        {
+        if (event.getSource() == MainMenu.mapEditorButton) {
             MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
         }
-        if (event.getSource() == MainMenu.customGameButton)
-        {
+        if (event.getSource() == MainMenu.customGameButton) {
             MapChooserInterface.Instance().showChooser();
         }
     }

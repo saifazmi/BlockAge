@@ -37,16 +37,14 @@ public class MapChooserInterface {
 
     private static MapChooserInterface instance;
 
-    public static MapChooserInterface Instance()
-    {
+    public static MapChooserInterface Instance() {
         if (instance == null)
             instance = new MapChooserInterface();
 
         return instance;
     }
 
-    private MapChooserInterface()
-    {
+    private MapChooserInterface() {
         mapChooseStage = new Stage();
 
         images = new HBox();
@@ -55,11 +53,13 @@ public class MapChooserInterface {
         SAVE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
 
-        setUpMapImages();
+        File imageDir = new File(IMAGE_DIRECTORY);
+        if (imageDir.exists())
+            setUpMapImages();
 
         ScrollPane scroller = new ScrollPane(images);
         scroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroller.setPrefSize(820,650);
+        scroller.setPrefSize(820, 650);
         //scroller.setOnScroll(e -> mapSelectScrolling(scroller, e));
 
         mapChooseScene = new Scene(scroller);
@@ -74,8 +74,7 @@ public class MapChooserInterface {
 
         getMapImages();
 
-        for (int i = 0; i < mapImages.size(); i++)
-        {
+        for (int i = 0; i < mapImages.size(); i++) {
             images.getChildren().add(mapImages.get(i));
         }
 
@@ -84,24 +83,19 @@ public class MapChooserInterface {
 
     private void mapSelectScrolling(ScrollPane scroller, ScrollEvent e) {
         double movedDistance = e.getTotalDeltaX();
-        if (Math.abs(movedDistance - THRESHOLD) > 0)
-        {
+        if (Math.abs(movedDistance - THRESHOLD) > 0) {
 
-            if (scroller.getHvalue() < oldHValue)
-            {
-                scroller.setHvalue(scroller.getHvalue() - scroller.getHmax()/mapImages.size());
-            }
-            else
-            {
-                scroller.setHvalue(scroller.getHvalue() + scroller.getHmax()/mapImages.size());
+            if (scroller.getHvalue() < oldHValue) {
+                scroller.setHvalue(scroller.getHvalue() - scroller.getHmax() / mapImages.size());
+            } else {
+                scroller.setHvalue(scroller.getHvalue() + scroller.getHmax() / mapImages.size());
             }
 
             oldHValue = scroller.getHvalue();
         }
     }
 
-    public void showChooser()
-    {
+    public void showChooser() {
         setUpMapImages();
         mapChooseStage.showAndWait();
     }
@@ -121,8 +115,7 @@ public class MapChooserInterface {
         File imageDir = new File(IMAGE_DIRECTORY);
         File[] mapFiles = imageDir.listFiles();
 
-        for (int i = 0; i < mapFiles.length; i++)
-        {
+        for (int i = 0; i < mapFiles.length; i++) {
             Image mapImage = new Image(mapFiles[i].toURI().toString());
             String mapName = getDataOf(mapFiles[i]);
             mapNames.add(mapName);
@@ -137,10 +130,10 @@ public class MapChooserInterface {
             container.setAlignment(Pos.CENTER);
 
             Button newMap = new Button();
-            b.setButtonProperties(newMap,"",0,0,e -> chooseMap(container), mapImageView);
+            b.setButtonProperties(newMap, "", 0, 0, e -> chooseMap(container), mapImageView);
             b.addHoverEffect3(newMap);
 
-            container.getChildren().addAll(mapNameLabel,newMap);
+            container.getChildren().addAll(mapNameLabel, newMap);
             mapImages.add(container);
         }
     }
@@ -150,7 +143,7 @@ public class MapChooserInterface {
         String[] mapNameParts = mapFile.toURI().toString().split(SEPERATOR);
         String mapFileName = mapNameParts[mapNameParts.length - 1];
 
-        String mapName = mapFileName.replace(".png",".txt");
+        String mapName = mapFileName.replace(".png", ".txt");
 
         return mapName;
     }

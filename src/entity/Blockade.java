@@ -160,11 +160,10 @@ public class Blockade extends Entity {
 
     public static Blockade mapBlockade(MouseEvent e, Blockade blockadeInstance, Renderer renderer, Graph graph) {
         GraphNode node = calcMapGraphNode(e, renderer, graph);
-        return placeBlockade(blockadeInstance,node);
+        return placeBlockade(blockadeInstance, node);
     }
 
-    private static GraphNode calcMapGraphNode(MouseEvent e, Renderer renderer, Graph graph)
-    {
+    private static GraphNode calcMapGraphNode(MouseEvent e, Renderer renderer, Graph graph) {
         double xSpacing = renderer.getXSpacing();
         double ySpacing = renderer.getYSpacing();
         double x = e.getX();

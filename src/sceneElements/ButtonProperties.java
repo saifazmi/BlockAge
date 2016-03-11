@@ -76,12 +76,12 @@ public class ButtonProperties {
 
     /**
      * Adds hover effect as above, but for buttons in the map editor interface
+     *
      * @param button
      * @param hoverImageIn
      * @param hoverImageOut
      */
-    public void addHoverEffect2(Button button, Image hoverImageIn, Image hoverImageOut, double posX, double posY)
-    {
+    public void addHoverEffect2(Button button, Image hoverImageIn, Image hoverImageOut, double posX, double posY) {
         button.setOnMousePressed(event -> button.getScene().setCursor(Cursor.DEFAULT));
         button.setOnMouseEntered(event ->
         {
@@ -97,6 +97,7 @@ public class ButtonProperties {
 
     /**
      * Simple enlargement of image inside Button
+     *
      * @param button
      */
     public void addHoverEffect3(Button button) {
