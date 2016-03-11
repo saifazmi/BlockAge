@@ -1,7 +1,5 @@
 package maps;
 
-import java.io.File;
-
 import entity.Blockade;
 import graph.Graph;
 import graph.GraphNode;
@@ -21,6 +19,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import menus.Menu;
 import stores.ImageStore;
+
+import java.io.File;
 
 /**
  * Created by hung on 04/03/16.

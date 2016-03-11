@@ -1,5 +1,6 @@
 package entity;
 
+import core.CoreEngine;
 import graph.Graph;
 import graph.GraphNode;
 import gui.Renderer;
@@ -7,10 +8,12 @@ import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import menus.MenuHandler;
 import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
@@ -228,6 +231,23 @@ public class Unit extends Entity {
                     nextNode = null;
                     this.completedMove = true;
                 }
+   }
+            else if (this.getPosition() == goal) {
+                nextNode = null;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        CoreEngine.Instance().setPaused(true);
+                        MenuHandler.switchScene(MenuHandler.END_GAME_MENU);
+                    }
+                });
+
+            }
+            else {
+                nextNode = null;
+                CoreEngine.Instance().setPaused(true);
+                CoreEngine.Instance().halveScore();
+                Platform.runLater(() -> MenuHandler.switchScene(MenuHandler.END_GAME_MENU));
             }
         }
     }
