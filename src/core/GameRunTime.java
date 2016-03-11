@@ -66,10 +66,11 @@ public class GameRunTime {
         final String SEPARATOR = File.separator;
         final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
+        Image hellBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "hell_background.png");
         Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
         Image grassBackground = new Image(SPRITE_RESOURCES + "misc" + SEPARATOR + "sand_background.png");
 
-        BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage myBIF = new BackgroundImage(hellBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         mainGamePane.setBackground(new Background(myBIF));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
         new Renderer();

@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 import gui.GameInterface;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,7 +18,6 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -27,19 +25,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import menus.Menu;
 import menus.MenuHandler;
 import sceneElements.ButtonProperties;
-import sceneElements.ElementsHandler;
 import stores.ImageStore;
-import java.io.InputStream;
 /**
  * Created by hung on 05/03/16.
  */
 public class MapEditorInterface {
 
     //for popup Scene
-    private Stage popUpStage;
+    private static Stage popUpStage;
     private Image yesImage, noImage, yesImageHover, noImageHover;
 
     //For the Map Editing scene itself
@@ -47,7 +44,7 @@ public class MapEditorInterface {
     public static Pane rightMenuPane, rightMenuBox;
     private HBox rightMenuSaveBack;
     private VBox rightMenuText;
-    public static Button saveButton, backButton, clearButton;
+    public static Button saveButton, backButton, clearButton, yes, no;
     private ButtonProperties b;
     private Image saveButtonImage, backButtonImage, saveButtonImageHover, backButtonImageHover, clearButtonImage, clearButtonImageHover;
     private TextArea instructions, fileNameBox, saveStatus;
@@ -101,10 +98,16 @@ public class MapEditorInterface {
         backButtonImageHover = ImageStore.backFromEditorHovered;
         clearButtonImage = ImageStore.clear;
         clearButtonImageHover = ImageStore.clearHovered;
+        yesImage = ImageStore.overwriteYes;
+        noImage = ImageStore.overwriteNo;
+        yesImageHover = ImageStore.overwriteYesHovered;
+        noImageHover = ImageStore.overwriteNoHovered;
         //Buttons
         saveButton = new Button();
         backButton = new Button();
         clearButton = new Button();
+        yes = new Button();
+        no = new Button();
         //Text areas
         instructions = new TextArea();
         fileNameBox = new TextArea();
@@ -173,15 +176,6 @@ public class MapEditorInterface {
         rightMenuBox.getChildren().addAll(saveButton, backButton, clearButton, instructionTextLabel, fileNameLabel, fileNameBox, saveStatusLabel, saveStatus);
         rightMenuPane.getChildren().add(rightMenuBox);
 
-
-        //dunno how spacing works yet
-        //rightMenuText.getChildren().addAll(fileNameLabel, fileNameBox, saveStatusLabel, saveStatus, instructionLabel,instructions);
-
-        //rightMenuSaveBack.getChildren().addAll(saveButton, backButton);
-        rightMenuSaveBack.setSpacing(0);
-
-        //rightMenu.getChildren().addAll(rightMenuSaveBack, rightMenuText,clearButton);
-
         ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenuPane);
     }
 
@@ -195,9 +189,15 @@ public class MapEditorInterface {
         if (event.getSource() == MapEditorInterface.backButton) {
         	MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
+        if (event.getSource() == MapEditorInterface.no) {
+            parser.setOverwrite(false);
+            popUpStage.hide();
+        }
+        if (event.getSource() == MapEditorInterface.yes) {
+            parser.setOverwrite(true);
+            popUpStage.hide();
+        }
     }
-
-
 
     public String getFileName() {
         return fileNameBox.getText();
@@ -207,47 +207,42 @@ public class MapEditorInterface {
         return saveStatus;
     }
 
-
     private void setUpPopUp() {
         popUpStage = new Stage();
-
-        GridPane messagePanel = new GridPane();
-        VBox layout = new VBox();
-        HBox buttons = new HBox();
-
+        int sceneWidth = 300;
+        int sceneHeight = 200;
+        Pane messagePanel = new Pane();
+        BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        messagePanel.setPrefSize(sceneWidth, sceneHeight);
+        messagePanel.setBackground(new Background(myBI));
         Label message = new Label();
-        Button yes = new Button();
-        Button no = new Button();
-        yesImage = ImageStore.overwriteYes;
-        noImage = ImageStore.overwriteNo;
-        yesImageHover = ImageStore.overwriteYesHovered;
-        noImageHover = ImageStore.overwriteNoHovered;
-
         ButtonProperties b = new ButtonProperties();
 
-        b.setButtonProperties(yes, "", 0, 0, event -> {
-            parser.setOverwrite(true);
-            popUpStage.hide();
-        }, new ImageView(yesImage));
-        //b.addHoverEffect2(yes,yesImageHover,yesImage,0,0);
+        b.setButtonProperties(yes, "", sceneWidth/2 + 25 - noImage.getWidth()/2, 125, e->handle(e), new ImageView(yesImage));
+        b.addHoverEffect2(yes,yesImageHover,yesImage,sceneWidth/2 + 25 - noImage.getWidth()/2, 125);
 
-        b.setButtonProperties(no, "", 0, 0, event -> {
-            parser.setOverwrite(false);
-            popUpStage.hide();
-        }, new ImageView(noImage));
-        //b.addHoverEffect2(no,noImageHover,noImage,0,0);
+        b.setButtonProperties(no, "", sceneWidth/2 - 60 - noImage.getWidth()/2, 125, e->handle(e), new ImageView(noImage));
+        b.addHoverEffect2(no,noImageHover,noImage,sceneWidth/2 - 60 - noImage.getWidth()/2, 125);
 
-        buttons.getChildren().addAll(yes, no);
-        layout.getChildren().addAll(message, buttons);
+        message.setText("That map already exists. Overwrite existing map?");
+        message.setWrapText(true);
+        message.setFont(bellotaFontSmaller);
+        message.setPrefSize(240, 50);
+        message.setAlignment(Pos.CENTER);
+        message.setLayoutX(300/2 - 200/2);
+        message.setLayoutY(50);
+        message.setTextFill(Color.web("#FFE130"));
 
-        message.setText("that map already exist, overwrite existing map?");
-
-        messagePanel.getChildren().addAll(layout);
         Scene popUpScene = new Scene(messagePanel);
+        messagePanel.getChildren().addAll(no,yes,message);
 
+        popUpStage.setWidth(sceneWidth);
+        popUpStage.setHeight(sceneHeight);
         popUpStage.setScene(popUpScene);
         popUpStage.initModality(Modality.APPLICATION_MODAL);
         popUpStage.hide();
+        popUpStage.initStyle(StageStyle.UNDECORATED);
         popUpStage.setOnCloseRequest(event -> {
             parser.setOverwrite(false);
         });

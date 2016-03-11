@@ -154,7 +154,6 @@ public class MapChooserInterface {
     }
 
     private String getDataOf(File mapFile) {
-
         String[] mapNameParts = mapFile.toURI().toString().split(SEPERATOR);
         String mapFileName = mapNameParts[mapNameParts.length - 1];
 

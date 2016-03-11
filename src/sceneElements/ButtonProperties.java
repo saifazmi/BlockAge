@@ -82,7 +82,6 @@ public class ButtonProperties {
      * @param hoverImageOut
      */
     public void addHoverEffect2(Button button, Image hoverImageIn, Image hoverImageOut, double posX, double posY) {
-        button.setOnMousePressed(event -> button.getScene().setCursor(Cursor.DEFAULT));
         button.setOnMouseEntered(event ->
         {
             button.setScaleX(1.1);
