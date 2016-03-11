@@ -1,6 +1,5 @@
 package gui;
 
-import core.CoreEngine;
 import core.GameRunTime;
 import entity.Entity;
 import entity.Unit;
@@ -82,8 +81,7 @@ public class Renderer extends Group {
     }
 
     public Node remove(Node node) {
-        if(this.getChildren().contains(node))
-        {
+        if (this.getChildren().contains(node)) {
             LOG.log(Level.INFO, "Deleted " + node.toString());
             this.getChildren().remove(node);
             return node;
@@ -94,14 +92,13 @@ public class Renderer extends Group {
 
     public void clear() {
         ObservableList list = this.getChildren();
-        for(Object object : list) {
+        for (Object object : list) {
             Node node = (Node) object;
             remove(node);
         }
     }
 
-    public void redraw()
-    {
+    public void redraw() {
         //@TODO redundant, will break transitions on resize
 //        if(CoreEngine.Instance().isPaused()) {
 //            this.getChildren().clear();
@@ -251,10 +248,9 @@ public class Renderer extends Group {
             Rectangle rect = new Rectangle(xSpacing, ySpacing);
             rect.setFill(Color.GREEN);
             rect.setOpacity(0.0);
-            rect.setX(line.getStartX() - xSpacing/2);
-            rect.setY(line.getStartY() - ySpacing/2);
-            if(!this.getChildren().contains(rect))
-            {
+            rect.setX(line.getStartX() - xSpacing / 2);
+            rect.setY(line.getStartY() - ySpacing / 2);
+            if (!this.getChildren().contains(rect)) {
                 this.getChildren().add(rect);
             }
             this.getChildren().add(line);
@@ -267,15 +263,15 @@ public class Renderer extends Group {
         Rectangle rect = new Rectangle(xSpacing, ySpacing);
         rect.setOpacity(0.0);
         rect.setFill(Color.ORANGE);
-        rect.setX(lines.get(lines.size() - 1).getStartX() - xSpacing/2);
-        rect.setY(lines.get(lines.size() - 1).getStartY() - ySpacing/2);
+        rect.setX(lines.get(lines.size() - 1).getStartX() - xSpacing / 2);
+        rect.setY(lines.get(lines.size() - 1).getStartY() - ySpacing / 2);
         this.getChildren().add(rect);
         FadeTransition rectIn2 = buildFadeAnimation(1000.0, 0.0, 1.0, rect);
         FadeTransition rectOut2 = buildFadeAnimation(1000.0, 1.0, 0.0, rect);
 
         trans.getChildren().addAll(rectIn2, rectOut2);
         List<Line> routeLines = produceRoute(unit.getRoute(), unit.getPosition());
-        for(Line line : routeLines) {
+        for (Line line : routeLines) {
             remove(line);
             line.setStroke(Color.GREEN);
         }
@@ -317,5 +313,7 @@ public class Renderer extends Group {
         return drawn.get(min);
     }
 
-    private <A> List<A> hardCopy(List<A> list) { return list.stream().collect(Collectors.toList()); }
+    private <A> List<A> hardCopy(List<A> list) {
+        return list.stream().collect(Collectors.toList());
+    }
 }

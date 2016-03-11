@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import menus.MenuHandler;
 
-import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
