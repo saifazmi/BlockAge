@@ -13,7 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import menus.Menu;
@@ -216,7 +222,7 @@ public class GameInterface {
         //SCORE LABEL
         scoreLabel.setText("Score: " + CoreEngine.Instance().getScore());
         scoreLabel.setFont(bellotaFontBigger);
-        scoreLabel.setLayoutX(rightPaneWidth/2 - 220/2);
+        scoreLabel.setLayoutX(rightPaneWidth / 2 - 220 / 2);
         scoreLabel.setLayoutY(initialPositionY + 600);
         scoreLabel.setTextFill(Color.web("#FFE130"));
 

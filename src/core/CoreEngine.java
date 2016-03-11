@@ -152,7 +152,7 @@ public class CoreEngine {
 
         if (spawner != null) {
             spawner.update();
-            score += ((double)1/ (double)FRAME_RATE);
+            score += ((double) 1 / (double) FRAME_RATE);
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -218,7 +218,7 @@ public class CoreEngine {
     }
 
     /**
-     *  Gets the score
+     * Gets the score
      *
      * @return this.score the score
      */
@@ -227,8 +227,8 @@ public class CoreEngine {
     }
 
     public void halveScore() {
-        if(!scoreHalved) {
-            this.score = this.score/2;
+        if (!scoreHalved) {
+            this.score = this.score / 2;
             this.scoreHalved = true;
         }
     }

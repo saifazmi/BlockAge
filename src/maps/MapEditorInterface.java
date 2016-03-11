@@ -1,10 +1,7 @@
 package maps;
 
-import java.io.InputStream;
-
 import gui.GameInterface;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -30,9 +27,10 @@ import javafx.stage.Stage;
 import menus.Menu;
 import menus.MenuHandler;
 import sceneElements.ButtonProperties;
-import sceneElements.ElementsHandler;
 import stores.ImageStore;
+
 import java.io.InputStream;
+
 /**
  * Created by hung on 05/03/16.
  */
@@ -70,7 +68,7 @@ public class MapEditorInterface {
         rightPane();
         setUpPopUp();
     }
-    
+
 
     private void loadFont() {
         InputStream fontStream = MapEditorInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
@@ -79,7 +77,7 @@ public class MapEditorInterface {
         }
         bellotaFont = Font.loadFont(fontStream, 28);
     }
-    
+
     private void loadFont2() {
         InputStream fontStream = MapEditorInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
         if (fontStream == null) {
@@ -87,7 +85,7 @@ public class MapEditorInterface {
         }
         bellotaFontSmaller = Font.loadFont(fontStream, 18);
     }
-    
+
     private void declareElements() {
         // HBoxes & VBoxes
         rightMenuSaveBack = new HBox();
@@ -118,26 +116,26 @@ public class MapEditorInterface {
     }
 
     private void rightPane() {
-    	// Adding buttons properties
-        b.setButtonProperties(saveButton, "", rightPaneWidth/2 - saveButtonImage.getWidth()/2 - 80, initialPositionY, e->handle(e), new ImageView(saveButtonImage));
-        b.addHoverEffect2(saveButton, saveButtonImageHover, saveButtonImage, rightPaneWidth/2 - saveButtonImage.getWidth()/2 - 80, initialPositionY);
+        // Adding buttons properties
+        b.setButtonProperties(saveButton, "", rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80, initialPositionY, e -> handle(e), new ImageView(saveButtonImage));
+        b.addHoverEffect2(saveButton, saveButtonImageHover, saveButtonImage, rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80, initialPositionY);
 
-        b.setButtonProperties(backButton, "", rightPaneWidth/2 - backButtonImage.getWidth()/2 + 80, initialPositionY, e->handle(e), new ImageView(backButtonImage));
-        b.addHoverEffect2(backButton, backButtonImageHover, backButtonImage, rightPaneWidth/2 - backButtonImage.getWidth()/2 + 80, initialPositionY);
+        b.setButtonProperties(backButton, "", rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80, initialPositionY, e -> handle(e), new ImageView(backButtonImage));
+        b.addHoverEffect2(backButton, backButtonImageHover, backButtonImage, rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80, initialPositionY);
 
-        b.setButtonProperties(clearButton, "", rightPaneWidth/2 - clearButtonImage.getWidth()/2, Menu.HEIGHT - 100, e->handle(e), new ImageView(clearButtonImage));
-        b.addHoverEffect2(clearButton, clearButtonImageHover, clearButtonImage,rightPaneWidth/2 - clearButtonImage.getWidth()/2, Menu.HEIGHT - 100);
+        b.setButtonProperties(clearButton, "", rightPaneWidth / 2 - clearButtonImage.getWidth() / 2, Menu.HEIGHT - 100, e -> handle(e), new ImageView(clearButtonImage));
+        b.addHoverEffect2(clearButton, clearButtonImageHover, clearButtonImage, rightPaneWidth / 2 - clearButtonImage.getWidth() / 2, Menu.HEIGHT - 100);
 
         BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         rightMenuPane.setPrefSize(GameInterface.rightPaneWidth, Menu.HEIGHT);
         rightMenuPane.setBackground(new Background(myBI));
-        
+
         instructionTextLabel.setFont(bellotaFont);
         instructionTextLabel.setText("Click on rectangle node to create blockades. Enter the map's name and press save to save your current configuration or back to cancel.");
         instructionTextLabel.setTextFill(Color.web("#FFE130"));
         instructionTextLabel.setPrefSize(300, 200);
-        instructionTextLabel.setLayoutX(rightPaneWidth/2 - 300/2);
+        instructionTextLabel.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         instructionTextLabel.setLayoutY(initialPositionY + 4 * heightSpacing);
         instructionTextLabel.setWrapText(true);
 
@@ -148,13 +146,13 @@ public class MapEditorInterface {
         fileNameLabel.setPrefSize(150, 30);
         fileNameLabel.setLayoutX(61);
         fileNameLabel.setLayoutY(initialPositionY + 5 * heightSpacing + 200);
-        
+
         fileNameBox.setPrefSize(300, 5);
-        fileNameBox.setLayoutX(rightPaneWidth/2 - 300/2);
+        fileNameBox.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         fileNameBox.setStyle("-fx-background-color: #FFE130;");
         fileNameBox.setFont(bellotaFontSmaller);
         fileNameBox.setLayoutY(initialPositionY + 5 * heightSpacing + 230);
-        
+
         saveStatusLabel.setFont(bellotaFont);
         saveStatusLabel.setText("Save Status");
         saveStatusLabel.setAlignment(Pos.CENTER_RIGHT);
@@ -162,14 +160,14 @@ public class MapEditorInterface {
         saveStatusLabel.setPrefSize(150, 30);
         saveStatusLabel.setLayoutX(47);
         saveStatusLabel.setLayoutY(initialPositionY + 8 * heightSpacing + 200);
-        
+
         saveStatus.setEditable(false);
         saveStatus.setPrefSize(300, 5);
         saveStatus.setStyle("-fx-background-color: #FFE130;");
         saveStatus.setFont(bellotaFontSmaller);
-        saveStatus.setLayoutX(rightPaneWidth/2 - 300/2);
+        saveStatus.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         saveStatus.setLayoutY(initialPositionY + 8 * heightSpacing + 230);
-        
+
         rightMenuBox.getChildren().addAll(saveButton, backButton, clearButton, instructionTextLabel, fileNameLabel, fileNameBox, saveStatusLabel, saveStatus);
         rightMenuPane.getChildren().add(rightMenuBox);
 
@@ -186,17 +184,16 @@ public class MapEditorInterface {
     }
 
     public static void handle(ActionEvent event) {
-    	if (event.getSource() == MapEditorInterface.saveButton) {
-        	parser.saveToUserFile();
-    	}
+        if (event.getSource() == MapEditorInterface.saveButton) {
+            parser.saveToUserFile();
+        }
         if (event.getSource() == MapEditorInterface.clearButton) {
-        	mapEditor.clearNodes();
+            mapEditor.clearNodes();
         }
         if (event.getSource() == MapEditorInterface.backButton) {
-        	MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
     }
-
 
 
     public String getFileName() {
