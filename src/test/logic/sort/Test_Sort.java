@@ -1,4 +1,4 @@
-package test;
+package test.logic.sort;
 
 import sorts.BubbleSort;
 import sorts.QuickSort;
