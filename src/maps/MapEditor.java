@@ -1,5 +1,7 @@
 package maps;
 
+import java.io.File;
+
 import entity.Blockade;
 import graph.Graph;
 import graph.GraphNode;
@@ -8,7 +10,13 @@ import gui.Renderer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import menus.Menu;
@@ -39,6 +47,13 @@ public class MapEditor implements Menu {
 
         //initialiseScene();
         mapEditorPane = new BorderPane();
+        final String SEPARATOR = File.separator;
+        final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
+        final String BACKGROUNDS = "backgrounds" + SEPARATOR;
+        Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
+
+        BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        mapEditorPane.setBackground(new Background(myBIF));
         Group mapEditor = new Group(mapEditorPane);
         mapEditorScene = new Scene(mapEditor, CoreGUI.WIDTH,CoreGUI.HEIGHT);
         ((BorderPane) ((Group) mapEditorScene.getRoot()).getChildren().get(0)).setCenter(mapEditorRenderer);

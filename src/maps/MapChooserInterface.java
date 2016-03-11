@@ -36,18 +36,15 @@ public class MapChooserInterface {
 
     private static MapChooserInterface instance;
 
-    public static MapChooserInterface Instance()
-    {
+    public static MapChooserInterface Instance() {
         if (instance == null)
             instance = new MapChooserInterface();
 
         return instance;
     }
 
-    private MapChooserInterface()
-    {
+    private MapChooserInterface() {
         mapChooseStage = new Stage();
-
         images = new HBox();
 
         String dir = System.getProperty("user.home");

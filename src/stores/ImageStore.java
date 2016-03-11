@@ -76,8 +76,8 @@ public final class ImageStore {
     public static final Image backMainImage = new Image(SPRITE_RESOURCES + BUTTONS + "Quit_Idle.png");
     public static final Image backMainImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Quit_Hover.png");
     // map editor related
-    public static final Image mapEditorImage = new Image(SPRITE_RESOURCES + BUTTONS + "MapEditor.png");
-    public static final Image mapEditorImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "MapEditor_Hover.png");
+    public static final Image mapEditorImage = new Image(SPRITE_RESOURCES + BUTTONS + "MapEditor.png", 410, 130, true, true);
+    public static final Image mapEditorImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "MapEditor_Hover.png", 410, 130, true, true);
     public static final Image saveMapImage = new Image(SPRITE_RESOURCES + BUTTONS + "Save.png");
     public static final Image saveMapImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Save_Hovered.png");
     public static final Image backFromEditor = new Image(SPRITE_RESOURCES + BUTTONS + "Back-small.png");
@@ -86,8 +86,8 @@ public final class ImageStore {
     public static final Image overwriteYesHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Yes_Hovered.png");
     public static final Image overwriteNo = new Image(SPRITE_RESOURCES + BUTTONS + "No.png");
     public static final Image overwriteNoHovered = new Image(SPRITE_RESOURCES + BUTTONS + "No_Hovered.png");
-    public static final Image clear = new Image(SPRITE_RESOURCES + BUTTONS + "Clear.png");
-    public static final Image clearHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Clear_Hovered.png");
+    public static final Image clear = new Image(SPRITE_RESOURCES + BUTTONS + "Clear.png", 250, 60, true, true);
+    public static final Image clearHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Clear_Hovered.png", 250, 60, true, true);
 
     public static void setSpriteProperties(Entity entity, Image image) {
         SpriteImage spriteImage = new SpriteImage(image, entity);
