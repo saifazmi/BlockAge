@@ -53,7 +53,9 @@ public class MapChooserInterface {
         SAVE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
 
-        setUpMapImages();
+        File imageDir = new File(IMAGE_DIRECTORY);
+        if (imageDir.exists())
+            setUpMapImages();
 
         ScrollPane scroller = new ScrollPane(images);
         scroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
