@@ -24,8 +24,9 @@ public final class ImageStore {
     private static final String BACKGROUNDS = "backgrounds" + SEPARATOR;
     private static final String LABELS = "labels" + SEPARATOR;
 
-//    private ImageStore() {
-//    }
+    private ImageStore() {
+        // To prevent instantiation.
+    }
 
     //unit images
     public static final Image imageDemon = new Image(SPRITE_RESOURCES + ENTITIES + UNITS + "BFS_Idle.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
