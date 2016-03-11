@@ -194,9 +194,9 @@ public class Renderer extends Group {
             line.setOpacity(0.0);
             if (!this.getChildren().contains(line)) {
                 this.getChildren().add(line);
-                FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
-                trans.getChildren().add(lineTransition);
             }
+            FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
+            trans.getChildren().add(lineTransition);
         }
         return trans;
     }
@@ -273,21 +273,14 @@ public class Renderer extends Group {
         FadeTransition rectIn2 = buildFadeAnimation(1000.0, 0.0, 1.0, rect);
         FadeTransition rectOut2 = buildFadeAnimation(1000.0, 1.0, 0.0, rect);
 
-        //lines.stream().filter(routeLines::contains).forEach(line -> line.setFill(Color.GREEN));
         trans.getChildren().addAll(rectIn2, rectOut2);
-        trans.setOnFinished(e ->
-        {
-            //@TODO doesn't work
-            List<Line> routeLines = produceRoute(unit.getRoute());
-            for(Line line : routeLines) {
-                //remove(line);
-                line.setFill(Color.GREEN);
-                line.setStrokeWidth(10);
-                this.getChildren().add(line);
-                LOG.log(Level.INFO, "Added green route line");
-            }
-            produceRouteVisual(routeLines).play();
-        });
+        List<Line> routeLines = produceRoute(unit.getRoute(), unit.getPosition());
+        for(Line line : routeLines) {
+            remove(line);
+            line.setStroke(Color.GREEN);
+        }
+        Transition trans2 = produceRouteVisual(routeLines);
+        trans.getChildren().add(trans2);
         return trans;
     }
 
