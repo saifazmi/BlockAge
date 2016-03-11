@@ -3,7 +3,11 @@ package searches;
 import entity.Unit;
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by hung on 06/02/16.
@@ -13,8 +17,8 @@ public class DepthFirstSearch {
      * Finds a path from a start node to the end node using DFS, utilises a stack
      * The returned path should not include the start node
      *
-     * @param unit the unit to search for
-     * @param endNode   node search terminates with, the goal node, usually player's base
+     * @param unit    the unit to search for
+     * @param endNode node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
     public static List<GraphNode> findPathFrom(Unit unit, GraphNode endNode) {
@@ -44,7 +48,7 @@ public class DepthFirstSearch {
                     visited.add(endNode);
                     unit.setVisited(visited);
                     unit.setRoute(path);
-                    ArrayList<GraphNode> clone = (ArrayList<GraphNode>)path.clone();
+                    ArrayList<GraphNode> clone = (ArrayList<GraphNode>) path.clone();
                     return path;
                 } else {
                     visited.add(current);

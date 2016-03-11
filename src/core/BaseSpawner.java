@@ -13,7 +13,13 @@ import maps.MapParser;
 import sceneElements.ElementsHandler;
 import stores.ImageStore;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -72,14 +78,11 @@ public class BaseSpawner {
         String chosenMap = MapChooserInterface.Instance().getChosenMap();
 
         //assured because map will always end with .txt
-        if (chosenMap.endsWith("null"))
-        {
+        if (chosenMap.endsWith("null")) {
             Random mapRndGen = new Random();
             String map = "map" + mapRndGen.nextInt(1) + ".txt";
             in = MapEditor.class.getResourceAsStream(map);
-        }
-        else
-        {
+        } else {
             mapFile = new File(chosenMap);
 
             try {

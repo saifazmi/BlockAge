@@ -15,7 +15,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import maps.MapChooserInterface;
-import menus.*;
+import menus.MainMenu;
+import menus.Menu;
+import menus.MenuHandler;
+import menus.Options;
+import menus.OptionsMenu;
+import menus.PauseMenu;
 import stores.ImageStore;
 import stores.LambdaStore;
 
@@ -45,12 +50,12 @@ public class ElementsHandler {
         if (event.getSource() == MainMenu.newGameButton) {
             startGame();
         } else if (event.getSource() == MainMenu.optionsButton) {
-        	OptionsMenu.blockadeLabel.setVisible(true);
-        	OptionsMenu.noButtonB.setVisible(true);
-        	OptionsMenu.yesButtonB.setVisible(true);
-        	OptionsMenu.blockadeLabel.setDisable(false);
-        	OptionsMenu.noButtonB.setDisable(false);
-        	OptionsMenu.yesButtonB.setDisable(false);
+            OptionsMenu.blockadeLabel.setVisible(true);
+            OptionsMenu.noButtonB.setVisible(true);
+            OptionsMenu.yesButtonB.setVisible(true);
+            OptionsMenu.blockadeLabel.setDisable(false);
+            OptionsMenu.noButtonB.setDisable(false);
+            OptionsMenu.yesButtonB.setDisable(false);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         } else if (event.getSource() == MainMenu.exitButton) {
             System.exit(0);
@@ -142,12 +147,12 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.optionsButton) {
-        	OptionsMenu.blockadeLabel.setVisible(false);
-        	OptionsMenu.noButtonB.setVisible(false);
-        	OptionsMenu.yesButtonB.setVisible(false);
-        	OptionsMenu.blockadeLabel.setDisable(true);
-        	OptionsMenu.noButtonB.setDisable(true);
-        	OptionsMenu.yesButtonB.setDisable(true);
+            OptionsMenu.blockadeLabel.setVisible(false);
+            OptionsMenu.noButtonB.setVisible(false);
+            OptionsMenu.yesButtonB.setVisible(false);
+            OptionsMenu.blockadeLabel.setDisable(true);
+            OptionsMenu.noButtonB.setDisable(true);
+            OptionsMenu.yesButtonB.setDisable(true);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
         if (event.getSource() == PauseMenu.backMainButton) {
@@ -161,12 +166,10 @@ public class ElementsHandler {
             engine.setPaused(true);
         }
 
-        if (event.getSource() == MainMenu.mapEditorButton)
-        {
+        if (event.getSource() == MainMenu.mapEditorButton) {
             MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
         }
-        if (event.getSource() == MainMenu.customMapButton)
-        {
+        if (event.getSource() == MainMenu.customGameButton) {
             MapChooserInterface.Instance().showChooser();
         }
     }
@@ -214,7 +217,42 @@ public class ElementsHandler {
         }
     }
 
-    private static void startGame() {
+    /*private static void startGame() {
+        // Create grid for the game we'll play
+        System.out.println("Start game");
+        GameRunTime gameRunTime = new GameRunTime();
+        engine = CoreEngine.Instance();
+        engine.setPaused(true);
+        Renderer.Instance().calculateSpacing();
+        System.out.println("Spacing calculated");
+        gameRunTime.startGame();
+        System.out.println("Game started");
+        MenuHandler.setMainGameScene();
+        System.out.println("Scene set");
+        new GameInterface();
+        System.out.println("Interface made");
+        MenuHandler.switchScene(MenuHandler.MAIN_GAME);
+        Renderer.Instance().initialDraw();
+        Thread unitSpawnerThread = new Thread(() -> {
+            GraphNode goal = BaseSpawner.Instance().getGoal();
+            while (goal == null) {
+                try {
+                    goal = BaseSpawner.Instance().getGoal();
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    LOG.log(Level.SEVERE, e.toString(), e);
+                }
+            }
+
+            LOG.log(Level.INFO, "GOAL found!!!");
+            UnitSpawner spawner = new UnitSpawner(2, goal);
+            CoreEngine.Instance().setSpawner(spawner);
+            engine.setPaused(false);
+        });
+        unitSpawnerThread.start();
+    }*/
+
+    public static void startGame() {
         // Create grid for the game we'll play
         System.out.println("Start game");
         GameRunTime gameRunTime = new GameRunTime();

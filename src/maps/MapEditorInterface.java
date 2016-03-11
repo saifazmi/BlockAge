@@ -19,7 +19,6 @@ import menus.MenuHandler;
 import sceneElements.ButtonProperties;
 import stores.ImageStore;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -45,8 +44,7 @@ public class MapEditorInterface {
     private String SEPARATOR = "/";
     private static MapEditor mapEditor;
 
-    public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor)
-    {
+    public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor) {
         MapEditorInterface.mapEditor = mapEditor;
         loadFont();
         parser = new EditorParser(MapEditorInterface.mapEditor);
@@ -65,7 +63,7 @@ public class MapEditorInterface {
         b.addHoverEffect2(backButton, backButtonImageHover, backButtonImage, 0, 0);
 
         b.setButtonProperties(clearButton, "", 0, 0, MapEditorInterface::handle, new ImageView(clearButtonImage));
-        b.addHoverEffect2(clearButton, clearButtonImageHover, clearButtonImage,0,0);
+        b.addHoverEffect2(clearButton, clearButtonImageHover, clearButtonImage, 0, 0);
 
         instructions.setText("Click on rectangle node to create blockades. Enter the map's name and press save to save your current configuration or back to cancel.");
         instructions.setPrefSize(300, 60);
@@ -88,27 +86,24 @@ public class MapEditorInterface {
         saveStatus.setEditable(false);
 
         //dunno how spacing works yet
-        rightMenuText.getChildren().addAll(fileNameLabel, fileNameBox, saveStatusLabel, saveStatus, instructionLabel,instructions);
+        rightMenuText.getChildren().addAll(fileNameLabel, fileNameBox, saveStatusLabel, saveStatus, instructionLabel, instructions);
 
         rightMenuSaveBack.getChildren().addAll(saveButton, backButton);
         rightMenuSaveBack.setSpacing(0);
 
-        rightMenu.getChildren().addAll(rightMenuSaveBack, rightMenuText,clearButton);
+        rightMenu.getChildren().addAll(rightMenuSaveBack, rightMenuText, clearButton);
 
         ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenu);
     }
 
     public static void handle(ActionEvent event) {
-        if (event.getSource() == MapEditorInterface.saveButton)
-        {
+        if (event.getSource() == MapEditorInterface.saveButton) {
             parser.saveToUserFile();
         }
-        if (event.getSource() == MapEditorInterface.backButton)
-        {
+        if (event.getSource() == MapEditorInterface.backButton) {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
-        if (event.getSource() == MapEditorInterface.clearButton)
-        {
+        if (event.getSource() == MapEditorInterface.clearButton) {
             mapEditor.clearNodes();
         }
     }
@@ -145,13 +140,11 @@ public class MapEditorInterface {
         b = new ButtonProperties();
     }
 
-    public String getFileName()
-    {
+    public String getFileName() {
         return fileNameBox.getText();
     }
 
-    public TextArea getSaveStatusBox()
-    {
+    public TextArea getSaveStatusBox() {
         return saveStatus;
     }
 
@@ -208,8 +201,7 @@ public class MapEditorInterface {
         });
     }
 
-    public Stage getPopUpStage()
-    {
+    public Stage getPopUpStage() {
         return popUpStage;
     }
 }
