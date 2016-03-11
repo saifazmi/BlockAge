@@ -7,9 +7,13 @@ import graph.Graph;
 import graph.GraphNode;
 import gui.Renderer;
 import javafx.scene.image.Image;
+import maps.MapChooserInterface;
+import maps.MapEditor;
+import maps.MapParser;
 import sceneElements.ElementsHandler;
 import stores.ImageStore;
 
+import java.io.*;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -23,6 +27,11 @@ public class BaseSpawner {
 
     private Renderer renderer = Renderer.Instance();
     private GameRunTime runTime = GameRunTime.Instance();
+
+    // may not be need
+    private String SEPARATOR = File.separator;
+
+
     private GraphNode goal;
 
     private static BaseSpawner instance = null;
@@ -46,11 +55,45 @@ public class BaseSpawner {
             runTime.setBasePlaced(true);
             // surround the base with sortable blockades.
             protectBase(goal);
-            // generate 100 random blockades.
+
             spawnBlockades(100);
+            //generateBlockades();
+
             runTime.getScene().setOnMouseClicked(null);
         });
 
+    }
+
+    private void generateBlockades() {
+
+        InputStream in = null;
+        File mapFile = null;
+
+        String chosenMap = MapChooserInterface.Instance().getChosenMap();
+
+        //assured because map will always end with .txt
+        if (chosenMap.endsWith("null"))
+        {
+            Random mapRndGen = new Random();
+            String map = "map" + mapRndGen.nextInt(1) + ".txt";
+            in = MapEditor.class.getResourceAsStream(map);
+        }
+        else
+        {
+            mapFile = new File(chosenMap);
+
+            try {
+                in = new FileInputStream(mapFile);
+            } catch (FileNotFoundException e) {
+                //error out
+            }
+        }
+
+        Reader fReader = new InputStreamReader(in);
+        BufferedReader reader = new BufferedReader(fReader);
+
+        MapParser parser = new MapParser(reader);
+        parser.generateBlockades();
     }
 
     private void protectBase(GraphNode base) {
