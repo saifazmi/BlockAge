@@ -278,14 +278,12 @@ public class Renderer extends Group {
         trans.setOnFinished(e ->
         {
             //@TODO doesn't work
-            List<Line> routeLines = produceRoute(unit.getRoute());
+            List<Line> routeLines = produceRoute(unit.getRoute(), unit.getPosition());
             for(Line line : routeLines) {
                 remove(line);
-                line.setFill(Color.GREEN);
-                LOG.log(Level.INFO, "Added green route line");
+                line.setStroke(Color.GREEN);
             }
             Transition trans2 = produceRouteVisual(routeLines);
-            trans2.setOnFinished(e2 -> System.out.println("Finished the green line draw"));
             trans2.play();
         });
         return trans;
