@@ -12,11 +12,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import menus.Menu;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
-import stores.ImageStore;
 
 import java.io.File;
 import java.util.logging.Logger;
