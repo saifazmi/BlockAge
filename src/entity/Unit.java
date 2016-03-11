@@ -242,11 +242,11 @@ public class Unit extends Entity {
                 });
             }
             else {
+                CoreEngine.Instance().setPaused(true);
+                CoreEngine.Instance().halveScore();
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        CoreEngine.Instance().setPaused(true);
-                        CoreEngine.Instance().setScore(CoreEngine.Instance().getScore()/2);
                         MenuHandler.switchScene(MenuHandler.END_GAME_MENU);
                     }
                 });

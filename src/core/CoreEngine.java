@@ -20,6 +20,7 @@ public class CoreEngine {
     private final int FRAME_RATE = 60;
 
     private double score;
+    private boolean scoreHalved;
     private boolean running;
     private boolean paused = false;
     private long startTime;
@@ -86,6 +87,7 @@ public class CoreEngine {
     public void startGame() {
         running = true;
         score = 0;
+        scoreHalved = false;
         startTime = System.nanoTime();
 
         // @TODO in case it's not running
@@ -224,5 +226,10 @@ public class CoreEngine {
         return this.score;
     }
 
-    public void setScore(double score) { this.score = score; }
+    public void halveScore() {
+        if(!scoreHalved) {
+            this.score = this.score/2;
+            this.scoreHalved = true;
+        }
+    }
 }
