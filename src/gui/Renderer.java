@@ -280,8 +280,9 @@ public class Renderer extends Group {
             //@TODO doesn't work
             List<Line> routeLines = produceRoute(unit.getRoute());
             for(Line line : routeLines) {
-                remove(line);
+                //remove(line);
                 line.setFill(Color.GREEN);
+                line.setStrokeWidth(10);
                 this.getChildren().add(line);
                 LOG.log(Level.INFO, "Added green route line");
             }

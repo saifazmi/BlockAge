@@ -42,14 +42,14 @@ public class MapEditorInterface {
     private Label instructionLabel, saveStatusLabel, fileNameLabel;
     private static EditorParser parser;
     private Font bellotaFont;
-    private String SEPARATOR = File.separator;
+    private String SEPARATOR = "/";
     private static MapEditor mapEditor;
 
     public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor)
     {
-        this.mapEditor = mapEditor;
+        MapEditorInterface.mapEditor = mapEditor;
         loadFont();
-        parser = new EditorParser(this.mapEditor);
+        parser = new EditorParser(MapEditorInterface.mapEditor);
         scene = mapEditorScene;
         declareElements();
         rightPane();
@@ -58,13 +58,13 @@ public class MapEditorInterface {
 
     private void rightPane() {
 
-        b.setButtonProperties(saveButton, "", 0, 0, e -> handle(e), new ImageView(saveButtonImage));
+        b.setButtonProperties(saveButton, "", 0, 0, MapEditorInterface::handle, new ImageView(saveButtonImage));
         b.addHoverEffect2(saveButton, saveButtonImageHover, saveButtonImage, 0, 0);
 
-        b.setButtonProperties(backButton, "", 0, 0, e -> handle(e), new ImageView(backButtonImage));
+        b.setButtonProperties(backButton, "", 0, 0, MapEditorInterface::handle, new ImageView(backButtonImage));
         b.addHoverEffect2(backButton, backButtonImageHover, backButtonImage, 0, 0);
 
-        b.setButtonProperties(clearButton, "", 0, 0, e -> handle(e), new ImageView(clearButtonImage));
+        b.setButtonProperties(clearButton, "", 0, 0, MapEditorInterface::handle, new ImageView(clearButtonImage));
         b.addHoverEffect2(clearButton, clearButtonImageHover, clearButtonImage,0,0);
 
         instructions.setText("Click on rectangle node to create blockades. Enter the map's name and press save to save your current configuration or back to cancel.");
