@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -37,6 +38,7 @@ public class BaseSpawner {
     // may not be need
     private final String SEPARATOR = "/";
     private final String MAP_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "maps" + SEPARATOR;
+    private final int MAP_PRESETS_QTY = 2;
 
     private GraphNode goal;
 
@@ -80,7 +82,7 @@ public class BaseSpawner {
         //assured because map will always end with .txt
         if (chosenMap.endsWith("null")) {
             Random mapRndGen = new Random();
-            String map = MAP_RESOURCES + "map" + mapRndGen.nextInt(1) + ".txt";
+            String map = MAP_RESOURCES + "00" + mapRndGen.nextInt(MAP_PRESETS_QTY) + ".map";
             in = MapEditor.class.getResourceAsStream(map);
         } else {
             mapFile = new File(chosenMap);
@@ -88,7 +90,7 @@ public class BaseSpawner {
             try {
                 in = new FileInputStream(mapFile);
             } catch (FileNotFoundException e) {
-                //error out
+                LOG.log(Level.SEVERE, e.toString(), e);
             }
         }
 

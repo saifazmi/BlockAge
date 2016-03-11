@@ -24,6 +24,7 @@ public final class LambdaStore {
     private static LambdaStore instance = null;
 
     private LambdaStore() {
+        // To prevent instantiation.
     }
 
     public static LambdaStore Instance() {

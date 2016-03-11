@@ -42,7 +42,6 @@ public class GameInterface {
     public static Label unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel, scoreLabel;
 
     private Label unitDescriptionLabel, sortVisualisationLabel, blockadesLabel, sortLabel;
-    private HBox sortingBox;
     private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
     private ButtonProperties b;
     private LabelProperties l;
@@ -77,8 +76,6 @@ public class GameInterface {
      * Declare the elements for the scene
      */
     public void declareElements() {
-        //HBoxes
-        sortingBox = new HBox();
         //Labels
         unitImage = new Label();
         namePaneLabel = new Label();
@@ -122,8 +119,6 @@ public class GameInterface {
         unitDescriptionLabel.setLayoutX(rightPaneWidth / 2 - 175 / 2);
         unitDescriptionLabel.setLayoutY(initialPositionY);
         unitDescriptionLabel.setTextFill(Color.web("#FFE130"));
-        //unitDescriptionLabel.setAlignment(Pos.CENTER);
-
 
         unitDescriptionText.setPrefSize(300, 90);
         unitDescriptionText.setLayoutX(rightPaneWidth / 2 - 300 / 2);
@@ -139,7 +134,6 @@ public class GameInterface {
         // Sets the image and the text of the unit accordingly with the mouse pressed
         namePaneLabel.setText("");
         namePaneLabel.setFont(bellotaFont);
-        //namePaneLabel.setPrefSize(250, 25);
         namePaneLabel.setLayoutX(15);
         namePaneLabel.setLayoutY(5);
         namePaneLabel.setTextFill(Color.web("#FFE130"));
@@ -232,7 +226,6 @@ public class GameInterface {
         rightMenuPane.setBackground(new Background(myBI));
         rightMenuBox.getChildren().addAll(unitDescriptionLabel, unitTextPane, sortVisualisationLabel, sortVisualisationPane, blockadesLabel, unsortableButton, sortableButton, sortLabel, scoreLabel);
         rightMenuPane.getChildren().add(rightMenuBox);
-        //playButton, pauseButton,
         rightMenuPane.setPrefSize(rightPaneWidth, Menu.HEIGHT);
         ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenuPane);
     }

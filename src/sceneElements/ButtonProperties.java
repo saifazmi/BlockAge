@@ -85,11 +85,15 @@ public class ButtonProperties {
         button.setOnMousePressed(event -> button.getScene().setCursor(Cursor.DEFAULT));
         button.setOnMouseEntered(event ->
         {
+            button.setScaleX(1.1);
+            button.setScaleY(1.1);
             setButtonProperties(button, "", posX, posY, e -> MapEditorInterface.handle(e), new ImageView(hoverImageIn));
             button.getScene().setCursor(Cursor.HAND);
         });
         button.setOnMouseExited(event ->
         {
+            button.setScaleX(1);
+            button.setScaleY(1);
             setButtonProperties(button, "", posX, posY, e -> MapEditorInterface.handle(e), new ImageView(hoverImageOut));
             button.getScene().setCursor(Cursor.DEFAULT);
         });
@@ -102,6 +106,8 @@ public class ButtonProperties {
      */
     public void addHoverEffect3(Button button) {
         button.setOnMousePressed(event -> button.getScene().setCursor(Cursor.DEFAULT));
+        button.setScaleX(1);
+        button.setScaleY(1);
         button.setOnMouseEntered(event ->
         {
             button.getGraphic().setScaleX(1.02);
