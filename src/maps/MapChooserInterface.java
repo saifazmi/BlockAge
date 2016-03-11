@@ -105,6 +105,11 @@ public class MapChooserInterface {
         return SAVE_DIRECTORY + chosenMap;
     }
 
+    public void resetChosenMap()
+    {
+        chosenMap = "null";
+    }
+
     private void getMapImages() {
 
         mapImages = new ArrayList<>();
