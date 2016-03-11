@@ -225,7 +225,7 @@ public class GameInterface {
         scoreLabel.setLayoutX(rightPaneWidth/2 - 220/2);
         scoreLabel.setLayoutY(initialPositionY + 600);
         scoreLabel.setTextFill(Color.web("#FFE130"));
-        
+
         // setting background for the right pane
         BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);

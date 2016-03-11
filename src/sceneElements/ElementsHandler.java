@@ -15,12 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import maps.MapChooserInterface;
-import menus.MainMenu;
-import menus.Menu;
-import menus.MenuHandler;
-import menus.Options;
-import menus.OptionsMenu;
-import menus.PauseMenu;
+import menus.*;
 import stores.ImageStore;
 import stores.LambdaStore;
 
