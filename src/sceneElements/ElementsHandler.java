@@ -157,6 +157,7 @@ public class ElementsHandler {
         }
         if (event.getSource() == PauseMenu.backMainButton) {
             engine.setRunning(false);
+            MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
         if (event.getSource() == GameInterface.playButton) {
