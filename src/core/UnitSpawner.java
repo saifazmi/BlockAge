@@ -1,5 +1,9 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.logging.Logger;
+
 import entity.Entity;
 import entity.Unit;
 import graph.Graph;
@@ -8,13 +12,10 @@ import gui.GameInterface;
 import gui.Renderer;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 import stores.ImageStore;
-
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Logger;
 
 /**
  * @author : First created by Hung Hoang with code by Hung Hoang, and Paul Popa
@@ -81,11 +82,11 @@ public class UnitSpawner {
         Image image;
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
-            image = ImageStore.imageDemon;
+        	image = ImageStore.imageDemon;
         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-            image = ImageStore.imageDk;
+        	image = ImageStore.imageDk;
         } else {
-            image = ImageStore.imageBanshee;
+        	image = ImageStore.imageBanshee;
         }
         SpriteImage sprite = new SpriteImage(image, null);
         Unit unit = new Unit(unitPoolCount, names[index], graph.nodeWith(new GraphNode(0, 0)), sprite, Unit.Search.values()[index], Unit.Sort.values()[index], graph, goal);
@@ -99,19 +100,30 @@ public class UnitSpawner {
                 ArrayList<Entity> units = engine.getEntities();
                 for (Entity unit1 : units) {
                     if (sprite.getEntity() == unit1) {
-                        GameInterface.unitDescriptionText.setFont(GameInterface.bellotaFont);
-                        GameInterface.unitDescriptionText.setText("Name:   " + sprite.getEntity().getName() + "\n" +
-                                "Search:  " + Unit.Search.values()[index] + "\n" +
-                                "Sort:      " + Unit.Sort.values()[index]);
                         // sets the image pressed for each unit accordingly to the search
+                    	GameInterface.namePaneLabel.setText("Name: " + sprite.getEntity().getName());
+                    	GameInterface.searchPaneLabel.setText("Search: " + Unit.Search.values()[index]);
+                    	GameInterface.sortPaneLabel.setText("Sort: " + Unit.Sort.values()[index]);
                         if (Unit.Search.values()[index] == Unit.Search.BFS) {
-                            sprite.setImage(ImageStore.imagePressedDemon);
+                        	sprite.setImage(ImageStore.imagePressedDemon);
+                        	ImageView demon = new ImageView(ImageStore.imageDemon);
+                        	demon.setFitHeight(80);
+                        	demon.setFitWidth(80);
+                        	GameInterface.unitImage.setGraphic(demon);
+
                         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-                            sprite.setImage(ImageStore.imagePressedDk);
+                        	sprite.setImage(ImageStore.imagePressedDk);
+                        	ImageView dk = new ImageView(ImageStore.imageDk);
+                        	dk.setFitHeight(80);
+                        	dk.setFitWidth(80);
+                        	GameInterface.unitImage.setGraphic(dk);
                         } else {
-                            sprite.setImage(ImageStore.imagePressedBanshee);
+                        	sprite.setImage(ImageStore.imagePressedBanshee);
+                        	ImageView banshee = new ImageView(ImageStore.imageBanshee);
+                        	banshee.setFitHeight(80);
+                        	banshee.setFitWidth(80);
+                        	GameInterface.unitImage.setGraphic(banshee);
                         }
-                        //((Unit) unit1).showTransition();
                     } else {
                         SpriteImage obtainedSprite = unit1.getSprite();
                         ElementsHandler.pressedToNotPressed(obtainedSprite);

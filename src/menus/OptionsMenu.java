@@ -22,10 +22,11 @@ public class OptionsMenu implements Menu {
     public static Image showSearchImage, soundImage, blockadeImage, onImage, onImageHovered, offImage, offImageHovered, backImage, backImageHovered = null;
     public static int spaceBetweenText = 100;
     public static int spaceBetweenImgH = 50;
+    public static Label searchLabel, soundLabel, blockadeLabel = null;
     public static Pane optionsMenuPane = null;
 
     private Scene optionsMenuScene = null;
-    private Label searchLabel, soundLabel, blockadeLabel = null;
+
     private LabelProperties l = null;
     private ButtonProperties b = null;
 

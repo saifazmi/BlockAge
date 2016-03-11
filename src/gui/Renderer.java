@@ -103,12 +103,12 @@ public class Renderer extends Group {
     public void redraw()
     {
         //@TODO redundant, will break transitions on resize
-        if(CoreEngine.Instance().isPaused()) {
-            this.getChildren().clear();
-            calculateSpacing();
-            initialDraw();
-            entitiesToDraw.forEach(this::drawInitialEntity);
-        }
+//        if(CoreEngine.Instance().isPaused()) {
+//            this.getChildren().clear();
+//            calculateSpacing();
+//            initialDraw();
+//            entitiesToDraw.forEach(this::drawInitialEntity);
+//        }
     }
 
     /**
@@ -125,12 +125,12 @@ public class Renderer extends Group {
     public boolean drawLines(double xSpacing, double ySpacing, double width, double height, int xAccumulator, int yAccumulator) {
         for (int i = 0; i < xAccumulator + 1; i++) {
             Line line = new Line(xSpacing * i, 0, xSpacing * i, height);
-            line.setStroke(Color.LIGHTGREY);
+            line.setStroke(Color.web("#201616"));
             this.getChildren().add(line);
         }
         for (int i = 0; i < yAccumulator + 1; i++) {
             Line line = new Line(0, ySpacing * i, width, ySpacing * i);
-            line.setStroke(Color.LIGHTGREY);
+            line.setStroke(Color.web("#201616"));
             this.getChildren().add(line);
         }
         return true;
