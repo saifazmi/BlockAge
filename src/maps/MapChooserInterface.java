@@ -51,7 +51,6 @@ public class MapChooserInterface {
 
     private MapChooserInterface() {
         mapChooseStage = new Stage();
-
         images = new HBox();
 
         String dir = System.getProperty("user.home");
