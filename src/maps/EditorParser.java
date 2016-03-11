@@ -20,14 +20,18 @@ public class EditorParser {
     private MapEditor editor;
     private String SAVE_DIRECTORY;
     private String IMAGE_DIRECTORY;
-    private String SEPERATOR = File.separator;
+    private String RTS_DIRECTORY;
     private boolean overwrite = true;
 
     public EditorParser(MapEditor mapEditor) {
-
         String dir = System.getProperty("user.home");
+        System.out.println(dir);
+        String SEPERATOR = File.separator;
+        RTS_DIRECTORY = dir + SEPERATOR + "bestRTS";
         SAVE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
+        System.out.println(SAVE_DIRECTORY);
+        System.out.println(IMAGE_DIRECTORY);
 
         this.editor = mapEditor;
     }
@@ -56,6 +60,13 @@ public class EditorParser {
                 boolean newDirectory = false;
 
                 // Create or directories for image and data if don't exist
+                File rtsDir = new File(RTS_DIRECTORY);
+
+                if (!rtsDir.exists()) {
+                    newDirectory = true;
+                    rtsDir.mkdir();
+                }
+
                 File saveDir = new File(SAVE_DIRECTORY);
 
                 if (!saveDir.exists()) {
