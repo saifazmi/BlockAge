@@ -23,7 +23,8 @@ public final class LambdaStore {
     private Scene scene = GameRunTime.Instance().getScene();
     private static LambdaStore instance = null;
 
-    private LambdaStore() {}
+    private LambdaStore() {
+    }
 
     public static LambdaStore Instance() {
         if (instance == null) {
@@ -65,15 +66,16 @@ public final class LambdaStore {
         return sceneClickPlaceUnbreakableBlockade;
     }
 
-    public EventHandler<MouseEvent> getPlaceBreakableBlockade() { return sceneClickPlaceBreakableBlockade;}
+    public EventHandler<MouseEvent> getPlaceBreakableBlockade() {
+        return sceneClickPlaceBreakableBlockade;
+    }
 
     public void setBlockadeClickEvent(boolean sortable) {
         if (scene.getOnMouseClicked() != null && (scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade()) || scene.getOnMouseClicked().equals(getPlaceBreakableBlockade()))) {
             scene.setOnMouseClicked(null);
-        } else if(!sortable){
+        } else if (!sortable) {
             scene.setOnMouseClicked(getPlaceUnbreakableBlockade());
-        }
-        else{
+        } else {
             scene.setOnMouseClicked(getPlaceBreakableBlockade());
         }
     }

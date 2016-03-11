@@ -20,14 +20,18 @@ public class EditorParser {
     private MapEditor editor;
     private String SAVE_DIRECTORY;
     private String IMAGE_DIRECTORY;
-    private String SEPERATOR = File.separator;
+    private String RTS_DIRECTORY;
     private boolean overwrite = true;
 
     public EditorParser(MapEditor mapEditor) {
-
         String dir = System.getProperty("user.home");
+        System.out.println(dir);
+        String SEPERATOR = File.separator;
+        RTS_DIRECTORY = dir + SEPERATOR + "bestRTS";
         SAVE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
+        System.out.println(SAVE_DIRECTORY);
+        System.out.println(IMAGE_DIRECTORY);
 
         this.editor = mapEditor;
     }
@@ -39,12 +43,9 @@ public class EditorParser {
 
         Graph graph = editor.getGraph();
 
-        if (fileName.equals(""))
-        {
+        if (fileName.equals("")) {
             editor.getInterface().getSaveStatusBox().setText("The map must have a name, please enter a name above");
-        }
-        else
-        {
+        } else {
 
             if (invalidName(editor.getInterface().getFileName()))
                 return;
@@ -56,6 +57,13 @@ public class EditorParser {
                 boolean newDirectory = false;
 
                 // Create or directories for image and data if don't exist
+                File rtsDir = new File(RTS_DIRECTORY);
+
+                if (!rtsDir.exists()) {
+                    newDirectory = true;
+                    rtsDir.mkdir();
+                }
+
                 File saveDir = new File(SAVE_DIRECTORY);
 
                 if (!saveDir.exists()) {
@@ -74,8 +82,7 @@ public class EditorParser {
                 File imageFile = new File(IMAGE_DIRECTORY + imageName);
 
                 // pop up if data file already exist
-                if (savedFile.exists())
-                {
+                if (savedFile.exists()) {
                     editor.getInterface().getPopUpStage().showAndWait();
                 }
 
@@ -87,19 +94,15 @@ public class EditorParser {
 
                 BufferedWriter writer = new BufferedWriter(fileWriter);
 
-                for (int y = 0; y < 20; y++)
-                {
-                    for (int x = 0; x < 20; x++)
-                    {
+                for (int y = 0; y < 20; y++) {
+                    for (int x = 0; x < 20; x++) {
                         if (x < 19) {
                             if (graph.nodeWith(new GraphNode(x, y)).getBlockade() != null) {
                                 writer.write("1 ");
                             } else {
                                 writer.write("0 ");
                             }
-                        }
-                        else
-                        {
+                        } else {
                             if (graph.nodeWith(new GraphNode(x, y)).getBlockade() != null) {
                                 writer.write("1");
                             } else {
@@ -116,15 +119,12 @@ public class EditorParser {
 
                 try {
                     ImageIO.write(SwingFXUtils.fromFXImage(mapImage, null), "png", imageFile);
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
                     // just whatever
                 }
 
 
-                if (newDirectory)
-                {
+                if (newDirectory) {
                     editor.getInterface().getSaveStatusBox().setText("New directory created at " + SAVE_DIRECTORY + ", map saved: " + fileName);
                 }
                 editor.getInterface().getSaveStatusBox().setText("map saved: " + SAVE_DIRECTORY + fileName);
@@ -134,16 +134,14 @@ public class EditorParser {
             } catch (IOException e) {
                 editor.getInterface().getSaveStatusBox().setText("Save failed, game error");
                 //notify user
-            }
-            finally {
+            } finally {
                 overwrite = true;
             }
         }
     }
 
     private boolean invalidName(String fileName) {
-        if (fileName.contains("."))
-        {
+        if (fileName.contains(".")) {
             editor.getInterface().getSaveStatusBox().setText("File name can only be contain alphanumerical characters, no special symbols allowed");
             return true;
         }
@@ -151,8 +149,7 @@ public class EditorParser {
         return false;
     }
 
-    public void setOverwrite(boolean overwrite)
-    {
+    public void setOverwrite(boolean overwrite) {
         this.overwrite = overwrite;
     }
 }

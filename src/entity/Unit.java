@@ -357,9 +357,13 @@ public class Unit extends Entity {
         this.visualTransition = visualTransition;
     }
 
-    public List<GraphNode> getVisited() { return visited; }
+    public List<GraphNode> getVisited() {
+        return visited;
+    }
 
-    public void setVisited(List<GraphNode> visited) { this.visited = visited; }
+    public void setVisited(List<GraphNode> visited) {
+        this.visited = visited;
+    }
 
     public void showTransition(boolean route, boolean show) {
         SequentialTransition currentTrans = this.getVisualTransition();
@@ -392,8 +396,7 @@ public class Unit extends Entity {
         }
     }
 
-    private void nullObject(Object object)
-    {
+    private void nullObject(Object object) {
         if (object instanceof Line) {
             Line line = (Line) object;
             line.setOpacity(0.0);
