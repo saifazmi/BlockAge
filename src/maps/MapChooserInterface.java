@@ -12,22 +12,27 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import menus.MenuHandler;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by hung on 06/03/16.
  */
 public class MapChooserInterface {
 
+    private static final Logger LOG = Logger.getLogger(MapChooserInterface.class.getName());
+
     private static final double THRESHOLD = 100;
     private static String chosenMap;
     private static String USER_MAP_DIRECTORY;
     private final String IMAGE_DIRECTORY;
-    private final String SEPERATOR = File.separator;
+    private final String SEPERATOR = "/";
     private static Stage mapChooseStage;
     private Scene mapChooseScene;
     private HBox images;
@@ -106,8 +111,7 @@ public class MapChooserInterface {
         return USER_MAP_DIRECTORY + chosenMap;
     }
 
-    public void resetChosenMap()
-    {
+    public void resetChosenMap() {
         chosenMap = "null";
     }
 
@@ -121,26 +125,32 @@ public class MapChooserInterface {
         File imageDir = new File(IMAGE_DIRECTORY);
         File[] mapFiles = imageDir.listFiles();
 
-        for (int i = 0; i < mapFiles.length; i++) {
-            Image mapImage = new Image(mapFiles[i].toURI().toString());
-            String mapName = getDataOf(mapFiles[i]);
-            mapNames.add(mapName);
+        try {
 
-            ImageView mapImageView = new ImageView(mapImage);
-            mapImageView.setPreserveRatio(true);
-            mapImageView.setFitHeight(600);
+            for (int i = 0; i < mapFiles.length; i++) {
+                Image mapImage = new Image(mapFiles[i].toURI().toString());
+                String mapName = getDataOf(mapFiles[i]);
+                mapNames.add(mapName);
+
+                ImageView mapImageView = new ImageView(mapImage);
+                mapImageView.setPreserveRatio(true);
+                mapImageView.setFitHeight(600);
 
 
-            Label mapNameLabel = new Label(mapName);
-            VBox container = new VBox();
-            container.setAlignment(Pos.CENTER);
+                Label mapNameLabel = new Label(mapName);
+                VBox container = new VBox();
+                container.setAlignment(Pos.CENTER);
 
-            Button newMap = new Button();
-            b.setButtonProperties(newMap, "", 0, 0, e -> chooseMap(container), mapImageView);
-            b.addHoverEffect3(newMap);
+                Button newMap = new Button();
+                b.setButtonProperties(newMap, "", 0, 0, e -> chooseMap(container), mapImageView);
+                b.addHoverEffect3(newMap);
 
-            container.getChildren().addAll(mapNameLabel, newMap);
-            mapImages.add(container);
+                container.getChildren().addAll(mapNameLabel, newMap);
+                mapImages.add(container);
+            }
+        } catch (NullPointerException e) {
+            LOG.log(Level.SEVERE, "No custom map directory");
+            MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
         }
     }
 
