@@ -154,6 +154,10 @@ public class ElementsHandler {
             engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
+        if (event.getSource() == EndGameMenu.backMainButton) {
+            engine.setRunning(false);
+            MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        }
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
         }

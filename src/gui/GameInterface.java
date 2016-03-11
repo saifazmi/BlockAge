@@ -1,11 +1,9 @@
 package gui;
 
-import java.io.InputStream;
-
+import core.CoreEngine;
 import core.GameRunTime;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -15,14 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import menus.Menu;
@@ -31,6 +22,8 @@ import sceneElements.ElementsHandler;
 import sceneElements.LabelProperties;
 import stores.ImageStore;
 import stores.LambdaStore;
+
+import java.io.InputStream;
 
 /**
  * @author : First created by Paul Popa with code by Paul Popa
@@ -44,9 +37,9 @@ public class GameInterface {
     
     public static Button playButton, pauseButton, unsortableButton, sortableButton;
     public static TextArea unitDescriptionText;
-    public static Font bellotaFont;
+    public static Font bellotaFont, bellotaFontBigger;
     public static Pane unitTextPane, sortVisualisationPane, rightMenuPane, rightMenuBox;
-    public static Label unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel;
+    public static Label unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel, scoreLabel;
 
     private Label unitDescriptionLabel, sortVisualisationLabel, blockadesLabel, sortLabel;
     private HBox sortingBox;
@@ -71,6 +64,13 @@ public class GameInterface {
             System.out.println("No font at that path");
         }
         bellotaFont = Font.loadFont(fontStream, 25);
+
+        InputStream fontStream1 = GameInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
+        if (fontStream == null) {
+            System.out.println("No font at that path");
+        }
+        bellotaFontBigger = Font.loadFont(fontStream1, 50);
+
     }
 
     /**
@@ -84,6 +84,7 @@ public class GameInterface {
         namePaneLabel = new Label();
         searchPaneLabel = new Label();
         sortPaneLabel = new Label();
+        scoreLabel = new Label();
         unitDescriptionLabel = new Label();
         sortVisualisationLabel = new Label();
         blockadesLabel = new Label();
@@ -218,12 +219,19 @@ public class GameInterface {
         b.addHoverEffect(sortableButton, sortableImage, sortableImage, rightPaneWidth/2 + 50 + sortableImage.getWidth(), initialPositionY + 5 * heightSpacing + 350);
         handleSort(sortableButton, "Sortable blockade");
         sortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent(true));
-        
+
+        //SCORE LABEL
+        scoreLabel.setText("Score: " + CoreEngine.Instance().getScore());
+        scoreLabel.setFont(bellotaFontBigger);
+        scoreLabel.setLayoutX(rightPaneWidth/2 - 220/2);
+        scoreLabel.setLayoutY(initialPositionY + 600);
+        scoreLabel.setTextFill(Color.web("#FFE130"));
+
         // setting background for the right pane
         BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         rightMenuPane.setBackground(new Background(myBI));
-        rightMenuBox.getChildren().addAll(unitDescriptionLabel, unitTextPane, sortVisualisationLabel, sortVisualisationPane, blockadesLabel, unsortableButton, sortableButton, sortLabel);
+        rightMenuBox.getChildren().addAll(unitDescriptionLabel, unitTextPane, sortVisualisationLabel, sortVisualisationPane, blockadesLabel, unsortableButton, sortableButton, sortLabel, scoreLabel);
         rightMenuPane.getChildren().add(rightMenuBox);
         //playButton, pauseButton,
         rightMenuPane.setPrefSize(rightPaneWidth, Menu.HEIGHT);
