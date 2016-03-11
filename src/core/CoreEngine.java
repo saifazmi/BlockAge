@@ -3,6 +3,8 @@ package core;
 import entity.Entity;
 import graph.Graph;
 import graph.GraphNode;
+import gui.GameInterface;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -17,6 +19,8 @@ public class CoreEngine {
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
     private final int FRAME_RATE = 60;
 
+    private double score;
+    private boolean scoreHalved;
     private boolean running;
     private boolean paused = false;
     private long startTime;
@@ -82,6 +86,8 @@ public class CoreEngine {
      */
     public void startGame() {
         running = true;
+        score = 0;
+        scoreHalved = false;
         startTime = System.nanoTime();
 
         // @TODO in case it's not running
@@ -146,6 +152,13 @@ public class CoreEngine {
 
         if (spawner != null) {
             spawner.update();
+            score += ((double)1/ (double)FRAME_RATE);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    GameInterface.scoreLabel.setText("Score: " + String.format("%.2f", score));
+                }
+            });
         }
     }
 
@@ -202,5 +215,21 @@ public class CoreEngine {
      */
     public void setSpawner(UnitSpawner spawner) {
         this.spawner = spawner;
+    }
+
+    /**
+     *  Gets the score
+     *
+     * @return this.score the score
+     */
+    public double getScore() {
+        return this.score;
+    }
+
+    public void halveScore() {
+        if(!scoreHalved) {
+            this.score = this.score/2;
+            this.scoreHalved = true;
+        }
     }
 }

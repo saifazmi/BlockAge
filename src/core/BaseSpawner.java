@@ -62,7 +62,7 @@ public class BaseSpawner {
             goal.setBase(base);
             runTime.setBasePlaced(true);
             // surround the base with sortable blockades.
-            protectBase(goal);
+            //protectBase(goal);
 
             //spawnBlockades(100);
             generateBlockades();

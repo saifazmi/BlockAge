@@ -17,12 +17,6 @@ import javafx.scene.input.KeyEvent;
 import maps.MapChooserInterface;
 import maps.MapEditorInterface;
 import menus.*;
-import menus.MainMenu;
-import menus.Menu;
-import menus.MenuHandler;
-import menus.Options;
-import menus.OptionsMenu;
-import menus.PauseMenu;
 import stores.ImageStore;
 import stores.LambdaStore;
 
@@ -162,9 +156,14 @@ public class ElementsHandler {
             MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
+        if (event.getSource() == EndGameMenu.backMainButton) {
+            engine.setRunning(false);
+            MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        }
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
         }
+
         if (event.getSource() == GameInterface.pauseButton) {
             engine.setPaused(true);
         }

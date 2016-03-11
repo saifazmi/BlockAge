@@ -1,5 +1,6 @@
 package menus;
 
+import core.CoreEngine;
 import core.GameRunTime;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ public class MenuHandler {
     private MainMenu mainMenu = new MainMenu();
     private OptionsMenu optionsMenu = new OptionsMenu();
     private PauseMenu pauseMenu = new PauseMenu();
+    private static EndGameMenu endGameMenu = new EndGameMenu();
 
     private MapEditor mapEditor = new MapEditor();
 
@@ -28,6 +30,7 @@ public class MenuHandler {
     public final static int OPTIONS_MENU = 1;
     public final static int MAIN_GAME = 2;
     public final static int PAUSE_MENU = 3;
+    public final static int END_GAME_MENU = 5;
 
     // index for map editor
     public final static int MAP_EDITOR = 4;
@@ -53,6 +56,7 @@ public class MenuHandler {
         sceneList[OPTIONS_MENU] = optionsMenu.getScene();
         sceneList[PAUSE_MENU] = pauseMenu.getScene();
         sceneList[MAP_EDITOR] = mapEditor.getScene();
+        sceneList[END_GAME_MENU] = endGameMenu.getScene();
     }
 
     public static void setMainGameScene() {
@@ -74,6 +78,12 @@ public class MenuHandler {
         lastScene = currentScene;
         currentScene = scene;
 
+
         primaryStage.setScene(sceneList[scene]);
+
+
+        if(scene == END_GAME_MENU) {
+            endGameMenu.setScore(CoreEngine.Instance().getScore());
+        }
     }
 }
