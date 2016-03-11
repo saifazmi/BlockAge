@@ -37,8 +37,7 @@ public class MapEditor implements Menu {
     private MapChooserInterface mapChooserInterface;
 
     // General Map Editor manager for scene, renderer and events
-    public MapEditor()
-    {
+    public MapEditor() {
         createGraph();
 
         mapEditorRenderer = new Renderer();
@@ -55,7 +54,7 @@ public class MapEditor implements Menu {
         BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         mapEditorPane.setBackground(new Background(myBIF));
         Group mapEditor = new Group(mapEditorPane);
-        mapEditorScene = new Scene(mapEditor, CoreGUI.WIDTH,CoreGUI.HEIGHT);
+        mapEditorScene = new Scene(mapEditor, CoreGUI.WIDTH, CoreGUI.HEIGHT);
         ((BorderPane) ((Group) mapEditorScene.getRoot()).getChildren().get(0)).setCenter(mapEditorRenderer);
         mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
@@ -76,8 +75,7 @@ public class MapEditor implements Menu {
         }
     }
 
-    public Graph getGraph()
-    {
+    public Graph getGraph() {
         return mapEditorGraph;
     }
 
@@ -92,19 +90,21 @@ public class MapEditor implements Menu {
         }
     };
 
-    public MapEditorInterface getInterface()
-    {
+    public MapEditorInterface getInterface() {
         return mapEditorInterface;
     }
-    public Renderer getRenderer() { return mapEditorRenderer; }
+
+    public Renderer getRenderer() {
+        return mapEditorRenderer;
+    }
+
     @Override
     public Scene getScene() {
         return mapEditorScene;
     }
 
     public void clearNodes() {
-        for (int i = 0; i < mapEditorGraph.getNodes().size(); i++)
-        {
+        for (int i = 0; i < mapEditorGraph.getNodes().size(); i++) {
             mapEditorGraph.getNodes().get(i).setBlockade(null);
         }
 

@@ -24,8 +24,9 @@ public final class ImageStore {
     private static final String BACKGROUNDS = "backgrounds" + SEPARATOR;
     private static final String LABELS = "labels" + SEPARATOR;
 
-//    private ImageStore() {
-//    }
+    private ImageStore() {
+        // To prevent instantiation.
+    }
 
     //unit images
     public static final Image imageDemon = new Image(SPRITE_RESOURCES + ENTITIES + UNITS + "BFS_Idle.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
@@ -86,8 +87,10 @@ public final class ImageStore {
     public static final Image overwriteYesHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Yes_Hovered.png");
     public static final Image overwriteNo = new Image(SPRITE_RESOURCES + BUTTONS + "No.png");
     public static final Image overwriteNoHovered = new Image(SPRITE_RESOURCES + BUTTONS + "No_Hovered.png");
-    public static final Image clear = new Image(SPRITE_RESOURCES + BUTTONS + "Clear.png", 250, 60, true, true);
-    public static final Image clearHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Clear_Hovered.png", 250, 60, true, true);
+    public static final Image clear = new Image(SPRITE_RESOURCES + BUTTONS + "Clear.png");
+    public static final Image clearHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Clear_Hovered.png");
+    public static final Image customGameImage = new Image(SPRITE_RESOURCES + BUTTONS + "CustomGame_Idle.png");
+    public static final Image customGameImageHover = new Image(SPRITE_RESOURCES + BUTTONS + "CustomGame_Hover.png");
 
     public static void setSpriteProperties(Entity entity, Image image) {
         SpriteImage spriteImage = new SpriteImage(image, entity);

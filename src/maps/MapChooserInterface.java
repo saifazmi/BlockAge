@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sceneElements.ButtonProperties;
+import sceneElements.ElementsHandler;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class MapChooserInterface {
 
     private static final double THRESHOLD = 100;
     private static String chosenMap;
-    private static String SAVE_DIRECTORY;
+    private static String USER_MAP_DIRECTORY;
     private final String IMAGE_DIRECTORY;
     private final String SEPERATOR = File.separator;
     private static Stage mapChooseStage;
@@ -48,14 +49,17 @@ public class MapChooserInterface {
         images = new HBox();
 
         String dir = System.getProperty("user.home");
-        SAVE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
+        USER_MAP_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
 
-        setUpMapImages();
+        File userMapDir = new File(USER_MAP_DIRECTORY);
+        if (userMapDir.exists()) {
+            setUpMapImages();
+        }
 
         ScrollPane scroller = new ScrollPane(images);
         scroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroller.setPrefSize(820,650);
+        scroller.setPrefSize(820, 650);
         //scroller.setOnScroll(e -> mapSelectScrolling(scroller, e));
 
         mapChooseScene = new Scene(scroller);
@@ -70,8 +74,7 @@ public class MapChooserInterface {
 
         getMapImages();
 
-        for (int i = 0; i < mapImages.size(); i++)
-        {
+        for (int i = 0; i < mapImages.size(); i++) {
             images.getChildren().add(mapImages.get(i));
         }
 
@@ -80,31 +83,31 @@ public class MapChooserInterface {
 
     private void mapSelectScrolling(ScrollPane scroller, ScrollEvent e) {
         double movedDistance = e.getTotalDeltaX();
-        if (Math.abs(movedDistance - THRESHOLD) > 0)
-        {
+        if (Math.abs(movedDistance - THRESHOLD) > 0) {
 
-            if (scroller.getHvalue() < oldHValue)
-            {
-                scroller.setHvalue(scroller.getHvalue() - scroller.getHmax()/mapImages.size());
-            }
-            else
-            {
-                scroller.setHvalue(scroller.getHvalue() + scroller.getHmax()/mapImages.size());
+            if (scroller.getHvalue() < oldHValue) {
+                scroller.setHvalue(scroller.getHvalue() - scroller.getHmax() / mapImages.size());
+            } else {
+                scroller.setHvalue(scroller.getHvalue() + scroller.getHmax() / mapImages.size());
             }
 
             oldHValue = scroller.getHvalue();
         }
     }
 
-    public void showChooser()
-    {
+    public void showChooser() {
         setUpMapImages();
         mapChooseStage.showAndWait();
     }
 
     public String getChosenMap() {
-        System.out.println(SAVE_DIRECTORY + chosenMap);
-        return SAVE_DIRECTORY + chosenMap;
+        System.out.println(USER_MAP_DIRECTORY + chosenMap);
+        return USER_MAP_DIRECTORY + chosenMap;
+    }
+
+    public void resetChosenMap()
+    {
+        chosenMap = "null";
     }
 
     private void getMapImages() {
@@ -117,8 +120,7 @@ public class MapChooserInterface {
         File imageDir = new File(IMAGE_DIRECTORY);
         File[] mapFiles = imageDir.listFiles();
 
-        for (int i = 0; i < mapFiles.length; i++)
-        {
+        for (int i = 0; i < mapFiles.length; i++) {
             Image mapImage = new Image(mapFiles[i].toURI().toString());
             String mapName = getDataOf(mapFiles[i]);
             mapNames.add(mapName);
@@ -133,10 +135,10 @@ public class MapChooserInterface {
             container.setAlignment(Pos.CENTER);
 
             Button newMap = new Button();
-            b.setButtonProperties(newMap,"",0,0,e -> chooseMap(container), mapImageView);
+            b.setButtonProperties(newMap, "", 0, 0, e -> chooseMap(container), mapImageView);
             b.addHoverEffect3(newMap);
 
-            container.getChildren().addAll(mapNameLabel,newMap);
+            container.getChildren().addAll(mapNameLabel, newMap);
             mapImages.add(container);
         }
     }
@@ -146,7 +148,7 @@ public class MapChooserInterface {
         String[] mapNameParts = mapFile.toURI().toString().split(SEPERATOR);
         String mapFileName = mapNameParts[mapNameParts.length - 1];
 
-        String mapName = mapFileName.replace(".png",".txt");
+        String mapName = mapFileName.replace(".png", ".map");
 
         return mapName;
     }
@@ -154,6 +156,7 @@ public class MapChooserInterface {
     private void chooseMap(VBox e) {
         int buttonIndex = mapImages.indexOf(e);
         chosenMap = mapNames.get(buttonIndex);
+        ElementsHandler.startGame();
         mapChooseStage.hide();
     }
 }

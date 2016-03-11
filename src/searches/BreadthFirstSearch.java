@@ -3,7 +3,11 @@ package searches;
 import entity.Unit;
 import graph.GraphNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author : First created by Hung Hoang with code by Hung Hoang
@@ -14,8 +18,8 @@ public class BreadthFirstSearch {
      * Finds a path from a start node to the end node using BFS, this utilises a queue which is just a linked list
      * The returned path should not include the start node.
      *
-     * @param unit the unit to search for
-     * @param endNode   node search terminates with, the goal node, usually player's base
+     * @param unit    the unit to search for
+     * @param endNode node search terminates with, the goal node, usually player's base
      * @return path from start to goal node
      */
     public static List<GraphNode> findPathFrom(Unit unit, GraphNode endNode) {
@@ -48,7 +52,7 @@ public class BreadthFirstSearch {
                     visited.add(endNode);
                     unit.setVisited(visited);
                     unit.setRoute(path);
-                    ArrayList<GraphNode> clone = (ArrayList<GraphNode>)path.clone();
+                    ArrayList<GraphNode> clone = (ArrayList<GraphNode>) path.clone();
                     return path;
                 } else {
                     visited.add(current);

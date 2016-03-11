@@ -19,8 +19,7 @@ public class MapParser {
     private String row;
 
     //args is portability, teacher can just give student map files
-    public MapParser(BufferedReader reader)
-    {
+    public MapParser(BufferedReader reader) {
         this.reader = reader;
     }
 
@@ -30,14 +29,11 @@ public class MapParser {
 
         try {
 
-            while ((row = reader.readLine()) != null)
-            {
-                while (row.length() > 0)
-                {
+            while ((row = reader.readLine()) != null) {
+                while (row.length() > 0) {
                     int blockPresent = getNextInt();
 
-                    if (blockPresent == 1)
-                    {
+                    if (blockPresent == 1) {
                         Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(x, y), null);
                         Image image1 = ImageStore.unsortableImage1;
                         SpriteImage spriteImage1 = new SpriteImage(image1, blockadeInstance);
@@ -47,8 +43,7 @@ public class MapParser {
                         spriteImage1.setSmooth(true);
                         blockadeInstance.setSprite(spriteImage1);
                         Blockade blockade = Blockade.randomBlockade(blockadeInstance);
-                        if (blockade != null)
-                        {
+                        if (blockade != null) {
                             Renderer.Instance().drawInitialEntity(blockade);
                         }
                     }
@@ -62,8 +57,7 @@ public class MapParser {
 
                 if (y < 20)
                     y++;
-                else
-                {
+                else {
                     break;
                 }
             }
@@ -73,12 +67,10 @@ public class MapParser {
         }
     }
 
-    private int getNextInt()
-    {
+    private int getNextInt() {
         int i = 0;
 
-        while (isSpace(row.charAt(i)))
-        {
+        while (isSpace(row.charAt(i))) {
             row = row.substring(1);
         }
 

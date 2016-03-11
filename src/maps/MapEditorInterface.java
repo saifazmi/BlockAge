@@ -32,7 +32,7 @@ import menus.MenuHandler;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 import stores.ImageStore;
-
+import java.io.InputStream;
 /**
  * Created by hung on 05/03/16.
  */
@@ -199,13 +199,11 @@ public class MapEditorInterface {
 
 
 
-    public String getFileName()
-    {
+    public String getFileName() {
         return fileNameBox.getText();
     }
 
-    public TextArea getSaveStatusBox()
-    {
+    public TextArea getSaveStatusBox() {
         return saveStatus;
     }
 
@@ -255,8 +253,7 @@ public class MapEditorInterface {
         });
     }
 
-    public Stage getPopUpStage()
-    {
+    public Stage getPopUpStage() {
         return popUpStage;
     }
 }
