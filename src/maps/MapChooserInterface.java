@@ -32,7 +32,7 @@ public class MapChooserInterface {
     private static String chosenMap;
     private static String USER_MAP_DIRECTORY;
     private final String IMAGE_DIRECTORY;
-    private final String SEPERATOR = File.separator;
+    private final String SEPERATOR = "/";
     private static Stage mapChooseStage;
     private Scene mapChooseScene;
     private HBox images;
