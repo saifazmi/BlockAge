@@ -273,19 +273,14 @@ public class Renderer extends Group {
         FadeTransition rectIn2 = buildFadeAnimation(1000.0, 0.0, 1.0, rect);
         FadeTransition rectOut2 = buildFadeAnimation(1000.0, 1.0, 0.0, rect);
 
-        //lines.stream().filter(routeLines::contains).forEach(line -> line.setFill(Color.GREEN));
         trans.getChildren().addAll(rectIn2, rectOut2);
-        trans.setOnFinished(e ->
-        {
-            //@TODO doesn't work
-            List<Line> routeLines = produceRoute(unit.getRoute(), unit.getPosition());
-            for(Line line : routeLines) {
-                remove(line);
-                line.setStroke(Color.GREEN);
-            }
-            Transition trans2 = produceRouteVisual(routeLines);
-            trans2.play();
-        });
+        List<Line> routeLines = produceRoute(unit.getRoute(), unit.getPosition());
+        for(Line line : routeLines) {
+            remove(line);
+            line.setStroke(Color.GREEN);
+        }
+        Transition trans2 = produceRouteVisual(routeLines);
+        trans.getChildren().add(trans2);
         return trans;
     }
 
