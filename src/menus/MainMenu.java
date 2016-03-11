@@ -19,12 +19,14 @@ import stores.ImageStore;
 
 public class MainMenu implements Menu {
 
-    public static Button newGameButton, exitButton, optionsButton, mapEditorButton, customMapButton = null;
+
+    public static Button newGameButton, exitButton, optionsButton, mapEditorButton, customGameButton;
+
     private Pane mainMenuPane = null;
     private Pane fadingPane = null;
     private Scene mainMenuScene = null;
     private ButtonProperties b = null;
-    private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered, mapEditorImage, mapEditorHovered, customMapImage= null;
+    private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage, exitImageHovered, mapEditorImage, mapEditorHovered, customGameImage, customGameImageHovered;
 
 
     public MainMenu() {
@@ -43,7 +45,7 @@ public class MainMenu implements Menu {
         exitButton = new Button();
         mapEditorButton = new Button();
         b = new ButtonProperties();
-        customMapButton = new Button();
+        customGameButton = new Button();
 
         newGameImage = ImageStore.newGameImage;
         newGameImageHovered = ImageStore.newGameImageHovered;
@@ -53,13 +55,14 @@ public class MainMenu implements Menu {
         exitImageHovered = ImageStore.exitImageHovered;
         mapEditorImage = ImageStore.mapEditorImage;
         mapEditorHovered = ImageStore.mapEditorImageHovered;
-        customMapImage = ImageStore.newGameImageHovered;
+        customGameImage = ImageStore.customGameImage;
+        customGameImageHovered = ImageStore.customGameImageHover;
     }
 
     /**
      * Initialise the scene for the main menu and what will be inside the scene
      */
-    public void initialiseScene() {
+    /*public void initialiseScene() {
 
         declareElements();
         // NEW GAME BUTTON
@@ -99,6 +102,63 @@ public class MainMenu implements Menu {
         ft.setOnFinished(e -> ft.play());
 
         mainMenuPane.getChildren().addAll(fadingPane, newGameButton, optionsButton, exitButton, mapEditorButton, customMapButton);
+
+        Group mainMenuGroup = new Group(mainMenuPane);
+        BackgroundImage myBI = new BackgroundImage(ImageStore.backgroundMainMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        mainMenuPane.setBackground(new Background(myBI));
+        mainMenuPane.setPrefWidth(Menu.WIDTH);
+        mainMenuPane.setPrefHeight(Menu.HEIGHT);
+        mainMenuScene = new Scene(mainMenuGroup, Menu.WIDTH, Menu.HEIGHT);
+    }*/
+
+    /**
+     * Initialise the scene for the main menu and what will be inside the scene
+     */
+    public void initialiseScene() {
+
+        declareElements();
+        // NEW GAME BUTTON
+        b.setButtonProperties(newGameButton, "", xPos(newGameImage), Menu.HEIGHT / 3, ElementsHandler::handle, new ImageView(newGameImage));
+        b.addHoverEffect(newGameButton, newGameImageHovered, newGameImage, xPos(newGameImage), Menu.HEIGHT / 3);
+
+        int spaceBetweenImgH = 70;
+        // NEW GAME CHOSEN MAP
+        b.setButtonProperties(customGameButton, "", xPos(customGameImage), Menu.HEIGHT / 3 + spaceBetweenImgH, ElementsHandler::handle, new ImageView(customGameImage));
+        b.addHoverEffect(customGameButton, customGameImageHovered, customGameImage, xPos(customGameImage), Menu.HEIGHT / 3 + spaceBetweenImgH);
+
+        // OPTIONS BUTTON
+        b.setButtonProperties(optionsButton, "", xPos(optionsImage), Menu.HEIGHT / 3 + spaceBetweenImgH * 2, ElementsHandler::handle, new ImageView(optionsImage));
+        b.addHoverEffect(optionsButton, optionsImageHovered, optionsImage, xPos(optionsImage), Menu.HEIGHT / 3 + spaceBetweenImgH * 2);
+
+        //Map Editor Button
+        b.setButtonProperties(mapEditorButton, "", Menu.WIDTH / 5 - mapEditorImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 3,
+                e -> ElementsHandler.handle(e), new ImageView(mapEditorImage));
+        b.addHoverEffect(mapEditorButton, mapEditorHovered, mapEditorImage, Menu.WIDTH / 5 - mapEditorImage.getWidth() / 2,  Menu.HEIGHT / 3 + spaceBetweenImgH * 3);
+
+        // EXIT BUTTON
+        b.setButtonProperties(exitButton, "", Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 4,
+                e -> ElementsHandler.handle(e), new ImageView(exitImage));
+        b.addHoverEffect(exitButton, exitImageHovered, exitImage, Menu.WIDTH / 5 - exitImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH * 4);
+
+
+
+        // ADD ALL BUTTONS TO THE PANE
+        BackgroundImage myBIF = new BackgroundImage(ImageStore.backgroundMainMenuGlow, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        fadingPane.setBackground(new Background(myBIF));
+        fadingPane.setPrefWidth(Menu.WIDTH);
+        fadingPane.setPrefHeight(Menu.HEIGHT);
+
+        // Fade transition of the main image
+        FadeTransition ft = new FadeTransition(Duration.millis(2000), fadingPane);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.1);
+        ft.setCycleCount(4);
+        ft.setAutoReverse(true);
+        ft.play();
+        ft.setOnFinished(e -> ft.play());
+
+        mainMenuPane.getChildren().addAll(fadingPane, newGameButton, optionsButton, exitButton, mapEditorButton, customGameButton);
 
         Group mainMenuGroup = new Group(mainMenuPane);
         BackgroundImage myBI = new BackgroundImage(ImageStore.backgroundMainMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
