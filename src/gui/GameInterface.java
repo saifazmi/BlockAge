@@ -211,12 +211,13 @@ public class GameInterface {
         b.setButtonProperties(unsortableButton, "", 135, initialPositionY + 5 * heightSpacing + 350, ElementsHandler::handle, new ImageView(unsortableImage));
         b.addHoverEffect(unsortableButton, unsortableImage, unsortableImage, rightPaneWidth/2 - 50 - unsortableImage.getWidth(), initialPositionY + 5 * heightSpacing + 350);
         handleSort(unsortableButton, "Unsortable blockade");
-        unsortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent());
+        unsortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent(false));
 
         // Set the properties for the sortable button
         b.setButtonProperties(sortableButton, "", rightPaneWidth - 150 - sortableImage.getWidth() , initialPositionY + 5 * heightSpacing + 350, ElementsHandler::handle, new ImageView(sortableImage));
         b.addHoverEffect(sortableButton, sortableImage, sortableImage, rightPaneWidth/2 + 50 + sortableImage.getWidth(), initialPositionY + 5 * heightSpacing + 350);
         handleSort(sortableButton, "Sortable blockade");
+        sortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent(true));
         
         // setting background for the right pane
         BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,

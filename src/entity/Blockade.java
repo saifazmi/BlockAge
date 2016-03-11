@@ -157,4 +157,24 @@ public class Blockade extends Entity {
         }
         return null;
     }
+
+    public static Blockade mapBlockade(MouseEvent e, Blockade blockadeInstance, Renderer renderer, Graph graph) {
+        GraphNode node = calcMapGraphNode(e, renderer, graph);
+        return placeBlockade(blockadeInstance,node);
+    }
+
+    private static GraphNode calcMapGraphNode(MouseEvent e, Renderer renderer, Graph graph)
+    {
+        double xSpacing = renderer.getXSpacing();
+        double ySpacing = renderer.getYSpacing();
+        double x = e.getX();
+        double y = e.getY();
+        double logicalX = Math.floor(x / xSpacing);
+        double logicalY = Math.floor(y / ySpacing);
+
+        if (logicalX >= 0 && logicalX < Graph.WIDTH && logicalY >= 0 && logicalY <= Graph.HEIGHT) {
+            return graph.nodeWith(new GraphNode((int) logicalX, (int) logicalY));
+        }
+        return null;
+    }
 }

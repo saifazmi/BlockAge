@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import menus.MenuHandler;
 
+import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,8 +16,10 @@ import java.util.logging.Logger;
 public class CoreGUI extends Application {
 
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
-    public static final int HEIGHT = 720;
-    public static final int WIDTH = 1280;
+    //public static Integer HEIGHT;
+    //public static Integer WIDTH;
+    public static final Integer HEIGHT = 720;
+    public static final Integer WIDTH = 1280;
 
     public static void main(String[] args) {
         launch(args);
@@ -24,6 +27,10 @@ public class CoreGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //WIDTH = (int)screenSize.getWidth();
+        //HEIGHT = (int)screenSize.getHeight();
+        //primaryStage.setMaximized(true);
         new MenuHandler(primaryStage);
         MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         primaryStage.setOnCloseRequest(e -> {

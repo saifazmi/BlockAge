@@ -13,6 +13,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import menus.Menu;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 import stores.ImageStore;
@@ -64,12 +65,26 @@ public class GameRunTime {
 
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
-        mainGameScene.setFill(Color.web("#2C642C"));
-        BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+
+        final String SEPARATOR = File.separator;
+        final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
+        final String BACKGROUNDS = "backgrounds" + SEPARATOR;
+        Image grassBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "GrassBackground.png");
+
+        BackgroundImage myBIF = new BackgroundImage(grassBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        mainGamePane.setBackground(new Background(myBIF));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
         new Renderer();
         mainGamePane.setCenter(Renderer.Instance());
+
+        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
+        {
+            Renderer.Instance().redraw();
+        });
+        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) ->
+        {
+            Renderer.Instance().redraw();
+        });
     }
 
     /**

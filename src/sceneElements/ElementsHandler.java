@@ -14,12 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import menus.MainMenu;
-import menus.Menu;
-import menus.MenuHandler;
-import menus.Options;
-import menus.OptionsMenu;
-import menus.PauseMenu;
+import maps.MapChooserInterface;
+import menus.*;
 import stores.ImageStore;
 import stores.LambdaStore;
 
@@ -142,7 +138,7 @@ public class ElementsHandler {
 
         // Elements from the Pause Menu scene
         if (event.getSource() == PauseMenu.backGameButton) {
-            CoreEngine.Instance().setPaused(false);
+            CoreEngine.Instance().setPaused(true);
             MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         }
         if (event.getSource() == PauseMenu.optionsButton) {
@@ -164,6 +160,15 @@ public class ElementsHandler {
         if (event.getSource() == GameInterface.pauseButton) {
             engine.setPaused(true);
         }
+
+        if (event.getSource() == MainMenu.mapEditorButton)
+        {
+            MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
+        }
+        if (event.getSource() == MainMenu.customMapButton)
+        {
+            MapChooserInterface.Instance().showChooser();
+        }
     }
 
     public static void handleKeys(KeyEvent event) {
@@ -174,14 +179,14 @@ public class ElementsHandler {
                 engine.setPaused(true);
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
             } else if (k == KeyCode.B) {
-                LambdaStore.Instance().setBlockadeClickEvent();
+                LambdaStore.Instance().setBlockadeClickEvent(event.isShiftDown());
             } else if (k == KeyCode.SPACE) {
                 if (engine.isPaused()) {
                     engine.setPaused(false);
                 } else {
                     engine.setPaused(true);
                 }
-            } else if (k == KeyCode.R && options.getShowPath() == true) {
+            } else if (k == KeyCode.R && options.getShowPath()) {
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), false);
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {

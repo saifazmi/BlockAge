@@ -2,6 +2,7 @@ package stores;
 
 import core.GameRunTime;
 import entity.Blockade;
+import entity.SortableBlockade;
 import graph.GraphNode;
 import gui.Renderer;
 import javafx.event.EventHandler;
@@ -22,8 +23,7 @@ public final class LambdaStore {
     private Scene scene = GameRunTime.Instance().getScene();
     private static LambdaStore instance = null;
 
-    private LambdaStore() {
-    }
+    private LambdaStore() {}
 
     public static LambdaStore Instance() {
         if (instance == null) {
@@ -33,9 +33,29 @@ public final class LambdaStore {
     }
 
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
-        Blockade blockadeInstance = new Blockade(1, "Blockade", new GraphNode(0, 0), null);
+        Blockade blockadeInstance = new Blockade(
+                1,
+                "Blockade",
+                new GraphNode(0, 0),
+                null
+        );
         ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
         Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
+        if (blockade != null) {
+            renderer.drawInitialEntity(blockade);
+        }
+    };
+
+    private final EventHandler<MouseEvent> sceneClickPlaceBreakableBlockade = e -> {
+        SortableBlockade sortableBlockadeInstance = new SortableBlockade(
+                0,
+                "Sortable Blockade",
+                Blockade.calcGraphNode(e),
+                null,
+                null
+        );
+        ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
+        SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
         if (blockade != null) {
             renderer.drawInitialEntity(blockade);
         }
@@ -45,11 +65,16 @@ public final class LambdaStore {
         return sceneClickPlaceUnbreakableBlockade;
     }
 
-    public void setBlockadeClickEvent() {
-        if (scene.getOnMouseClicked() != null && scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade())) {
+    public EventHandler<MouseEvent> getPlaceBreakableBlockade() { return sceneClickPlaceBreakableBlockade;}
+
+    public void setBlockadeClickEvent(boolean sortable) {
+        if (scene.getOnMouseClicked() != null && (scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade()) || scene.getOnMouseClicked().equals(getPlaceBreakableBlockade()))) {
             scene.setOnMouseClicked(null);
-        } else {
+        } else if(!sortable){
             scene.setOnMouseClicked(getPlaceUnbreakableBlockade());
+        }
+        else{
+            scene.setOnMouseClicked(getPlaceBreakableBlockade());
         }
     }
 }

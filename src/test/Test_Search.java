@@ -2,9 +2,6 @@ package test;
 
 import graph.Graph;
 import graph.GraphNode;
-import searches.AStar;
-
-import java.util.List;
 
 /**
  * @author : Evgeniy
@@ -45,12 +42,12 @@ public class Test_Search {
         //graph made, do your test
 
 
-        List<GraphNode> path = AStar.search(startNode, goalNode, false);
+        //List<GraphNode> path = AStar.search(startNode, goalNode, false);
 
-        assert path != null;
-        for (GraphNode aPath : path) {
-            System.out.println("Node at: " + aPath.getX() + " , " + aPath.getY());
-        }
+        //assert path != null;
+        //for (GraphNode aPath : path) {
+        //    System.out.println("Node at: " + aPath.getX() + " , " + aPath.getY());
+        //}
 
     }
 
