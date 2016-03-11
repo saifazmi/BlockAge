@@ -38,7 +38,7 @@ public class EditorParser {
 
 
     public void saveToUserFile() {
-        String fileName = editor.getInterface().getFileName() + ".txt";
+        String fileName = editor.getInterface().getFileName() + ".map";
         String imageName = editor.getInterface().getFileName() + ".png";
 
         Graph graph = editor.getGraph();

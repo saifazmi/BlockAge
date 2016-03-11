@@ -25,7 +25,7 @@ public class MapChooserInterface {
 
     private static final double THRESHOLD = 100;
     private static String chosenMap;
-    private static String SAVE_DIRECTORY;
+    private static String USER_MAP_DIRECTORY;
     private final String IMAGE_DIRECTORY;
     private final String SEPERATOR = File.separator;
     private static Stage mapChooseStage;
@@ -50,12 +50,13 @@ public class MapChooserInterface {
         images = new HBox();
 
         String dir = System.getProperty("user.home");
-        SAVE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
+        USER_MAP_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
 
-        File imageDir = new File(IMAGE_DIRECTORY);
-        if (imageDir.exists())
+        File userMapDir = new File(USER_MAP_DIRECTORY);
+        if (userMapDir.exists()) {
             setUpMapImages();
+        }
 
         ScrollPane scroller = new ScrollPane(images);
         scroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -101,8 +102,13 @@ public class MapChooserInterface {
     }
 
     public String getChosenMap() {
-        System.out.println(SAVE_DIRECTORY + chosenMap);
-        return SAVE_DIRECTORY + chosenMap;
+        System.out.println(USER_MAP_DIRECTORY + chosenMap);
+        return USER_MAP_DIRECTORY + chosenMap;
+    }
+
+    public void resetChosenMap()
+    {
+        chosenMap = "null";
     }
 
     private void getMapImages() {
@@ -143,7 +149,7 @@ public class MapChooserInterface {
         String[] mapNameParts = mapFile.toURI().toString().split(SEPERATOR);
         String mapFileName = mapNameParts[mapNameParts.length - 1];
 
-        String mapName = mapFileName.replace(".png", ".txt");
+        String mapName = mapFileName.replace(".png", ".map");
 
         return mapName;
     }
