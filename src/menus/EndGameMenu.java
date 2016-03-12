@@ -19,6 +19,8 @@ import sceneElements.ElementsHandler;
 import sceneElements.LabelProperties;
 import stores.ImageStore;
 
+import java.io.InputStream;
+
 /**
  * @author : First created by Anh with code by Paul Popa
  * @date : 11/03/16, last edited by Anh on 11/03/16
@@ -27,6 +29,7 @@ public class EndGameMenu implements Menu {
 
     public static Button backMainButton;
     public static Label scoreLabel;
+    private final String SEPARATOR = "/";
 
     private Pane endGameMenuPane = null;
     private Scene endGameMenuScene = null;
@@ -52,10 +55,16 @@ public class EndGameMenu implements Menu {
 
     public void initialiseScene() {
         declareElements();
-        //@TODO: Change font to basis33.ttf and make it yellow.
         l.setLabelProperties(scoreLabel, "", Menu.WIDTH / 5 - 210, Menu.HEIGHT / 3, null);
-        scoreLabel.setFont(Font.font("Verdana", 70));
-        scoreLabel.setTextFill(Color.YELLOWGREEN);
+
+        // Loading font
+        InputStream fontStream = EndGameMenu.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
+        if (fontStream == null) {
+            System.out.println("No font at that path");
+        }
+
+        scoreLabel.setFont(Font.loadFont(fontStream, 100));
+        scoreLabel.setTextFill(Color.web("#FFE130"));
 
         int spaceBetweenImgH = 70;
         /**
