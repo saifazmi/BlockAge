@@ -32,18 +32,25 @@ public class BaseSpawner {
 
     private static final Logger LOG = Logger.getLogger(BaseSpawner.class.getName());
 
+    // Map directory
+    private final String SEPARATOR = "/";
+    private final String MAP_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "maps" + SEPARATOR;
+    // Number of preset maps
+    private final int MAP_PRESETS_QTY = 2;
+
     private Renderer renderer = Renderer.Instance();
     private GameRunTime runTime = GameRunTime.Instance();
 
-    // may not be need
-    private final String SEPARATOR = "/";
-    private final String MAP_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "maps" + SEPARATOR;
-    private final int MAP_PRESETS_QTY = 2;
-
     private GraphNode goal;
 
+    // Instance for singleton.
     private static BaseSpawner instance = null;
 
+    /**
+     * Implements Singleton for this class (Only one can exist)
+     *
+     * @return the only engine to be created
+     */
     public static BaseSpawner Instance() {
         if (instance == null) {
             instance = new BaseSpawner();
@@ -53,6 +60,7 @@ public class BaseSpawner {
 
     public BaseSpawner() {
         instance = this;
+
         runTime.getScene().setOnMouseClicked(e -> {
             goal = Blockade.calcGraphNode(e);
             Base base = new Base(9999, "Base", goal, null);
@@ -82,7 +90,7 @@ public class BaseSpawner {
         //assured because map will always end with .txt
         if (chosenMap.endsWith("null")) {
             Random mapRndGen = new Random();
-            String map = MAP_RESOURCES + "00" + mapRndGen.nextInt(MAP_PRESETS_QTY) + ".map";
+            String map = MAP_RESOURCES + mapRndGen.nextInt(MAP_PRESETS_QTY) + ".map";
             in = MapEditor.class.getResourceAsStream(map);
         } else {
             mapFile = new File(chosenMap);
