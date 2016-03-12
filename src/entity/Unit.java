@@ -231,8 +231,7 @@ public class Unit extends Entity {
                     nextNode = null;
                     this.completedMove = true;
                 }
-   }
-            else if (this.getPosition() == goal) {
+            } else if (this.getPosition() == goal) {
                 nextNode = null;
                 Platform.runLater(new Runnable() {
                     @Override
@@ -242,8 +241,7 @@ public class Unit extends Entity {
                     }
                 });
 
-            }
-            else {
+            } else {
                 nextNode = null;
                 CoreEngine.Instance().setPaused(true);
                 CoreEngine.Instance().halveScore();

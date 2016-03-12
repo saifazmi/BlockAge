@@ -17,17 +17,25 @@ import java.util.logging.Logger;
 public class CoreEngine {
 
     private static final Logger LOG = Logger.getLogger(CoreEngine.class.getName());
+
     private final int FRAME_RATE = 60;
 
-    private double score;
-    private boolean scoreHalved;
+    // Engine states
     private boolean running;
     private boolean paused = false;
     private long startTime;
+    private boolean slept = false;
+
+    // Game score
+    private double score;
+    private boolean scoreHalved;
+
+    // Runtime dependencies
     private Graph graph;
     private ArrayList<Entity> entities;
     private UnitSpawner spawner;
-    private boolean slept = false;
+
+    // Instance for singleton.
     private static CoreEngine instance = null;
 
     /**
@@ -36,6 +44,7 @@ public class CoreEngine {
      * @return the only engine to be created
      */
     public static CoreEngine Instance() {
+
         if (instance == null) {
             instance = new CoreEngine();
         }
@@ -47,25 +56,22 @@ public class CoreEngine {
      * All the nodes will be created and added to the graph, each will have their corresponding neighbours added
      */
     public CoreEngine() {
-        instance = this;
-        this.graph = null;
 
-        Graph graph = new Graph();
+        instance = this;
+        this.graph = new Graph();
+        this.entities = new ArrayList<>();
 
         for (int x = 0; x < Graph.WIDTH; x++) {
             for (int y = 0; y < Graph.HEIGHT; y++) {
+
                 GraphNode node = new GraphNode(x, y);
-                graph.nodeWith(node);
+                this.graph.nodeWith(node);
             }
         }
 
-        for (GraphNode aNode : graph.getNodes()) {
-            aNode.addNeighbours(graph);
+        for (GraphNode aNode : this.graph.getNodes()) {
+            aNode.addNeighbours(this.graph);
         }
-
-        this.graph = graph;
-
-        entities = new ArrayList<>();
     }
 
     /**
@@ -74,8 +80,8 @@ public class CoreEngine {
      * @return the graph
      */
     public Graph getGraph() {
-        return graph;
 
+        return graph;
     }
 
     /**
@@ -85,28 +91,104 @@ public class CoreEngine {
      * because waiting will put the thread to sleep.
      */
     public void startGame() {
+
         running = true;
         score = 0;
         scoreHalved = false;
         startTime = System.nanoTime();
 
-        // @TODO in case it's not running
         while (running) {
             while (paused) {
+
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LOG.log(Level.SEVERE, e.toString(), e);
                 }
             }
+
             if (isTimeToUpdate(startTime)) {
+
                 updateGameState();
                 this.slept = false;
+
             } else if (!slept) {
+
                 waitForNextFrame();
                 this.slept = true;
             }
         }
+    }
+
+    /**
+     * Check if the engine is paused
+     *
+     * @return the engine paused state
+     */
+    public boolean isPaused() {
+
+        return this.paused;
+    }
+
+    /**
+     * Check if the engine is running
+     *
+     * @return the engine running state
+     */
+    public boolean isRunning() {
+
+        return this.running;
+    }
+
+    /**
+     * Gets the list of entities that the engine updates
+     *
+     * @return the list of entities
+     */
+    public ArrayList<Entity> getEntities() {
+
+        return this.entities;
+    }
+
+    /**
+     * Gets the score
+     *
+     * @return this.score the score
+     */
+    public double getScore() {
+
+        return this.score;
+    }
+
+    /**
+     * Sets the spawner for this engine to use
+     *
+     * @param spawner the spawner used
+     */
+    public void setSpawner(UnitSpawner spawner) {
+
+        this.spawner = spawner;
+    }
+
+    /**
+     * Sets the running state of the engine
+     *
+     * @param running the state to set the engine to
+     */
+    public void setRunning(boolean running) {
+
+        this.running = running;
+    }
+
+    /**
+     * Set the paused state of the engine.
+     *
+     * @param paused the new paused state
+     */
+    public void setPaused(boolean paused) {
+
+        LOG.log(Level.INFO, "Paused set:" + paused);
+        this.paused = paused;
     }
 
     /**
@@ -118,13 +200,17 @@ public class CoreEngine {
      * @return Whether its time to update or not
      */
     private boolean isTimeToUpdate(long startTime) {
+
         boolean timeToUpdate = false;
         long currentTime = System.nanoTime();
         long deltaTime = currentTime - startTime;
+
         if (deltaTime >= (Math.pow(10, 9) / FRAME_RATE)) {
+
             timeToUpdate = true;
             this.startTime = currentTime;
         }
+
         return timeToUpdate;
     }
 
@@ -132,6 +218,7 @@ public class CoreEngine {
      * Waits for the next frame, puts this thread to sleep whilst waiting
      */
     private void waitForNextFrame() {
+
         try {
             Thread.sleep(950 / FRAME_RATE);
         } catch (InterruptedException e) {
@@ -143,90 +230,29 @@ public class CoreEngine {
      * Updates all game objects that need updating, includes all the entites, spawner
      */
     private void updateGameState() {
+
         //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
         if (entities != null) {
+
             for (Entity entity : entities) {
                 entity.update();
             }
         }
 
         if (spawner != null) {
+
             spawner.update();
             score += ((double) 1 / (double) FRAME_RATE);
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    GameInterface.scoreLabel.setText("Score: " + String.format("%.2f", score));
-                }
-            });
+
+            Platform.runLater(() -> GameInterface.scoreLabel.setText("Score: " + String.format("%.2f", score)));
         }
     }
 
     /**
-     * Check if the engine is paused
-     *
-     * @return the engine paused state
+     * Divides the score into two halves.
      */
-    public boolean isPaused() {
-        return paused;
-    }
-
-    /**
-     * Set the paused state of the engine.
-     *
-     * @param paused the new paused state
-     */
-    public void setPaused(boolean paused) {
-        System.out.println("Paused set:" + paused);
-        this.paused = paused;
-    }
-
-    /**
-     * Check if the engine is running
-     *
-     * @return the engine running state
-     */
-    public boolean isRunning() {
-        return running;
-    }
-
-    /**
-     * Sets the running state of the engine
-     *
-     * @param running the state to set the engine to
-     */
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
-
-    /**
-     * Gets the list of entities that the engine updates
-     *
-     * @return the list of entities
-     */
-    public ArrayList<Entity> getEntities() {
-        return entities;
-    }
-
-    /**
-     * Sets the spawner for this engine to use
-     *
-     * @param spawner the spawner used
-     */
-    public void setSpawner(UnitSpawner spawner) {
-        this.spawner = spawner;
-    }
-
-    /**
-     * Gets the score
-     *
-     * @return this.score the score
-     */
-    public double getScore() {
-        return this.score;
-    }
-
     public void halveScore() {
+
         if (!scoreHalved) {
             this.score = this.score / 2;
             this.scoreHalved = true;
