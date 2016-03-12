@@ -39,9 +39,11 @@ public class BubbleSort {
         while (swap) { //while a swap occurs in an iteration
             swap = false;
             for (int x = 0; x < size - 1; x++) { //compare all with adjacents
+                swap = false;
                 SortableComponent s = new SortableComponent(getByValue(state), x, x + 1, swap); //consider order, should show comparison first, then swap, so 2 states per swap, 1 state per comparison and no swap
-                allStates.add(s);
+                //    allStates.add(s);
                 if ((Integer) state.get(x) > (Integer) state.get(x + 1)) { // if swap needs to occur, start swapping
+                    allStates.add(s);
                     temp = (Integer) state.get(x);
                     state.set(x, state.get(x + 1));
                     state.set(x + 1, temp);
@@ -59,7 +61,6 @@ public class BubbleSort {
 
     /**
      * Pass by value
-     *
      * @param list
      * @return
      */
