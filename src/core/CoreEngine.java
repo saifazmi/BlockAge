@@ -28,6 +28,7 @@ public class CoreEngine {
     private ArrayList<Entity> entities;
     private UnitSpawner spawner;
     private boolean slept = false;
+
     private static CoreEngine instance = null;
 
     /**
