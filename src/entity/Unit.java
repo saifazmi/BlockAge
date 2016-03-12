@@ -251,31 +251,6 @@ public class Unit extends Entity {
     }
 
     /**
-     * for testing
-     */
-    public void updateTest() {
-        if (completedMove) {
-
-            LOG.log(Level.INFO, "completed move");
-            if (this.nextNode != null) {
-                LOG.log(Level.INFO, "next node is " + this.nextNode);
-                this.position = this.nextNode;
-            }
-            if (route.size() > 0) {
-                this.completedMove = false;
-                this.nextNode = this.route.remove(0);
-                int xChange = this.nextNode.getX() - this.position.getX();
-                int yChange = this.nextNode.getY() - this.position.getY();
-                if (!logicalMove(xChange, yChange)) {
-                    decideRoute();
-                    nextNode = null;
-                    this.completedMove = true;
-                }
-            }
-        }
-    }
-
-    /**
      * Does a logical move of the unit in the specified direction, i.e. move it in the graph and change its graph position
      *
      * @param xChange amount of nodes to move in the x axis
@@ -307,7 +282,7 @@ public class Unit extends Entity {
     }
 
 
-    private void decideRoute() {
+    public void decideRoute() {
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
         if (search == Search.DFS) {
             DepthFirstSearch.findPathFrom(this, this.goal);
