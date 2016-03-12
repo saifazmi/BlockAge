@@ -16,6 +16,7 @@ import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 
 import java.io.File;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -23,14 +24,27 @@ import java.util.logging.Logger;
  * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
  */
 public class GameRunTime {
+
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
-    private CoreEngine engine;
+
+    // States
     private boolean basePlaced = false;
-    private static Scene mainGameScene = null;
-    private static GameRunTime instance = null;
     private SpriteImage lastClicked = null;
 
+    // Dependencies
+    private CoreEngine engine;
+    private static Scene mainGameScene = null;
+
+    // Instance for singleton.
+    private static GameRunTime instance = null;
+
+    /**
+     * Implements Singleton for this class (Only one can exist)
+     *
+     * @return the only game runtime to be created
+     */
     public static GameRunTime Instance() {
+
         if (instance == null) {
             instance = new GameRunTime();
         }
@@ -42,20 +56,25 @@ public class GameRunTime {
      * Initialises the engine, renderer, and unit unitSpawner
      */
     public GameRunTime() {
+
         instance = this;
-        Thread engThread = new Thread(() ->
-        {
+
+        Thread engThread = new Thread(() -> {
+
             this.engine = new CoreEngine();
             this.engine.startGame();
         });
         engThread.start();
+
         while (this.engine == null) {
+
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOG.log(Level.SEVERE, e.toString(), e);
             }
         }
+
         BorderPane mainGamePane = new BorderPane();
         mainGamePane.setPrefWidth(CoreGUI.WIDTH - GameInterface.rightPaneWidth);
         mainGamePane.setPrefHeight(CoreGUI.HEIGHT);
@@ -63,6 +82,7 @@ public class GameRunTime {
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
 
+        //@TODO: why are these here?
         final String SEPARATOR = File.separator;
         final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
@@ -72,17 +92,27 @@ public class GameRunTime {
         BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         mainGamePane.setBackground(new Background(myBIF));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
+
         new Renderer();
         mainGamePane.setCenter(Renderer.Instance());
 
-        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) ->
-        {
+        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
             Renderer.Instance().redraw();
         });
-        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) ->
-        {
+
+        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
             Renderer.Instance().redraw();
         });
+    }
+
+    public void startGame() {
+
+        new BaseSpawner();
+    }
+
+    public boolean isBasePlaced() {
+
+        return this.basePlaced;
     }
 
     /**
@@ -91,27 +121,23 @@ public class GameRunTime {
      * @return - the main game scene
      */
     public Scene getScene() {
+
         return mainGameScene;
     }
 
-    public void startGame() {
-        new BaseSpawner();
+    public SpriteImage getLastClicked() {
+
+        return this.lastClicked;
+    }
+
+    public void setLastClicked(SpriteImage lastClicked) {
+
+        this.lastClicked = lastClicked;
     }
 
     // to notify the placement of the base
     public void setBasePlaced(boolean basePlaced) {
+
         this.basePlaced = basePlaced;
-    }
-
-    public boolean isBasePlaced() {
-        return basePlaced;
-    }
-
-    public SpriteImage getLastClicked() {
-        return lastClicked;
-    }
-
-    public void setLastClicked(SpriteImage lastClicked) {
-        this.lastClicked = lastClicked;
     }
 }
