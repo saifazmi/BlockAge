@@ -6,6 +6,7 @@ import graph.Graph;
 import graph.GraphNode;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +24,61 @@ public class Test_Unit extends Test_Logic{
     private Unit testUnit;
 
     /**
+     * function for creating a graph for testing
+     *
+     * @return graph
+     */
+    public Graph createGraph() {
+
+        this.testBlockades = new ArrayList<>();
+
+        Graph graph = new Graph();
+
+        for (int x = 0; x < Graph.WIDTH; x++) {
+            for (int y = 0; y < Graph.HEIGHT; y++) {
+                GraphNode node = new GraphNode(x, y);
+                graph.nodeWith(node);
+            }
+        }
+
+        for (GraphNode aNode : graph.getNodes()) {
+            aNode.addNeighbours(graph);
+        }
+
+        // set blockade at (10,10), (19,17), (17, 17), (17, 18), (17, 19)
+        ArrayList<Integer> positions = new ArrayList<>(Arrays.asList(10, 10, 19, 17, 17, 17, 17, 18, 17, 19));
+        for (int i = 0; i < positions.size() / 2; i++) {
+            SpriteImage sprite = new SpriteImage(null, null);
+            GraphNode node = graph.nodeWith(new GraphNode(positions.get(2 * i), positions.get(2 * i + 1)));
+            Blockade blockade = new Blockade(i, "TestBlock", node, sprite);
+            sprite.setEntity(blockade);
+            blockade.getPosition().setBlockade(blockade);
+            this.testBlockades.add(blockade);
+        }
+        return graph;
+    }
+
+    /**
+     * function for making a testing unit for the purpose of testing
+     *
+     * @param xStart the X-coordinate of the starting position of the unit
+     * @param yStart the Y-coordinate of the starting position of the unit
+     * @param xGoal  the X-coordinate of the goal of the unit
+     * @param yGoal  the Y-coordinate of the goal of the unit
+     */
+    public void createUnit(int xStart, int yStart, int xGoal, int yGoal) {
+
+        GraphNode startNode = graph.nodeWith(new GraphNode(xStart, yStart));
+        GraphNode goalNode = graph.nodeWith((new GraphNode(xGoal, yGoal)));
+
+        SpriteImage sprite = new SpriteImage(null, null);
+        Unit newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+        sprite.setEntity(newUnit);
+        startNode.getUnits().add(newUnit);
+        this.testUnit = newUnit;
+    }
+
+    /**
      * Testing function of the block checking mechanism of unit class
      */
     @Test
@@ -33,7 +89,7 @@ public class Test_Unit extends Test_Logic{
         boolean blockade = true;
 
         for (int i = 0; i < testBlockades.size() && blockade; i++) {
-            //blockade = !testUnit.blockCheckTest(testBlockades.get(i).getPosition());
+            blockade = !testUnit.blockCheck(testBlockades.get(i).getPosition());
         }
         Assert.assertEquals(blockade, true);
     }
@@ -217,7 +273,10 @@ public class Test_Unit extends Test_Logic{
         createUnit(5, 5, 19, 19);
         GraphNode nextNode = graph.nodeWith(new GraphNode(5, 6));
         testUnit.setRoute(new ArrayList<GraphNode>(Arrays.asList(nextNode)));
-        testUnit.update();
+        try {testUnit.update();}
+        catch (ExceptionInInitializerError e) {
+            e.printStackTrace();
+        }
         GraphNode position = testUnit.getPosition();
 
         Assert.assertEquals(position, graph.nodeWith(new GraphNode(5, 6)));

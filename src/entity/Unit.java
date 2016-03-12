@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class Unit extends Entity {
     //@TODO: fix the move function
-    private Renderer renderer = Renderer.Instance();
+    //private Renderer renderer = Renderer.Instance();
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
     private static final Duration SPEED = Duration.millis(600);
 
@@ -184,7 +184,7 @@ public class Unit extends Entity {
      * @param position the position to be checked
      * @return whether the position has a block
      */
-    private boolean blockCheck(GraphNode position) {
+    public boolean blockCheck(GraphNode position) {
 
         if (position.getBlockade() == null) {
             this.getPosition().getUnits().remove(this);
@@ -218,8 +218,8 @@ public class Unit extends Entity {
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
                 if (logicalMove(xChange, yChange)) {
-                    double nextPixelX = x * renderer.getXSpacing();
-                    double nextPixelY = y * renderer.getYSpacing();
+                    double nextPixelX = x * Renderer.Instance().getXSpacing();
+                    double nextPixelY = y * Renderer.Instance().getYSpacing();
 
                     TranslateTransition transition = new TranslateTransition(SPEED, sprite);
                     transition.setToX(nextPixelX);
@@ -340,11 +340,11 @@ public class Unit extends Entity {
         SequentialTransition currentTrans = this.getVisualTransition();
         if (currentTrans == null && this.getRoute() != null && show) {
             if (route) {
-                SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
+                SequentialTransition transition = Renderer.Instance().produceRouteVisual(Renderer.Instance().produceRoute(this.getRoute(), this.getPosition()));
                 this.setVisualTransition(transition);
                 transition.play();
             } else {
-                this.setVisualTransition(renderer.produceAlgoRouteVisual(this));
+                this.setVisualTransition(Renderer.Instance().produceAlgoRouteVisual(this));
                 this.getVisualTransition().play();
             }
         } else if (currentTrans != null && !show) {
