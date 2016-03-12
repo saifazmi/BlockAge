@@ -48,9 +48,10 @@ public class BaseSpawner {
     /**
      * Implements Singleton for this class (Only one can exist).
      *
-     * @return the only engine to be created.
+     * @return the only base spawner to be created.
      */
     public static BaseSpawner Instance() {
+
         if (instance == null) {
             instance = new BaseSpawner();
         }
@@ -58,23 +59,47 @@ public class BaseSpawner {
     }
 
     public BaseSpawner() {
+
         instance = this;
 
         runTime.getScene().setOnMouseClicked(e -> {
-            goal = Blockade.calcGraphNode(e);
+
+            this.goal = Blockade.calcGraphNode(e);
             Base base = new Base(9999, "Base", goal, null);
             Image image = ImageStore.base;
+
             ImageStore.setSpriteProperties(base, image);
-            renderer.drawInitialEntity(base);
-            goal.setBase(base);
-            runTime.setBasePlaced(true);
+            this.renderer.drawInitialEntity(base);
+            this.goal.setBase(base);
+            this.runTime.setBasePlaced(true);
+
             //protectBase(goal);
-            //spawnBlockades(100);
             generateBlockades();
 
-            runTime.getScene().setOnMouseClicked(null);
+            this.runTime.getScene().setOnMouseClicked(null);
         });
+    }
 
+    /**
+     * Getter function for base location.
+     *
+     * @return GraphNode location of base.
+     */
+    public GraphNode getGoal() {
+        return goal;
+    }
+
+    /**
+     * Checks if a given coordinate in on the grid.
+     *
+     * @param row index value of row.
+     * @param col index value of column.
+     * @return true if the coordinates are on board else false.
+     */
+    private boolean isOnGrid(int row, int col) {
+
+        return !((row < 0 || col < 0 ||
+                row >= Graph.HEIGHT || col >= Graph.WIDTH));
     }
 
     /**
@@ -84,15 +109,17 @@ public class BaseSpawner {
 
         InputStream in = null;
         File mapFile = null;
-
         String chosenMap = MapChooserInterface.Instance().getChosenMap();
 
         //assured because map will always end with .map
         if (chosenMap.endsWith("null")) {
+
             Random mapRndGen = new Random();
             String map = MAP_RESOURCES + mapRndGen.nextInt(MAP_PRESETS_QTY) + ".map";
             in = MapEditor.class.getResourceAsStream(map);
+
         } else {
+
             mapFile = new File(chosenMap);
 
             try {
@@ -102,8 +129,15 @@ public class BaseSpawner {
             }
         }
 
-        Reader fReader = new InputStreamReader(in);
-        BufferedReader reader = new BufferedReader(fReader);
+        Reader fReader = null;
+        if (in != null) {
+            fReader = new InputStreamReader(in);
+        }
+
+        BufferedReader reader = null;
+        if (fReader != null) {
+            reader = new BufferedReader(fReader);
+        }
 
         MapParser parser = new MapParser(reader);
         parser.generateBlockades();
@@ -121,6 +155,7 @@ public class BaseSpawner {
 
         for (int i = (row - 1); i <= (row + 1); i++) {
             for (int j = (col - 1); j <= (col + 1); j++) {
+
                 // coordinate should be on grid and not the same as the base
                 if (isOnGrid(i, j) && !(i == row && j == col)) {
 
@@ -143,37 +178,18 @@ public class BaseSpawner {
     }
 
     /**
-     * Checks if a given coordinate in on the grid.
-     *
-     * @param row index value of row.
-     * @param col index value of column.
-     * @return true if the coordinates are on board else false.
-     */
-    private boolean isOnGrid(int row, int col) {
-
-        return !((row < 0 || col < 0 ||
-                row >= Graph.HEIGHT || col >= Graph.WIDTH));
-    }
-
-    /**
-     * Getter function for base location.
-     *
-     * @return GraphNode location of base.
-     */
-    public GraphNode getGoal() {
-        return goal;
-    }
-
-    /**
      * Generates random initial blockades.
      *
      * @param count number of random blockades.
      */
     @Deprecated
     private void spawnBlockades(int count) {
+
         if (ElementsHandler.options.getInitialBlockades()) {
+
             while (count > 0) {
-                System.out.println("Blockade " + count);
+
+                LOG.log(Level.INFO, "Blockade " + count);
                 Random rand = new Random();
                 int randomX = rand.nextInt(Graph.HEIGHT);
                 int randomY = rand.nextInt(Graph.WIDTH);
