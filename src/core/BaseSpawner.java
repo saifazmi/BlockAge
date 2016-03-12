@@ -40,16 +40,15 @@ public class BaseSpawner {
 
     private Renderer renderer = Renderer.Instance();
     private GameRunTime runTime = GameRunTime.Instance();
-
     private GraphNode goal;
 
     // Instance for singleton.
     private static BaseSpawner instance = null;
 
     /**
-     * Implements Singleton for this class (Only one can exist)
+     * Implements Singleton for this class (Only one can exist).
      *
-     * @return the only engine to be created
+     * @return the only engine to be created.
      */
     public static BaseSpawner Instance() {
         if (instance == null) {
@@ -69,9 +68,7 @@ public class BaseSpawner {
             renderer.drawInitialEntity(base);
             goal.setBase(base);
             runTime.setBasePlaced(true);
-            // surround the base with sortable blockades.
             //protectBase(goal);
-
             //spawnBlockades(100);
             generateBlockades();
 
@@ -80,6 +77,9 @@ public class BaseSpawner {
 
     }
 
+    /**
+     * Generates initial blockades based on a random preset map.
+     */
     private void generateBlockades() {
 
         InputStream in = null;
@@ -87,7 +87,7 @@ public class BaseSpawner {
 
         String chosenMap = MapChooserInterface.Instance().getChosenMap();
 
-        //assured because map will always end with .txt
+        //assured because map will always end with .map
         if (chosenMap.endsWith("null")) {
             Random mapRndGen = new Random();
             String map = MAP_RESOURCES + mapRndGen.nextInt(MAP_PRESETS_QTY) + ".map";
@@ -109,6 +109,11 @@ public class BaseSpawner {
         parser.generateBlockades();
     }
 
+    /**
+     * Surrounds the base with sortable blockades.
+     *
+     * @param base location of the base.
+     */
     private void protectBase(GraphNode base) {
 
         int row = base.getX();
@@ -137,16 +142,34 @@ public class BaseSpawner {
         }
     }
 
+    /**
+     * Checks if a given coordinate in on the grid.
+     *
+     * @param row index value of row.
+     * @param col index value of column.
+     * @return true if the coordinates are on board else false.
+     */
     private boolean isOnGrid(int row, int col) {
 
         return !((row < 0 || col < 0 ||
                 row >= Graph.HEIGHT || col >= Graph.WIDTH));
     }
 
+    /**
+     * Getter function for base location.
+     *
+     * @return GraphNode location of base.
+     */
     public GraphNode getGoal() {
         return goal;
     }
 
+    /**
+     * Generates random initial blockades.
+     *
+     * @param count number of random blockades.
+     */
+    @Deprecated
     private void spawnBlockades(int count) {
         if (ElementsHandler.options.getInitialBlockades()) {
             while (count > 0) {
