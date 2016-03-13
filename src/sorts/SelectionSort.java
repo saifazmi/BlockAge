@@ -7,27 +7,18 @@ import java.util.Collections;
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
-//WORKS, visualization logic untested, cant really see until its made
 public class SelectionSort {
     /**
-     * Selection sort, not sure if functional
-     *
-     * @param size
+     * Selection sort
+     * Partitions list into sorted and unsorted halves, taking elements from the unsorted half and
+     * placing thme in the sorted, in it's correct position.
+     * @param state ArrayList which contains a randomly ordered set of numbers
      * @return
      */
-    public static ArrayList<SortableComponent> sort(int size) {
-        if (size < 3) {
-            System.out.println("SORT: Input too low, returned null");
-            return null;
-        }
-        //return list
+    public static ArrayList<SortableComponent> sort(ArrayList<Integer> state) {
+       int size = state.size();
         ArrayList<SortableComponent> allStates = new ArrayList<>();
-        //generate  numbers
-        ArrayList<Integer> state = new ArrayList<>();
-        for (int x = 0; x < size; x++) {
-            state.add(x);
-        }
-        Collections.shuffle(state);
+
         int i, j;
         for (j = 0; j < size - 1; j++) {
             int min = j;

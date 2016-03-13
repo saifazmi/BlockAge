@@ -29,7 +29,7 @@ public class TestVisualLive extends Application {
     private ArrayList<Tuple> tuples;
     public void start(Stage stage) {
         tuples = new ArrayList<Tuple>();
-        sorts = BubbleSort.sort(10);
+        sorts = SelectionSort.sort(Test_Sort.generateUniqSortArray());
         Pane sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: gray;");
         sortPane.setPrefSize(WIDTH,HEIGHT);

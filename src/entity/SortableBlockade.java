@@ -58,7 +58,7 @@ public class SortableBlockade extends Blockade {
 
         List<Integer> arrToSort = new ArrayList<>(SORT_ELEMENT_QTY);
 
-        for (int i = 1; i <= SORT_ELEMENT_QTY; i++) {
+        for (int i = 0; i < SORT_ELEMENT_QTY; i++) {
             arrToSort.add(i);
         }
 

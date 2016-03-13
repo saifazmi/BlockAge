@@ -10,7 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.*;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class SortVisual extends Application {
     private ArrayList<Tuple> tuples;
     public void start(Stage stage) {
         tuples = new ArrayList<Tuple>();
-        sorts = BubbleSort.sort(10);
+        //sorts = BubbleSort.sort(10);
         Pane sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: gray;");
         sortPane.setPrefSize(WIDTH,HEIGHT);
