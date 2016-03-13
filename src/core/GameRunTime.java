@@ -105,11 +105,19 @@ public class GameRunTime {
         });
     }
 
+    /**
+     * Starts the game by instantiating the BaseSpawner
+     */
     public void startGame() {
 
         new BaseSpawner();
     }
 
+    /**
+     * Checks if the player has placed the base
+     *
+     * @return true if the base has been placed else false
+     */
     public boolean isBasePlaced() {
 
         return this.basePlaced;
@@ -118,24 +126,38 @@ public class GameRunTime {
     /**
      * Returns the main game scene where the game will be played
      *
-     * @return - the main game scene
+     * @return the main game scene
      */
     public Scene getScene() {
 
         return mainGameScene;
     }
 
+    /**
+     * Returns the last clicked sprite
+     *
+     * @return the last clicked SpriteImage object
+     */
     public SpriteImage getLastClicked() {
 
         return this.lastClicked;
     }
 
+    /**
+     * Changes the last clicked sprite
+     *
+     * @param lastClicked the sprite image last clicked
+     */
     public void setLastClicked(SpriteImage lastClicked) {
 
         this.lastClicked = lastClicked;
     }
 
-    // to notify the placement of the base
+    /**
+     * Set the base existence
+     *
+     * @param basePlaced the base placement state
+     */
     public void setBasePlaced(boolean basePlaced) {
 
         this.basePlaced = basePlaced;

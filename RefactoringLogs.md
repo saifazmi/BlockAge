@@ -3,6 +3,7 @@ FORMATTING
 - Just re-formatting the code to make sense out of everything.
 - Formatted and partially documented the "core" package, needs proof  
 reading.
+- Finished formatting and documenting "core"
 
 REFACTORING
 ===========  

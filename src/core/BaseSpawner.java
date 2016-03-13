@@ -58,6 +58,9 @@ public class BaseSpawner {
         return instance;
     }
 
+    /**
+     * Builds a base for the player
+     */
     public BaseSpawner() {
 
         instance = this;
