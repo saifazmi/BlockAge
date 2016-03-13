@@ -21,18 +21,20 @@ public class SortableBlockade extends Blockade {
     private static final Logger LOG = Logger.getLogger(SortableBlockade.class.getName());
     private static final int SORT_ELEMENT_QTY = 10;
 
-    private List<Integer> toSortArray;
+    private ArrayList<Integer> toSortArray;
+    private static int sortID;
 
-    public SortableBlockade(int id, String name, GraphNode position, SpriteImage sprite, List<Integer> toSortArray) {
+    public SortableBlockade(int id, String name, GraphNode position, SpriteImage sprite, ArrayList<Integer> toSortArray,int sortID) {
         super(id, name, position, sprite);
         this.toSortArray = toSortArray;
+        this.sortID=sortID;
         setBreakable(true);
     }
 
     public static SortableBlockade create(SortableBlockade sortableBlockadeInstance) {
         GraphNode node = CoreEngine.Instance().getGraph().nodeWith(sortableBlockadeInstance.getPosition());
         if (node != null && !node.equals(new GraphNode(0, 0))) {
-            SortableBlockade blockade = new SortableBlockade(calcId(), sortableBlockadeInstance.getName(), node, sortableBlockadeInstance.getSprite(), generateUniqSortArray());
+            SortableBlockade blockade = new SortableBlockade(calcId(), sortableBlockadeInstance.getName(), node, sortableBlockadeInstance.getSprite(), generateUniqSortArray(),sortID);
             if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
                 blockade.getPosition().setBlockade(blockade);
                 return blockade;
@@ -41,9 +43,9 @@ public class SortableBlockade extends Blockade {
         return null;
     }
 
-    private static List<Integer> generateSortArray() {
+    private static ArrayList<Integer> generateSortArray() {
 
-        List<Integer> arrToSort = new ArrayList<>(SORT_ELEMENT_QTY);
+        ArrayList<Integer> arrToSort = new ArrayList<>(SORT_ELEMENT_QTY);
         Random generator = new Random();
 
         for (int i = 0; i < SORT_ELEMENT_QTY; i++) {
@@ -54,9 +56,9 @@ public class SortableBlockade extends Blockade {
         return arrToSort;
     }
 
-    private static List<Integer> generateUniqSortArray() {
+    private static ArrayList<Integer> generateUniqSortArray() {
 
-        List<Integer> arrToSort = new ArrayList<>(SORT_ELEMENT_QTY);
+        ArrayList<Integer> arrToSort = new ArrayList<>(SORT_ELEMENT_QTY);
 
         for (int i = 0; i < SORT_ELEMENT_QTY; i++) {
             arrToSort.add(i);
@@ -81,7 +83,15 @@ public class SortableBlockade extends Blockade {
         return sb.toString();
     }
 
-    public List<Integer> getToSortArray() {
+    public ArrayList<Integer> getToSortArray() {
         return toSortArray;
+    }
+
+    public static int getSortID() {
+        return sortID;
+    }
+
+    public static void setSortID(int sortID) {
+        SortableBlockade.sortID = sortID;
     }
 }

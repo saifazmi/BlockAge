@@ -1,5 +1,6 @@
 package sorts;
 
+import entity.SortableBlockade;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -24,9 +25,19 @@ public class SortVisual extends Application {
     private static ArrayList<SortVisualBar> blocks;
     private ArrayList<SortableComponent> sorts;
     private ArrayList<Tuple> tuples;
+    private int sortID;
+    private SortableBlockade block;
+
+    public SortVisual(SortableBlockade block){
+        this.sortID = block.getSortID();
+        this.block=block;
+
+    }
     public void start(Stage stage) {
         tuples = new ArrayList<Tuple>();
-        //sorts = BubbleSort.sort(10);
+        if(sortID==0)sorts = BubbleSort.sort(block.getToSortArray());;
+        if(sortID==1)sorts = SelectionSort.sort(block.getToSortArray());;
+
         Pane sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: gray;");
         sortPane.setPrefSize(WIDTH,HEIGHT);
@@ -38,13 +49,13 @@ public class SortVisual extends Application {
             if(x!=0){int pos = find(x-1);
                 loc = 40 + (30*pos);}
             if(x==0) loc=10;
-            block.relocate(loc, HEIGHT - (x * 15) - 50); //trying to make it state0
-
+            block.relocate(loc, HEIGHT - (x * 15) - 50);
             sortPane.getChildren().add(block);
             block.setUpdateX(block.getLayoutX());
             blocks.add(block);
         }
         ArrayList<SortVisualBar> blocksTemp = new ArrayList<SortVisualBar>();
+        //logical positioning in the data structure
         blocksTemp.add(blocks.get(0));
         for(int x=0;x<sorts.get(0).getValue().size();x++){
             blocksTemp.add(blocks.get(sorts.get(0).getValue().get(x)+1));
@@ -74,24 +85,11 @@ public class SortVisual extends Application {
         return -1;
     }
 
-    /**
-     * Gets the block corresponding to the value
-     * @param value
-     * @return block
-     */
-//    public int findBlock(int value){ // assumed never input -1
-//        for(int x=1; x<blocks.size();x++){ //-1 is invis
-//            if(blocks.get(x).getValue() == value){
-//                return x;
-//            }
-//        }
-//        return -1;
-//    }
 
     /**
      * Generates the SequentialTransition
      */
-    public void prepareTransitions() {
+    private void prepareTransitions() {
         int count = 0;
         while (count < sorts.size()) {
             Tuple x = findSwapped(sorts.get(count), count);
@@ -112,7 +110,7 @@ public class SortVisual extends Application {
      * @param currentID
      * @return Tuple
      */
-    public Tuple findSwapped(SortableComponent sortState,int currentID){
+    private Tuple findSwapped(SortableComponent sortState,int currentID){
         int first=-1;//flag for no swap
         int second=-1;
 
@@ -131,12 +129,13 @@ public class SortVisual extends Application {
     }
     /**
      * General Pattern:
-     * Make transition, add to animatePath
+     * Make transition, play it, after it's played make a new one
+     * Take block1, push it to 0, replace its old pos with block2, put block 1 in old block2 pos
      * USAGE: input blocks from 1-10
      * @param: int block1 first block id
      * @param: int block2 second block id
      */
-    public void swapTwo(int block1, int block2,int swapIndex) {
+    private void swapTwo(int block1, int block2,int swapIndex) {
 
         SortVisualBar b1 = blocks.get(block1);
         SortVisualBar b2 = blocks.get(block2);
