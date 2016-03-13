@@ -28,22 +28,52 @@ import java.util.logging.Logger;
  * @date : 28/01/16, last edited by Dominic Walters on 21/02/16
  */
 public class Unit extends Entity {
-    //@TODO: fix the move function
-    private Renderer renderer = Renderer.Instance();
+
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
+
     private static final Duration SPEED = Duration.millis(600);
 
-    //enum to indicate which search algorithm is being used by a Unit instance
+    private Renderer renderer = Renderer.Instance();
+
+    /**
+     * Search flags
+     */
     public enum Search {
+
+        /**
+         * Depth First Search
+         */
         DFS,
+
+        /**
+         * Breadth First Search
+         */
         BFS,
+
+        /**
+         * A* Search
+         */
         A_STAR
     }
 
-    //enum to indicate which sort algorithm is being used by a Unit instance
+    /**
+     * Sort flags
+     */
     public enum Sort {
+
+        /**
+         * Bubble Sort
+         */
         BUBBLE,
+
+        /**
+         * Selection Sort
+         */
         SELECTION,
+
+        /**
+         * Quick Sort
+         */
         QUICK
     }
 
@@ -83,27 +113,122 @@ public class Unit extends Entity {
         decideRoute();
     }
 
+    // GETTER methods
+
+    /**
+     * Gets the search algorithm being used by this unit
+     *
+     * @return search algorithm used
+     */
+    public Search getSearch() {
+
+        return this.search;
+    }
+
+    /**
+     * Gets the sort algorithm being used by this unit
+     *
+     * @return sort algorithm used
+     */
+    public Sort getSort() {
+
+        return this.sort;
+    }
+
+    /**
+     * Gets the route calculated by this unit
+     *
+     * @return List of GraphNodes making up the route
+     */
+    public List<GraphNode> getRoute() {
+
+        return this.route;
+    }
+
+    /**
+     * Gets the visual transition used by the unit
+     *
+     * @return a Sequential Transition used by the unit
+     */
+    public SequentialTransition getVisualTransition() {
+
+        return this.visualTransition;
+    }
+
+    /**
+     * Gets a list of graph nodes visited by this unit
+     *
+     * @return a List of GraphNodes visited by this unit
+     */
+    public List<GraphNode> getVisited() {
+
+        return this.visited;
+    }
+
+    // SETTER methods
+
+    /**
+     * Sets the route to be followed by this unit
+     * @param route List of GraphNodes making up the route
+     */
+    public void setRoute(List<GraphNode> route) {
+
+        this.route = route;
+    }
+
+    /**
+     * Sets the visual transition for this unit
+     *
+     * @param visualTransition a Sequential Transition for this unit
+     */
+    public void setVisualTransition(SequentialTransition visualTransition) {
+
+        this.visualTransition = visualTransition;
+    }
+
+    /**
+     * Sets the list of visited graph nodes for this unit
+     *
+     * @param visited a List of GraphNodes visited by this unit
+     */
+    public void setVisited(List<GraphNode> visited) {
+
+        this.visited = visited;
+    }
+
+    // MOVEMENT methods
+
     /**
      * Moves the unit up logically, i.e. change its graph position if there is no block there
      *
      * @return whether the move was successful
      */
     public boolean moveUp() {
+
         // Has the unit moved
         boolean moved;
         GraphNode newPosition;
+
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() - 1) < 0) {
+
             moved = false;
             LOG.log(Level.SEVERE, "Move Up: Failed!");
+
         } else {
+
             // Get the new position.
-            newPosition = graph.nodeWith(new GraphNode(this.getPosition().getX(), getPosition().getY() - 1));
+            newPosition = graph.nodeWith(
+
+                    new GraphNode(
+                            getPosition().getX(),
+                            getPosition().getY() - 1
+                    )
+            );
+
             LOG.log(Level.INFO, "Move Up: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
-//            GameInterface.textInfoText.clear();
-//            GameInterface.textInfoText.setText("Move Up: " + newPosition.getX() + "," + newPosition.getY());
         }
 
         return moved;
@@ -115,20 +240,33 @@ public class Unit extends Entity {
      * @return whether the move was successful
      */
     public boolean moveDown() {
+
         // Has the unit moved
         boolean moved;
         GraphNode newPosition;
+
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getY() + 1) >= Graph.HEIGHT) {
+
             moved = false;
             LOG.log(Level.SEVERE, "Move Down: Failed!");
+
         } else {
+
             // Get the new position.
-            newPosition = graph.nodeWith(new GraphNode(this.getPosition().getX(), getPosition().getY() + 1));
+            newPosition = graph.nodeWith(
+
+                    new GraphNode(
+                            getPosition().getX(),
+                            getPosition().getY() + 1
+                    )
+            );
+
             LOG.log(Level.INFO, "Move Down: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
         }
+
         return moved;
     }
 
@@ -138,20 +276,33 @@ public class Unit extends Entity {
      * @return whether the move was successful
      */
     public boolean moveRight() {
+
         // Has the unit moved
         boolean moved;
         GraphNode newPosition;
+
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() + 1) >= Graph.WIDTH) {
+
             moved = false;
             LOG.log(Level.SEVERE, "Move Right: Failed!");
+
         } else {
+
             // Get the new position.
-            newPosition = graph.nodeWith(new GraphNode(this.getPosition().getX() + 1, getPosition().getY()));
+            newPosition = graph.nodeWith(
+
+                    new GraphNode(
+                            getPosition().getX() + 1,
+                            getPosition().getY()
+                    )
+            );
+
             LOG.log(Level.INFO, "Move Right: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
         }
+
         return moved;
     }
 
@@ -161,20 +312,32 @@ public class Unit extends Entity {
      * @return whether the move was successful
      */
     public boolean moveLeft() {
+
         // Has the unit moved
         boolean moved;
         GraphNode newPosition;
+
         // Check if the unit is still in the graph bounds.
         if ((this.getPosition().getX() - 1) < 0) {
+
             moved = false;
             LOG.log(Level.SEVERE, "Move Left: Failed!");
+
         } else {
             // Get the new position.
-            newPosition = graph.nodeWith(new GraphNode(this.getPosition().getX() - 1, getPosition().getY()));
+            newPosition = graph.nodeWith(
+
+                    new GraphNode(
+                            getPosition().getX() - 1,
+                            getPosition().getY()
+                    )
+            );
+
             LOG.log(Level.INFO, "Move Left: " + newPosition.getX() + "," + newPosition.getY());
             // Check if the new position has a blockade in it.
             moved = blockCheck(newPosition);
         }
+
         return moved;
     }
 
@@ -187,11 +350,14 @@ public class Unit extends Entity {
     private boolean blockCheck(GraphNode position) {
 
         if (position.getBlockade() == null) {
-            this.getPosition().getUnits().remove(this);
+
+            getPosition().getUnits().remove(this);
             position.getUnits().add(this);
-            this.setPosition(position);
+            setPosition(position);
+
             return true;
         }
+
         return false;
     }
 
@@ -203,21 +369,28 @@ public class Unit extends Entity {
      */
     @Override
     public void update() {
-        if (completedMove) {
 
+        if (completedMove) {
             LOG.log(Level.INFO, "completed move");
+
             if (this.nextNode != null) {
+
                 LOG.log(Level.INFO, "next node is " + this.nextNode);
                 this.position = this.nextNode;
             }
+
             if (route.size() > 0) {
+
                 this.completedMove = false;
                 this.nextNode = this.route.remove(0);
+
                 int x = this.nextNode.getX();
                 int y = this.nextNode.getY();
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
+
                 if (logicalMove(xChange, yChange)) {
+
                     double nextPixelX = x * renderer.getXSpacing();
                     double nextPixelY = y * renderer.getYSpacing();
 
@@ -226,23 +399,28 @@ public class Unit extends Entity {
                     transition.setToY(nextPixelY);
                     transition.setOnFinished(e -> this.completedMove = true);
                     transition.play();
+
                 } else {
+
                     decideRoute();
                     nextNode = null;
                     this.completedMove = true;
                 }
+
             } else if (this.getPosition() == goal) {
+
                 nextNode = null;
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        CoreEngine.Instance().setPaused(true);
-                        MenuHandler.switchScene(MenuHandler.END_GAME_MENU);
-                    }
+
+                Platform.runLater(() -> {
+
+                    CoreEngine.Instance().setPaused(true);
+                    MenuHandler.switchScene(MenuHandler.END_GAME_MENU);
                 });
 
             } else {
+
                 nextNode = null;
+
                 CoreEngine.Instance().setPaused(true);
                 CoreEngine.Instance().halveScore();
                 Platform.runLater(() -> MenuHandler.switchScene(MenuHandler.END_GAME_MENU));
@@ -250,23 +428,30 @@ public class Unit extends Entity {
         }
     }
 
+    //@TODO: is this required anymore?
     /**
      * for testing
      */
     public void updateTest() {
-        if (completedMove) {
 
+        if (completedMove) {
             LOG.log(Level.INFO, "completed move");
+
             if (this.nextNode != null) {
+
                 LOG.log(Level.INFO, "next node is " + this.nextNode);
                 this.position = this.nextNode;
             }
+
             if (route.size() > 0) {
+
                 this.completedMove = false;
                 this.nextNode = this.route.remove(0);
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
+
                 if (!logicalMove(xChange, yChange)) {
+
                     decideRoute();
                     nextNode = null;
                     this.completedMove = true;
@@ -283,120 +468,132 @@ public class Unit extends Entity {
      * @return if the logical move was successful
      */
     private boolean logicalMove(int xChange, int yChange) {
+
         boolean success;
         double rotate;
+
         if (xChange == 0) {
+
             if (yChange > 0) {
+
                 success = moveDown();
                 rotate = 0;
+
             } else {
+
                 success = moveUp();
                 rotate = 180;
             }
+
         } else {
+
             if (xChange > 0) {
+
                 success = moveRight();
                 rotate = 270;
+
             } else {
+
                 success = moveLeft();
                 rotate = 90;
             }
         }
-        this.getSprite().setRotate(rotate);
+
+        getSprite().setRotate(rotate);
+
         return success;
     }
 
-
+    /**
+     * Decides a route based on the search algorithm of the unit
+     */
     private void decideRoute() {
+
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
+
         if (search == Search.DFS) {
             DepthFirstSearch.findPathFrom(this, this.goal);
+
         } else if (search == Search.BFS) {
             BreadthFirstSearch.findPathFrom(this, this.goal);
+
         } else {
             AStar.search(this, this.goal);
         }
+
         LOG.log(Level.INFO, route.toString());
     }
 
+    //@TODO: document these methods
     /**
-     * Gets the search algorithm being used by this unit
      *
-     * @return search algorithm used
+     * @param route
+     * @param show
      */
-    public Search getSearch() {
-        return search;
-    }
-
-    /**
-     * Gets the sort algorithm being used by this unit
-     *
-     * @return sort algorithm used
-     */
-    public Sort getSort() {
-        return sort;
-    }
-
-    public List<GraphNode> getRoute() {
-        return route;
-    }
-
-    public void setRoute(List<GraphNode> route) {
-        this.route = route;
-    }
-
-    public SequentialTransition getVisualTransition() {
-        return visualTransition;
-    }
-
-    public void setVisualTransition(SequentialTransition visualTransition) {
-        this.visualTransition = visualTransition;
-    }
-
-    public List<GraphNode> getVisited() {
-        return visited;
-    }
-
-    public void setVisited(List<GraphNode> visited) {
-        this.visited = visited;
-    }
-
     public void showTransition(boolean route, boolean show) {
+
         SequentialTransition currentTrans = this.getVisualTransition();
+
         if (currentTrans == null && this.getRoute() != null && show) {
+
             if (route) {
-                SequentialTransition transition = renderer.produceRouteVisual(renderer.produceRoute(this.getRoute(), this.getPosition()));
-                this.setVisualTransition(transition);
+
+                SequentialTransition transition = renderer.produceRouteVisual(
+                        renderer.produceRoute(getRoute(), getPosition()
+                        )
+                );
+
+                setVisualTransition(transition);
                 transition.play();
+
             } else {
-                this.setVisualTransition(renderer.produceAlgoRouteVisual(this));
-                this.getVisualTransition().play();
+
+                setVisualTransition(renderer.produceAlgoRouteVisual(this));
+                getVisualTransition().play();
             }
+
         } else if (currentTrans != null && !show) {
+
             currentTrans.stop();
             ObservableList<Animation> transitions = currentTrans.getChildren();
+
             for (Animation transition : transitions) {
+
                 if (transition instanceof FadeTransition) {
+
                     FadeTransition trans = (FadeTransition) transition;
                     nullObject(trans.getNode());
+
                 } else if (transition instanceof SequentialTransition) {
+
                     SequentialTransition trans = (SequentialTransition) transition;
                     ObservableList<Animation> transitions2 = trans.getChildren();
+
                     for (Animation transition2 : transitions2) {
+
                         FadeTransition trans2 = (FadeTransition) transition2;
                         nullObject(trans2.getNode());
                     }
                 }
-                this.setVisualTransition(null);
+
+                setVisualTransition(null);
             }
         }
     }
 
+    /**
+     *
+     * @param object
+     */
     private void nullObject(Object object) {
+
         if (object instanceof Line) {
+
             Line line = (Line) object;
             line.setOpacity(0.0);
+
         } else if (object instanceof Rectangle) {
+
             Rectangle rect = (Rectangle) object;
             rect.setOpacity(0.0);
         }
