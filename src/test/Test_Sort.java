@@ -15,11 +15,11 @@ public class Test_Sort {
         ArrayList states = BubbleSort.sort(10);
         //System.out.println(((SortableComponent)states.get(0)).getValue());
         //printSort(states);
-        ArrayList statesX = SelectionSort.sort(5);
+        ArrayList statesX = SelectionSort.sort(10);
         //printSort(statesX);
         QuickSort o = new QuickSort();
         ArrayList statesZ = o.sort(10);
-        printSort(states);
+        printSort(statesZ);
     }
 
     public static void printSort(ArrayList<SortableComponent> list) {
@@ -30,6 +30,7 @@ public class Test_Sort {
                 out += h.get(z) + ", ";
 
             }
+            if(e.isSwapped())  out+= " SWAPPED";
             out += "\n";
         }
         System.out.println(out);

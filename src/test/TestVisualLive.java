@@ -10,10 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.BubbleSort;
-import sorts.SortVisualBar;
-import sorts.SortableComponent;
-import sorts.Tuple;
+import sorts.*;
 
 import java.util.ArrayList;
 
@@ -23,6 +20,7 @@ import java.util.ArrayList;
  *
  * TEST CLASS
  */
+//TODO: 'TEMP' Pane at 0, growing vertically
 public class TestVisualLive extends Application {
     public int HEIGHT = 300;
     public int WIDTH = 400;
@@ -62,12 +60,7 @@ public class TestVisualLive extends Application {
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
-        for(int x=0;x<tuples.size();x++){
-            System.out.println("First "+tuples.get(x).getFirst());
-            System.out.println("Second "+ tuples.get(x).getSecond());
-        }
         swapTwo(tuples.get(0).getFirst(),tuples.get(0).getSecond(),0);
-        //test.Test_Sort.printSort(sorts);
     }
 
 
@@ -106,7 +99,6 @@ public class TestVisualLive extends Application {
         while (count < sorts.size()) {
             Tuple x = findSwapped(sorts.get(count), count);
             if (x.getFirst() != -1 && x.getSecond() != -1) {
-                // swapTwo(findBlock(x.getFirst()),findBlock(x.getSecond())); //use findBlock to get block corresponding to logical value
                 x.setFirst(x.getFirst()+1);
                 x.setSecond(x.getSecond()+1);
                 tuples.add(x);
@@ -128,7 +120,6 @@ public class TestVisualLive extends Application {
         int second=-1;
 
         if(sortState.swapped) {
-            System.out.println();
             SortableComponent previous = sorts.get(currentID-1);
             for (int x = 0; x < sortState.getValue().size(); x++) {
                 if(first==-1 && previous.getValue().get(x) != sortState.getValue().get(x)){
@@ -159,8 +150,6 @@ public class TestVisualLive extends Application {
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
 
-//        System.out.println(block1+ " is at : " + oldX);
-//        System.out.println(block2+ " is at : " + oldSecondX);
         // first block , 3 transitions
         TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
@@ -173,8 +162,6 @@ public class TestVisualLive extends Application {
         TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         txx.setFromY(-100);
         txx.setToY(0);
-        // second block, take note of values on the last transitions of each one
-        //you can change the dimensions as you wish, easier to navigate if you have some sort of class-wide var for sizes
 
 
         TranslateTransition ty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
@@ -207,13 +194,9 @@ public class TestVisualLive extends Application {
             @Override
             public void handle(ActionEvent event) {
                 if(swapIndex != tuples.size()-1) {
-                    //b1.relocate(oldSecondX, b1.getLayoutY());
-                    //b2.relocate(oldX, b2.getLayoutY());
 
                     b1.setUpdateX(oldSecondX);
                     b2.setUpdateX(oldX);
-//                    System.out.println(block1+ " changed to : " + b1.getLayoutX());
-//                    System.out.println(block2+ " changed to : " + b2.getLayoutX());
                     Tuple next = tuples.get(swapIndex+1);
                     SortVisualBar temp = blocks.get(block1);
                     blocks.set(block1,blocks.get(block2));

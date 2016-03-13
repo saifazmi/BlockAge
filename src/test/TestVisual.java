@@ -11,10 +11,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.SortVisual;
 import sorts.SortVisualBar;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by Caitlyn PLS on 19-Feb-16.
@@ -83,50 +83,39 @@ public class TestVisual extends Application {
         TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
         tty.setToY(-100);
-        // tty.setCycleCount(1);
 
         TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         ttx.setFromX(0);
         ttx.setToX(-oldX);//was -200
-//        ttx.setCycleCount(1);
 
         TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         txx.setFromY(-100);
         txx.setToY(0);
-//        txx.setCycleCount(1);
-        // second block, take note of values on the last transitions of each one
-        //you can change the dimensions as you wish, easier to navigate if you have some sort of class-wide var for sizes
 
         TranslateTransition ty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         ty.setFromY(0);
         ty.setToY(-200);
-//        ty.setCycleCount(1);
 
         TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
         tx.setToX(- (oldSecondX - (oldX)));
-//        tx.setCycleCount(1);
 
         TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         txt.setFromY(-200);
         txt.setToY(0);
-//        txt.setCycleCount(1);
 
         //last 3
         TranslateTransition gy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gy.setFromY(0);
         gy.setToY(-200);
-//        gy.setCycleCount(1);
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
         gx.setToX(oldSecondX-oldX);//old distance-  width - gap
-//        gx.setCycleCount(1);
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
-//        gyy.setCycleCount(1);
         gyy.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
