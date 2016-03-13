@@ -41,6 +41,7 @@ public class TestVisual extends Application {
 //            counterx += 20+(x*60);
 //            countery += HEIGHT-(x*30);
             canvas.getChildren().add(block);
+            block.setUpdateX(block.getLayoutX());
             blocks.add(block);
         }
         //System.out.println(counterx);
@@ -69,6 +70,9 @@ public class TestVisual extends Application {
 
         SortVisualBar b1 = blocks.get(block1);
         SortVisualBar b2 = blocks.get(block2);
+
+        b1.relocate(b1.getUpdateX(),b1.getLayoutY());
+        b2.relocate(b2.getUpdateX(),b2.getLayoutY());
 
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
@@ -129,11 +133,13 @@ public class TestVisual extends Application {
                 //if(block1!=10){
 
 
-                b1.relocate(oldSecondX,b1.getLayoutY());
-                b2.relocate(oldX,b2.getLayoutY());
+                //b1.relocate(oldSecondX,b1.getLayoutY());
+                //b2.relocate(oldX,b2.getLayoutY());
+                b1.setUpdateX(oldSecondX);
+                b2.setUpdateX(oldX);
                 System.out.println(block1+ " changed to : " + b1.getLayoutX());
                 System.out.println(block2+ " changed to : " + b2.getLayoutX());
-                swapFF(10,3);
+                swapFF(7,6);
                 //}
             }
         });
