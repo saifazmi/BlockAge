@@ -89,7 +89,14 @@ public class GameRunTime {
         Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
         Image grassBackground = new Image(SPRITE_RESOURCES + "misc" + SEPARATOR + "sand_background.png");
 
-        BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage myBIF = new BackgroundImage(
+                sandBackground,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+
         mainGamePane.setBackground(new Background(myBIF));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
 
@@ -105,13 +112,7 @@ public class GameRunTime {
         });
     }
 
-    /**
-     * Starts the game by instantiating the BaseSpawner
-     */
-    public void startGame() {
-
-        new BaseSpawner();
-    }
+    // GETTER methods
 
     /**
      * Checks if the player has placed the base
@@ -143,6 +144,8 @@ public class GameRunTime {
         return this.lastClicked;
     }
 
+    // SETTER methods
+
     /**
      * Changes the last clicked sprite
      *
@@ -161,5 +164,13 @@ public class GameRunTime {
     public void setBasePlaced(boolean basePlaced) {
 
         this.basePlaced = basePlaced;
+    }
+
+    /**
+     * Starts the game by instantiating the BaseSpawner
+     */
+    public void startGame() {
+
+        new BaseSpawner();
     }
 }

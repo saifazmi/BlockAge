@@ -74,6 +74,8 @@ public class CoreEngine {
         }
     }
 
+    // GETTER methods
+
     /**
      * Gets the graph that the game is running on
      *
@@ -81,7 +83,80 @@ public class CoreEngine {
      */
     public Graph getGraph() {
 
-        return graph;
+        return this.graph;
+    }
+
+    /**
+     * Check if the engine is paused
+     *
+     * @return the engine paused state
+     */
+    public boolean isPaused() {
+
+        return this.paused;
+    }
+
+    /**
+     * Check if the engine is running
+     *
+     * @return the engine running state
+     */
+    public boolean isRunning() {
+
+        return this.running;
+    }
+
+    /**
+     * Gets the list of entities that the engine updates
+     *
+     * @return the list of Entities
+     */
+    public ArrayList<Entity> getEntities() {
+
+        return this.entities;
+    }
+
+    /**
+     * Gets the score
+     *
+     * @return this.score the score
+     */
+    public double getScore() {
+
+        return this.score;
+    }
+
+    // SETTER methods
+
+    /**
+     * Sets the spawner for this engine to use
+     *
+     * @param spawner the UnitSpawner used
+     */
+    public void setSpawner(UnitSpawner spawner) {
+
+        this.spawner = spawner;
+    }
+
+    /**
+     * Sets the running state of the engine
+     *
+     * @param running the state to set the engine to
+     */
+    public void setRunning(boolean running) {
+
+        this.running = running;
+    }
+
+    /**
+     * Set the paused state of the engine.
+     *
+     * @param paused the new paused state
+     */
+    public void setPaused(boolean paused) {
+
+        LOG.log(Level.INFO, "Paused set:" + paused);
+        this.paused = paused;
     }
 
     /**
@@ -118,77 +193,6 @@ public class CoreEngine {
                 this.slept = true;
             }
         }
-    }
-
-    /**
-     * Check if the engine is paused
-     *
-     * @return the engine paused state
-     */
-    public boolean isPaused() {
-
-        return this.paused;
-    }
-
-    /**
-     * Check if the engine is running
-     *
-     * @return the engine running state
-     */
-    public boolean isRunning() {
-
-        return this.running;
-    }
-
-    /**
-     * Gets the list of entities that the engine updates
-     *
-     * @return the list of entities
-     */
-    public ArrayList<Entity> getEntities() {
-
-        return this.entities;
-    }
-
-    /**
-     * Gets the score
-     *
-     * @return this.score the score
-     */
-    public double getScore() {
-
-        return this.score;
-    }
-
-    /**
-     * Sets the spawner for this engine to use
-     *
-     * @param spawner the spawner used
-     */
-    public void setSpawner(UnitSpawner spawner) {
-
-        this.spawner = spawner;
-    }
-
-    /**
-     * Sets the running state of the engine
-     *
-     * @param running the state to set the engine to
-     */
-    public void setRunning(boolean running) {
-
-        this.running = running;
-    }
-
-    /**
-     * Set the paused state of the engine.
-     *
-     * @param paused the new paused state
-     */
-    public void setPaused(boolean paused) {
-
-        LOG.log(Level.INFO, "Paused set:" + paused);
-        this.paused = paused;
     }
 
     /**
@@ -248,6 +252,7 @@ public class CoreEngine {
         }
     }
 
+    //@TODO: move this function
     /**
      * Divides the score into two halves.
      */
