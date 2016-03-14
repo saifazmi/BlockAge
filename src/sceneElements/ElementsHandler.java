@@ -286,7 +286,9 @@ public class ElementsHandler {
         System.out.println("Interface made");
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
-        if(options.isTutorial()) { Tutorial.setup(); }
+        if (options.isTutorial()) {
+            Tutorial.setup();
+        }
         Thread unitSpawnerThread = new Thread(() -> {
             GraphNode goal = BaseSpawner.Instance().getGoal();
             while (goal == null) {
@@ -299,7 +301,7 @@ public class ElementsHandler {
             }
 
             LOG.log(Level.INFO, "GOAL found!!!");
-            UnitSpawner spawner = new UnitSpawner(2, goal);
+            UnitSpawner spawner = new UnitSpawner(1, goal);
             CoreEngine.Instance().setSpawner(spawner);
 
             engine.setPaused(!Tutorial.active);

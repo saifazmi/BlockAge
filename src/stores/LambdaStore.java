@@ -37,13 +37,13 @@ public final class LambdaStore {
 
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
 
-        if(CoreEngine.Instance().unbreakableBlockadesLeft()) {
+        if (CoreEngine.Instance().unbreakableBlockadesLeft()) {
             Blockade blockadeInstance = new Blockade(
                     1,
                     "Blockade",
                     new GraphNode(0, 0),
                     null
-                );
+            );
             ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
             Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
             if (blockade != null) {
@@ -55,7 +55,8 @@ public final class LambdaStore {
     };
 
     private final EventHandler<MouseEvent> sceneClickPlaceBreakableBlockade = e -> {
-        if(CoreEngine.Instance().breakableBlockadesLeft()) {
+
+        if (CoreEngine.Instance().breakableBlockadesLeft()) {
             SortableBlockade sortableBlockadeInstance = new SortableBlockade(
                     0,
                     "Sortable Blockade",

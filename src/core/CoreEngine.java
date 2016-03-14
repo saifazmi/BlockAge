@@ -1,5 +1,6 @@
 package core;
 
+import entity.Blockade;
 import entity.Entity;
 import graph.Graph;
 import graph.GraphNode;
@@ -263,11 +264,10 @@ public class CoreEngine {
     /**
      * Check if there is any more sortable blockades to place
      *
-     * @return true if there still are
      * @return false if there are none left
      */
-    public boolean breakableBlockadesLeft () {
-        if(breakableBlockadesLimit > 0) {
+    public boolean breakableBlockadesLeft() {
+        if (breakableBlockadesLimit > 0) {
             return true;
         }
         return false;
@@ -276,18 +276,17 @@ public class CoreEngine {
     /**
      * Reduce the amount of sortable blockades available by 1
      */
-    public void breakableBlockadesPlaced () {
+    public void breakableBlockadesPlaced() {
         breakableBlockadesLimit--;
     }
 
     /**
      * Check if there is any more unsortable blockades to place
      *
-     * @return true if there still are and reduce the amount by 1
      * @return false if there are none left
      */
-    public boolean unbreakableBlockadesLeft () {
-        if(unbreakableBlockadesLimit > 0) {
+    public boolean unbreakableBlockadesLeft() {
+        if (unbreakableBlockadesLimit > 0) {
             return true;
         }
         return false;
@@ -296,7 +295,7 @@ public class CoreEngine {
     /**
      * Reduce the amount of unsortable blockades available by 1
      */
-    public void unbreakableBlockadesPlaced () {
+    public void unbreakableBlockadesPlaced() {
         unbreakableBlockadesLimit--;
     }
 
@@ -334,6 +333,9 @@ public class CoreEngine {
 
             // remove the sprite of the entity from renderer
             Renderer.Instance().remove(entity.getSprite());
+        }
+        if (entity instanceof Blockade) {
+            entity.getPosition().setBlockade(null);
         }
 
         return removed;

@@ -61,6 +61,7 @@ public final class ImageStore {
     public static final Image pauseMenu = new Image(SPRITE_RESOURCES + BACKGROUNDS + "PauseMenu.png");
     public static final Image paneBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "Pane.png");
     public static final Image grassBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "GrassBackground.png");
+    public static final Image yesNoBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "yesNoPane.png");
     //options images
     public static final Image onImage = new Image(SPRITE_RESOURCES + BUTTONS + "On_Idle.png", 395, 55, true, true);
     public static final Image onImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "On_Hover.png", 395, 55, true, true);

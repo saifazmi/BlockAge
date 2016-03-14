@@ -86,6 +86,7 @@ public class GameRunTime {
         final String SEPARATOR = File.separator;
         final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
+        Image hellBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "hell_background.png");
         Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
         Image grassBackground = new Image(SPRITE_RESOURCES + "misc" + SEPARATOR + "sand_background.png");
 

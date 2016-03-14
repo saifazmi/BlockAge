@@ -12,10 +12,10 @@ public class Base extends Entity {
     /**
      * Builds a base with the given attributes.
      *
-     * @param id the ID of this entity
-     * @param name name of the entity
+     * @param id       the ID of this entity
+     * @param name     name of the entity
      * @param position position of the entity on the graph
-     * @param sprite the sprite image representing this entity
+     * @param sprite   the sprite image representing this entity
      */
     public Base(int id, String name, GraphNode position, SpriteImage sprite) {
 

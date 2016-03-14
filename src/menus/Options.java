@@ -79,7 +79,9 @@ public class Options {
         return initialBlockades;
     }
 
-    public boolean isTutorial() { return tutorial; }
+    public boolean isTutorial() {
+        return tutorial;
+    }
 
     public void setTutorial(boolean tutorial) {
         this.tutorial = tutorial;

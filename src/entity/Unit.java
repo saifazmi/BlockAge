@@ -3,6 +3,7 @@ package entity;
 import core.CoreEngine;
 import graph.Graph;
 import graph.GraphNode;
+import gui.GameInterface;
 import gui.Renderer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -18,6 +19,7 @@ import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
+import sorts.SortVisual;
 import tutorial.Tutorial;
 
 import java.util.List;
@@ -132,7 +134,6 @@ public class Unit extends Entity {
      * @return sort algorithm used
      */
     public Sort getSort() {
-
         return this.sort;
     }
 
@@ -170,6 +171,7 @@ public class Unit extends Entity {
 
     /**
      * Sets the route to be followed by this unit
+     *
      * @param route List of GraphNodes making up the route
      */
     public void setRoute(List<GraphNode> route) {
@@ -349,14 +351,19 @@ public class Unit extends Entity {
      * @return whether the position has a block
      */
     private boolean blockCheck(GraphNode position) {
-
-        if (position.getBlockade() == null) {
+        Blockade blockade = position.getBlockade();
+        if (blockade == null) {
 
             getPosition().getUnits().remove(this);
             position.getUnits().add(this);
             setPosition(position);
 
             return true;
+        } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null) {
+            System.out.println("WTF: " + ((SortableBlockade) blockade).arrayToString(((SortableBlockade) blockade).getToSortArray()));
+            SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
+            ((SortableBlockade) blockade).setSortVisual(sortVisual);
+            Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
         }
 
         return false;
@@ -494,8 +501,8 @@ public class Unit extends Entity {
     }
 
     //@TODO: document these methods
+
     /**
-     *
      * @param route
      * @param show
      */
@@ -555,7 +562,6 @@ public class Unit extends Entity {
     }
 
     /**
-     *
      * @param object
      */
     private void nullObject(Object object) {

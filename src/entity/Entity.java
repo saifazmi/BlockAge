@@ -24,11 +24,11 @@ public abstract class Entity extends Observable {
     /**
      * Builds an entity with the given attributes.
      *
-     * @param id the ID of this entity
-     * @param name name of the entity
+     * @param id          the ID of this entity
+     * @param name        name of the entity
      * @param description additional detail for the entity
-     * @param position position of the entity on the graph
-     * @param sprite the sprite image representing this entity
+     * @param position    position of the entity on the graph
+     * @param sprite      the sprite image representing this entity
      */
     public Entity(int id, String name, String description, GraphNode position, SpriteImage sprite) {
 
@@ -42,10 +42,10 @@ public abstract class Entity extends Observable {
     /**
      * Builds an entity with the given attributes.
      *
-     * @param id the ID of this entity
-     * @param name name of the entity
+     * @param id       the ID of this entity
+     * @param name     name of the entity
      * @param position position of the entity on the graph
-     * @param sprite the sprite image representing this entity
+     * @param sprite   the sprite image representing this entity
      */
     public Entity(int id, String name, GraphNode position, SpriteImage sprite) {
 
@@ -121,6 +121,7 @@ public abstract class Entity extends Observable {
     }
 
     //@TODO: document this method
+
     /**
      *
      */
