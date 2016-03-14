@@ -16,15 +16,25 @@ public class GraphNode {
 
     private static final Logger LOG = Logger.getLogger(GraphNode.class.getName());
 
+    // X-coordinate of the node
     private int x;
+    // Y-coordinate of the node
     private int y;
 
-    private List<Unit> units;     // Empty list of entities
-    private Blockade blockade;    // null blockade
+    // Properties
+    private List<Unit> units;
+    private Blockade blockade;
     private List<GraphNode> successors;
     private Base base;
 
+    /**
+     * Builds a GraphNode with the given coordinates
+     *
+     * @param x x-coordinate of the node
+     * @param y y-coordinate of the node
+     */
     public GraphNode(int x, int y) {
+
         this.x = x;
         this.y = y;
         this.units = new ArrayList<>();
@@ -33,23 +43,11 @@ public class GraphNode {
         base = null;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof GraphNode)) return false;
-
-        GraphNode graphNode = (GraphNode) o;
-
-        return x == graphNode.x && y == graphNode.y;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
-        return result;
-    }
-
+    /**
+     *
+     *
+     * @param graph
+     */
     public void addNeighbours(Graph graph) {
         for (int i = 0; i < graph.getNodes().size(); i++) {
             GraphNode node = graph.getNodes().get(i);
@@ -64,36 +62,57 @@ public class GraphNode {
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("GraphNode{x=").append(x).append(", y=").append(y).append('}');
-        sb.append(" ");
-        for (GraphNode successor : this.successors) {
-            sb.append("(").append(successor.getX()).append(",").append(successor.getY()).append(")");
-        }
-        return sb.toString();
+    // GETTER methods
+
+    /**
+     * Gets the X-coordinate of this graph node
+     *
+     * @return the X-coordinate
+     */
+    public int getX() {
+
+        return this.x;
     }
 
+    /**
+     * Gets the Y-coordinate of this graph node
+     *
+     * @return the Y-coordinate
+     */
+    public int getY() {
+
+        return this.y;
+    }
+
+    /**
+     * Gets the list of successors for this graph node
+     *
+     * @return a List of successive GraphNodes for this GraphNode
+     */
     public List<GraphNode> getSuccessors() {
-        return successors;
+
+        return this.successors;
     }
 
+    /**
+     * Gets the blockade on this graph node
+     *
+     * @return a Blockade
+     */
+    public Blockade getBlockade() {
+
+        return this.blockade;
+    }
+
+    /**
+     *
+     *
+     * @param node
+     * @param graph
+     */
     public void addSuccessor(GraphNode node, Graph graph) {
         GraphNode successor = graph.nodeWith(node);
         this.successors.add(successor);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public Blockade getBlockade() {
-        return blockade;
     }
 
     public void setBlockade(Blockade blockade) {
@@ -110,5 +129,40 @@ public class GraphNode {
 
     public void setBase(Base base) {
         this.base = base;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("GraphNode{x=").append(x).append(", y=").append(y).append('}');
+        sb.append(" ");
+        for (GraphNode successor : this.successors) {
+            sb.append("(").append(successor.getX()).append(",").append(successor.getY()).append(")");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Checks if a given object is equal to this GraphNode
+     *
+     * @param o object to be compared
+     * @return true if the object is equal to this GraphNode else false
+     */
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (!(o instanceof GraphNode)) return false;
+
+        GraphNode graphNode = (GraphNode) o;
+
+        return x == graphNode.x && y == graphNode.y;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = x;
+        result = 31 * result + y;
+        return result;
     }
 }
