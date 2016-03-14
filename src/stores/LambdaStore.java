@@ -1,5 +1,6 @@
 package stores;
 
+import core.CoreEngine;
 import core.GameRunTime;
 import entity.Blockade;
 import entity.SortableBlockade;
@@ -45,6 +46,7 @@ public final class LambdaStore {
         Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
         if (blockade != null) {
             renderer.drawInitialEntity(blockade);
+            CoreEngine.Instance().getEntities().add(blockade);
         }
     };
 
@@ -60,6 +62,7 @@ public final class LambdaStore {
         SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
         if (blockade != null) {
             renderer.drawInitialEntity(blockade);
+            CoreEngine.Instance().getEntities().add(blockade);
         }
     };
 

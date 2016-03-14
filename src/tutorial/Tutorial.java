@@ -45,7 +45,7 @@ public class Tutorial {
         tutorial.setOnKeyPressed(e ->
         {
             KeyCode k = e.getCode();
-            if(k == KeyCode.ENTER) {
+            if(k == KeyCode.ENTER && Tutorial.active) {
                 Tutorial.inc();
             }
         });
@@ -71,12 +71,13 @@ public class Tutorial {
                                  "Press the ENTER key to continue.");
                 break;
             case 2:
-                if(BaseSpawner.Instance().getGoal() != null) {
+                if(BaseSpawner.Instance().getGoal() == null) {
                     tutorial.setText("You haven't placed the base yet, please place it.\n" +
                                      "Press the ENTER key to continue.");
                     step--;
                 } else {
                     mapBlockadeCount = Blockade.getBlockades().size();
+                    System.out.println(mapBlockadeCount);
                     tutorial.setText("Good, the enemy units will spawn in the upper right hand corner and try to reach the base.\n" +
                                      "Once these units reach your base, you lose the game.\n" +
                                      "You can place blockades to slow down the units and/or redirect them.\n" +
@@ -87,6 +88,7 @@ public class Tutorial {
                 break;
             case 3:
                 if(Blockade.getBlockades().size() == mapBlockadeCount) {
+                    System.out.println(Blockade.getBlockades().size());
                     tutorial.setText("You haven't placed any blockades, please place one.\n" +
                                      "Press the ENTER key to continue.");
                     step--;
@@ -108,7 +110,7 @@ public class Tutorial {
                                  "Press the ENTER key to continue.");
                 break;
             case 5:
-                if(GameRunTime.Instance().getScene().getFocusOwner() instanceof SpriteImage) {
+                if(GameRunTime.Instance().getLastClicked() != null) {
                     tutorial.setText("Good, here you can see what search and sort this unit employs.\n" +
                                      "You can also press R when selecting a unit to show its current route.\n" +
                                      "Press R to show the current route of the unit you selected.\n" +
@@ -158,7 +160,10 @@ public class Tutorial {
         routeShown = false;
         visualShown = false;
 
+        GameInterface.sortVisualisationPane.getChildren().clear();
         GameInterface.sortVisualisationPane.getChildren().addAll(oldKids);
+        //@TODO reinitialise sort stuff if needed
+        CoreEngine.Instance().setPaused(false);
     }
 
 }

@@ -299,7 +299,14 @@ public class ElementsHandler {
             LOG.log(Level.INFO, "GOAL found!!!");
             UnitSpawner spawner = new UnitSpawner(2, goal);
             CoreEngine.Instance().setSpawner(spawner);
-            engine.setPaused(false);
+
+            engine.setPaused(!Tutorial.active);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            engine.setPaused(Tutorial.active);
         });
         unitSpawnerThread.start();
     }
