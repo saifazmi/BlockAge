@@ -212,7 +212,7 @@ public class MapEditorInterface {
         int sceneWidth = 300;
         int sceneHeight = 200;
         Pane messagePanel = new Pane();
-        BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+        BackgroundImage myBI = new BackgroundImage(ImageStore.yesNoBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         messagePanel.setPrefSize(sceneWidth, sceneHeight);
         messagePanel.setBackground(new Background(myBI));

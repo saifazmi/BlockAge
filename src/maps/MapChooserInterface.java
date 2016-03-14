@@ -8,6 +8,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -15,6 +19,7 @@ import javafx.stage.Stage;
 import menus.MenuHandler;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
+import stores.ImageStore;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -82,7 +87,6 @@ public class MapChooserInterface {
         for (int i = 0; i < mapImages.size(); i++) {
             images.getChildren().add(mapImages.get(i));
         }
-
         images.setSpacing(50);
     }
 
