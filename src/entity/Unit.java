@@ -19,7 +19,7 @@ import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
-import sorts.SortVisual;
+import sorts.visual.SortVisual;
 import tutorial.Tutorial;
 
 import java.util.List;

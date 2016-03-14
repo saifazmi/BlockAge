@@ -10,10 +10,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.SelectionSort;
-import sorts.SortVisualBar;
-import sorts.SortableComponent;
-import sorts.Tuple;
+import sorts.logic.SelectionSort;
+import sorts.visual.SortVisualBar;
+import sorts.logic.SortableComponent;
+import sorts.visual.Tuple;
 
 import java.util.ArrayList;
 

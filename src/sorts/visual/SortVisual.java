@@ -1,4 +1,4 @@
-package sorts;
+package sorts.visual;
 
 import core.CoreEngine;
 import entity.SortableBlockade;
@@ -11,6 +11,9 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import sorts.logic.BubbleSort;
+import sorts.logic.SelectionSort;
+import sorts.logic.SortableComponent;
 
 import java.util.ArrayList;
 
@@ -50,10 +53,15 @@ public class SortVisual {
 
     public void start() {
         tuples = new ArrayList<Tuple>();
+
+        // DFS unit
         if (this.sort == Unit.Sort.BUBBLE) sorts = BubbleSort.sort(block.getToSortArray());
-        ;
+
+        // BFS unit
+        if (this.sort == Unit.Sort.QUICK) sorts = SelectionSort.sort(block.getToSortArray());
+
+        // Astar unit
         if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
-        ;
 
         sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: gray;");

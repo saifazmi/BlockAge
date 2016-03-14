@@ -1,8 +1,8 @@
 package test;
 
-import sorts.QuickSort;
-import sorts.SelectionSort;
-import sorts.SortableComponent;
+import sorts.logic.QuickSort;
+import sorts.logic.SelectionSort;
+import sorts.logic.SortableComponent;
 
 import java.util.ArrayList;
 import java.util.Collections;

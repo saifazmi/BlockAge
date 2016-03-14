@@ -1,4 +1,4 @@
-package sorts;
+package sorts.visual;
 
 /**
  * Created by decklol on 28/02/16.

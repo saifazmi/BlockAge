@@ -1,4 +1,4 @@
-package sorts;
+package sorts.logic;
 
 import java.util.ArrayList;
 

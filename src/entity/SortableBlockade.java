@@ -3,7 +3,7 @@ package entity;
 import core.CoreEngine;
 import graph.GraphNode;
 import sceneElements.SpriteImage;
-import sorts.SortVisual;
+import sorts.visual.SortVisual;
 
 import java.util.ArrayList;
 import java.util.Collections;

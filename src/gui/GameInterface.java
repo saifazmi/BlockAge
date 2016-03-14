@@ -28,7 +28,7 @@ import menus.Menu;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 import sceneElements.LabelProperties;
-import sorts.SortVisual;
+import sorts.visual.SortVisual;
 import stores.ImageStore;
 import stores.LambdaStore;
 

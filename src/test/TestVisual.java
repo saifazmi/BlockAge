@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.SortVisualBar;
+import sorts.visual.SortVisualBar;
 
 import java.util.ArrayList;
 

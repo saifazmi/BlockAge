@@ -1,4 +1,4 @@
-package sorts;
+package sorts.visual;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
