@@ -366,6 +366,7 @@ public class Unit extends Entity {
             Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
         }
 
+
         return false;
     }
 
