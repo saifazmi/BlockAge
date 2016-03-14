@@ -1,5 +1,6 @@
 package stores;
 
+import core.CoreEngine;
 import core.GameRunTime;
 import entity.Blockade;
 import entity.SortableBlockade;
@@ -35,31 +36,36 @@ public final class LambdaStore {
     }
 
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
-        Blockade blockadeInstance = new Blockade(
-                1,
-                "Blockade",
-                new GraphNode(0, 0),
-                null
-        );
-        ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
-        Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
-        if (blockade != null) {
-            renderer.drawInitialEntity(blockade);
+        if(CoreEngine.Instance().unbreakableBlockadesLeft()) {
+            Blockade blockadeInstance = new Blockade(
+                    1,
+                    "Blockade",
+                    new GraphNode(0, 0),
+                    null
+                );
+            ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
+            Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
+            if (blockade != null) {
+                renderer.drawInitialEntity(blockade);
+            }
         }
     };
 
     private final EventHandler<MouseEvent> sceneClickPlaceBreakableBlockade = e -> {
-        SortableBlockade sortableBlockadeInstance = new SortableBlockade(
-                0,
-                "Sortable Blockade",
-                Blockade.calcGraphNode(e),
-                null,
-                null
-        );
-        ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
-        SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
-        if (blockade != null) {
-            renderer.drawInitialEntity(blockade);
+        if(CoreEngine.Instance().breakableBlockadesLeft()) {
+            SortableBlockade sortableBlockadeInstance = new SortableBlockade(
+                    0,
+                    "Sortable Blockade",
+                    Blockade.calcGraphNode(e),
+                    null,
+                    null
+            );
+
+            ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
+            SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
+            if (blockade != null) {
+                renderer.drawInitialEntity(blockade);
+            }
         }
     };
 

@@ -30,6 +30,10 @@ public class CoreEngine {
     private double score;
     private boolean scoreHalved;
 
+    // Block limit
+    private int unbreakableBlockadesLimit;
+    private int breakableBlockadesLimit;
+
     // Runtime dependencies
     private Graph graph;
     private ArrayList<Entity> entities;
@@ -169,6 +173,8 @@ public class CoreEngine {
 
         running = true;
         score = 0;
+        unbreakableBlockadesLimit = 20;
+        breakableBlockadesLimit = 20;
         scoreHalved = false;
         startTime = System.nanoTime();
 
@@ -248,7 +254,7 @@ public class CoreEngine {
             spawner.update();
             score += ((double) 1 / (double) FRAME_RATE);
 
-            Platform.runLater(() -> GameInterface.scoreLabel.setText("Score: " + String.format("%.2f", score)));
+            Platform.runLater(GameInterface::update);
         }
     }
 
@@ -262,5 +268,51 @@ public class CoreEngine {
             this.score = this.score / 2;
             this.scoreHalved = true;
         }
+    }
+
+    /**
+     * Check if there is any more sortable blockades to place
+     *
+     * @return true if there still are and reduce the amount by 1
+     * @return false if there are none left
+     */
+    public boolean breakableBlockadesLeft () {
+        if(breakableBlockadesLimit > 0) {
+            breakableBlockadesLimit--;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if there is any more unsortable blockades to place
+     *
+     * @return true if there still are and reduce the amount by 1
+     * @return false if there are none left
+     */
+    public boolean unbreakableBlockadesLeft () {
+        if(unbreakableBlockadesLimit > 0) {
+            unbreakableBlockadesLimit--;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get the amount of unbreakable blockade left
+     *
+     * @return unbreakableBlockadesLimit the amount of unbreakable blockade left
+     */
+    public int getUnbreakableBlockadesLimit() {
+        return unbreakableBlockadesLimit;
+    }
+
+    /**
+     * Get the amount of breakable blockade left
+     *
+     * @return breakableBlockadesLimit the amount of breakable blockade left
+     */
+    public int getBreakableBlockadesLimit() {
+        return breakableBlockadesLimit;
     }
 }
