@@ -100,7 +100,7 @@ public class Blockade extends Entity {
      *
      * @return the list of blockades
      */
-    private static ArrayList<Blockade> getBlockades() {
+    public static ArrayList<Blockade> getBlockades() {
 
         ArrayList<Blockade> blockades = new ArrayList<>();
         ArrayList<Entity> entities = CoreEngine.Instance().getEntities();

@@ -25,6 +25,7 @@ import menus.OptionsMenu;
 import menus.PauseMenu;
 import stores.ImageStore;
 import stores.LambdaStore;
+import tutorial.Tutorial;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -210,6 +211,10 @@ public class ElementsHandler {
                     pressedToNotPressed(obtainedSprite);
                 }
                 GameInterface.unitDescriptionText.clear();
+                Tutorial.routeShown = false;
+                Tutorial.visualShown = false;
+            } else if (k == KeyCode.ENTER && Tutorial.active) {
+                Tutorial.inc();
             }
         }
     }
@@ -279,6 +284,7 @@ public class ElementsHandler {
         System.out.println("Interface made");
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
+        if(options.isTutorial()) { Tutorial.setup(); }
         Thread unitSpawnerThread = new Thread(() -> {
             GraphNode goal = BaseSpawner.Instance().getGoal();
             while (goal == null) {

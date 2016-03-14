@@ -18,6 +18,7 @@ import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
+import tutorial.Tutorial;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -545,11 +546,13 @@ public class Unit extends Entity {
 
                 setVisualTransition(transition);
                 transition.play();
+                Tutorial.routeShown = Tutorial.active;
 
             } else {
 
                 setVisualTransition(renderer.produceAlgoRouteVisual(this));
                 getVisualTransition().play();
+                Tutorial.visualShown = Tutorial.active;
             }
 
         } else if (currentTrans != null && !show) {
@@ -577,6 +580,8 @@ public class Unit extends Entity {
                 }
 
                 setVisualTransition(null);
+                Tutorial.routeShown = false;
+                Tutorial.visualShown = false;
             }
         }
     }

@@ -7,6 +7,7 @@ public class Options {
     private boolean showDescription = true;
     private boolean showPath = true;
     private boolean initialBlockades = true;
+    private boolean tutorial = true;
 
     public Options() {
     }
@@ -76,5 +77,11 @@ public class Options {
      */
     public boolean getInitialBlockades() {
         return initialBlockades;
+    }
+
+    public boolean isTutorial() { return tutorial; }
+
+    public void setTutorial(boolean tutorial) {
+        this.tutorial = tutorial;
     }
 }
