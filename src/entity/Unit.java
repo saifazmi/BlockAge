@@ -38,6 +38,18 @@ public class Unit extends Entity {
 
     private Renderer renderer = Renderer.Instance();
 
+    public SortableBlockade getSorting() {
+        return sorting;
+    }
+
+    public void setSorting(SortableBlockade sorting) {
+        this.sorting = sorting;
+        if(sorting == null) {
+            this.completedMove = true;
+            //this.nextNode = null;
+        }
+    }
+
     /**
      * Search flags
      */
@@ -92,6 +104,8 @@ public class Unit extends Entity {
 
     private GraphNode nextNode;
     private boolean completedMove = true;
+
+    private SortableBlockade sorting = null;
 
     /**
      * Constructor for Unit used by UnitSpawner
@@ -206,10 +220,10 @@ public class Unit extends Entity {
      *
      * @return whether the move was successful
      */
-    public boolean moveUp() {
+    public Boolean moveUp() {
 
         // Has the unit moved
-        boolean moved;
+        Boolean moved;
         GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
@@ -242,10 +256,10 @@ public class Unit extends Entity {
      *
      * @return whether the move was successful
      */
-    public boolean moveDown() {
+    public Boolean moveDown() {
 
         // Has the unit moved
-        boolean moved;
+        Boolean moved;
         GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
@@ -278,10 +292,10 @@ public class Unit extends Entity {
      *
      * @return whether the move was successful
      */
-    public boolean moveRight() {
+    public Boolean moveRight() {
 
         // Has the unit moved
-        boolean moved;
+        Boolean moved;
         GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
@@ -314,10 +328,10 @@ public class Unit extends Entity {
      *
      * @return whether the move was successful
      */
-    public boolean moveLeft() {
+    public Boolean moveLeft() {
 
         // Has the unit moved
-        boolean moved;
+        Boolean moved;
         GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
@@ -350,22 +364,28 @@ public class Unit extends Entity {
      * @param position the position to be checked
      * @return whether the position has a block
      */
-    private boolean blockCheck(GraphNode position) {
+    private Boolean blockCheck(GraphNode position) {
         Blockade blockade = position.getBlockade();
         if (blockade == null) {
 
             getPosition().getUnits().remove(this);
             position.getUnits().add(this);
             setPosition(position);
-
             return true;
-        } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null) {
-            System.out.println("WTF: " + ((SortableBlockade) blockade).arrayToString(((SortableBlockade) blockade).getToSortArray()));
-            SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
-            ((SortableBlockade) blockade).setSortVisual(sortVisual);
-            Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
-        }
 
+        } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null && sorting == null) {
+            System.out.println("WTF: " + ((SortableBlockade) blockade).arrayToString(((SortableBlockade) blockade).getToSortArray()));
+            sorting = (SortableBlockade)blockade;
+            Thread t = new Thread(() ->
+            {
+                SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
+                ((SortableBlockade) blockade).setSortVisual(sortVisual);
+                Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
+            });
+            t.start();
+
+            return false;
+        }
 
         return false;
     }
@@ -398,7 +418,8 @@ public class Unit extends Entity {
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
 
-                if (logicalMove(xChange, yChange)) {
+                Boolean result = logicalMove(xChange, yChange);
+                if (result) {
 
                     double nextPixelX = x * renderer.getXSpacing();
                     double nextPixelY = y * renderer.getYSpacing();
@@ -410,10 +431,15 @@ public class Unit extends Entity {
                     transition.play();
 
                 } else {
+                    if(sorting != null) {
+                        //nextNode = null;
+                        //this.completedMove = true;
+                    } else {
+                        decideRoute();
+                        nextNode = null;
+                        this.completedMove = true;
+                    }
 
-                    decideRoute();
-                    nextNode = null;
-                    this.completedMove = true;
                 }
 
             } else if (this.getPosition() == goal) {
@@ -444,9 +470,9 @@ public class Unit extends Entity {
      * @param yChange amount of nodes to move in the y axis
      * @return if the logical move was successful
      */
-    private boolean logicalMove(int xChange, int yChange) {
+    private Boolean logicalMove(int xChange, int yChange) {
 
-        boolean success;
+        Boolean success;
         double rotate;
 
         if (xChange == 0) {

@@ -58,12 +58,15 @@ public class BaseSpawner {
         return instance;
     }
 
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     /**
      * Builds a base for the player
      */
-    public BaseSpawner() {
-
-        instance = this;
+    private BaseSpawner() {
 
         runTime.getScene().setOnMouseClicked(e -> {
 

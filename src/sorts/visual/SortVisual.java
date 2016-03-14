@@ -222,6 +222,8 @@ public class SortVisual {
                     remove = true;
                     System.out.println("WTF");
                     CoreEngine.Instance().removeEntity(block);
+                    unit.setSorting(null);
+                    block.setSortVisual(null);
                 }
             }
         });

@@ -40,7 +40,9 @@ public class MapEditor implements Menu {
     public MapEditor() {
         createGraph();
 
-        mapEditorRenderer = new Renderer();
+        //@todo delete after map quits
+        Renderer.delete();
+        mapEditorRenderer = Renderer.Instance();
         mapEditorRenderer.calculateSpacing();
         mapEditorRenderer.initialDraw();
 

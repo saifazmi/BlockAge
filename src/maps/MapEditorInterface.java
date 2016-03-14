@@ -1,6 +1,7 @@
 package maps;
 
 import gui.GameInterface;
+import gui.Renderer;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -189,6 +190,7 @@ public class MapEditorInterface {
         }
         if (event.getSource() == MapEditorInterface.backButton) {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            Renderer.delete();
         }
         if (event.getSource() == MapEditorInterface.no) {
             parser.setOverwrite(false);

@@ -4,9 +4,11 @@ import core.BaseSpawner;
 import core.CoreEngine;
 import core.GameRunTime;
 import core.UnitSpawner;
+import entity.Base;
 import entity.Entity;
 import entity.Unit;
 import graph.GraphNode;
+import gui.CoreGUI;
 import gui.GameInterface;
 import gui.Renderer;
 import javafx.event.Event;
@@ -15,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import maps.MapChooserInterface;
+import maps.MapEditor;
 import maps.MapEditorInterface;
 import menus.EndGameMenu;
 import menus.MainMenu;
@@ -23,6 +26,7 @@ import menus.MenuHandler;
 import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
+import sound.SoundManager;
 import stores.ImageStore;
 import stores.LambdaStore;
 import tutorial.Tutorial;
@@ -162,12 +166,14 @@ public class ElementsHandler {
             engine.setRunning(false);
             MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            quitGame();
         }
 
         // Elements in the End Game Menu Scene
         if (event.getSource() == EndGameMenu.backMainButton) {
             engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            quitGame();
         }
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
@@ -273,12 +279,12 @@ public class ElementsHandler {
     public static void startGame() {
         // Create grid for the game we'll play
         System.out.println("Start game");
-        GameRunTime gameRunTime = new GameRunTime();
+        new GameRunTime();
         engine = CoreEngine.Instance();
         engine.setPaused(true);
         Renderer.Instance().calculateSpacing();
         System.out.println("Spacing calculated");
-        gameRunTime.startGame();
+        BaseSpawner.Instance();
         System.out.println("Game started");
         MenuHandler.setMainGameScene();
         System.out.println("Scene set");
@@ -313,6 +319,15 @@ public class ElementsHandler {
             engine.setPaused(Tutorial.active);
         });
         unitSpawnerThread.start();
+    }
+
+    private static void quitGame() {
+        Renderer.delete();
+        CoreEngine.delete();
+        GameRunTime.delete();
+        BaseSpawner.delete();
+        SoundManager.delete();
+        MapChooserInterface.delete();
     }
 }
 
