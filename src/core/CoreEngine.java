@@ -4,6 +4,7 @@ import entity.Entity;
 import graph.Graph;
 import graph.GraphNode;
 import gui.GameInterface;
+import gui.Renderer;
 import javafx.application.Platform;
 import sceneElements.Score;
 
@@ -315,5 +316,26 @@ public class CoreEngine {
      */
     public int getBreakableBlockadesLimit() {
         return breakableBlockadesLimit;
+    }
+
+    /**
+     * Removes a given entity from the game
+     *
+     * @param entity Entity to be removed
+     * @return true if the entity was removed else false
+     */
+    public boolean removeEntity(Entity entity) {
+
+        // remove the given entity
+        boolean removed = entities.remove(entity);
+
+        // check if the entity was logically removed
+        if (removed) {
+
+            // remove the sprite of the entity from renderer
+            Renderer.Instance().remove(entity.getSprite());
+        }
+
+        return removed;
     }
 }
