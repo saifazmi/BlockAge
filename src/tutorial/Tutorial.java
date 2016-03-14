@@ -7,8 +7,8 @@ import entity.Blockade;
 import gui.GameInterface;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.io.InputStream;
@@ -39,7 +39,7 @@ public class Tutorial {
         GameInterface.sortVisualisationPane.getChildren().clear();
 
         GameInterface.sortVisualisationLabel.setText("Tutorial");
-        GameInterface.sortVisualisationLabel.setLayoutX(212 - 87.5/2);
+        GameInterface.sortVisualisationLabel.setLayoutX(212 - 87.5 / 2);
 
         tutorial.setPrefSize(300, 260);
         tutorial.setStyle("-fx-border-color: white");

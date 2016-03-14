@@ -84,19 +84,19 @@ public final class LambdaStore {
     }
 
     public void setBlockadeClickEvent(boolean sortable) {
-        if(scene.getOnMouseClicked() == null) {
+        if (scene.getOnMouseClicked() == null) {
             if (!sortable) {
                 scene.setOnMouseClicked(getPlaceUnbreakableBlockade());
             } else {
                 scene.setOnMouseClicked(getPlaceBreakableBlockade());
             }
-        } else if(scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade())) {
+        } else if (scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade())) {
             if (!sortable) {
                 scene.setOnMouseClicked(null);
             } else {
                 scene.setOnMouseClicked(getPlaceBreakableBlockade());
             }
-        } else if(scene.getOnMouseClicked().equals(getPlaceBreakableBlockade())) {
+        } else if (scene.getOnMouseClicked().equals(getPlaceBreakableBlockade())) {
             if (!sortable) {
                 scene.setOnMouseClicked(getPlaceUnbreakableBlockade());
             } else {

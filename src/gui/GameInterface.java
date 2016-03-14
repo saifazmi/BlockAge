@@ -3,8 +3,6 @@ package gui;
 import core.CoreEngine;
 import core.GameRunTime;
 import entity.SortableBlockade;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
