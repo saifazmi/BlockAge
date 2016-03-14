@@ -89,7 +89,14 @@ public class GameRunTime {
         Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
         Image grassBackground = new Image(SPRITE_RESOURCES + "misc" + SEPARATOR + "sand_background.png");
 
-        BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage myBIF = new BackgroundImage(
+                sandBackground,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+
         mainGamePane.setBackground(new Background(myBIF));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
 
@@ -105,11 +112,13 @@ public class GameRunTime {
         });
     }
 
-    public void startGame() {
+    // GETTER methods
 
-        new BaseSpawner();
-    }
-
+    /**
+     * Checks if the player has placed the base
+     *
+     * @return true if the base has been placed else false
+     */
     public boolean isBasePlaced() {
 
         return this.basePlaced;
@@ -118,26 +127,50 @@ public class GameRunTime {
     /**
      * Returns the main game scene where the game will be played
      *
-     * @return - the main game scene
+     * @return the main game scene
      */
     public Scene getScene() {
 
         return mainGameScene;
     }
 
+    /**
+     * Returns the last clicked sprite
+     *
+     * @return the last clicked SpriteImage object
+     */
     public SpriteImage getLastClicked() {
 
         return this.lastClicked;
     }
 
+    // SETTER methods
+
+    /**
+     * Changes the last clicked sprite
+     *
+     * @param lastClicked the sprite image last clicked
+     */
     public void setLastClicked(SpriteImage lastClicked) {
 
         this.lastClicked = lastClicked;
     }
 
-    // to notify the placement of the base
+    /**
+     * Set the base existence
+     *
+     * @param basePlaced the base placement state
+     */
     public void setBasePlaced(boolean basePlaced) {
 
         this.basePlaced = basePlaced;
+    }
+
+    /**
+     * Starts the game by instantiating the BaseSpawner
+     */
+    public void startGame() {
+
+        new BaseSpawner();
     }
 }

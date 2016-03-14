@@ -1,8 +1,10 @@
-FORMATTING
-==========  
+FORMATTING & DOC
+================  
 - Just re-formatting the code to make sense out of everything.
 - Formatted and partially documented the "core" package, needs proof  
 reading.
+- Finished formatting and documenting "core"
+- Formatted "entity" package needs doc for some methods.
 
 REFACTORING
 ===========  

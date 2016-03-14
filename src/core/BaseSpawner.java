@@ -36,7 +36,7 @@ public class BaseSpawner {
     private final String SEPARATOR = "/";
     private final String MAP_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "maps" + SEPARATOR;
     // Number of preset maps
-    private final int MAP_PRESETS_QTY = 2;
+    private final int MAP_PRESETS_QTY = 3;
 
     private Renderer renderer = Renderer.Instance();
     private GameRunTime runTime = GameRunTime.Instance();
@@ -58,6 +58,9 @@ public class BaseSpawner {
         return instance;
     }
 
+    /**
+     * Builds a base for the player
+     */
     public BaseSpawner() {
 
         instance = this;

@@ -85,7 +85,7 @@ public class UnitSpawner {
         this.spawnlimit = spawnlimit;
 
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
-            CreateUnit(graph, goal);
+            create(graph, goal);
         }
     }
 
@@ -99,7 +99,7 @@ public class UnitSpawner {
      * @param goal  The Goal node to which the Unit's search will use, passed to Unit Constructor
      * @return A new Unit
      */
-    private Unit CreateUnit(Graph graph, GraphNode goal) {
+    private Unit create(Graph graph, GraphNode goal) {
 
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
@@ -195,7 +195,7 @@ public class UnitSpawner {
         if (unitPool.size() > 0) {
             newUnit = unitPool.remove(0);
         } else {
-            newUnit = CreateUnit(this.graph, this.goal);
+            newUnit = create(this.graph, this.goal);
         }
 
         spawnCount++;
@@ -204,6 +204,7 @@ public class UnitSpawner {
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
+    //@TODO: is this methods being used anymore?
     /**
      * Moves the unit back into the pool if its not needed
      *
