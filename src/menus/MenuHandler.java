@@ -83,7 +83,7 @@ public class MenuHandler {
 
 
         if (scene == END_GAME_MENU) {
-            endGameMenu.setScore(CoreEngine.Instance().getScore());
+            endGameMenu.setScore(CoreEngine.Instance().getScore().getScore());
         }
     }
 }

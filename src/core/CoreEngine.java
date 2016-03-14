@@ -5,6 +5,7 @@ import graph.Graph;
 import graph.GraphNode;
 import gui.GameInterface;
 import javafx.application.Platform;
+import sceneElements.Score;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -27,7 +28,7 @@ public class CoreEngine {
     private boolean slept = false;
 
     // Game score
-    private double score;
+    private Score score;
     private boolean scoreHalved;
 
     // Block limit
@@ -125,7 +126,7 @@ public class CoreEngine {
      *
      * @return this.score the score
      */
-    public double getScore() {
+    public Score getScore() {
 
         return this.score;
     }
@@ -172,7 +173,7 @@ public class CoreEngine {
     public void startGame() {
 
         running = true;
-        score = 0;
+        score = new Score();
         unbreakableBlockadesLimit = 20;
         breakableBlockadesLimit = 20;
         scoreHalved = false;
@@ -252,21 +253,9 @@ public class CoreEngine {
         if (spawner != null) {
 
             spawner.update();
-            score += ((double) 1 / (double) FRAME_RATE);
+            score.update((double) 1 / (double) FRAME_RATE);
 
             Platform.runLater(GameInterface::update);
-        }
-    }
-
-    //@TODO: move this function
-    /**
-     * Divides the score into two halves.
-     */
-    public void halveScore() {
-
-        if (!scoreHalved) {
-            this.score = this.score / 2;
-            this.scoreHalved = true;
         }
     }
 

@@ -236,7 +236,7 @@ public class GameInterface {
         sortableLimitLabel.setTextFill(Color.web("#FFE130"));
 
         // Set the properties for the score label
-        scoreLabel.setText("Score: " + CoreEngine.Instance().getScore());
+        scoreLabel.setText("Score: " + String.format("%.2f", CoreEngine.Instance().getScore().getScore()));
         scoreLabel.setFont(bellotaFontBigger);
         scoreLabel.setLayoutX(rightPaneWidth / 2 - 220 / 2);
         scoreLabel.setLayoutY(initialPositionY + 600);
@@ -277,7 +277,7 @@ public class GameInterface {
     }
 
     public static void update() {
-        scoreLabel.setText("Score: " + String.format("%.2f", CoreEngine.Instance().getScore()));
+        scoreLabel.setText("Score: " + String.format("%.2f", CoreEngine.Instance().getScore().getScore()));
         unsortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getUnbreakableBlockadesLimit()));
         sortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getBreakableBlockadesLimit()));
     }

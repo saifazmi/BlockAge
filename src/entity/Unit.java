@@ -422,40 +422,8 @@ public class Unit extends Entity {
                 nextNode = null;
 
                 CoreEngine.Instance().setPaused(true);
-                CoreEngine.Instance().halveScore();
+                CoreEngine.Instance().getScore().halveScore();
                 Platform.runLater(() -> MenuHandler.switchScene(MenuHandler.END_GAME_MENU));
-            }
-        }
-    }
-
-    //@TODO: is this required anymore?
-    /**
-     * for testing
-     */
-    public void updateTest() {
-
-        if (completedMove) {
-            LOG.log(Level.INFO, "completed move");
-
-            if (this.nextNode != null) {
-
-                LOG.log(Level.INFO, "next node is " + this.nextNode);
-                this.position = this.nextNode;
-            }
-
-            if (route.size() > 0) {
-
-                this.completedMove = false;
-                this.nextNode = this.route.remove(0);
-                int xChange = this.nextNode.getX() - this.position.getX();
-                int yChange = this.nextNode.getY() - this.position.getY();
-
-                if (!logicalMove(xChange, yChange)) {
-
-                    decideRoute();
-                    nextNode = null;
-                    this.completedMove = true;
-                }
             }
         }
     }
