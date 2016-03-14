@@ -6,6 +6,7 @@ import core.GameRunTime;
 import entity.Blockade;
 import gui.GameInterface;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  */
 public class Tutorial {
 
-    private static TextArea tutorial = new TextArea();
+    private static Label tutorial = new Label();
     public static boolean active = false;
     private static int step = 0;
     private static int mapBlockadeCount;
@@ -36,10 +37,14 @@ public class Tutorial {
         active = true;
         oldKids.addAll(GameInterface.sortVisualisationPane.getChildren().stream().collect(Collectors.toList()));
         GameInterface.sortVisualisationPane.getChildren().clear();
-        tutorial.setPrefSize(300, 200);
+
+        GameInterface.sortVisualisationLabel.setText("Tutorial");
+        GameInterface.sortVisualisationLabel.setLayoutX(212 - 87.5/2);
+
+        tutorial.setPrefSize(300, 260);
         tutorial.setStyle("-fx-border-color: white");
         tutorial.setFont(Font.loadFont(fontStream, 18));
-        tutorial.setEditable(false);
+        tutorial.setTextFill(Color.web("#FFE130"));
         tutorial.setWrapText(true);
         tutorial.setOnKeyPressed(e ->
         {
@@ -161,13 +166,15 @@ public class Tutorial {
     private static void reset() {
         Tutorial.active = false;
         step = 0;
-        tutorial = new TextArea();
+        tutorial = new Label();
         mapBlockadeCount = 0;
         routeShown = false;
         visualShown = false;
 
         GameInterface.sortVisualisationPane.getChildren().clear();
         GameInterface.sortVisualisationPane.getChildren().addAll(oldKids);
+        GameInterface.sortVisualisationLabel.setText("Sort Visualisation");
+        GameInterface.sortVisualisationLabel.setLayoutX(212 - 197 / 2);
         //@TODO reinitialise sort stuff if needed
         CoreEngine.Instance().setPaused(false);
     }
