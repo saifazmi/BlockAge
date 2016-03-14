@@ -273,15 +273,21 @@ public class CoreEngine {
     /**
      * Check if there is any more sortable blockades to place
      *
-     * @return true if there still are and reduce the amount by 1
+     * @return true if there still are
      * @return false if there are none left
      */
     public boolean breakableBlockadesLeft () {
         if(breakableBlockadesLimit > 0) {
-            breakableBlockadesLimit--;
             return true;
         }
         return false;
+    }
+
+    /**
+     * Reduce the amount of sortable blockades available by 1
+     */
+    public void breakableBlockadesPlaced () {
+        breakableBlockadesLimit--;
     }
 
     /**
@@ -292,10 +298,16 @@ public class CoreEngine {
      */
     public boolean unbreakableBlockadesLeft () {
         if(unbreakableBlockadesLimit > 0) {
-            unbreakableBlockadesLimit--;
             return true;
         }
         return false;
+    }
+
+    /**
+     * Reduce the amount of unsortable blockades available by 1
+     */
+    public void unbreakableBlockadesPlaced () {
+        unbreakableBlockadesLimit--;
     }
 
     /**

@@ -47,6 +47,7 @@ public final class LambdaStore {
             Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
             if (blockade != null) {
                 renderer.drawInitialEntity(blockade);
+                CoreEngine.Instance().unbreakableBlockadesPlaced();
             }
         }
     };
@@ -65,6 +66,7 @@ public final class LambdaStore {
             SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
             if (blockade != null) {
                 renderer.drawInitialEntity(blockade);
+                CoreEngine.Instance().breakableBlockadesPlaced();
             }
         }
     };
