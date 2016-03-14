@@ -7,12 +7,19 @@ Key Bindings
 ------------
 - **SPACE:** Pause the game
 - **R:** Toggle route display
-- **SHIFT-R:** Toggle advanced route display
-- **B:** Toggle block placement  
+- **SHIFT+R:** Toggle advanced route display
+- **B:** Toggle normal block placement  
+- **SHIFT+B:** Toggle sortable block placement.
 - **S:** Toggle unit selection
 
 Knows Bugs    
-----------
+----------  
+#### Blockade  
+- Cannot place blocked's after starting a new game.  
+
+#### Custom Game  
+- When redirected to map creator it pop-ups a window.  
+
 #### Base Spawner
 - ~~Base can be placed anywhere (on blockades, off of grid etc)~~
 - ~~Base defence rendering outside the grid in edge cases.~~
@@ -28,7 +35,8 @@ Knows Bugs
 
 #### Unit  
 - Transitions don't work if unit doesn't spawn at (0,0)
-- If boxed in the unit stops moving and the game crashes.
+- ~~If boxed in the unit stops moving and the game crashes.~~ 
+- Cannot select unit after generating route with SHIFT+R.
 
 #### Renderer  
 - ~~Route lines don't draw from the route start, but from the 2nd node~~
@@ -47,4 +55,3 @@ Contributors
 - [Anh Tuan Pham](https://github.com/istatsuki)  
 - [Hung Hoang](https://github.com/ParityB1t)  
 - [Paul Popa](https://github.com/PaulPopa)  
-
