@@ -4,6 +4,7 @@ import core.CoreEngine;
 import core.GameRunTime;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -45,9 +46,9 @@ public class GameInterface {
     public static TextArea unitDescriptionText;
     public static Font bellotaFont, bellotaFontBigger;
     public static Pane unitTextPane, sortVisualisationPane, rightMenuPane, rightMenuBox;
-    public static Label unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel, sortableLimitLabel, unsortableLimitLabel, scoreLabel;
+    public static Label unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel, sortableLimitLabel, unsortableLimitLabel, scoreLabel, sortVisualisationLabel;
 
-    private Label unitDescriptionLabel, sortVisualisationLabel, blockadesLabel, sortLabel;
+    private Label unitDescriptionLabel, blockadesLabel, sortLabel;
     private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
     private ButtonProperties b;
     private LabelProperties l;
@@ -174,14 +175,11 @@ public class GameInterface {
         sortVisualisationLabel.setAlignment(Pos.CENTER);
         sortVisualisationLabel.setTextFill(Color.web("#FFE130"));
 
-        sortVisualisationLabel.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldWidth, Number newWidth) {
-                System.out.println("The new width" + newWidth);
-            }
+        sortVisualisationLabel.widthProperty().addListener((observable, oldWidth, newWidth) -> {
+            System.out.println("The new width" + newWidth);
         });
 
-        sortVisualisationPane.setPrefSize(300, 200);
+        sortVisualisationPane.setPrefSize(300, 260);
         sortVisualisationPane.setStyle("-fx-border-color: white");
         sortVisualisationPane.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         sortVisualisationPane.setLayoutY(initialPositionY + 3 * heightSpacing + 90);
