@@ -176,6 +176,7 @@ public class BaseSpawner {
                     SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
                     if (blockade != null) {
                         renderer.drawInitialEntity(blockade);
+                        CoreEngine.Instance().getEntities().add(blockade);
                     }
                 }
             }
