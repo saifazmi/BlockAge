@@ -31,7 +31,6 @@ public class SortVisual {
     private Pane sortPane = null;
     private Unit unit;
     public Sort sort;
-    private int fiveadded = 0;
     private boolean remove = false;
 
     public boolean isRemove() {
@@ -76,7 +75,7 @@ public class SortVisual {
                 loc = 40 + (20 * pos);
             }
             if (x == 0) loc = 10;
-            block.relocate(loc, HEIGHT - (x * 15) - fiveadded);
+            block.relocate(loc, HEIGHT - (x * 15) - 5);
             sortPane.getChildren().add(block);
             block.setUpdateX(block.getLayoutX());
             blocks.add(block);
@@ -173,7 +172,7 @@ public class SortVisual {
 
         TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         ttx.setFromX(0);
-        ttx.setToX(-oldX + fiveadded);//was -200
+        ttx.setToX(-oldX);//was -200
 
         TranslateTransition txx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         txx.setFromY(-100);
@@ -199,7 +198,7 @@ public class SortVisual {
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         gx.setFromX(-oldX);
-        gx.setToX(oldSecondX - oldX + fiveadded);//old distance-  width - gap
+        gx.setToX(oldSecondX - oldX);//old distance-  width - gap
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         gyy.setFromY(-200); //this is how it works...dont ask
