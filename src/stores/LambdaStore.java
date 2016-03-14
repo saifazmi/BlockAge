@@ -54,7 +54,8 @@ public final class LambdaStore {
                 "Sortable Blockade",
                 Blockade.calcGraphNode(e),
                 null,
-                null
+                null,
+                0
         );
         ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
         SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);

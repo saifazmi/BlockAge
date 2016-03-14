@@ -1,15 +1,16 @@
 package entity;
 
-import core.CoreEngine;
-import graph.GraphNode;
-import sceneElements.SpriteImage;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import core.CoreEngine;
+import graph.GraphNode;
+import sceneElements.SpriteImage;
+import sorts.SortVisual;
 
 /**
  * @author : saif
@@ -23,8 +24,17 @@ public class SortableBlockade extends Blockade {
 
     private ArrayList<Integer> toSortArray;
     private static int sortID;
+    private SortVisual sortVisual = null;
 
-    public SortableBlockade(int id, String name, GraphNode position, SpriteImage sprite, ArrayList<Integer> toSortArray,int sortID) {
+    public SortVisual getSortVisual() {
+		return sortVisual;
+	}
+
+	public void setSortVisual(SortVisual sortVisual) {
+		this.sortVisual = sortVisual;
+	}
+
+	public SortableBlockade(int id, String name, GraphNode position, SpriteImage sprite, ArrayList<Integer> toSortArray,int sortID) {
         super(id, name, position, sprite);
         this.toSortArray = toSortArray;
         this.sortID=sortID;
@@ -69,7 +79,7 @@ public class SortableBlockade extends Blockade {
         return arrToSort;
     }
 
-    private static String arrayToString(List<Integer> arrList) {
+    public static String arrayToString(List<Integer> arrList) {
 
         StringBuilder sb = new StringBuilder();
         sb.append("ARRAY = [");

@@ -1,8 +1,13 @@
 package entity;
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import core.CoreEngine;
 import graph.Graph;
 import graph.GraphNode;
+import gui.GameInterface;
 import gui.Renderer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -18,10 +23,7 @@ import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
-
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import sorts.SortVisual;
 
 /**
  * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
@@ -131,7 +133,6 @@ public class Unit extends Entity {
      * @return sort algorithm used
      */
     public Sort getSort() {
-
         return this.sort;
     }
 
@@ -348,14 +349,20 @@ public class Unit extends Entity {
      * @return whether the position has a block
      */
     private boolean blockCheck(GraphNode position) {
-
-        if (position.getBlockade() == null) {
-
+    	Blockade blockade = position.getBlockade();
+        if (blockade == null) {
+        	
             getPosition().getUnits().remove(this);
             position.getUnits().add(this);
             setPosition(position);
 
             return true;
+        }
+        else if(blockade instanceof SortableBlockade && ((SortableBlockade)blockade).getSortVisual() == null) {
+        	System.out.println("WTF: " + ((SortableBlockade) blockade).arrayToString(((SortableBlockade) blockade).getToSortArray()));
+        	SortVisual sortVisual = new SortVisual((SortableBlockade)blockade, this);
+        	((SortableBlockade) blockade).setSortVisual(sortVisual);
+        	Platform.runLater(()->GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
         }
 
         return false;

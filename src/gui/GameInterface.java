@@ -1,9 +1,14 @@
 package gui;
 
+import java.io.InputStream;
+
 import core.CoreEngine;
 import core.GameRunTime;
+import entity.SortableBlockade;
+import graph.GraphNode;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -26,10 +31,9 @@ import menus.Menu;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 import sceneElements.LabelProperties;
+import sorts.SortVisual;
 import stores.ImageStore;
 import stores.LambdaStore;
-
-import java.io.InputStream;
 
 /**
  * @author : First created by Paul Popa with code by Paul Popa
@@ -53,6 +57,8 @@ public class GameInterface {
     private LabelProperties l;
     private int initialPositionY = 50;
     private int heightSpacing = 30;
+    public SortVisual sortVisual = null;
+    public SortableBlockade sortableBlockade;
 
     public GameInterface() {
         loadFont();
@@ -112,6 +118,17 @@ public class GameInterface {
         pauseImageHovered = ImageStore.pauseImageHovered;
         unsortableImage = ImageStore.unsortableImage2;
         sortableImage = ImageStore.sortableImage2;
+        
+//        SortableBlockade sortableBlockadeInstance = new SortableBlockade(
+//                0,
+//                "Sortable Blockade",
+//                new GraphNode(0, 1),
+//                null,
+//                null,
+//                0
+//        );
+//        sortableBlockade = SortableBlockade.create(sortableBlockadeInstance);
+//        sortVisual = new SortVisual(sortableBlockade);
 
     }
 

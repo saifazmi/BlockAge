@@ -1,55 +1,67 @@
 package sorts;
 
+import java.util.ArrayList;
+
 import entity.SortableBlockade;
+import entity.Unit;
+import entity.Unit.Sort;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.util.ArrayList;
 
 /**
  * @author : First created by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  *
  */
-public class SortVisual extends Application {
-    public int HEIGHT = 300;
-    public int WIDTH = 400;
+public class SortVisual {
+    public int HEIGHT = 200;
+    public int WIDTH = 300;
     private static ArrayList<SortVisualBar> blocks;
     private ArrayList<SortableComponent> sorts;
     private ArrayList<Tuple> tuples;
-    private int sortID;
     private SortableBlockade block;
-
-    public SortVisual(SortableBlockade block){
-        this.sortID = block.getSortID();
+    private Pane sortPane = null;
+    private Unit unit;
+    public Sort sort;
+    private int fiveadded = 0;
+    private boolean remove = false;
+    
+    public boolean isRemove() {
+		return remove;
+	}
+	public void setRemove(boolean remove) {
+		this.remove = remove;
+	}
+	public SortVisual(SortableBlockade block, Unit unit){
+    	block.setSortVisual(this);
+    	this.sort = unit.getSort();//block.getSortID();
         this.block=block;
+        this.unit = unit;
+        start();
 
     }
-    public void start(Stage stage) {
+    public void start() {
         tuples = new ArrayList<Tuple>();
-        if(sortID==0)sorts = BubbleSort.sort(block.getToSortArray());;
-        if(sortID==1)sorts = SelectionSort.sort(block.getToSortArray());;
+        if(this.sort == Unit.Sort.BUBBLE)sorts = BubbleSort.sort(block.getToSortArray());;
+        if(this.sort == Unit.Sort.SELECTION)sorts = SelectionSort.sort(block.getToSortArray());;
 
-        Pane sortPane = new Pane();
+        sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: gray;");
         sortPane.setPrefSize(WIDTH,HEIGHT);
         //make blocks
         blocks = new ArrayList<SortVisualBar>();
         for (double x = 0; x < 11; x++) {              //width  //height
-            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.INDIANRED, (int) x-1); //-1 because extra invis block, so 1 holds 0...etc
+            SortVisualBar block = new SortVisualBar(15.0, (x * 15.0), Color.INDIANRED, (int) x-1); //-1 because extra invis block, so 1 holds 0...etc
             int loc = 40;
             if(x!=0){int pos = find(x-1);
-                loc = 40 + (30*pos);}
+                loc = 40 + (20*pos);}
             if(x==0) loc=10;
-            block.relocate(loc, HEIGHT - (x * 15) - 50);
+            block.relocate(loc, HEIGHT - (x * 15)- fiveadded);
             sortPane.getChildren().add(block);
             block.setUpdateX(block.getLayoutX());
             blocks.add(block);
@@ -62,19 +74,9 @@ public class SortVisual extends Application {
         }
         blocks = blocksTemp;
         prepareTransitions();//makes new seqTransition
-        Scene scene = new Scene(sortPane);
-        stage = new Stage();
-        stage.setTitle("TEST");
-        stage.setScene(scene);
-        stage.sizeToScene();
-        stage.show();
         swapTwo(tuples.get(0).getFirst(),tuples.get(0).getSecond(),0);
     }
 
-
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
     private int find(double s){
         ArrayList<Integer> state = sorts.get(0).getValue();
         for(int x=0;x<state.size();x++){
@@ -153,7 +155,7 @@ public class SortVisual extends Application {
 
         TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         ttx.setFromX(0);
-        ttx.setToX(-oldX);//was -200
+        ttx.setToX(-oldX + fiveadded);//was -200
 
         TranslateTransition txx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         txx.setFromY(-100);
@@ -179,7 +181,7 @@ public class SortVisual extends Application {
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         gx.setFromX(-oldX);
-        gx.setToX(oldSecondX-oldX);//old distance-  width - gap
+        gx.setToX(oldSecondX-oldX + fiveadded);//old distance-  width - gap
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         gyy.setFromY(-200); //this is how it works...dont ask
@@ -199,10 +201,30 @@ public class SortVisual extends Application {
                     blocks.set(block2,temp);
                     swapTwo(next.getFirst(),next.getSecond(), swapIndex+1);
                 }
+                else {
+                	remove = true;
+                }
             }
         });
 
         seq.play();
     }
+    
+    public Pane getPane() {
+    	return sortPane;
+    }
+	public SortableBlockade getBlock() {
+		return block;
+	}
+	public void setBlock(SortableBlockade block) {
+		this.block = block;
+	}
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+    
 
 }
