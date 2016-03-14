@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 
 /**
  * @author : First created by Paul Popa with code by Dominic Walters, and Paul Popa
- * @date : 09/02/16, last edited by Paul Popa on 25/02/16
+ * @date : 09/02/16, last edited by Anh Pham on 14/03/16
  */
 public class ElementsHandler {
 
@@ -163,6 +163,8 @@ public class ElementsHandler {
             MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
+
+        // Elements in the End Game Menu Scene
         if (event.getSource() == EndGameMenu.backMainButton) {
             engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
