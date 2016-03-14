@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
 public class SortVisual {
-    public int HEIGHT = 200;
+    public int HEIGHT = 260;
     public int WIDTH = 300;
     private static ArrayList<SortVisualBar> blocks;
     private ArrayList<SortableComponent> sorts;
