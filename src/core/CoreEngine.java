@@ -1,15 +1,16 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import entity.Blockade;
 import entity.Entity;
 import graph.Graph;
 import graph.GraphNode;
 import gui.GameInterface;
 import gui.Renderer;
 import javafx.application.Platform;
-
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, and Paul Popa
@@ -281,6 +282,9 @@ public class CoreEngine {
 
             // remove the sprite of the entity from renderer
             Renderer.Instance().remove(entity.getSprite());
+        }
+        if (entity instanceof Blockade) {
+        	entity.getPosition().setBlockade(null);
         }
 
         return removed;

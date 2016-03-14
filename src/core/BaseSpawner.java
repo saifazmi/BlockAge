@@ -176,6 +176,7 @@ public class BaseSpawner {
                     System.out.println(blockade.arrayToString(blockade.getToSortArray()));
                     if (blockade != null) {
                         renderer.drawInitialEntity(blockade);
+                        CoreEngine.Instance().getEntities().add(blockade);
                     }
                 }
             }

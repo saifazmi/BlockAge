@@ -2,6 +2,7 @@ package sorts;
 
 import java.util.ArrayList;
 
+import core.CoreEngine;
 import entity.SortableBlockade;
 import entity.Unit;
 import entity.Unit.Sort;
@@ -203,6 +204,8 @@ public class SortVisual {
                 }
                 else {
                 	remove = true;
+                	System.out.println("WTF");
+                	CoreEngine.Instance().removeEntity(block);
                 }
             }
         });
