@@ -1,5 +1,6 @@
 package maps;
 
+import core.CoreEngine;
 import entity.Blockade;
 import graph.GraphNode;
 import gui.Renderer;
@@ -45,6 +46,7 @@ public class MapParser {
                         Blockade blockade = Blockade.randomBlockade(blockadeInstance);
                         if (blockade != null) {
                             Renderer.Instance().drawInitialEntity(blockade);
+                            CoreEngine.Instance().getEntities().add(blockade);
                         }
                     }
 

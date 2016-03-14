@@ -2,8 +2,8 @@ package gui;
 
 import core.CoreEngine;
 import core.GameRunTime;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import entity.SortableBlockade;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -26,6 +26,7 @@ import menus.Menu;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 import sceneElements.LabelProperties;
+import sorts.visual.SortVisual;
 import stores.ImageStore;
 import stores.LambdaStore;
 
@@ -45,14 +46,16 @@ public class GameInterface {
     public static TextArea unitDescriptionText;
     public static Font bellotaFont, bellotaFontBigger;
     public static Pane unitTextPane, sortVisualisationPane, rightMenuPane, rightMenuBox;
-    public static Label unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel, scoreLabel;
+    public static Label unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel, sortableLimitLabel, unsortableLimitLabel, scoreLabel, sortVisualisationLabel;
 
-    private Label unitDescriptionLabel, sortVisualisationLabel, blockadesLabel, sortLabel;
+    private Label unitDescriptionLabel, blockadesLabel, sortLabel;
     private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
     private ButtonProperties b;
     private LabelProperties l;
     private int initialPositionY = 50;
     private int heightSpacing = 30;
+    public SortVisual sortVisual = null;
+    public SortableBlockade sortableBlockade;
 
     public GameInterface() {
         loadFont();
@@ -87,6 +90,8 @@ public class GameInterface {
         namePaneLabel = new Label();
         searchPaneLabel = new Label();
         sortPaneLabel = new Label();
+        sortableLimitLabel = new Label();
+        unsortableLimitLabel = new Label();
         scoreLabel = new Label();
         unitDescriptionLabel = new Label();
         sortVisualisationLabel = new Label();
@@ -112,7 +117,6 @@ public class GameInterface {
         pauseImageHovered = ImageStore.pauseImageHovered;
         unsortableImage = ImageStore.unsortableImage2;
         sortableImage = ImageStore.sortableImage2;
-
     }
 
     /**
@@ -172,17 +176,15 @@ public class GameInterface {
         sortVisualisationLabel.setAlignment(Pos.CENTER);
         sortVisualisationLabel.setTextFill(Color.web("#FFE130"));
 
-        sortVisualisationLabel.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldWidth, Number newWidth) {
-                System.out.println("The new width" + newWidth);
-            }
+        sortVisualisationLabel.widthProperty().addListener((observable, oldWidth, newWidth) -> {
+            System.out.println("The new width" + newWidth);
         });
 
-        sortVisualisationPane.setPrefSize(300, 200);
+        sortVisualisationPane.setPrefSize(300, 260);
         sortVisualisationPane.setStyle("-fx-border-color: white");
         sortVisualisationPane.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         sortVisualisationPane.setLayoutY(initialPositionY + 3 * heightSpacing + 90);
+        sortVisualisationPane.setPadding(new Insets(12, 12, 12, 12));
 
         // Set the properties for the play button
         b.setButtonProperties(playButton, "", rightPaneWidth / 2 - 50 - playImage.getWidth(), initialPositionY + 3.5 * heightSpacing + 290, ElementsHandler::handle, new ImageView(playImage));
@@ -213,16 +215,31 @@ public class GameInterface {
         handleSort(unsortableButton, "Unsortable blockade");
         unsortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent(false));
 
+        // Set the properties for the unsortable limit label
+        unsortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getUnbreakableBlockadesLimit()));
+        unsortableLimitLabel.setFont(bellotaFontBigger);
+        unsortableLimitLabel.setLayoutX(90);
+        unsortableLimitLabel.setLayoutY(initialPositionY + 5 * heightSpacing + 350);
+        unsortableLimitLabel.setTextFill(Color.web("#FFE130"));
+
         // Set the properties for the sortable button
         b.setButtonProperties(sortableButton, "", rightPaneWidth - 150 - sortableImage.getWidth(), initialPositionY + 5 * heightSpacing + 350, ElementsHandler::handle, new ImageView(sortableImage));
         b.addHoverEffect(sortableButton, sortableImage, sortableImage, rightPaneWidth / 2 + 50 + sortableImage.getWidth(), initialPositionY + 5 * heightSpacing + 350);
         handleSort(sortableButton, "Sortable blockade");
         sortableButton.setOnMouseClicked(e -> LambdaStore.Instance().setBlockadeClickEvent(true));
 
-        //SCORE LABEL
-        scoreLabel.setText("Score: " + CoreEngine.Instance().getScore());
+        // Set the properties for the sortable limit label
+        sortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getBreakableBlockadesLimit()));
+        sortableLimitLabel.setFont(bellotaFontBigger);
+        sortableLimitLabel.setLayoutX(rightPaneWidth - 150 + 15);
+        sortableLimitLabel.setLayoutY(initialPositionY + 5 * heightSpacing + 350);
+        sortableLimitLabel.setTextFill(Color.web("#FFE130"));
+
+        // Set the properties for the score label
+        scoreLabel.setText("Score: " + String.format("%.2f", CoreEngine.Instance().getScore().getScore()));
         scoreLabel.setFont(bellotaFontBigger);
-        scoreLabel.setLayoutX(rightPaneWidth / 2 - 220 / 2);
+        scoreLabel.setPrefSize(300, 30);
+        scoreLabel.setLayoutX(rightPaneWidth / 2 - 250 / 2);
         scoreLabel.setLayoutY(initialPositionY + 600);
         scoreLabel.setTextFill(Color.web("#FFE130"));
 
@@ -230,7 +247,7 @@ public class GameInterface {
         BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         rightMenuPane.setBackground(new Background(myBI));
-        rightMenuBox.getChildren().addAll(unitDescriptionLabel, unitTextPane, sortVisualisationLabel, sortVisualisationPane, blockadesLabel, unsortableButton, sortableButton, sortLabel, scoreLabel);
+        rightMenuBox.getChildren().addAll(unitDescriptionLabel, unitTextPane, sortVisualisationLabel, sortVisualisationPane, blockadesLabel, unsortableButton, sortableButton, sortLabel, unsortableLimitLabel, sortableLimitLabel, scoreLabel);
         rightMenuPane.getChildren().add(rightMenuBox);
         rightMenuPane.setPrefSize(rightPaneWidth, Menu.HEIGHT);
         ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenuPane);
@@ -258,5 +275,11 @@ public class GameInterface {
             if (!rightMenuBox.getChildren().contains(sortLabel))
                 rightMenuBox.getChildren().add(sortLabel);
         });
+    }
+
+    public static void update() {
+        scoreLabel.setText("Score: " + String.format("%.2f", CoreEngine.Instance().getScore().getScore()));
+        unsortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getUnbreakableBlockadesLimit()));
+        sortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getBreakableBlockadesLimit()));
     }
 }

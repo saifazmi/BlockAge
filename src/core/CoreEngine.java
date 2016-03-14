@@ -1,11 +1,13 @@
 package core;
 
+import entity.Blockade;
 import entity.Entity;
 import graph.Graph;
 import graph.GraphNode;
 import gui.GameInterface;
 import gui.Renderer;
 import javafx.application.Platform;
+import sceneElements.Score;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -28,8 +30,12 @@ public class CoreEngine {
     private boolean slept = false;
 
     // Game score
-    private double score;
+    private Score score;
     private boolean scoreHalved;
+
+    // Block limit
+    private int unbreakableBlockadesLimit;
+    private int breakableBlockadesLimit;
 
     // Runtime dependencies
     private Graph graph;
@@ -122,7 +128,7 @@ public class CoreEngine {
      *
      * @return this.score the score
      */
-    public double getScore() {
+    public Score getScore() {
 
         return this.score;
     }
@@ -169,7 +175,9 @@ public class CoreEngine {
     public void startGame() {
 
         running = true;
-        score = 0;
+        score = new Score();
+        unbreakableBlockadesLimit = 20;
+        breakableBlockadesLimit = 20;
         scoreHalved = false;
         startTime = System.nanoTime();
 
@@ -247,22 +255,66 @@ public class CoreEngine {
         if (spawner != null) {
 
             spawner.update();
-            score += ((double) 1 / (double) FRAME_RATE);
+            score.update((double) 1 / (double) FRAME_RATE);
 
-            Platform.runLater(() -> GameInterface.scoreLabel.setText("Score: " + String.format("%.2f", score)));
+            Platform.runLater(GameInterface::update);
         }
     }
 
-    //@TODO: move this function
     /**
-     * Divides the score into two halves.
+     * Check if there is any more sortable blockades to place
+     *
+     * @return false if there are none left
      */
-    public void halveScore() {
-
-        if (!scoreHalved) {
-            this.score = this.score / 2;
-            this.scoreHalved = true;
+    public boolean breakableBlockadesLeft() {
+        if (breakableBlockadesLimit > 0) {
+            return true;
         }
+        return false;
+    }
+
+    /**
+     * Reduce the amount of sortable blockades available by 1
+     */
+    public void breakableBlockadesPlaced() {
+        breakableBlockadesLimit--;
+    }
+
+    /**
+     * Check if there is any more unsortable blockades to place
+     *
+     * @return false if there are none left
+     */
+    public boolean unbreakableBlockadesLeft() {
+        if (unbreakableBlockadesLimit > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Reduce the amount of unsortable blockades available by 1
+     */
+    public void unbreakableBlockadesPlaced() {
+        unbreakableBlockadesLimit--;
+    }
+
+    /**
+     * Get the amount of unbreakable blockade left
+     *
+     * @return unbreakableBlockadesLimit the amount of unbreakable blockade left
+     */
+    public int getUnbreakableBlockadesLimit() {
+        return unbreakableBlockadesLimit;
+    }
+
+    /**
+     * Get the amount of breakable blockade left
+     *
+     * @return breakableBlockadesLimit the amount of breakable blockade left
+     */
+    public int getBreakableBlockadesLimit() {
+        return breakableBlockadesLimit;
     }
 
     /**
@@ -281,6 +333,9 @@ public class CoreEngine {
 
             // remove the sprite of the entity from renderer
             Renderer.Instance().remove(entity.getSprite());
+        }
+        if (entity instanceof Blockade) {
+            entity.getPosition().setBlockade(null);
         }
 
         return removed;

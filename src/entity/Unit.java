@@ -3,6 +3,7 @@ package entity;
 import core.CoreEngine;
 import graph.Graph;
 import graph.GraphNode;
+import gui.GameInterface;
 import gui.Renderer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -18,6 +19,8 @@ import sceneElements.SpriteImage;
 import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
+import sorts.visual.SortVisual;
+import tutorial.Tutorial;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -131,7 +134,6 @@ public class Unit extends Entity {
      * @return sort algorithm used
      */
     public Sort getSort() {
-
         return this.sort;
     }
 
@@ -169,6 +171,7 @@ public class Unit extends Entity {
 
     /**
      * Sets the route to be followed by this unit
+     *
      * @param route List of GraphNodes making up the route
      */
     public void setRoute(List<GraphNode> route) {
@@ -348,14 +351,19 @@ public class Unit extends Entity {
      * @return whether the position has a block
      */
     private boolean blockCheck(GraphNode position) {
-
-        if (position.getBlockade() == null) {
+        Blockade blockade = position.getBlockade();
+        if (blockade == null) {
 
             getPosition().getUnits().remove(this);
             position.getUnits().add(this);
             setPosition(position);
 
             return true;
+        } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null) {
+            System.out.println("WTF: " + ((SortableBlockade) blockade).arrayToString(((SortableBlockade) blockade).getToSortArray()));
+            SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
+            ((SortableBlockade) blockade).setSortVisual(sortVisual);
+            Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
         }
 
         return false;
@@ -422,40 +430,8 @@ public class Unit extends Entity {
                 nextNode = null;
 
                 CoreEngine.Instance().setPaused(true);
-                CoreEngine.Instance().halveScore();
+                CoreEngine.Instance().getScore().halveScore();
                 Platform.runLater(() -> MenuHandler.switchScene(MenuHandler.END_GAME_MENU));
-            }
-        }
-    }
-
-    //@TODO: is this required anymore?
-    /**
-     * for testing
-     */
-    public void updateTest() {
-
-        if (completedMove) {
-            LOG.log(Level.INFO, "completed move");
-
-            if (this.nextNode != null) {
-
-                LOG.log(Level.INFO, "next node is " + this.nextNode);
-                this.position = this.nextNode;
-            }
-
-            if (route.size() > 0) {
-
-                this.completedMove = false;
-                this.nextNode = this.route.remove(0);
-                int xChange = this.nextNode.getX() - this.position.getX();
-                int yChange = this.nextNode.getY() - this.position.getY();
-
-                if (!logicalMove(xChange, yChange)) {
-
-                    decideRoute();
-                    nextNode = null;
-                    this.completedMove = true;
-                }
             }
         }
     }
@@ -525,8 +501,8 @@ public class Unit extends Entity {
     }
 
     //@TODO: document these methods
+
     /**
-     *
      * @param route
      * @param show
      */
@@ -545,11 +521,13 @@ public class Unit extends Entity {
 
                 setVisualTransition(transition);
                 transition.play();
+                Tutorial.routeShown = Tutorial.active;
 
             } else {
 
                 setVisualTransition(renderer.produceAlgoRouteVisual(this));
                 getVisualTransition().play();
+                Tutorial.visualShown = Tutorial.active;
             }
 
         } else if (currentTrans != null && !show) {
@@ -577,12 +555,13 @@ public class Unit extends Entity {
                 }
 
                 setVisualTransition(null);
+                Tutorial.routeShown = false;
+                Tutorial.visualShown = false;
             }
         }
     }
 
     /**
-     *
      * @param object
      */
     private void nullObject(Object object) {

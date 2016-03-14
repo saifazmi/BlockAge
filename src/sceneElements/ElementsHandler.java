@@ -25,6 +25,7 @@ import menus.OptionsMenu;
 import menus.PauseMenu;
 import stores.ImageStore;
 import stores.LambdaStore;
+import tutorial.Tutorial;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -32,7 +33,7 @@ import java.util.logging.Logger;
 
 /**
  * @author : First created by Paul Popa with code by Dominic Walters, and Paul Popa
- * @date : 09/02/16, last edited by Paul Popa on 25/02/16
+ * @date : 09/02/16, last edited by Anh Pham on 14/03/16
  */
 public class ElementsHandler {
 
@@ -162,6 +163,8 @@ public class ElementsHandler {
             MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         }
+
+        // Elements in the End Game Menu Scene
         if (event.getSource() == EndGameMenu.backMainButton) {
             engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
@@ -210,6 +213,10 @@ public class ElementsHandler {
                     pressedToNotPressed(obtainedSprite);
                 }
                 GameInterface.unitDescriptionText.clear();
+                Tutorial.routeShown = false;
+                Tutorial.visualShown = false;
+            } else if (k == KeyCode.ENTER && Tutorial.active) {
+                Tutorial.inc();
             }
         }
     }
@@ -279,6 +286,9 @@ public class ElementsHandler {
         System.out.println("Interface made");
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
+        if (options.isTutorial()) {
+            Tutorial.setup();
+        }
         Thread unitSpawnerThread = new Thread(() -> {
             GraphNode goal = BaseSpawner.Instance().getGoal();
             while (goal == null) {
@@ -291,9 +301,16 @@ public class ElementsHandler {
             }
 
             LOG.log(Level.INFO, "GOAL found!!!");
-            UnitSpawner spawner = new UnitSpawner(2, goal);
+            UnitSpawner spawner = new UnitSpawner(1, goal);
             CoreEngine.Instance().setSpawner(spawner);
-            engine.setPaused(false);
+
+            engine.setPaused(!Tutorial.active);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            engine.setPaused(Tutorial.active);
         });
         unitSpawnerThread.start();
     }

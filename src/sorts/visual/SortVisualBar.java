@@ -1,4 +1,4 @@
-package sorts;
+package sorts.visual;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -9,6 +9,15 @@ import javafx.scene.shape.Rectangle;
  */
 public class SortVisualBar extends Rectangle {
     private int value;
+    private double updateX;
+
+    public double getUpdateX() {
+        return updateX;
+    }
+
+    public void setUpdateX(double updateX) {
+        this.updateX = updateX;
+    }
 
     public int getLogicalPosition() {
         return logicalPosition;
