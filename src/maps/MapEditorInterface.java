@@ -28,6 +28,7 @@ import menus.Menu;
 import menus.MenuHandler;
 import sceneElements.ButtonProperties;
 import stores.ImageStore;
+
 import java.io.InputStream;
 
 /**
@@ -219,23 +220,23 @@ public class MapEditorInterface {
         Label message = new Label();
         ButtonProperties b = new ButtonProperties();
 
-        b.setButtonProperties(yes, "", sceneWidth/2 + 25 - noImage.getWidth()/2, 125, e->handle(e), new ImageView(yesImage));
-        b.addHoverEffect2(yes,yesImageHover,yesImage,sceneWidth/2 + 25 - noImage.getWidth()/2, 125);
+        b.setButtonProperties(yes, "", sceneWidth / 2 + 25 - noImage.getWidth() / 2, 125, e -> handle(e), new ImageView(yesImage));
+        b.addHoverEffect2(yes, yesImageHover, yesImage, sceneWidth / 2 + 25 - noImage.getWidth() / 2, 125);
 
-        b.setButtonProperties(no, "", sceneWidth/2 - 60 - noImage.getWidth()/2, 125, e->handle(e), new ImageView(noImage));
-        b.addHoverEffect2(no,noImageHover,noImage,sceneWidth/2 - 60 - noImage.getWidth()/2, 125);
+        b.setButtonProperties(no, "", sceneWidth / 2 - 60 - noImage.getWidth() / 2, 125, e -> handle(e), new ImageView(noImage));
+        b.addHoverEffect2(no, noImageHover, noImage, sceneWidth / 2 - 60 - noImage.getWidth() / 2, 125);
 
         message.setText("That map already exists. Overwrite existing map?");
         message.setWrapText(true);
         message.setFont(bellotaFontSmaller);
         message.setPrefSize(240, 50);
         message.setAlignment(Pos.CENTER);
-        message.setLayoutX(300/2 - 200/2);
+        message.setLayoutX(300 / 2 - 200 / 2);
         message.setLayoutY(50);
         message.setTextFill(Color.web("#FFE130"));
 
         Scene popUpScene = new Scene(messagePanel);
-        messagePanel.getChildren().addAll(no,yes,message);
+        messagePanel.getChildren().addAll(no, yes, message);
 
         popUpStage.setWidth(sceneWidth);
         popUpStage.setHeight(sceneHeight);

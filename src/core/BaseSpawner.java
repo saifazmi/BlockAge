@@ -68,18 +68,20 @@ public class BaseSpawner {
         runTime.getScene().setOnMouseClicked(e -> {
 
             this.goal = Blockade.calcGraphNode(e);
-            Base base = new Base(9999, "Base", goal, null);
-            Image image = ImageStore.base;
+            if (goal != null) {
+                Base base = new Base(9999, "Base", goal, null);
+                Image image = ImageStore.base;
 
-            ImageStore.setSpriteProperties(base, image);
-            this.renderer.drawInitialEntity(base);
-            this.goal.setBase(base);
-            this.runTime.setBasePlaced(true);
+                ImageStore.setSpriteProperties(base, image);
+                this.renderer.drawInitialEntity(base);
+                this.goal.setBase(base);
+                this.runTime.setBasePlaced(true);
 
-            protectBase(goal);
-            generateBlockades();
+                protectBase(goal);
+                generateBlockades();
 
-            this.runTime.getScene().setOnMouseClicked(null);
+                this.runTime.getScene().setOnMouseClicked(null);
+            }
         });
     }
 
@@ -167,8 +169,7 @@ public class BaseSpawner {
                             "Sortable Blockade",
                             new GraphNode(i, j),
                             null,
-                            null,
-                            0
+                            null
                     );
 
                     ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);

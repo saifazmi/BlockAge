@@ -1,15 +1,11 @@
 package test;
 
-import entity.SortableBlockade;
-import sorts.BubbleSort;
 import sorts.QuickSort;
 import sorts.SelectionSort;
 import sorts.SortableComponent;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Created by decklol on 19/02/16.
@@ -41,6 +37,7 @@ public class Test_Sort {
         }
         System.out.println(out);
     }
+
     public static ArrayList<Integer> generateUniqSortArray() {
 
         ArrayList<Integer> arrToSort = new ArrayList<>();

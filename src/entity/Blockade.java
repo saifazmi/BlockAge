@@ -25,10 +25,10 @@ public class Blockade extends Entity {
     /**
      * Builds a normal blockade with the given attributes.
      *
-     * @param id the ID of this entity
-     * @param name name of the entity
+     * @param id       the ID of this entity
+     * @param name     name of the entity
      * @param position position of the entity on the graph
-     * @param sprite the sprite image representing this entity
+     * @param sprite   the sprite image representing this entity
      */
     public Blockade(int id, String name, GraphNode position, SpriteImage sprite) {
 
@@ -39,11 +39,11 @@ public class Blockade extends Entity {
     /**
      * Builds a normal blockade with the given attributes.
      *
-     * @param id the ID of this entity
-     * @param name name of the entity
+     * @param id          the ID of this entity
+     * @param name        name of the entity
      * @param description additional detail for the entity
-     * @param position position of the entity on the graph
-     * @param sprite the sprite image representing this entity
+     * @param position    position of the entity on the graph
+     * @param sprite      the sprite image representing this entity
      */
     public Blockade(int id, String name, String description, GraphNode position, SpriteImage sprite) {
 
@@ -84,7 +84,7 @@ public class Blockade extends Entity {
     /**
      * Creates a blockade at a given mouse event, on a given run time, and respecting a given blockade instance
      *
-     * @param e the mouse event to get the graph node from
+     * @param e                the mouse event to get the graph node from
      * @param blockadeInstance the blockade object to 'duplicate'
      * @return the blockade created (null if not in grid, clicked on a blockade, clicked on a unit)
      */
@@ -100,7 +100,7 @@ public class Blockade extends Entity {
      *
      * @return the list of blockades
      */
-    private static ArrayList<Blockade> getBlockades() {
+    public static ArrayList<Blockade> getBlockades() {
 
         ArrayList<Blockade> blockades = new ArrayList<>();
         ArrayList<Entity> entities = CoreEngine.Instance().getEntities();
@@ -176,7 +176,7 @@ public class Blockade extends Entity {
                 max = blockade.getId();
             }
         }
-        
+
         return max + 1;
     }
 
@@ -184,7 +184,7 @@ public class Blockade extends Entity {
      * Creates a new blockade with given properties
      *
      * @param blockadeInstance blockade properties to use
-     * @param node GraphNode to create the blockade at
+     * @param node             GraphNode to create the blockade at
      * @return the blockade created
      */
     private static Blockade create(Blockade blockadeInstance, GraphNode node) {
@@ -212,8 +212,8 @@ public class Blockade extends Entity {
     }
 
     //@TODO: document these methods
+
     /**
-     *
      * @param e
      * @param blockadeInstance
      * @param renderer
@@ -228,7 +228,6 @@ public class Blockade extends Entity {
     }
 
     /**
-     *
      * @param e
      * @param renderer
      * @param graph

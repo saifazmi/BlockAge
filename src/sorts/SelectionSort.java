@@ -1,7 +1,6 @@
 package sorts;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
@@ -12,11 +11,12 @@ public class SelectionSort {
      * Selection sort
      * Partitions list into sorted and unsorted halves, taking elements from the unsorted half and
      * placing thme in the sorted, in it's correct position.
+     *
      * @param state ArrayList which contains a randomly ordered set of numbers
      * @return
      */
     public static ArrayList<SortableComponent> sort(ArrayList<Integer> state) {
-       int size = state.size();
+        int size = state.size();
         ArrayList<SortableComponent> allStates = new ArrayList<>();
 
         int i, j;

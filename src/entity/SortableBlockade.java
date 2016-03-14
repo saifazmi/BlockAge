@@ -1,16 +1,16 @@
 package entity;
 
+import core.CoreEngine;
+import graph.GraphNode;
+import sceneElements.SpriteImage;
+import sorts.SortVisual;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import core.CoreEngine;
-import graph.GraphNode;
-import sceneElements.SpriteImage;
-import sorts.SortVisual;
 
 /**
  * @author : saif
@@ -27,24 +27,23 @@ public class SortableBlockade extends Blockade {
     private SortVisual sortVisual = null;
 
     public SortVisual getSortVisual() {
-		return sortVisual;
-	}
+        return sortVisual;
+    }
 
-	public void setSortVisual(SortVisual sortVisual) {
-		this.sortVisual = sortVisual;
-	}
+    public void setSortVisual(SortVisual sortVisual) {
+        this.sortVisual = sortVisual;
+    }
 
-	public SortableBlockade(int id, String name, GraphNode position, SpriteImage sprite, ArrayList<Integer> toSortArray,int sortID) {
+    public SortableBlockade(int id, String name, GraphNode position, SpriteImage sprite, ArrayList<Integer> toSortArray) {
         super(id, name, position, sprite);
         this.toSortArray = toSortArray;
-        this.sortID=sortID;
         setBreakable(true);
     }
 
     public static SortableBlockade create(SortableBlockade sortableBlockadeInstance) {
         GraphNode node = CoreEngine.Instance().getGraph().nodeWith(sortableBlockadeInstance.getPosition());
         if (node != null && !node.equals(new GraphNode(0, 0))) {
-            SortableBlockade blockade = new SortableBlockade(calcId(), sortableBlockadeInstance.getName(), node, sortableBlockadeInstance.getSprite(), generateUniqSortArray(),sortID);
+            SortableBlockade blockade = new SortableBlockade(calcId(), sortableBlockadeInstance.getName(), node, sortableBlockadeInstance.getSprite(), generateUniqSortArray());
             if (blockade.getPosition().getBlockade() == null && blockade.getPosition().getBase() == null && blockade.getPosition().getUnits().size() == 0) {
                 blockade.getPosition().setBlockade(blockade);
                 return blockade;

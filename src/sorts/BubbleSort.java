@@ -1,7 +1,6 @@
 package sorts;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
@@ -52,6 +51,7 @@ public class BubbleSort {
 
     /**
      * Pass by value
+     *
      * @param list
      * @return
      */

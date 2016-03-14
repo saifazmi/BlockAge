@@ -53,7 +53,7 @@ public class TestVisual extends Application {
         stage.sizeToScene();
         stage.show();
         // trying to move block
-        swapFF(3,10);
+        swapFF(3, 10);
 
 
     }
@@ -71,14 +71,14 @@ public class TestVisual extends Application {
         SortVisualBar b1 = blocks.get(block1);
         SortVisualBar b2 = blocks.get(block2);
 
-        b1.relocate(b1.getUpdateX(),b1.getLayoutY());
-        b2.relocate(b2.getUpdateX(),b2.getLayoutY());
+        b1.relocate(b1.getUpdateX(), b1.getLayoutY());
+        b2.relocate(b2.getUpdateX(), b2.getLayoutY());
 
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
 
-        System.out.println(block1+ " is at : " + b1.getLayoutX());
-        System.out.println(block2+ " is at : " + b2.getLayoutX());
+        System.out.println(block1 + " is at : " + b1.getLayoutX());
+        System.out.println(block2 + " is at : " + b2.getLayoutX());
         // first block , 3 transitions
         TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
@@ -98,7 +98,7 @@ public class TestVisual extends Application {
 
         TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
-        tx.setToX(- (oldSecondX - (oldX)));
+        tx.setToX(-(oldSecondX - (oldX)));
 
         TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         txt.setFromY(-200);
@@ -111,7 +111,7 @@ public class TestVisual extends Application {
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
-        gx.setToX(oldSecondX-oldX);//old distance-  width - gap
+        gx.setToX(oldSecondX - oldX);//old distance-  width - gap
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gyy.setFromY(-200); //this is how it works...dont ask
@@ -126,14 +126,14 @@ public class TestVisual extends Application {
                 //b2.relocate(oldX,b2.getLayoutY());
                 b1.setUpdateX(oldSecondX);
                 b2.setUpdateX(oldX);
-                System.out.println(block1+ " changed to : " + b1.getLayoutX());
-                System.out.println(block2+ " changed to : " + b2.getLayoutX());
-                swapFF(7,6);
+                System.out.println(block1 + " changed to : " + b1.getLayoutX());
+                System.out.println(block2 + " changed to : " + b2.getLayoutX());
+                swapFF(7, 6);
                 //}
             }
         });
 
-        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty,ttx,txx,ty,tx,txt,gy,gx,gyy);
+        SequentialTransition seq = new SequentialTransition(blocks.get(block2), tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.play();
 
     }
