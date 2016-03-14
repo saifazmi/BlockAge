@@ -118,18 +118,6 @@ public class GameInterface {
         pauseImageHovered = ImageStore.pauseImageHovered;
         unsortableImage = ImageStore.unsortableImage2;
         sortableImage = ImageStore.sortableImage2;
-        
-//        SortableBlockade sortableBlockadeInstance = new SortableBlockade(
-//                0,
-//                "Sortable Blockade",
-//                new GraphNode(0, 1),
-//                null,
-//                null,
-//                0
-//        );
-//        sortableBlockade = SortableBlockade.create(sortableBlockadeInstance);
-//        sortVisual = new SortVisual(sortableBlockade);
-
     }
 
     /**
@@ -200,6 +188,7 @@ public class GameInterface {
         sortVisualisationPane.setStyle("-fx-border-color: white");
         sortVisualisationPane.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         sortVisualisationPane.setLayoutY(initialPositionY + 3 * heightSpacing + 90);
+        sortVisualisationPane.setPadding(new Insets(12,12,12,12));
 
         // Set the properties for the play button
         b.setButtonProperties(playButton, "", rightPaneWidth / 2 - 50 - playImage.getWidth(), initialPositionY + 3.5 * heightSpacing + 290, ElementsHandler::handle, new ImageView(playImage));
@@ -239,7 +228,8 @@ public class GameInterface {
         //SCORE LABEL
         scoreLabel.setText("Score: " + CoreEngine.Instance().getScore());
         scoreLabel.setFont(bellotaFontBigger);
-        scoreLabel.setLayoutX(rightPaneWidth / 2 - 220 / 2);
+        scoreLabel.setPrefSize(300, 30);
+        scoreLabel.setLayoutX(rightPaneWidth / 2 - 250 / 2);
         scoreLabel.setLayoutY(initialPositionY + 600);
         scoreLabel.setTextFill(Color.web("#FFE130"));
 
