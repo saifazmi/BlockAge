@@ -20,6 +20,7 @@ import searches.AStar;
 import searches.BreadthFirstSearch;
 import searches.DepthFirstSearch;
 import sorts.visual.SortVisual;
+import stores.ImageStore;
 import tutorial.Tutorial;
 
 import java.util.List;
@@ -360,7 +361,6 @@ public class Unit extends Entity {
 
             return true;
         } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null) {
-            System.out.println("WTF: " + ((SortableBlockade) blockade).arrayToString(((SortableBlockade) blockade).getToSortArray()));
             SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
             ((SortableBlockade) blockade).setSortVisual(sortVisual);
             Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));

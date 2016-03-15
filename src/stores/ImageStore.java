@@ -41,8 +41,9 @@ public final class ImageStore {
     public static final Image pauseImage = new Image(SPRITE_RESOURCES + BUTTONS + "Pause_Idle.png");
     public static final Image pauseImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Pause_Hover.png");
     //blockade images
-    public static final Image unsortableImage1 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "Blockade_UnSortable.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
-    public static final Image sortableImage1 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "Blockade_Sortable.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+    public static final Image unsortableImage1 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "sandBlock.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+    public static final Image sortableImage1 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "sortableBlock.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+    public static final Image sortableBiggerImage = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "sortableBlockSorting.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
     //base images
     public static final Image base = new Image(SPRITE_RESOURCES + ENTITIES + "Base.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
     //menu images
@@ -52,8 +53,8 @@ public final class ImageStore {
     public static final Image optionsImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Options_Hover.png");
     public static final Image exitImage = new Image(SPRITE_RESOURCES + BUTTONS + "Quit_Idle.png");
     public static final Image exitImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Quit_Hover.png");
-    public static final Image unsortableImage2 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "Blockade_UnSortable.png", 55, 55, false, true);
-    public static final Image sortableImage2 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "Blockade_Sortable.png", 55, 55, false, true);
+    public static final Image unsortableImage2 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "sandBlock.png", 55, 55, false, true);
+    public static final Image sortableImage2 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "sortableBlock.png", 55, 55, false, true);
     //background images
     public static final Image backgroundMainMenu = new Image(SPRITE_RESOURCES + BACKGROUNDS + "MainMenu_Idle.png");
     public static final Image backgroundMainMenuGlow = new Image(SPRITE_RESOURCES + BACKGROUNDS + "MainMenu_Glow.png");
@@ -69,6 +70,7 @@ public final class ImageStore {
     public static final Image offImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Off_Hover.png", 395, 55, true, true);
     public static final Image showSearchImage = new Image(SPRITE_RESOURCES + LABELS + "ShowSearch.png", 395, 183, true, true);
     public static final Image soundImage = new Image(SPRITE_RESOURCES + LABELS + "Sound.png", 395, 55, true, true);
+    public static final Image tutorialImage = new Image(SPRITE_RESOURCES + LABELS + "Tutorial.png", 395, 55, true, true);
     public static final Image blockadeImage = new Image(SPRITE_RESOURCES + LABELS + "NoStartBlockade.png", 550, 0, true, true);
     public static final Image backImage = new Image(SPRITE_RESOURCES + BUTTONS + "Back_Idle.png", 395, 55, true, true);
     public static final Image backImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Back_Hover.png", 395, 55, true, true);

@@ -23,6 +23,7 @@ import menus.MenuHandler;
 import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
+import sorts.visual.SortVisual;
 import stores.ImageStore;
 import stores.LambdaStore;
 import tutorial.Tutorial;
@@ -42,6 +43,7 @@ public class ElementsHandler {
     private static CoreEngine engine = CoreEngine.Instance();
 
     public static Options options = new Options();
+    public static Tutorial tutorial = new Tutorial();
 
     /**
      * Handles the events for the buttons
@@ -113,12 +115,37 @@ public class ElementsHandler {
                 OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonSound);
             }
         }
+        
+        if (event.getSource() == OptionsMenu.yesButtonTutorial) {
+        	options.setTutorial(false);
+        	if(Tutorial.active == true) {
+        		Tutorial.reset();
+        	}
+            b.setButtonProperties(OptionsMenu.noButtonTutorial, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+                    ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
+            b.addHoverEffect(OptionsMenu.noButtonTutorial, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonTutorial)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonTutorial);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonTutorial);
+            }
+        }
+        
+        if (event.getSource() == OptionsMenu.noButtonTutorial) {
+        	options.setTutorial(true);
+            b.setButtonProperties(OptionsMenu.yesButtonTutorial, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+                    ElementsHandler::handle, new ImageView(OptionsMenu.onImage));
+            b.addHoverEffect(OptionsMenu.yesButtonTutorial, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonTutorial)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonTutorial);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonTutorial);
+            }
+        }
 
         if (event.getSource() == OptionsMenu.yesButtonB) {
             options.setInitialBlockades(false);
-            b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+            b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 3 * OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
-            b.addHoverEffect(OptionsMenu.noButtonB, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            b.addHoverEffect(OptionsMenu.noButtonB, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 3 * OptionsMenu.spaceBetweenImgH);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonB)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonB);
                 OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonB);
@@ -127,9 +154,9 @@ public class ElementsHandler {
 
         if (event.getSource() == OptionsMenu.noButtonB) {
             options.setInitialBlockades(true);
-            b.setButtonProperties(OptionsMenu.yesButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+            b.setButtonProperties(OptionsMenu.yesButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 3 * OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle, new ImageView(OptionsMenu.onImage));
-            b.addHoverEffect(OptionsMenu.yesButtonB, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            b.addHoverEffect(OptionsMenu.yesButtonB, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 3 * OptionsMenu.spaceBetweenImgH);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonB)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonB);
                 OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonB);
@@ -197,10 +224,14 @@ public class ElementsHandler {
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
             } else if (k == KeyCode.B) {
                 LambdaStore.Instance().setBlockadeClickEvent(event.isShiftDown());
-            } else if (k == KeyCode.SPACE) {
+            } else if (k == KeyCode.SPACE && Tutorial.active == false) {
                 if (engine.isPaused()) {
+                	if(SortVisual.seq != null)
+                		SortVisual.seq.play();
                     engine.setPaused(false);
                 } else {
+                	if(SortVisual.seq != null)
+                		SortVisual.seq.pause();
                     engine.setPaused(true);
                 }
             } else if (k == KeyCode.R && options.getShowPath()) {
@@ -211,6 +242,7 @@ public class ElementsHandler {
                 for (int i = 0; i < units.size(); i++) {
                     SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
                     pressedToNotPressed(obtainedSprite);
+                    units.get(i).getSprite().getParent().requestFocus();
                 }
                 GameInterface.unitDescriptionText.clear();
                 Tutorial.routeShown = false;
@@ -301,7 +333,7 @@ public class ElementsHandler {
             }
 
             LOG.log(Level.INFO, "GOAL found!!!");
-            UnitSpawner spawner = new UnitSpawner(1, goal);
+            UnitSpawner spawner = new UnitSpawner(2, goal);
             CoreEngine.Instance().setSpawner(spawner);
 
             engine.setPaused(!Tutorial.active);

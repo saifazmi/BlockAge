@@ -4,8 +4,10 @@ import core.CoreEngine;
 import entity.SortableBlockade;
 import entity.Unit;
 import entity.Unit.Sort;
+import gui.Renderer;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
@@ -14,6 +16,7 @@ import javafx.util.Duration;
 import sorts.logic.BubbleSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
+import stores.ImageStore;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 public class SortVisual {
     public int HEIGHT = 260;
     public int WIDTH = 300;
+    public static SequentialTransition seq = null;
     private static ArrayList<SortVisualBar> blocks;
     private ArrayList<SortableComponent> sorts;
     private ArrayList<Tuple> tuples;
@@ -47,8 +51,17 @@ public class SortVisual {
         this.sort = unit.getSort();//block.getSortID();
         this.block = block;
         this.unit = unit;
+        highlightBlock();
         start();
-
+    }
+    
+    /** 
+     * Highlights the current block the unit is sorting
+     */
+    public void highlightBlock() {
+    	Platform.runLater(() ->Renderer.Instance().remove(block.getSprite()));
+        Platform.runLater(() ->ImageStore.setSpriteProperties(block, ImageStore.sortableBiggerImage));
+        Platform.runLater(() ->Renderer.Instance().drawInitialEntity(block));
     }
 
     public void start() {
@@ -205,7 +218,7 @@ public class SortVisual {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
 
-        SequentialTransition seq = new SequentialTransition(tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
+        seq = new SequentialTransition(tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -220,8 +233,8 @@ public class SortVisual {
                     swapTwo(next.getFirst(), next.getSecond(), swapIndex + 1);
                 } else {
                     remove = true;
-                    System.out.println("WTF");
                     CoreEngine.Instance().removeEntity(block);
+                    
                 }
             }
         });
