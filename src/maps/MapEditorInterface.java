@@ -59,12 +59,30 @@ public class MapEditorInterface {
     private int initialPositionY = 50;
     private int heightSpacing = 30;
 
+    private static MapEditorInterface instance = null;
+
+    /**
+     * Implements Singleton for this class (Only one can exist)
+     *
+     * @return the only game runtime to be created
+     */
+    public static MapEditorInterface Instance() {
+
+        return instance;
+    }
+
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor) {
+        instance = this;
         declareElements();
-        this.mapEditor = mapEditor;
+        MapEditorInterface.mapEditor = mapEditor;
         loadFont();
         loadFont2();
-        parser = new EditorParser(this.mapEditor);
+        parser = new EditorParser(MapEditorInterface.mapEditor);
         scene = mapEditorScene;
         rightPane();
         setUpPopUp();
@@ -190,7 +208,10 @@ public class MapEditorInterface {
         }
         if (event.getSource() == MapEditorInterface.backButton) {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            mapEditor.clearNodes();
             Renderer.delete();
+            MapEditorInterface.delete();
+            MapEditor.delete();
         }
         if (event.getSource() == MapEditorInterface.no) {
             parser.setOverwrite(false);

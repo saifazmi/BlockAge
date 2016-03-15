@@ -21,7 +21,7 @@ public class MenuHandler {
     private PauseMenu pauseMenu = new PauseMenu();
     private static EndGameMenu endGameMenu = new EndGameMenu();
 
-    private MapEditor mapEditor = new MapEditor();
+    private MapEditor mapEditor = MapEditor.Instance();
 
     private static Scene[] sceneList = new Scene[20];
 

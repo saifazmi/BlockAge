@@ -43,7 +43,7 @@ public class ElementsHandler {
 
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
     private static ButtonProperties b = new ButtonProperties();
-    private static CoreEngine engine = CoreEngine.Instance();
+    //private static CoreEngine engine = CoreEngine.Instance();
 
     public static Options options = new Options();
 
@@ -68,7 +68,7 @@ public class ElementsHandler {
             System.exit(0);
         }
         // End of elements from Main Menu scene
-
+        CoreEngine engine = CoreEngine.Instance();
         // Elements from the Options Menu scene
         if (event.getSource() == OptionsMenu.yesButtonSearch) {
             options.setPath(false);
@@ -280,16 +280,12 @@ public class ElementsHandler {
         // Create grid for the game we'll play
         System.out.println("Start game");
         new GameRunTime();
-        engine = CoreEngine.Instance();
+        CoreEngine engine = CoreEngine.Instance();
         engine.setPaused(true);
         Renderer.Instance().calculateSpacing();
-        System.out.println("Spacing calculated");
         BaseSpawner.Instance();
-        System.out.println("Game started");
         MenuHandler.setMainGameScene();
-        System.out.println("Scene set");
-        new GameInterface();
-        System.out.println("Interface made");
+        GameInterface.Instance();
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
         if (options.isTutorial()) {
@@ -325,9 +321,12 @@ public class ElementsHandler {
         Renderer.delete();
         CoreEngine.delete();
         GameRunTime.delete();
+        UnitSpawner.delete();
         BaseSpawner.delete();
         SoundManager.delete();
         MapChooserInterface.delete();
+        GameInterface.delete();
+        LambdaStore.delete();
     }
 }
 

@@ -35,6 +35,11 @@ public final class LambdaStore {
         return instance;
     }
 
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
 
         if (CoreEngine.Instance().unbreakableBlockadesLeft()) {
@@ -44,9 +49,11 @@ public final class LambdaStore {
                     new GraphNode(0, 0),
                     null
             );
+            System.out.println("Blockade instance made");
             ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
             Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
             if (blockade != null) {
+                System.out.println("Blockade rendered");
                 renderer.drawInitialEntity(blockade);
                 CoreEngine.Instance().getEntities().add(blockade);
                 CoreEngine.Instance().unbreakableBlockadesPlaced();
@@ -86,20 +93,26 @@ public final class LambdaStore {
     public void setBlockadeClickEvent(boolean sortable) {
         if (scene.getOnMouseClicked() == null) {
             if (!sortable) {
+                System.out.println("Unsortable on");
                 scene.setOnMouseClicked(getPlaceUnbreakableBlockade());
             } else {
+                System.out.println("Sortable on");
                 scene.setOnMouseClicked(getPlaceBreakableBlockade());
             }
         } else if (scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade())) {
             if (!sortable) {
+                System.out.println("Unsortable off");
                 scene.setOnMouseClicked(null);
             } else {
+                System.out.println("Sortable on");
                 scene.setOnMouseClicked(getPlaceBreakableBlockade());
             }
         } else if (scene.getOnMouseClicked().equals(getPlaceBreakableBlockade())) {
             if (!sortable) {
+                System.out.println("Unsortable on");
                 scene.setOnMouseClicked(getPlaceUnbreakableBlockade());
             } else {
+                System.out.println("Sortable off");
                 scene.setOnMouseClicked(null);
             }
         }

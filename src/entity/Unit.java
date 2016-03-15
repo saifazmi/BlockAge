@@ -46,7 +46,6 @@ public class Unit extends Entity {
         this.sorting = sorting;
         if(sorting == null) {
             this.completedMove = true;
-            //this.nextNode = null;
         }
     }
 
@@ -220,10 +219,10 @@ public class Unit extends Entity {
      *
      * @return whether the move was successful
      */
-    public Boolean moveUp() {
+    public boolean moveUp() {
 
         // Has the unit moved
-        Boolean moved;
+        boolean moved;
         GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
@@ -256,10 +255,10 @@ public class Unit extends Entity {
      *
      * @return whether the move was successful
      */
-    public Boolean moveDown() {
+    public boolean moveDown() {
 
         // Has the unit moved
-        Boolean moved;
+        boolean moved;
         GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
@@ -292,10 +291,10 @@ public class Unit extends Entity {
      *
      * @return whether the move was successful
      */
-    public Boolean moveRight() {
+    public boolean moveRight() {
 
         // Has the unit moved
-        Boolean moved;
+        boolean moved;
         GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
@@ -328,10 +327,10 @@ public class Unit extends Entity {
      *
      * @return whether the move was successful
      */
-    public Boolean moveLeft() {
+    public boolean moveLeft() {
 
         // Has the unit moved
-        Boolean moved;
+        boolean moved;
         GraphNode newPosition;
 
         // Check if the unit is still in the graph bounds.
@@ -374,8 +373,8 @@ public class Unit extends Entity {
             return true;
 
         } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null && sorting == null) {
-            System.out.println("WTF: " + ((SortableBlockade) blockade).arrayToString(((SortableBlockade) blockade).getToSortArray()));
-            sorting = (SortableBlockade)blockade;
+
+            sorting = (SortableBlockade) blockade;
             Thread t = new Thread(() ->
             {
                 SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
@@ -383,21 +382,21 @@ public class Unit extends Entity {
                 Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
             });
             t.start();
+            return false;
+
+        } else {
 
             return false;
         }
-
-        return false;
     }
-
     /**
      * Updates the unit's position per frame, if it has completed its previous move, called by CoreEngine.
      * Takes the first node from what remains of the route this unit is following and calculate the difference between
      * that node and its current position, after that moves the unit with MoveUnit. This method also updates the unit's logical position,
      * this is done after the unit moves graphically
      */
-    @Override
-    public void update() {
+    //@Override
+    public void update2() {
 
         if (completedMove) {
             LOG.log(Level.INFO, "completed move");
@@ -418,7 +417,7 @@ public class Unit extends Entity {
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
 
-                Boolean result = logicalMove(xChange, yChange);
+                boolean result = logicalMove(xChange, yChange);
                 if (result) {
 
                     double nextPixelX = x * renderer.getXSpacing();
@@ -462,6 +461,56 @@ public class Unit extends Entity {
             }
         }
     }
+    @Override
+    public void update(){
+        if (completedMove) {
+
+            if (route.size() > 0) {
+
+                this.completedMove = false;
+                GraphNode nextNode = route.remove(0);
+
+                int x = nextNode.getX();
+                int y = nextNode.getY();
+                int xChange = x - this.position.getX();
+                int yChange = y - this.position.getY();
+
+                boolean result = logicalMove(xChange, yChange);
+
+                if(result) {
+
+                    double nextPixelX = x * renderer.getXSpacing();
+                    double nextPixelY = y * renderer.getYSpacing();
+
+                    TranslateTransition transition = new TranslateTransition(SPEED, sprite);
+                    transition.setToX(nextPixelX);
+                    transition.setToY(nextPixelY);
+                    transition.setOnFinished(e -> this.completedMove = true);
+                    transition.play();
+                } else {
+                    if(this.sorting == null) {
+                        decideRoute();
+                        this.completedMove = true;
+                    } else {
+                        route.add(0, nextNode);
+                    }
+                }
+            } else if (this.getPosition() == goal) {
+
+                Platform.runLater(() -> {
+
+                    CoreEngine.Instance().setPaused(true);
+                    MenuHandler.switchScene(MenuHandler.END_GAME_MENU);
+                });
+
+            } else {
+
+                CoreEngine.Instance().setPaused(true);
+                CoreEngine.Instance().getScore().halveScore();
+                Platform.runLater(() -> MenuHandler.switchScene(MenuHandler.END_GAME_MENU));
+            }
+        }
+    }
 
     /**
      * Does a logical move of the unit in the specified direction, i.e. move it in the graph and change its graph position
@@ -470,9 +519,9 @@ public class Unit extends Entity {
      * @param yChange amount of nodes to move in the y axis
      * @return if the logical move was successful
      */
-    private Boolean logicalMove(int xChange, int yChange) {
+    private boolean logicalMove(int xChange, int yChange) {
 
-        Boolean success;
+        boolean success;
         double rotate;
 
         if (xChange == 0) {

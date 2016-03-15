@@ -55,6 +55,11 @@ public class UnitSpawner {
         return instance;
     }
 
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     /**
      * Creates enemy unit for a game.
      * Instantiates here the list of names and description for units.

@@ -21,6 +21,7 @@ import menus.Menu;
 import stores.ImageStore;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by hung on 04/03/16.
@@ -36,8 +37,28 @@ public class MapEditor implements Menu {
     private MapEditorInterface mapEditorInterface;
     private MapChooserInterface mapChooserInterface;
 
+    private static MapEditor instance = null;
+
+    /**
+     * Implements Singleton for this class (Only one can exist)
+     *
+     * @return the only game runtime to be created
+     */
+    public static MapEditor Instance() {
+
+        if (instance == null) {
+            instance = new MapEditor();
+        }
+        return instance;
+    }
+
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     // General Map Editor manager for scene, renderer and events
-    public MapEditor() {
+    private MapEditor() {
         createGraph();
 
         //@todo delete after map quits
@@ -106,10 +127,13 @@ public class MapEditor implements Menu {
     }
 
     public void clearNodes() {
+        List<GraphNode> graph = mapEditorGraph.getNodes();
         for (int i = 0; i < mapEditorGraph.getNodes().size(); i++) {
+            Blockade blockade = graph.get(i).getBlockade();
             mapEditorGraph.getNodes().get(i).setBlockade(null);
+            if(blockade != null) {
+                Renderer.Instance().remove(blockade.getSprite());
+            }
         }
-
-        //mapEditorRenderer.drawInitialEntity()
     }
 }

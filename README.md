@@ -15,8 +15,8 @@ Key Bindings
 Knows Bugs    
 ----------  
 #### Blockade  
-- Cannot place blocked's after starting a new game without quiting  
-the game.  
+- ~~Cannot place blockades after starting a new game without quiting  
+the game.~~  
 
 #### Custom Game  
 - When redirected to map creator it pop-ups a window.  
@@ -40,7 +40,7 @@ the game.
 - Cannot select unit after generating route with SHIFT+R.
 
 #### SortVisualisation
-- Doesn't reset the visualiser for new game.
+- ~~Doesn't reset the visualiser for new game.~~
 
 #### Renderer  
 - ~~Route lines don't draw from the route start, but from the 2nd node~~

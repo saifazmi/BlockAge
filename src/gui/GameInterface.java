@@ -57,7 +57,21 @@ public class GameInterface {
     public SortVisual sortVisual = null;
     public SortableBlockade sortableBlockade;
 
-    public GameInterface() {
+    private static GameInterface instance = null;
+
+    public static GameInterface Instance() {
+        if(instance == null) {
+            instance = new GameInterface();
+        }
+        return instance;
+    }
+
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
+    private GameInterface() {
         loadFont();
         declareElements();
         rightPane();
