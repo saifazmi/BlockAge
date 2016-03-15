@@ -27,7 +27,8 @@ public class UnitSpawner {
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
     private int unitPoolCount;
-    private int totalSpawnables = 2;
+    // totalSpawnables must be >= to spawnlimit
+    private int totalSpawnables = 5;
     private int spawnCount = 0;
     private GraphNode goal;
     private int spawnlimit;
@@ -35,7 +36,7 @@ public class UnitSpawner {
 
     private String[] names;
     private String[] descriptions;
-    private int cooldown = 60;
+    private int cooldown = 0;
 
     // Dependencies.
     private CoreEngine engine = CoreEngine.Instance();
@@ -222,9 +223,13 @@ public class UnitSpawner {
      */
     public void update() {
 
-        if (spawnCount < spawnlimit) {
+        if (cooldown > 0)
+        {
+            cooldown--;
+        }
+        else if (spawnCount < spawnlimit) {
 
-            this.cooldown = 60;
+            this.cooldown = 300;
             spawnUnit();
         }
     }
