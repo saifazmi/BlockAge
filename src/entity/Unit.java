@@ -629,7 +629,7 @@ public class Unit extends Entity {
                         nullObject(trans2.getNode());
                     }
                 }
-
+                transition = null;
                 setVisualTransition(null);
                 Tutorial.routeShown = false;
                 Tutorial.visualShown = false;
@@ -646,11 +646,13 @@ public class Unit extends Entity {
 
             Line line = (Line) object;
             line.setOpacity(0.0);
+            line = null;
 
         } else if (object instanceof Rectangle) {
 
             Rectangle rect = (Rectangle) object;
             rect.setOpacity(0.0);
+            rect = null;
         }
     }
 }

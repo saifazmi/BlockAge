@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 import stores.ImageStore;
+import stores.LambdaStore;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -108,7 +109,7 @@ public class UnitSpawner {
 
         // doing random for now, could return sequence of numbers representing units wanted
         int index = rndSearchGen.nextInt(3);
-        Image image = null;
+        Image image;
 
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
             image = ImageStore.imageDemon;
@@ -134,54 +135,7 @@ public class UnitSpawner {
 
         // focus sprite and displays text when clicked on it
         if (ElementsHandler.options.getShowPath()) {
-
-            sprite.setOnMouseClicked(e -> {
-
-                sprite.requestFocus();
-                GameRunTime.Instance().setLastClicked(sprite);
-                ArrayList<Entity> units = engine.getEntities();
-
-                for (Entity unit1 : units) {
-
-                    if (sprite.getEntity() == unit1) {
-
-                        // sets the image pressed for each unit accordingly to the search
-                        GameInterface.namePaneLabel.setText("Name: " + sprite.getEntity().getName());
-                        GameInterface.searchPaneLabel.setText("Search: " + Unit.Search.values()[index]);
-                        GameInterface.sortPaneLabel.setText("Sort: " + Unit.Sort.values()[index]);
-
-                        if (Unit.Search.values()[index] == Unit.Search.BFS) {
-
-                            sprite.setImage(ImageStore.imagePressedDemon);
-                            ImageView demon = new ImageView(ImageStore.imageDemon);
-                            demon.setFitHeight(80);
-                            demon.setFitWidth(80);
-                            GameInterface.unitImage.setGraphic(demon);
-
-                        } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
-
-                            sprite.setImage(ImageStore.imagePressedDk);
-                            ImageView dk = new ImageView(ImageStore.imageDk);
-                            dk.setFitHeight(80);
-                            dk.setFitWidth(80);
-                            GameInterface.unitImage.setGraphic(dk);
-
-                        } else {
-
-                            sprite.setImage(ImageStore.imagePressedBanshee);
-                            ImageView banshee = new ImageView(ImageStore.imageBanshee);
-                            banshee.setFitHeight(80);
-                            banshee.setFitWidth(80);
-                            GameInterface.unitImage.setGraphic(banshee);
-                        }
-
-                    } else {
-
-                        SpriteImage obtainedSprite = unit1.getSprite();
-                        ElementsHandler.pressedToNotPressed(obtainedSprite);
-                    }
-                }
-            });
+            sprite.setOnMouseClicked(LambdaStore.Instance().getUnitClickEvent());
         }
 
         // adds the units into an array list
@@ -239,8 +193,7 @@ public class UnitSpawner {
      *
      * @param spawnlimit number of unit allowed to spawn
      */
-    public void setSpawnlimit(int spawnlimit) {
+    public void setSpawnlimit(int spawnlimit) { this.spawnlimit = spawnlimit; }
 
-        this.spawnlimit = spawnlimit;
-    }
+    public Random getRndSearchGen() { return rndSearchGen; }
 }

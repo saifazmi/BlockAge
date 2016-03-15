@@ -12,10 +12,12 @@ import gui.CoreGUI;
 import gui.GameInterface;
 import gui.Renderer;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import maps.MapChooserInterface;
 import maps.MapEditor;
 import maps.MapEditorInterface;
@@ -213,10 +215,16 @@ public class ElementsHandler {
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), false);
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {
+                GameInterface.namePaneLabel.setText("");
+                GameInterface.searchPaneLabel.setText("");
+                GameInterface.sortPaneLabel.setText("");
+                GameInterface.unitImage.setGraphic(null);
                 ArrayList<Entity> units = engine.getEntities();
                 for (int i = 0; i < units.size(); i++) {
-                    SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
-                    pressedToNotPressed(obtainedSprite);
+                    if(units.get(i) instanceof Unit) {
+                        SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
+                        pressedToNotPressed(obtainedSprite);
+                    }
                 }
                 GameInterface.unitDescriptionText.clear();
                 Tutorial.routeShown = false;
@@ -232,12 +240,15 @@ public class ElementsHandler {
         if (image.equals(ImageStore.imagePressedDemon)) {
             sprite.setImage(ImageStore.imageDemon);
             ((Unit) sprite.getEntity()).showTransition(false, false);
+            sprite.setOnMouseClicked(LambdaStore.Instance().getUnitClickEvent());
         } else if (image.equals(ImageStore.imagePressedDk)) {
             sprite.setImage(ImageStore.imageDk);
             ((Unit) sprite.getEntity()).showTransition(false, false);
+            sprite.setOnMouseClicked(LambdaStore.Instance().getUnitClickEvent());
         } else if (image.equals(ImageStore.imagePressedBanshee)) {
             sprite.setImage(ImageStore.imageBanshee);
             ((Unit) sprite.getEntity()).showTransition(false, false);
+            sprite.setOnMouseClicked(LambdaStore.Instance().getUnitClickEvent());
         }
     }
 

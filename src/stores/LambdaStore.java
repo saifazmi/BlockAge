@@ -2,14 +2,23 @@ package stores;
 
 import core.CoreEngine;
 import core.GameRunTime;
+import core.UnitSpawner;
 import entity.Blockade;
+import entity.Entity;
 import entity.SortableBlockade;
+import entity.Unit;
 import graph.GraphNode;
+import gui.GameInterface;
 import gui.Renderer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import sceneElements.ElementsHandler;
+import sceneElements.SpriteImage;
 
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -82,13 +91,64 @@ public final class LambdaStore {
         }
     };
 
-    public EventHandler<MouseEvent> getPlaceUnbreakableBlockade() {
-        return sceneClickPlaceUnbreakableBlockade;
-    }
+    private final EventHandler<MouseEvent> unitClickEvent = e -> {
+        System.out.println("Here guys");
 
-    public EventHandler<MouseEvent> getPlaceBreakableBlockade() {
-        return sceneClickPlaceBreakableBlockade;
-    }
+        SpriteImage sprite = (SpriteImage)e.getSource();
+        Unit unit = (Unit)sprite.getEntity();
+        sprite.requestFocus();
+
+        Unit.Search search = unit.getSearch();
+        Unit.Sort sort = unit.getSort();
+
+        GameRunTime.Instance().setLastClicked(sprite);
+        ArrayList<Entity> units = CoreEngine.Instance().getEntities();
+
+        for (Entity unit1 : units) {
+
+            if (sprite.getEntity() == unit1) {
+
+                // sets the image pressed for each unit accordingly to the search
+                GameInterface.namePaneLabel.setText("Name: " + sprite.getEntity().getName());
+                GameInterface.searchPaneLabel.setText("Search: " + search.name());
+                GameInterface.sortPaneLabel.setText("Sort: " + sort.name());
+
+                if (search == Unit.Search.BFS) {
+
+                    sprite.setImage(ImageStore.imagePressedDemon);
+                    ImageView demon = new ImageView(ImageStore.imageDemon);
+                    demon.setFitHeight(80);
+                    demon.setFitWidth(80);
+                    GameInterface.unitImage.setGraphic(demon);
+
+                } else if (search == Unit.Search.A_STAR) {
+
+                    sprite.setImage(ImageStore.imagePressedDk);
+                    ImageView dk = new ImageView(ImageStore.imageDk);
+                    dk.setFitHeight(80);
+                    dk.setFitWidth(80);
+                    GameInterface.unitImage.setGraphic(dk);
+
+                } else {
+
+                    sprite.setImage(ImageStore.imagePressedBanshee);
+                    ImageView banshee = new ImageView(ImageStore.imageBanshee);
+                    banshee.setFitHeight(80);
+                    banshee.setFitWidth(80);
+                    GameInterface.unitImage.setGraphic(banshee);
+                }
+
+            } else {
+
+                SpriteImage obtainedSprite = unit1.getSprite();
+                ElementsHandler.pressedToNotPressed(obtainedSprite);
+            }
+        }
+    };
+
+    public EventHandler<MouseEvent> getPlaceUnbreakableBlockade() { return sceneClickPlaceUnbreakableBlockade; }
+
+    public EventHandler<MouseEvent> getPlaceBreakableBlockade() { return sceneClickPlaceBreakableBlockade; }
 
     public void setBlockadeClickEvent(boolean sortable) {
         if (scene.getOnMouseClicked() == null) {
@@ -117,4 +177,6 @@ public final class LambdaStore {
             }
         }
     }
+
+    public EventHandler<MouseEvent> getUnitClickEvent() { return unitClickEvent; }
 }

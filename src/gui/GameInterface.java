@@ -144,11 +144,6 @@ public class GameInterface {
         unitDescriptionLabel.setLayoutY(initialPositionY);
         unitDescriptionLabel.setTextFill(Color.web("#FFE130"));
 
-        unitDescriptionText.setPrefSize(300, 90);
-        unitDescriptionText.setLayoutX(rightPaneWidth / 2 - 300 / 2);
-        unitDescriptionText.setLayoutY(initialPositionY + heightSpacing);
-        unitDescriptionText.setEditable(false);
-
         // UNIT TEXT PANE
         unitTextPane.setPrefSize(300, 90);
         unitTextPane.setStyle("-fx-border-color: white");
