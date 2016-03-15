@@ -121,6 +121,7 @@ public class ElementsHandler {
         	if(Tutorial.active == true) {
         		Tutorial.reset();
         	}
+        	engine.setPaused(true);
             b.setButtonProperties(OptionsMenu.noButtonTutorial, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
             b.addHoverEffect(OptionsMenu.noButtonTutorial, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
@@ -235,16 +236,16 @@ public class ElementsHandler {
                     engine.setPaused(true);
                 }
             } else if (k == KeyCode.R && options.getShowPath()) {
-                ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), false);
+
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {
                 ArrayList<Entity> units = engine.getEntities();
                 for (int i = 0; i < units.size(); i++) {
                     SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
                     pressedToNotPressed(obtainedSprite);
-                    units.get(i).getSprite().getParent().requestFocus();
                 }
-                GameInterface.unitDescriptionText.clear();
+                for(int i=0; i<4; i++)
+                	GameInterface.unitTextPane.getChildren().get(i).setVisible(false);
                 Tutorial.routeShown = false;
                 Tutorial.visualShown = false;
             } else if (k == KeyCode.ENTER && Tutorial.active) {
@@ -318,7 +319,7 @@ public class ElementsHandler {
         System.out.println("Interface made");
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
-        if (options.isTutorial()) {
+        if (!options.isTutorial()) { // change to true
             Tutorial.setup();
         }
         Thread unitSpawnerThread = new Thread(() -> {
@@ -333,7 +334,7 @@ public class ElementsHandler {
             }
 
             LOG.log(Level.INFO, "GOAL found!!!");
-            UnitSpawner spawner = new UnitSpawner(2, goal);
+            UnitSpawner spawner = new UnitSpawner(1, goal);
             CoreEngine.Instance().setSpawner(spawner);
 
             engine.setPaused(!Tutorial.active);

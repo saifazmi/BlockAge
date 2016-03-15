@@ -1,9 +1,12 @@
 package sorts.visual;
 
+import java.util.ArrayList;
+
 import core.CoreEngine;
 import entity.SortableBlockade;
 import entity.Unit;
 import entity.Unit.Sort;
+import gui.GameInterface;
 import gui.Renderer;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
@@ -18,15 +21,13 @@ import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
 import stores.ImageStore;
 
-import java.util.ArrayList;
-
 /**
  * @author : First created by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  */
 public class SortVisual {
     public int HEIGHT = 260;
-    public int WIDTH = 300;
+    public int WIDTH = 280;
     public static SequentialTransition seq = null;
     private static ArrayList<SortVisualBar> blocks;
     private ArrayList<SortableComponent> sorts;
@@ -64,6 +65,7 @@ public class SortVisual {
     }
 
     public void start() {
+
         tuples = new ArrayList<Tuple>();
 
         // DFS unit
@@ -74,14 +76,16 @@ public class SortVisual {
 
         // Astar unit
         if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
-
         sortPane = new Pane();
-        sortPane.setStyle("-fx-background-color: gray;");
+
+        sortPane.setStyle("-fx-background-color: #838b83;");
+        GameInterface.sortVisualisationPane.setStyle("-fx-background-color: #838b83;");
         sortPane.setPrefSize(WIDTH, HEIGHT);
         //make blocks
         blocks = new ArrayList<SortVisualBar>();
         for (double x = 0; x < 11; x++) {              //width  //height
-            SortVisualBar block = new SortVisualBar(15.0, (x * 15.0), Color.INDIANRED, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
+            SortVisualBar block = new SortVisualBar(15.0, (x * 15.0), Color.web("#7092BE"), (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
+            if(x==0) block.setStroke(null);
             int loc = 40;
             if (x != 0) {
                 int pos = find(x - 1);

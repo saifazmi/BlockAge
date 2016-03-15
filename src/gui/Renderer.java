@@ -1,5 +1,6 @@
 package gui;
 
+import core.CoreEngine;
 import core.GameRunTime;
 import entity.Entity;
 import entity.Unit;
@@ -240,26 +241,34 @@ public class Renderer extends Group {
         fadeTransition.setToValue(opac2);
         return fadeTransition;
     }
-
     public SequentialTransition produceAlgoRouteVisual(Unit unit) {
         SequentialTransition trans = new SequentialTransition();
+
         List<Line> lines = produceAlgoRoute(unit);
+
         for (Line line : lines) {
             Rectangle rect = new Rectangle(xSpacing, ySpacing);
             rect.setFill(Color.GREEN);
             rect.setOpacity(0.0);
             rect.setX(line.getStartX() - xSpacing / 2);
             rect.setY(line.getStartY() - ySpacing / 2);
+
             if (!this.getChildren().contains(rect)) {
-                this.getChildren().add(rect);
+                this.remove(unit.getSprite());
+                this.getChildren().addAll(unit.getSprite(), rect); // This breaks everything
+                unit.getSprite().requestFocus();
             }
+
             this.getChildren().add(line);
             line.setOpacity(0.0);
+
             FadeTransition rectIn = buildFadeAnimation(25.0, 0.0, 1.0, rect);
             FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
             FadeTransition rectOut = buildFadeAnimation(25.0, 1.0, 0.0, rect);
+
             trans.getChildren().addAll(rectIn, lineTransition, rectOut);
         }
+
         Rectangle rect = new Rectangle(xSpacing, ySpacing);
         rect.setOpacity(0.0);
         rect.setFill(Color.ORANGE);
@@ -277,7 +286,7 @@ public class Renderer extends Group {
         }
         Transition trans2 = produceRouteVisual(routeLines);
         trans.getChildren().add(trans2);
-        return trans;
+       return trans;
     }
 
     private List<Line> produceAlgoRoute(Unit unit) {

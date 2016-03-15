@@ -11,6 +11,7 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -351,7 +352,7 @@ public class Unit extends Entity {
      * @param position the position to be checked
      * @return whether the position has a block
      */
-    private boolean blockCheck(GraphNode position) {
+    public boolean blockCheck(GraphNode position) {
         Blockade blockade = position.getBlockade();
         if (blockade == null) {
 
@@ -363,7 +364,9 @@ public class Unit extends Entity {
         } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null) {
             SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
             ((SortableBlockade) blockade).setSortVisual(sortVisual);
-            Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
+            sortVisual.getPane().setLayoutX(424 / 2 - 300 / 2 + 20);
+            sortVisual.getPane().setLayoutY(50 + 3 * 30 + 90);
+            Platform.runLater(() -> GameInterface.rightMenuBox.getChildren().add(sortVisual.getPane()));
         }
 
         return false;

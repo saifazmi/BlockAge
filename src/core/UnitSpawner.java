@@ -131,7 +131,8 @@ public class UnitSpawner {
         if (ElementsHandler.options.getShowPath()) {
 
             sprite.setOnMouseClicked(e -> {
-
+            	 for(int i=0; i<4; i++)
+                 	GameInterface.unitTextPane.getChildren().get(i).setVisible(true);
                 sprite.requestFocus();
                 GameRunTime.Instance().setLastClicked(sprite);
                 ArrayList<Entity> units = engine.getEntities();
