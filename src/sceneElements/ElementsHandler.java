@@ -169,6 +169,8 @@ public class ElementsHandler {
             MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             quitGame();
+            //@TODO added while new game is broken
+            System.exit(0);
         }
 
         // Elements in the End Game Menu Scene
@@ -176,6 +178,8 @@ public class ElementsHandler {
             engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             quitGame();
+            //@TODO added while new game is broken
+            System.exit(0);
         }
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
@@ -185,6 +189,7 @@ public class ElementsHandler {
             engine.setPaused(true);
         }
         if (event.getSource() == MainMenu.mapEditorButton) {
+            MapEditor.Instance();
             MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
         }
         if (event.getSource() == MainMenu.customGameButton) {
@@ -193,6 +198,7 @@ public class ElementsHandler {
         // Adding events for the map editor interface
         if (event.getSource() == MapEditorInterface.backButton) {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            quitGame();
         }
     }
 
@@ -329,14 +335,20 @@ public class ElementsHandler {
     }
 
     private static void quitGame() {
-        Renderer.delete();
+
         CoreEngine.delete();
         GameRunTime.delete();
         UnitSpawner.delete();
         BaseSpawner.delete();
-        SoundManager.delete();
+
         MapChooserInterface.delete();
+        MapEditorInterface.delete();
+        MapEditor.delete();
+
         GameInterface.delete();
+        Renderer.delete();
+        SoundManager.delete();
+
         LambdaStore.delete();
     }
 }

@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class MapEditor implements Menu {
 
-    private Pane mapEditorPane = null;
+    private BorderPane mapEditorPane = null;
     private Scene mapEditorScene = null;
 
     private Renderer mapEditorRenderer;
@@ -60,15 +60,15 @@ public class MapEditor implements Menu {
     // General Map Editor manager for scene, renderer and events
     private MapEditor() {
         createGraph();
+        mapEditorPane = new BorderPane();
 
         //@todo delete after map quits
         Renderer.delete();
         mapEditorRenderer = Renderer.Instance();
+        mapEditorPane.setCenter(mapEditorRenderer);
         mapEditorRenderer.calculateSpacing();
         mapEditorRenderer.initialDraw();
 
-        //initialiseScene();
-        mapEditorPane = new BorderPane();
         final String SEPARATOR = File.separator;
         final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
