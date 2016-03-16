@@ -350,7 +350,7 @@ public class Unit extends Entity {
      * @param position the position to be checked
      * @return whether the position has a block
      */
-    private boolean blockCheck(GraphNode position) {
+    public boolean blockCheck(GraphNode position) {
         Blockade blockade = position.getBlockade();
         if (blockade == null) {
 
@@ -483,7 +483,7 @@ public class Unit extends Entity {
     /**
      * Decides a route based on the search algorithm of the unit
      */
-    private void decideRoute() {
+    public void decideRoute() {
 
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
 
