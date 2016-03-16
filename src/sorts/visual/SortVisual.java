@@ -40,7 +40,7 @@ import java.util.ArrayList;
 public class SortVisual {
     public int HEIGHT = 260;
     public int WIDTH = 280;
-    public static SequentialTransition seq = null;
+    public static ArrayList<SequentialTransition> seq = new ArrayList<>();
     private ArrayList<SortVisualBar> blocks; //sorts all the visual block objects
     private ArrayList<SortableComponent> sorts; //all RELEVANT sort states, swapped and the state before a swap
     private ArrayList<Tuple> tuples; //used to store WHAT is swapped in a state
@@ -268,37 +268,36 @@ public class SortVisual {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
 
-        seq = new SequentialTransition(colx, tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
-        seq.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                FillTransition col1x = new FillTransition(Duration.millis(300), b1, Color.AQUA, Color.web("#7092BE"));
-                FillTransition col2x = new FillTransition(Duration.millis(300), b2, Color.AQUA, Color.web("#7092BE"));
-                ParallelTransition colShift = new ParallelTransition(col1x, col2x);
-                colShift.play();
+        SequentialTransition temp = new SequentialTransition(colx, tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
+        seq.add(temp);
+        temp.setOnFinished(event -> {
+            FillTransition col1x = new FillTransition(Duration.millis(300), b1, Color.AQUA, Color.web("#7092BE"));
+            FillTransition col2x = new FillTransition(Duration.millis(300), b2, Color.AQUA, Color.web("#7092BE"));
+            ParallelTransition colShift = new ParallelTransition(col1x, col2x);
+            colShift.play();
 
-                if (swapIndex != tuples.size() - 1) {
-                    //update the special var x value, for the next time the block is used to update logically
-                    b1.setUpdateX(oldSecondX);
-                    b2.setUpdateX(oldX);
-                    //prepare next swap from Tuple list
-                    Tuple next = tuples.get(swapIndex + 1);
-                    //swap logical position in the data structure as well as visual
-                    SortVisualBar temp = blocks.get(block1);
-                    blocks.set(block1, blocks.get(block2));
-                    blocks.set(block2, temp);
-                    swapTwo(next.getFirst(), next.getSecond(), swapIndex + 1); //next transition
-                } else {
-                    remove = true;
-                    CoreEngine.Instance().removeEntity(block);
-                    unit.setSorting(null);
-                    block.setSortVisual(null);
-
-                }
+            if (swapIndex != tuples.size() - 1) {
+                //update the special var x value, for the next time the block is used to update logically
+                b1.setUpdateX(oldSecondX);
+                b2.setUpdateX(oldX);
+                //prepare next swap from Tuple list
+                Tuple next = tuples.get(swapIndex + 1);
+                //swap logical position in the data structure as well as visual
+                SortVisualBar temp1 = blocks.get(block1);
+                blocks.set(block1, blocks.get(block2));
+                blocks.set(block2, temp1);
+                seq.remove(temp);
+                swapTwo(next.getFirst(), next.getSecond(), swapIndex + 1); //next transition
+            } else {
+                remove = true;
+                CoreEngine.Instance().removeEntity(block);
+                unit.setSorting(null);
+                block.setSortVisual(null);
+                seq.remove(temp);
             }
         });
 
-        seq.play();
+        temp.play();
     }
 
     public Pane getPane() {

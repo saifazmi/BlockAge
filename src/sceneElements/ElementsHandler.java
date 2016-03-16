@@ -235,14 +235,10 @@ public class ElementsHandler {
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
             } else if (k == KeyCode.B) {
                 LambdaStore.Instance().setBlockadeClickEvent(event.isShiftDown());
-            } else if (k == KeyCode.SPACE && Tutorial.active == false) {
+            } else if (k == KeyCode.SPACE && !Tutorial.active) {
                 if (engine.isPaused()) {
-                    if (SortVisual.seq != null)
-                        SortVisual.seq.play();
                     engine.setPaused(false);
                 } else {
-                    if (SortVisual.seq != null)
-                        SortVisual.seq.pause();
                     engine.setPaused(true);
                 }
             } else if (k == KeyCode.R && options.getShowPath()) {
