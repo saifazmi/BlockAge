@@ -4,6 +4,8 @@ import core.CoreEngine;
 import entity.SortableBlockade;
 import entity.Unit;
 import entity.Unit.Sort;
+import javafx.animation.FillTransition;
+import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -180,6 +182,10 @@ public class SortVisual {
 
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
+        //TODO: provisional code insertion test, also label
+        FillTransition col1 = new FillTransition(Duration.millis(10),b1,Color.INDIANRED,Color.AQUA);
+        FillTransition col2 = new FillTransition(Duration.millis(10),b2,Color.INDIANRED,Color.AQUA);
+
 
         // first block , 3 transitions  UP LEFT DOWN
         TranslateTransition tty = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
@@ -220,10 +226,15 @@ public class SortVisual {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
 
-        SequentialTransition seq = new SequentialTransition(tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
+        SequentialTransition seq = new SequentialTransition(col1,col2,tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                FillTransition col1x = new FillTransition(Duration.millis(10),b1,Color.AQUA,Color.INDIANRED);
+                FillTransition col2x = new FillTransition(Duration.millis(10),b2,Color.AQUA,Color.INDIANRED);
+                ParallelTransition colShift = new ParallelTransition(col1x,col2x);
+                colShift.play();
+
                 if (swapIndex != tuples.size() - 1) {
                     //update the special var x value, for the next time the block is used to update logically
                     b1.setUpdateX(oldSecondX);
