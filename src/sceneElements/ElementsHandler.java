@@ -319,7 +319,7 @@ public class ElementsHandler {
         System.out.println("Interface made");
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
-        if (!options.isTutorial()) { // change to true
+        if (options.isTutorial()) {
             Tutorial.setup();
         }
         Thread unitSpawnerThread = new Thread(() -> {

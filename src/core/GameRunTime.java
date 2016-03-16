@@ -88,10 +88,10 @@ public class GameRunTime {
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
         Image hellBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "hell_background.png");
         Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
-        Image grassBackground = new Image(SPRITE_RESOURCES + "misc" + SEPARATOR + "sand_background.png");
+        Image grassBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "GrassBackground.png");
 
         BackgroundImage myBIF = new BackgroundImage(
-                sandBackground,
+        		sandBackground,
                 BackgroundRepeat.REPEAT,
                 BackgroundRepeat.REPEAT,
                 BackgroundPosition.DEFAULT,

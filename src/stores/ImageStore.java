@@ -41,7 +41,7 @@ public final class ImageStore {
     public static final Image pauseImage = new Image(SPRITE_RESOURCES + BUTTONS + "Pause_Idle.png");
     public static final Image pauseImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Pause_Hover.png");
     //blockade images
-    public static final Image unsortableImage1 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "UnSortable_Blockade.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
+    public static final Image unsortableImage1 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "UnSortable_Blockade.jpg", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
     public static final Image sortableImage1 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "sortableBlock.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
     public static final Image sortableBiggerImage = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "sortableBlockSorting.png", renderer.getXSpacing(), renderer.getYSpacing(), true, true);
     //base images
@@ -53,7 +53,7 @@ public final class ImageStore {
     public static final Image optionsImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Options_Hover.png");
     public static final Image exitImage = new Image(SPRITE_RESOURCES + BUTTONS + "Quit_Idle.png");
     public static final Image exitImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Quit_Hover.png");
-    public static final Image unsortableImage2 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "UnSortable_Blockade.png", 55, 55, false, true);
+    public static final Image unsortableImage2 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "UnSortable_Blockade.jpg", 55, 55, false, true);
     public static final Image sortableImage2 = new Image(SPRITE_RESOURCES + ENTITIES + BLOCKADES + "sortableBlock.png", 55, 55, false, true);
     //background images
     public static final Image backgroundMainMenu = new Image(SPRITE_RESOURCES + BACKGROUNDS + "MainMenu_Idle.png");
