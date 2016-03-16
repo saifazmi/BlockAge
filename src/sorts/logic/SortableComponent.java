@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
+ * Specific object made for storing 'states' of a given sort. For visualisation.
  */
 //For indication of what is being sorted on the visual level.
 public class SortableComponent {
