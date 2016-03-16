@@ -164,9 +164,9 @@ public class ElementsHandler {
             engine.setRunning(false);
             MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
-            //quitGame();
+            quitGame();
             //@TODO added while new game is broken
-//            System.exit(0);
+            System.exit(0);
         }
 
         // Elements in the End Game Menu Scene
@@ -175,7 +175,7 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             quitGame();
             //@TODO added while new game is broken
-//            System.exit(0);
+            System.exit(0);
         }
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
@@ -316,7 +316,8 @@ public class ElementsHandler {
             }
 
             LOG.log(Level.INFO, "GOAL found!!!");
-            UnitSpawner spawner = new UnitSpawner(1, goal);
+            //UnitSpawner spawner = new UnitSpawner(1, goal);
+            UnitSpawner spawner = new UnitSpawner(5, goal);
             CoreEngine.Instance().setSpawner(spawner);
 
             engine.setPaused(!Tutorial.active);

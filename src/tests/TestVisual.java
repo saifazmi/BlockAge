@@ -1,4 +1,4 @@
-package test;
+package tests;
 
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;

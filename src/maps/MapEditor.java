@@ -66,7 +66,6 @@ public class MapEditor implements Menu {
         mapEditorRenderer = Renderer.Instance();
         mapEditorRenderer.calculateSpacing();
 
-
         //initialiseScene();
         mapEditorPane = new BorderPane();
         final String SEPARATOR = File.separator;
@@ -129,11 +128,11 @@ public class MapEditor implements Menu {
 
     public void clearNodes() {
         List<GraphNode> graph = mapEditorGraph.getNodes();
-        for (int i = 0; i < mapEditorGraph.getNodes().size(); i++) {
-            Blockade blockade = graph.get(i).getBlockade();
-            mapEditorGraph.getNodes().get(i).setBlockade(null);
-            if(blockade != null) {
-                Renderer.Instance().remove(blockade.getSprite());
+        for (GraphNode aGraph : graph) {
+            Blockade blockade = aGraph.getBlockade();
+            if (blockade != null) {
+                mapEditorRenderer.remove(blockade.getSprite());
+                aGraph.setBlockade(null);
             }
         }
     }

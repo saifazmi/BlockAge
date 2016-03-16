@@ -128,10 +128,10 @@ public abstract class Entity extends Observable {
     public abstract void update();
 
     /**
-     * Checks if a given object is equal to Entity
+     * Checks if a given object is equal to this Entity
      *
      * @param o object to be compared
-     * @return true if the object is equal to the entity else false
+     * @return true if the object is equal to this Entity else false
      */
     @Override
     public boolean equals(Object o) {
