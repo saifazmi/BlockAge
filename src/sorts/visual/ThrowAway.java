@@ -8,10 +8,17 @@ import javafx.animation.FillTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import sorts.logic.BubbleSort;
 import sorts.logic.SelectionSort;
@@ -31,7 +38,7 @@ import java.util.ArrayList;
  * in a way that can be easily usable by a visualizer, which is also here.
  *
  */
-public class SortVisual {
+public class ThrowAway extends Application {
     public int HEIGHT = 200;
     public int WIDTH = 300;
     private static ArrayList<SortVisualBar> blocks; //sorts all the visual block objects
@@ -39,38 +46,11 @@ public class SortVisual {
     private ArrayList<Tuple> tuples; //used to store WHAT is swapped in a state
     private SortableBlockade block; //the physical blockade on the map passed in
     private Pane sortPane = null;
-    private Unit unit; //the physical unit on the map passed in
-    public Sort sort; //enum to choose sort
-    private boolean remove = false;
 
-    public boolean isRemove() {
-        return remove;
-    }
-
-    public void setRemove(boolean remove) {
-        this.remove = remove;
-    }
-
-    public SortVisual(SortableBlockade block, Unit unit) {
-        block.setSortVisual(this);
-        this.sort = unit.getSort();
-        this.block = block;
-        this.unit = unit;
-        start();
-
-    }
-
-    public void start() {
+    public void start(Stage primaryStage) {
         tuples = new ArrayList<Tuple>();
 
-        // DFS unit
-        if (this.sort == Unit.Sort.BUBBLE) sorts = BubbleSort.sort(block.getToSortArray());
-        //TODO: this is wrong, and quick isnt implemented yet
-        // BFS unit
-        if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
-
-        // Astar unit
-        if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
+        sorts = SelectionSort.sort(SortableBlockade.generateUniqSortArray());
 
         sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: gray;");
@@ -97,11 +77,25 @@ public class SortVisual {
         for (int x = 0; x < sorts.get(0).getValue().size(); x++) {
             blocksTemp.add(blocks.get(sorts.get(0).getValue().get(x) + 1));
         }
+        //sign
+        Text tempSign = new Text("TEMP");
+        tempSign.setFill(Color.AQUA);
+        tempSign.setFont(Font.font("Verdana", FontWeight.BOLD,18));
+        tempSign.setRotate(-90);
+        sortPane.getChildren().add(tempSign);
+        tempSign.relocate(-WIDTH/15,HEIGHT-45);
+
+        Scene scene = new Scene(sortPane);
+        primaryStage.setScene(scene);
         blocks = blocksTemp;
+        primaryStage.show();
         prepareTransitions();//processes sorts state list, populates the Tuple list
+
         swapTwo(tuples.get(0).getFirst(), tuples.get(0).getSecond(), 0);// swap animation
     }
-
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
     /**
      * Used to generate a correct location for a block.
      * @param s
@@ -183,55 +177,56 @@ public class SortVisual {
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
         //TODO: provisional code insertion test, also label
+
         FillTransition col1 = new FillTransition(Duration.millis(10),b1,Color.INDIANRED,Color.AQUA);
         FillTransition col2 = new FillTransition(Duration.millis(10),b2,Color.INDIANRED,Color.AQUA);
-
+        ParallelTransition colx = new ParallelTransition(col1,col2);
 
         // first block , 3 transitions  UP LEFT DOWN
-        TranslateTransition tty = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
         tty.setToY(-100);
 
-        TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         ttx.setFromX(0);
         ttx.setToX(-oldX);//was -200
 
-        TranslateTransition txx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         txx.setFromY(-100);
         txx.setToY(0);
 
         //second block, 3 transitions UP <> DOWN
-        TranslateTransition ty = new TranslateTransition(Duration.seconds(0.17), blocks.get(block2));
+        TranslateTransition ty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         ty.setFromY(0);
         ty.setToY(-200);
 
-        TranslateTransition tx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block2));
+        TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
         tx.setToX(-(oldSecondX - (oldX)));//always left
 
-        TranslateTransition txt = new TranslateTransition(Duration.seconds(0.17), blocks.get(block2));
+        TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         txt.setFromY(-200);
         txt.setToY(0);
 
         //last 3, first block, UP RIGHT DOWN
-        TranslateTransition gy = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition gy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gy.setFromY(0);
         gy.setToY(-200);
 
-        TranslateTransition gx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
         gx.setToX(oldSecondX - oldX);//old distance-  width - gap
 
-        TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
 
-        SequentialTransition seq = new SequentialTransition(col1,col2,tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
+        SequentialTransition seq = new SequentialTransition(colx,tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FillTransition col1x = new FillTransition(Duration.millis(10),b1,Color.AQUA,Color.INDIANRED);
-                FillTransition col2x = new FillTransition(Duration.millis(10),b2,Color.AQUA,Color.INDIANRED);
+                FillTransition col1x = new FillTransition(Duration.millis(200),b1,Color.AQUA,Color.INDIANRED);
+                FillTransition col2x = new FillTransition(Duration.millis(200),b2,Color.AQUA,Color.INDIANRED);
                 ParallelTransition colShift = new ParallelTransition(col1x,col2x);
                 colShift.play();
 
@@ -246,9 +241,6 @@ public class SortVisual {
                     blocks.set(block1, blocks.get(block2));
                     blocks.set(block2, temp);
                     swapTwo(next.getFirst(), next.getSecond(), swapIndex + 1); //next transition
-                } else {
-                    remove = true;
-                    CoreEngine.Instance().removeEntity(block);
                 }
             }
         });
@@ -267,14 +259,5 @@ public class SortVisual {
     public void setBlock(SortableBlockade block) {
         this.block = block;
     }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
 
 }

@@ -6,20 +6,17 @@ import java.util.Collections;
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
+ * INCOMPLETE, unsure of a reliable way to go around it.
  */
 
-/*
- * Underlying IDEA: SortableComponent comes in sets of 3. one for left side, one for pivot, one for right
- * Do with it what you will, I think this is safest
- */
 public class QuickSort {
     ArrayList allStates = new ArrayList<SortableComponent>();
 
     /**
-     * Pre-quicksort formatting
+     * Pre-quicksort formatting, ON OLD 'input size' MODEL
      *
      * @param size
-     * @return
+     * @return Arraylist of arraylists, all states of sort
      */
     public ArrayList<SortableComponent> sort(int size) {
         if (size < 3) {

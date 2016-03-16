@@ -5,23 +5,23 @@ import java.util.ArrayList;
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
+ *
+ * BubbleSort with a SortableComponent object which prepares the data to be
+ * more easily unpacked for visualisation at SortVisual class.
  */
-//TESTED - WORKS, VIS LOGIC WILL WORK
 public class BubbleSort {
+
     /**
-     * Simple bubble sort. Presumed that only size is passed on
-     * and the numbers will range from 1 to (size-1)
+     * Simple bubble sort. Iterates through list until no swaps are made,
+     * swapping every time it finds x < x+1.
      *
-     * @param n ArrayList of unique integers to sort
+     * @param n Arraylist of integers
      * @return ArrayList of ArrayLists - representing all states every step of the sort
      */
     public static ArrayList<SortableComponent> sort(ArrayList<Integer> n) {
         ArrayList<Integer> state = n;
         //return list
         ArrayList allStates = new ArrayList<SortableComponent>();
-        //generate  numbers
-        //System.out.println(state);
-        SortableComponent first = new SortableComponent(getByValue(state), 0, 0, false);
 
         boolean swap = true;
         Integer temp;
@@ -32,9 +32,9 @@ public class BubbleSort {
                 //swap = false;
                 SortableComponent s = new SortableComponent(getByValue(state), x, x + 1, swap); //consider order, should show comparison first, then swap, so 2 states per swap, 1 state per comparison and no swap
                 //    allStates.add(s);
-                if ((Integer) state.get(x) > (Integer) state.get(x + 1)) { // if swap needs to occur, start swapping
+                if ( state.get(x) >  state.get(x + 1)) { // if swap needs to occur, start swapping
                     allStates.add(s);
-                    temp = (Integer) state.get(x);
+                    temp =  state.get(x);
                     state.set(x, state.get(x + 1));
                     state.set(x + 1, temp);
                     swap = true;
@@ -51,7 +51,6 @@ public class BubbleSort {
 
     /**
      * Pass by value
-     *
      * @param list
      * @return
      */
