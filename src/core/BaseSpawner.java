@@ -177,9 +177,10 @@ public class BaseSpawner {
 
                     ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
                     SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
-                    System.out.println(blockade.arrayToString(blockade.getToSortArray()));
+                    //System.out.println(blockade.arrayToString(blockade.getToSortArray()));
                     if (blockade != null) {
                         renderer.drawInitialEntity(blockade);
+                        blockade.getSprite().setOnMouseClicked(f -> blockade.getSortVisual().display(true));
                         CoreEngine.Instance().getEntities().add(blockade);
                     }
                 }

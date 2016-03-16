@@ -24,6 +24,8 @@ import menus.MenuHandler;
 import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
+import sorts.visual.SortVisual;
+import sorts.visual.SortVisualBar;
 import sound.SoundManager;
 import stores.ImageStore;
 import stores.LambdaStore;
@@ -228,6 +230,13 @@ public class ElementsHandler {
                         pressedToNotPressed(obtainedSprite);
                     }
                 }
+                if(SortVisual.rendered != null) {
+                    SortVisual.rendered.display(false);
+                }
+//                Entity entity = GameRunTime.Instance().getLastClicked().getEntity();
+//                if(entity instanceof Unit) {
+//                    ((Unit) entity).getSorting().getSortVisual().display(false);
+//                } else
                 GameInterface.unitDescriptionText.clear();
                 Tutorial.routeShown = false;
                 Tutorial.visualShown = false;

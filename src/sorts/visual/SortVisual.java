@@ -33,14 +33,26 @@ import java.util.ArrayList;
 public class SortVisual {
     public int HEIGHT = 200;
     public int WIDTH = 300;
-    private static ArrayList<SortVisualBar> blocks; //sorts all the visual block objects
+
+    public ArrayList<SortVisualBar> getBlocks() {
+        return blocks;
+    }
+
+    private ArrayList<SortVisualBar> blocks; //sorts all the visual block objects
     private ArrayList<SortableComponent> sorts; //all RELEVANT sort states, swapped and the state before a swap
     private ArrayList<Tuple> tuples; //used to store WHAT is swapped in a state
     private SortableBlockade block; //the physical blockade on the map passed in
+
+    public Pane getSortPane() {
+        return sortPane;
+    }
+
     private Pane sortPane = null;
     private Unit unit; //the physical unit on the map passed in
     public Sort sort; //enum to choose sort
     private boolean remove = false;
+
+    public static SortVisual rendered = null;
 
     public boolean isRemove() {
         return remove;
@@ -60,7 +72,7 @@ public class SortVisual {
     }
 
     public void start() {
-        tuples = new ArrayList<Tuple>();
+        tuples = new ArrayList<>();
 
         // DFS unit
         if (this.sort == Unit.Sort.BUBBLE) sorts = BubbleSort.sort(block.getToSortArray());
@@ -69,13 +81,14 @@ public class SortVisual {
         if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
 
         // Astar unit
-        if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
+        if (this.sort == Unit.Sort.QUICK) sorts = SelectionSort.sort(block.getToSortArray());
 
         sortPane = new Pane();
+        sortPane.setOpacity(0.0);
         sortPane.setStyle("-fx-background-color: gray;");
         sortPane.setPrefSize(WIDTH, HEIGHT);
         //make blocks
-        blocks = new ArrayList<SortVisualBar>();
+        blocks = new ArrayList<>();
         for (double x = 0; x < 11; x++) {              //width  //height
             SortVisualBar block = new SortVisualBar(15.0, (x * 15.0), Color.INDIANRED, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
             int loc = 40; //calculate x pos for block
@@ -85,11 +98,12 @@ public class SortVisual {
             }
             if (x == 0) loc = 10;
             block.relocate(loc, HEIGHT - (x * 15) - 5); //place in location calculated
+            block.setOpacity(0.0);
             sortPane.getChildren().add(block); //add to pane
             block.setUpdateX(block.getLayoutX()); //set custom variable needed for animation
             blocks.add(block); //add to global list of blocks
         }
-        ArrayList<SortVisualBar> blocksTemp = new ArrayList<SortVisualBar>();
+        ArrayList<SortVisualBar> blocksTemp = new ArrayList<>();
         //logical positioning in the data structure, they are ordered visually above,
         //but now need to be in the corresponding place in the data structure as well
         blocksTemp.add(blocks.get(0));
@@ -279,5 +293,19 @@ public class SortVisual {
         this.unit = unit;
     }
 
-
+    public void display(boolean display) {
+        double opacity;
+        if(display) {
+            opacity = 1.0;
+            rendered = this;
+        } else {
+            opacity = 0.0;
+            rendered = null;
+        }
+        ArrayList<SortVisualBar> bars = getBlocks();
+        for(SortVisualBar bar : bars) {
+            bar.setOpacity(opacity);
+        }
+        sortPane.setOpacity(opacity);
+    }
 }

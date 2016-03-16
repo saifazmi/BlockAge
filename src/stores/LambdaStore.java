@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
+import sorts.visual.SortVisualBar;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -83,6 +84,7 @@ public final class LambdaStore {
             SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
             if (blockade != null) {
                 renderer.drawInitialEntity(blockade);
+                blockade.getSprite().setOnMouseClicked(f -> blockade.getSortVisual().display(true));
                 CoreEngine.Instance().getEntities().add(blockade);
                 CoreEngine.Instance().breakableBlockadesPlaced();
             }
@@ -90,11 +92,14 @@ public final class LambdaStore {
     };
 
     private final EventHandler<MouseEvent> unitClickEvent = e -> {
-        System.out.println("Here guys");
 
         SpriteImage sprite = (SpriteImage) e.getSource();
         Unit unit = (Unit) sprite.getEntity();
         sprite.requestFocus();
+
+        if(unit.getSorting() != null) {
+            unit.getSorting().getSortVisual().display(true);
+        }
 
         Unit.Search search = unit.getSearch();
         Unit.Sort sort = unit.getSort();

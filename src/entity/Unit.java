@@ -375,13 +375,13 @@ public class Unit extends Entity {
         } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null && sorting == null) {
 
             sorting = (SortableBlockade) blockade;
-            Thread t = new Thread(() ->
-            {
+//            Thread t = new Thread(() ->
+//            {
                 SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
                 ((SortableBlockade) blockade).setSortVisual(sortVisual);
                 Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
-            });
-            t.start();
+//            });
+//            t.start();
             return false;
 
         } else {
