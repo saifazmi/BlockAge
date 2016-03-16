@@ -247,6 +247,7 @@ public class Renderer extends Group {
         List<Line> lines = produceAlgoRoute(unit);
 
         for (Line line : lines) {
+        	line.setMouseTransparent(true);
             Rectangle rect = new Rectangle(xSpacing, ySpacing);
             rect.setFill(Color.GREEN);
             rect.setOpacity(0.0);
@@ -254,8 +255,8 @@ public class Renderer extends Group {
             rect.setY(line.getStartY() - ySpacing / 2);
 
             if (!this.getChildren().contains(rect)) {
-                this.remove(unit.getSprite());
-                this.getChildren().addAll(unit.getSprite(), rect); // This breaks everything
+                rect.setMouseTransparent(true);
+            	this.getChildren().addAll(rect);
                 unit.getSprite().requestFocus();
             }
 
