@@ -301,7 +301,8 @@ public class ElementsHandler {
             }
 
             LOG.log(Level.INFO, "GOAL found!!!");
-            UnitSpawner spawner = new UnitSpawner(1, goal);
+            //UnitSpawner spawner = new UnitSpawner(1, goal);
+            UnitSpawner spawner = new UnitSpawner(5, goal);
             CoreEngine.Instance().setSpawner(spawner);
 
             engine.setPaused(!Tutorial.active);

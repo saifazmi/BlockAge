@@ -1,94 +1,77 @@
-package sorts.visual;
+package tests;
 
-import core.CoreEngine;
-import entity.SortableBlockade;
-import entity.Unit;
-import entity.Unit.Sort;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.logic.BubbleSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
+import sorts.visual.SortVisualBar;
+import sorts.visual.Tuple;
 
 import java.util.ArrayList;
 
 /**
  * @author : First created by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
+ * <p>
+ * TEST CLASS
  */
-public class SortVisual {
-    public int HEIGHT = 200;
-    public int WIDTH = 300;
+//TODO: 'TEMP' Pane at 0, growing vertically
+public class TestVisualLive extends Application {
+    public int HEIGHT = 300;
+    public int WIDTH = 400;
     private static ArrayList<SortVisualBar> blocks;
     private ArrayList<SortableComponent> sorts;
     private ArrayList<Tuple> tuples;
-    private SortableBlockade block;
-    private Pane sortPane = null;
-    private Unit unit;
-    public Sort sort;
-    private boolean remove = false;
 
-    public boolean isRemove() {
-        return remove;
-    }
-
-    public void setRemove(boolean remove) {
-        this.remove = remove;
-    }
-
-    public SortVisual(SortableBlockade block, Unit unit) {
-        block.setSortVisual(this);
-        this.sort = unit.getSort();//block.getSortID();
-        this.block = block;
-        this.unit = unit;
-        start();
-
-    }
-
-    public void start() {
+    public void start(Stage stage) {
         tuples = new ArrayList<Tuple>();
-
-        // DFS unit
-        if (this.sort == Unit.Sort.BUBBLE) sorts = BubbleSort.sort(block.getToSortArray());
-
-        // BFS unit
-        if (this.sort == Unit.Sort.QUICK) sorts = SelectionSort.sort(block.getToSortArray());
-
-        // Astar unit
-        if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
-
-        sortPane = new Pane();
+        sorts = SelectionSort.sort(Test_Sort.generateUniqSortArray());
+        Pane sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: gray;");
         sortPane.setPrefSize(WIDTH, HEIGHT);
         //make blocks
         blocks = new ArrayList<SortVisualBar>();
         for (double x = 0; x < 11; x++) {              //width  //height
-            SortVisualBar block = new SortVisualBar(15.0, (x * 15.0), Color.INDIANRED, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
+            SortVisualBar block = new SortVisualBar(25.0, (x * 15.0), Color.INDIANRED, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
             int loc = 40;
             if (x != 0) {
                 int pos = find(x - 1);
-                loc = 40 + (20 * pos);
+                loc = 40 + (30 * pos);
             }
             if (x == 0) loc = 10;
-            block.relocate(loc, HEIGHT - (x * 15) - 5);
+            block.relocate(loc, HEIGHT - (x * 15) - 50); //trying to make it state0
+
             sortPane.getChildren().add(block);
             block.setUpdateX(block.getLayoutX());
             blocks.add(block);
         }
         ArrayList<SortVisualBar> blocksTemp = new ArrayList<SortVisualBar>();
-        //logical positioning in the data structure
         blocksTemp.add(blocks.get(0));
         for (int x = 0; x < sorts.get(0).getValue().size(); x++) {
             blocksTemp.add(blocks.get(sorts.get(0).getValue().get(x) + 1));
         }
         blocks = blocksTemp;
         prepareTransitions();//makes new seqTransition
+        Scene scene = new Scene(sortPane);
+        stage = new Stage();
+        stage.setTitle("TEST");
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.show();
         swapTwo(tuples.get(0).getFirst(), tuples.get(0).getSecond(), 0);
+    }
+
+
+    public static void main(String[] args) {
+        Application.launch(args);
     }
 
     private int find(double s) {
@@ -101,11 +84,24 @@ public class SortVisual {
         return -1;
     }
 
+    /**
+     * Gets the block corresponding to the value
+     * @param value
+     * @return block
+     */
+//    public int findBlock(int value){ // assumed never input -1
+//        for(int x=1; x<blocks.size();x++){ //-1 is invis
+//            if(blocks.get(x).getValue() == value){
+//                return x;
+//            }
+//        }
+//        return -1;
+//    }
 
     /**
      * Generates the SequentialTransition
      */
-    private void prepareTransitions() {
+    public void prepareTransitions() {
         int count = 0;
         while (count < sorts.size()) {
             Tuple x = findSwapped(sorts.get(count), count);
@@ -127,7 +123,7 @@ public class SortVisual {
      * @param currentID
      * @return Tuple
      */
-    private Tuple findSwapped(SortableComponent sortState, int currentID) {
+    public Tuple findSwapped(SortableComponent sortState, int currentID) {
         int first = -1;//flag for no swap
         int second = -1;
 
@@ -147,14 +143,13 @@ public class SortVisual {
 
     /**
      * General Pattern:
-     * Make transition, play it, after it's played make a new one
-     * Take block1, push it to 0, replace its old pos with block2, put block 1 in old block2 pos
+     * Make transition, add to animatePath
      * USAGE: input blocks from 1-10
      *
      * @param: int block1 first block id
      * @param: int block2 second block id
      */
-    private void swapTwo(int block1, int block2, int swapIndex) {
+    public void swapTwo(int block1, int block2, int swapIndex) {
 
         SortVisualBar b1 = blocks.get(block1);
         SortVisualBar b2 = blocks.get(block2);
@@ -166,41 +161,41 @@ public class SortVisual {
         double oldSecondX = b2.getLayoutX();
 
         // first block , 3 transitions
-        TranslateTransition tty = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
         tty.setToY(-100);
 
-        TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         ttx.setFromX(0);
         ttx.setToX(-oldX);//was -200
 
-        TranslateTransition txx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         txx.setFromY(-100);
         txx.setToY(0);
 
 
-        TranslateTransition ty = new TranslateTransition(Duration.seconds(0.17), blocks.get(block2));
+        TranslateTransition ty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         ty.setFromY(0);
         ty.setToY(-200);
 
-        TranslateTransition tx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block2));
+        TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
         tx.setToX(-(oldSecondX - (oldX)));//always left
 
-        TranslateTransition txt = new TranslateTransition(Duration.seconds(0.17), blocks.get(block2));
+        TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         txt.setFromY(-200);
         txt.setToY(0);
 
         //last 3
-        TranslateTransition gy = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition gy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gy.setFromY(0);
         gy.setToY(-200);
 
-        TranslateTransition gx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
         gx.setToX(oldSecondX - oldX);//old distance-  width - gap
 
-        TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
+        TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
 
@@ -217,36 +212,11 @@ public class SortVisual {
                     blocks.set(block1, blocks.get(block2));
                     blocks.set(block2, temp);
                     swapTwo(next.getFirst(), next.getSecond(), swapIndex + 1);
-                } else {
-                    remove = true;
-                    System.out.println("WTF");
-                    CoreEngine.Instance().removeEntity(block);
                 }
             }
         });
 
         seq.play();
     }
-
-    public Pane getPane() {
-        return sortPane;
-    }
-
-    public SortableBlockade getBlock() {
-        return block;
-    }
-
-    public void setBlock(SortableBlockade block) {
-        this.block = block;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
 
 }

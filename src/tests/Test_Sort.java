@@ -1,4 +1,4 @@
-package test;
+package tests;
 
 import sorts.logic.QuickSort;
 import sorts.logic.SelectionSort;

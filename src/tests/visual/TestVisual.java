@@ -1,4 +1,4 @@
-package test;
+package tests.visual;
 
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
@@ -11,10 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.visual.SortVisualBar;
+import sorts.SortVisualBar;
 
 import java.util.ArrayList;
-
 
 /**
  * Created by Caitlyn PLS on 19-Feb-16.
@@ -41,7 +40,6 @@ public class TestVisual extends Application {
 //            counterx += 20+(x*60);
 //            countery += HEIGHT-(x*30);
             canvas.getChildren().add(block);
-            block.setUpdateX(block.getLayoutX());
             blocks.add(block);
         }
         //System.out.println(counterx);
@@ -71,65 +69,71 @@ public class TestVisual extends Application {
         SortVisualBar b1 = blocks.get(block1);
         SortVisualBar b2 = blocks.get(block2);
 
-        b1.relocate(b1.getUpdateX(), b1.getLayoutY());
-        b2.relocate(b2.getUpdateX(), b2.getLayoutY());
+        double oldX = blocks.get(block1).getLayoutX();
+        double oldSecondX = blocks.get(block2).getLayoutX();
 
-        double oldX = b1.getLayoutX();
-        double oldSecondX = b2.getLayoutX();
-
-        System.out.println(block1 + " is at : " + b1.getLayoutX());
-        System.out.println(block2 + " is at : " + b2.getLayoutX());
+        System.out.println(oldX);
+        System.out.println(oldSecondX);
         // first block , 3 transitions
         TranslateTransition tty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         tty.setFromY(0);
         tty.setToY(-100);
+        tty.setCycleCount(1);
 
         TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         ttx.setFromX(0);
         ttx.setToX(-oldX);//was -200
+        ttx.setCycleCount(1);
 
         TranslateTransition txx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         txx.setFromY(-100);
         txx.setToY(0);
+        txx.setCycleCount(1);
+        // second block, take note of values on the last transitions of each one
+        //you can change the dimensions as you wish, easier to navigate if you have some sort of class-wide var for sizes
+
 
         TranslateTransition ty = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         ty.setFromY(0);
         ty.setToY(-200);
+        ty.setCycleCount(1);
 
         TranslateTransition tx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         tx.setFromX(0);
-        tx.setToX(-(oldSecondX - (oldX)));
+        tx.setToX(-(oldSecondX - (oldX)));//always left
+        tx.setCycleCount(1);
 
         TranslateTransition txt = new TranslateTransition(Duration.seconds(0.25), blocks.get(block2));
         txt.setFromY(-200);
         txt.setToY(0);
+        txt.setCycleCount(1);
 
         //last 3
         TranslateTransition gy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gy.setFromY(0);
         gy.setToY(-200);
+        gy.setCycleCount(1);
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gx.setFromX(-oldX);
         gx.setToX(oldSecondX - oldX);//old distance-  width - gap
+        gx.setCycleCount(1);
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.25), blocks.get(block1));
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
+        gyy.setCycleCount(1);
         gyy.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //if(block1!=10){
 
 
-                //b1.relocate(oldSecondX,b1.getLayoutY());
-                //b2.relocate(oldX,b2.getLayoutY());
-                b1.setUpdateX(oldSecondX);
-                b2.setUpdateX(oldX);
-                System.out.println(block1 + " changed to : " + b1.getLayoutX());
-                System.out.println(block2 + " changed to : " + b2.getLayoutX());
-                swapFF(7, 6);
-                //}
+                if (block1 != 10) {
+                    b1.relocate(oldSecondX, b1.getLayoutY());
+                    b2.relocate(oldX, b2.getLayoutY());
+                    swapFF(10, 3);
+
+                }
             }
         });
 
