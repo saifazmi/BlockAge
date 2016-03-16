@@ -26,6 +26,11 @@ public class SoundManager {
         return instance;
     }
 
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     private SoundManager() {
 
         URL soundPaths[] = {

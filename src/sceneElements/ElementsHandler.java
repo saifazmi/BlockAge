@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import maps.MapChooserInterface;
+import maps.MapEditor;
 import maps.MapEditorInterface;
 import menus.EndGameMenu;
 import menus.MainMenu;
@@ -23,6 +24,7 @@ import menus.MenuHandler;
 import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
+import sound.SoundManager;
 import stores.ImageStore;
 import stores.LambdaStore;
 import tutorial.Tutorial;
@@ -39,7 +41,7 @@ public class ElementsHandler {
 
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
     private static ButtonProperties b = new ButtonProperties();
-    private static CoreEngine engine = CoreEngine.Instance();
+    //private static CoreEngine engine = CoreEngine.Instance();
 
     public static Options options = new Options();
 
@@ -64,7 +66,7 @@ public class ElementsHandler {
             System.exit(0);
         }
         // End of elements from Main Menu scene
-
+        CoreEngine engine = CoreEngine.Instance();
         // Elements from the Options Menu scene
         if (event.getSource() == OptionsMenu.yesButtonSearch) {
             options.setPath(false);
@@ -162,12 +164,18 @@ public class ElementsHandler {
             engine.setRunning(false);
             MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            quitGame();
+            //@TODO added while new game is broken
+            System.exit(0);
         }
 
         // Elements in the End Game Menu Scene
         if (event.getSource() == EndGameMenu.backMainButton) {
             engine.setRunning(false);
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            quitGame();
+            //@TODO added while new game is broken
+            System.exit(0);
         }
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
@@ -177,6 +185,7 @@ public class ElementsHandler {
             engine.setPaused(true);
         }
         if (event.getSource() == MainMenu.mapEditorButton) {
+            MapEditor.Instance();
             MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
         }
         if (event.getSource() == MainMenu.customGameButton) {
@@ -185,6 +194,7 @@ public class ElementsHandler {
         // Adding events for the map editor interface
         if (event.getSource() == MapEditorInterface.backButton) {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+            quitGame();
         }
     }
 
@@ -207,10 +217,16 @@ public class ElementsHandler {
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), false);
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {
+                GameInterface.namePaneLabel.setText("");
+                GameInterface.searchPaneLabel.setText("");
+                GameInterface.sortPaneLabel.setText("");
+                GameInterface.unitImage.setGraphic(null);
                 ArrayList<Entity> units = engine.getEntities();
                 for (int i = 0; i < units.size(); i++) {
-                    SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
-                    pressedToNotPressed(obtainedSprite);
+                    if(units.get(i) instanceof Unit) {
+                        SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
+                        pressedToNotPressed(obtainedSprite);
+                    }
                 }
                 GameInterface.unitDescriptionText.clear();
                 Tutorial.routeShown = false;
@@ -226,12 +242,15 @@ public class ElementsHandler {
         if (image.equals(ImageStore.imagePressedDemon)) {
             sprite.setImage(ImageStore.imageDemon);
             ((Unit) sprite.getEntity()).showTransition(false, false);
+            sprite.setOnMouseClicked(LambdaStore.Instance().getUnitClickEvent());
         } else if (image.equals(ImageStore.imagePressedDk)) {
             sprite.setImage(ImageStore.imageDk);
             ((Unit) sprite.getEntity()).showTransition(false, false);
+            sprite.setOnMouseClicked(LambdaStore.Instance().getUnitClickEvent());
         } else if (image.equals(ImageStore.imagePressedBanshee)) {
             sprite.setImage(ImageStore.imageBanshee);
             ((Unit) sprite.getEntity()).showTransition(false, false);
+            sprite.setOnMouseClicked(LambdaStore.Instance().getUnitClickEvent());
         }
     }
 
@@ -273,17 +292,13 @@ public class ElementsHandler {
     public static void startGame() {
         // Create grid for the game we'll play
         System.out.println("Start game");
-        GameRunTime gameRunTime = new GameRunTime();
-        engine = CoreEngine.Instance();
+        new GameRunTime();
+        CoreEngine engine = CoreEngine.Instance();
         engine.setPaused(true);
         Renderer.Instance().calculateSpacing();
-        System.out.println("Spacing calculated");
-        gameRunTime.startGame();
-        System.out.println("Game started");
+        BaseSpawner.Instance();
         MenuHandler.setMainGameScene();
-        System.out.println("Scene set");
-        new GameInterface();
-        System.out.println("Interface made");
+        GameInterface.Instance();
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
         if (options.isTutorial()) {
@@ -314,6 +329,24 @@ public class ElementsHandler {
             engine.setPaused(Tutorial.active);
         });
         unitSpawnerThread.start();
+    }
+
+    private static void quitGame() {
+
+        CoreEngine.delete();
+        GameRunTime.delete();
+        UnitSpawner.delete();
+        BaseSpawner.delete();
+
+        MapChooserInterface.delete();
+        MapEditorInterface.delete();
+        MapEditor.delete();
+
+        GameInterface.delete();
+        Renderer.delete();
+        SoundManager.delete();
+
+        LambdaStore.delete();
     }
 }
 

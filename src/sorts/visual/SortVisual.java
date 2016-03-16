@@ -249,6 +249,8 @@ public class SortVisual {
                 } else {
                     remove = true;
                     CoreEngine.Instance().removeEntity(block);
+                    unit.setSorting(null);
+                    block.setSortVisual(null);
                 }
             }
         });

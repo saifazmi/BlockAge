@@ -38,6 +38,17 @@ public class Unit extends Entity {
 
     private Renderer renderer = Renderer.Instance();
 
+    public SortableBlockade getSorting() {
+        return sorting;
+    }
+
+    public void setSorting(SortableBlockade sorting) {
+        this.sorting = sorting;
+        if(sorting == null) {
+            this.completedMove = true;
+        }
+    }
+
     /**
      * Search flags
      */
@@ -92,6 +103,8 @@ public class Unit extends Entity {
 
     private GraphNode nextNode;
     private boolean completedMove = true;
+
+    private SortableBlockade sorting = null;
 
     /**
      * Constructor for Unit used by UnitSpawner
@@ -350,33 +363,40 @@ public class Unit extends Entity {
      * @param position the position to be checked
      * @return whether the position has a block
      */
-    private boolean blockCheck(GraphNode position) {
+    private Boolean blockCheck(GraphNode position) {
         Blockade blockade = position.getBlockade();
         if (blockade == null) {
 
             getPosition().getUnits().remove(this);
             position.getUnits().add(this);
             setPosition(position);
-
             return true;
-        } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null) {
-            System.out.println("WTF: " + ((SortableBlockade) blockade).arrayToString(((SortableBlockade) blockade).getToSortArray()));
-            SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
-            ((SortableBlockade) blockade).setSortVisual(sortVisual);
-            Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
+
+        } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null && sorting == null) {
+
+            sorting = (SortableBlockade) blockade;
+            Thread t = new Thread(() ->
+            {
+                SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
+                ((SortableBlockade) blockade).setSortVisual(sortVisual);
+                Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
+            });
+            t.start();
+            return false;
+
+        } else {
+
+            return false;
         }
-
-        return false;
     }
-
     /**
      * Updates the unit's position per frame, if it has completed its previous move, called by CoreEngine.
      * Takes the first node from what remains of the route this unit is following and calculate the difference between
      * that node and its current position, after that moves the unit with MoveUnit. This method also updates the unit's logical position,
      * this is done after the unit moves graphically
      */
-    @Override
-    public void update() {
+    //@Override
+    public void update2() {
 
         if (completedMove) {
             LOG.log(Level.INFO, "completed move");
@@ -397,7 +417,8 @@ public class Unit extends Entity {
                 int xChange = this.nextNode.getX() - this.position.getX();
                 int yChange = this.nextNode.getY() - this.position.getY();
 
-                if (logicalMove(xChange, yChange)) {
+                boolean result = logicalMove(xChange, yChange);
+                if (result) {
 
                     double nextPixelX = x * renderer.getXSpacing();
                     double nextPixelY = y * renderer.getYSpacing();
@@ -409,10 +430,15 @@ public class Unit extends Entity {
                     transition.play();
 
                 } else {
+                    if(sorting != null) {
+                        //nextNode = null;
+                        //this.completedMove = true;
+                    } else {
+                        decideRoute();
+                        nextNode = null;
+                        this.completedMove = true;
+                    }
 
-                    decideRoute();
-                    nextNode = null;
-                    this.completedMove = true;
                 }
 
             } else if (this.getPosition() == goal) {
@@ -428,6 +454,56 @@ public class Unit extends Entity {
             } else {
 
                 nextNode = null;
+
+                CoreEngine.Instance().setPaused(true);
+                CoreEngine.Instance().getScore().halveScore();
+                Platform.runLater(() -> MenuHandler.switchScene(MenuHandler.END_GAME_MENU));
+            }
+        }
+    }
+    @Override
+    public void update(){
+        if (completedMove) {
+
+            if (route.size() > 0) {
+
+                this.completedMove = false;
+                GraphNode nextNode = route.remove(0);
+
+                int x = nextNode.getX();
+                int y = nextNode.getY();
+                int xChange = x - this.position.getX();
+                int yChange = y - this.position.getY();
+
+                boolean result = logicalMove(xChange, yChange);
+
+                if(result) {
+
+                    double nextPixelX = x * renderer.getXSpacing();
+                    double nextPixelY = y * renderer.getYSpacing();
+
+                    TranslateTransition transition = new TranslateTransition(SPEED, sprite);
+                    transition.setToX(nextPixelX);
+                    transition.setToY(nextPixelY);
+                    transition.setOnFinished(e -> this.completedMove = true);
+                    transition.play();
+                } else {
+                    if(this.sorting == null) {
+                        decideRoute();
+                        this.completedMove = true;
+                    } else {
+                        route.add(0, nextNode);
+                    }
+                }
+            } else if (this.getPosition() == goal) {
+
+                Platform.runLater(() -> {
+
+                    CoreEngine.Instance().setPaused(true);
+                    MenuHandler.switchScene(MenuHandler.END_GAME_MENU);
+                });
+
+            } else {
 
                 CoreEngine.Instance().setPaused(true);
                 CoreEngine.Instance().getScore().halveScore();
@@ -553,7 +629,7 @@ public class Unit extends Entity {
                         nullObject(trans2.getNode());
                     }
                 }
-
+                transition = null;
                 setVisualTransition(null);
                 Tutorial.routeShown = false;
                 Tutorial.visualShown = false;
@@ -570,11 +646,13 @@ public class Unit extends Entity {
 
             Line line = (Line) object;
             line.setOpacity(0.0);
+            line = null;
 
         } else if (object instanceof Rectangle) {
 
             Rectangle rect = (Rectangle) object;
             rect.setOpacity(0.0);
+            rect = null;
         }
     }
 }

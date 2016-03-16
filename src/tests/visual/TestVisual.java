@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sorts.SortVisualBar;
+import sorts.visual.SortVisualBar;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class TestVisual extends Application {
     public int HEIGHT = 300;
     public int WIDTH = 400;
-    private static ArrayList<SortVisualBar> blocks = new ArrayList<SortVisualBar>();
+    private static ArrayList<SortVisualBar> blocks = new ArrayList<>();
 
     public void start(Stage stage) {
         //store blocks somewhere
