@@ -1,4 +1,4 @@
-package test.logic;
+package tests.logic;
 
 import entity.Blockade;
 import entity.Unit;

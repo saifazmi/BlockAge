@@ -1,4 +1,4 @@
-package test.logic;
+package tests.logic;
 
 import graph.Graph;
 import graph.GraphNode;

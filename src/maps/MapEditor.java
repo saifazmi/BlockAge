@@ -105,9 +105,13 @@ public class MapEditor implements Menu {
 
     public void clearNodes() {
         for (int i = 0; i < mapEditorGraph.getNodes().size(); i++) {
-            mapEditorGraph.getNodes().get(i).setBlockade(null);
+            Blockade blockade = mapEditorGraph.getNodes().get(i).getBlockade();
+            if (blockade != null) {
+                mapEditorRenderer.remove(blockade.getSprite());
+                mapEditorGraph.getNodes().get(i).setBlockade(null);
+            }
         }
 
-        //mapEditorRenderer.drawInitialEntity()
+
     }
 }

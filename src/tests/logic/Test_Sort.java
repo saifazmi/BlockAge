@@ -1,4 +1,4 @@
-package test.logic;
+package tests.logic;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
