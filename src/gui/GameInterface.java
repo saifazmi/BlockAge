@@ -3,7 +3,6 @@ package gui;
 import core.CoreEngine;
 import core.GameRunTime;
 import entity.SortableBlockade;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -193,7 +192,7 @@ public class GameInterface {
         sortVisualisationPane.setStyle("-fx-border-color: white");
         sortVisualisationPane.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         sortVisualisationPane.setLayoutY(initialPositionY + 3 * heightSpacing + 90);
-        sortVisualisationPane.setPadding(new Insets(12, 12, 12, 12));
+
 
         // Set the properties for the play button
         b.setButtonProperties(playButton, "", rightPaneWidth / 2 - 50 - playImage.getWidth(), initialPositionY + 3.5 * heightSpacing + 290, ElementsHandler::handle, new ImageView(playImage));

@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
-import sorts.visual.SortVisualBar;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -97,7 +96,10 @@ public final class LambdaStore {
         Unit unit = (Unit) sprite.getEntity();
         sprite.requestFocus();
 
-        if(unit.getSorting() != null) {
+        for (int i = 0; i < 4; i++)
+            GameInterface.unitTextPane.getChildren().get(i).setVisible(true);
+
+        if (unit.getSorting() != null) {
             unit.getSorting().getSortVisual().display(true);
         }
 

@@ -25,7 +25,6 @@ import menus.Options;
 import menus.OptionsMenu;
 import menus.PauseMenu;
 import sorts.visual.SortVisual;
-import sorts.visual.SortVisualBar;
 import sound.SoundManager;
 import stores.ImageStore;
 import stores.LambdaStore;
@@ -46,6 +45,7 @@ public class ElementsHandler {
     //private static CoreEngine engine = CoreEngine.Instance();
 
     public static Options options = new Options();
+    public static Tutorial tutorial = new Tutorial();
 
     /**
      * Handles the events for the buttons
@@ -118,11 +118,37 @@ public class ElementsHandler {
             }
         }
 
+        if (event.getSource() == OptionsMenu.yesButtonTutorial) {
+            options.setTutorial(false);
+            if (Tutorial.active == true) {
+                Tutorial.reset();
+            }
+            engine.setPaused(true);
+            b.setButtonProperties(OptionsMenu.noButtonTutorial, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+                    ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
+            b.addHoverEffect(OptionsMenu.noButtonTutorial, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonTutorial)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonTutorial);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonTutorial);
+            }
+        }
+
+        if (event.getSource() == OptionsMenu.noButtonTutorial) {
+            options.setTutorial(true);
+            b.setButtonProperties(OptionsMenu.yesButtonTutorial, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+                    ElementsHandler::handle, new ImageView(OptionsMenu.onImage));
+            b.addHoverEffect(OptionsMenu.yesButtonTutorial, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonTutorial)) {
+                OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonTutorial);
+                OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonTutorial);
+            }
+        }
+
         if (event.getSource() == OptionsMenu.yesButtonB) {
             options.setInitialBlockades(false);
-            b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+            b.setButtonProperties(OptionsMenu.noButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 3 * OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle, new ImageView(OptionsMenu.offImage));
-            b.addHoverEffect(OptionsMenu.noButtonB, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            b.addHoverEffect(OptionsMenu.noButtonB, OptionsMenu.offImageHovered, OptionsMenu.offImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 3 * OptionsMenu.spaceBetweenImgH);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.noButtonB)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.yesButtonB);
                 OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.noButtonB);
@@ -131,9 +157,9 @@ public class ElementsHandler {
 
         if (event.getSource() == OptionsMenu.noButtonB) {
             options.setInitialBlockades(true);
-            b.setButtonProperties(OptionsMenu.yesButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH,
+            b.setButtonProperties(OptionsMenu.yesButtonB, "", Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 3 * OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle, new ImageView(OptionsMenu.onImage));
-            b.addHoverEffect(OptionsMenu.yesButtonB, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 2 * OptionsMenu.spaceBetweenImgH);
+            b.addHoverEffect(OptionsMenu.yesButtonB, OptionsMenu.onImageHovered, OptionsMenu.onImage, Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText, Menu.HEIGHT / 3 + 3 * OptionsMenu.spaceBetweenImgH);
             if (!OptionsMenu.optionsMenuPane.getChildren().contains(OptionsMenu.yesButtonB)) {
                 OptionsMenu.optionsMenuPane.getChildren().remove(OptionsMenu.noButtonB);
                 OptionsMenu.optionsMenuPane.getChildren().add(OptionsMenu.yesButtonB);
@@ -209,20 +235,20 @@ public class ElementsHandler {
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
             } else if (k == KeyCode.B) {
                 LambdaStore.Instance().setBlockadeClickEvent(event.isShiftDown());
-            } else if (k == KeyCode.SPACE) {
+            } else if (k == KeyCode.SPACE && Tutorial.active == false) {
                 if (engine.isPaused()) {
+                    if (SortVisual.seq != null)
+                        SortVisual.seq.play();
                     engine.setPaused(false);
                 } else {
+                    if (SortVisual.seq != null)
+                        SortVisual.seq.pause();
                     engine.setPaused(true);
                 }
             } else if (k == KeyCode.R && options.getShowPath()) {
-                ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), false);
+
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {
-                GameInterface.namePaneLabel.setText("");
-                GameInterface.searchPaneLabel.setText("");
-                GameInterface.sortPaneLabel.setText("");
-                GameInterface.unitImage.setGraphic(null);
                 ArrayList<Entity> units = engine.getEntities();
                 for (int i = 0; i < units.size(); i++) {
                     if (units.get(i) instanceof Unit) {
@@ -230,14 +256,13 @@ public class ElementsHandler {
                         pressedToNotPressed(obtainedSprite);
                     }
                 }
-                if(SortVisual.rendered != null) {
+                if (SortVisual.rendered != null) {
                     SortVisual.rendered.display(false);
                 }
-//                Entity entity = GameRunTime.Instance().getLastClicked().getEntity();
-//                if(entity instanceof Unit) {
-//                    ((Unit) entity).getSorting().getSortVisual().display(false);
-//                } else
+
                 GameInterface.unitDescriptionText.clear();
+                for (int i = 0; i < 4; i++)
+                    GameInterface.unitTextPane.getChildren().get(i).setVisible(false);
                 Tutorial.routeShown = false;
                 Tutorial.visualShown = false;
             } else if (k == KeyCode.ENTER && Tutorial.active) {
@@ -325,8 +350,8 @@ public class ElementsHandler {
             }
 
             LOG.log(Level.INFO, "GOAL found!!!");
-            //UnitSpawner spawner = new UnitSpawner(1, goal);
-            UnitSpawner spawner = new UnitSpawner(5, goal);
+
+            UnitSpawner spawner = new UnitSpawner(3, goal);
             CoreEngine.Instance().setSpawner(spawner);
 
             engine.setPaused(!Tutorial.active);

@@ -363,7 +363,7 @@ public class Unit extends Entity {
      * @param position the position to be checked
      * @return whether the position has a block
      */
-    private Boolean blockCheck(GraphNode position) {
+    public boolean blockCheck(GraphNode position) {
         Blockade blockade = position.getBlockade();
         if (blockade == null) {
 
@@ -371,19 +371,14 @@ public class Unit extends Entity {
             position.getUnits().add(this);
             setPosition(position);
             return true;
-
         } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null && sorting == null) {
-
             sorting = (SortableBlockade) blockade;
-//            Thread t = new Thread(() ->
-//            {
-                SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
-                ((SortableBlockade) blockade).setSortVisual(sortVisual);
-                Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
-//            });
-//            t.start();
+            SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
+            ((SortableBlockade) blockade).setSortVisual(sortVisual);
+            sortVisual.getPane().setLayoutX(424 / 2 - 300 / 2 + 20);
+            sortVisual.getPane().setLayoutY(50 + 3 * 30 + 90);
+            Platform.runLater(() -> GameInterface.rightMenuBox.getChildren().add(sortVisual.getPane()));
             return false;
-
         } else {
 
             return false;

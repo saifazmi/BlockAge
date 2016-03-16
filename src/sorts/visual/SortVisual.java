@@ -4,10 +4,13 @@ import core.CoreEngine;
 import entity.SortableBlockade;
 import entity.Unit;
 import entity.Unit.Sort;
+import gui.GameInterface;
+import gui.Renderer;
 import javafx.animation.FillTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
@@ -16,6 +19,7 @@ import javafx.util.Duration;
 import sorts.logic.BubbleSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
+import stores.ImageStore;
 
 import java.util.ArrayList;
 
@@ -31,20 +35,16 @@ import java.util.ArrayList;
  * in a way that can be easily usable by a visualizer, which is also here.
  */
 public class SortVisual {
-    public int HEIGHT = 200;
-    public int WIDTH = 300;
-
-    public ArrayList<SortVisualBar> getBlocks() {
-        return blocks;
-    }
-
+    public int HEIGHT = 260;
+    public int WIDTH = 280;
+    public static SequentialTransition seq = null;
     private ArrayList<SortVisualBar> blocks; //sorts all the visual block objects
     private ArrayList<SortableComponent> sorts; //all RELEVANT sort states, swapped and the state before a swap
     private ArrayList<Tuple> tuples; //used to store WHAT is swapped in a state
     private SortableBlockade block; //the physical blockade on the map passed in
 
-    public Pane getSortPane() {
-        return sortPane;
+    public ArrayList<SortVisualBar> getBlocks() {
+        return blocks;
     }
 
     private Pane sortPane = null;
@@ -67,12 +67,22 @@ public class SortVisual {
         this.sort = unit.getSort();
         this.block = block;
         this.unit = unit;
+        highlightBlock();
         start();
+    }
 
+    /**
+     * Highlights the current block the unit is sorting
+     */
+    public void highlightBlock() {
+        Platform.runLater(() -> Renderer.Instance().remove(block.getSprite()));
+        Platform.runLater(() -> ImageStore.setSpriteProperties(block, ImageStore.sortableBiggerImage));
+        Platform.runLater(() -> Renderer.Instance().drawInitialEntity(block));
     }
 
     public void start() {
         tuples = new ArrayList<>();
+
 
         // DFS unit
         if (this.sort == Unit.Sort.BUBBLE) sorts = BubbleSort.sort(block.getToSortArray());
@@ -85,13 +95,17 @@ public class SortVisual {
 
         sortPane = new Pane();
         sortPane.setOpacity(0.0);
-        sortPane.setStyle("-fx-background-color: gray;");
+
+        sortPane.setStyle("-fx-background-color: #838b83;");
+        GameInterface.sortVisualisationPane.setStyle("-fx-background-color: #838b83;");
         sortPane.setPrefSize(WIDTH, HEIGHT);
         //make blocks
         blocks = new ArrayList<>();
         for (double x = 0; x < 11; x++) {              //width  //height
-            SortVisualBar block = new SortVisualBar(15.0, (x * 15.0), Color.INDIANRED, (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
-            int loc = 40; //calculate x pos for block
+
+            SortVisualBar block = new SortVisualBar(15.0, (x * 15.0), Color.web("#7092BE"), (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
+            if (x == 0) block.setStroke(null);
+            int loc = 40;
             if (x != 0) {
                 int pos = find(x - 1);
                 loc = 40 + (20 * pos);
@@ -241,7 +255,7 @@ public class SortVisual {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
 
-        SequentialTransition seq = new SequentialTransition(col1, col2, tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
+        seq = new SequentialTransition(col1, col2, tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -266,6 +280,7 @@ public class SortVisual {
                     CoreEngine.Instance().removeEntity(block);
                     unit.setSorting(null);
                     block.setSortVisual(null);
+
                 }
             }
         });
@@ -295,7 +310,7 @@ public class SortVisual {
 
     public void display(boolean display) {
         double opacity;
-        if(display) {
+        if (display) {
             opacity = 1.0;
             rendered = this;
         } else {
@@ -303,7 +318,7 @@ public class SortVisual {
             rendered = null;
         }
         ArrayList<SortVisualBar> bars = getBlocks();
-        for(SortVisualBar bar : bars) {
+        for (SortVisualBar bar : bars) {
             bar.setOpacity(opacity);
         }
         sortPane.setOpacity(opacity);

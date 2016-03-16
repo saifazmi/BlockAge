@@ -1,5 +1,6 @@
 package sorts.visual;
 
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
@@ -26,6 +27,7 @@ public class SortVisualBar extends Rectangle {
     public SortVisualBar(double width, double height, Paint fill, int value) {
         super(width, height, fill);
         this.value = value;
+        this.setStroke(Color.BLACK);
     }
 
     public int getValue() {
