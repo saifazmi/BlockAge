@@ -15,6 +15,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import sorts.logic.BubbleSort;
 import sorts.logic.SelectionSort;
@@ -117,6 +120,15 @@ public class SortVisual {
             block.setUpdateX(block.getLayoutX()); //set custom variable needed for animation
             blocks.add(block); //add to global list of blocks
         }
+
+        Text tempSign = new Text("TEMP");
+        tempSign.setFill(Color.AQUA);
+        tempSign.setFont(Font.font("Verdana", FontWeight.BOLD,18));
+        tempSign.setRotate(-90);
+        sortPane.getChildren().add(tempSign);
+        tempSign.relocate(-WIDTH/15,HEIGHT-45);
+        tempSign.relocate(-WIDTH/15,HEIGHT-45);
+
         ArrayList<SortVisualBar> blocksTemp = new ArrayList<>();
         //logical positioning in the data structure, they are ordered visually above,
         //but now need to be in the corresponding place in the data structure as well
@@ -212,8 +224,9 @@ public class SortVisual {
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
         //TODO: provisional code insertion test, also label
-        FillTransition col1 = new FillTransition(Duration.millis(10), b1, Color.INDIANRED, Color.AQUA);
-        FillTransition col2 = new FillTransition(Duration.millis(10), b2, Color.INDIANRED, Color.AQUA);
+        FillTransition col1 = new FillTransition(Duration.millis(10),b1,Color.web("#7092BE"),Color.AQUA);
+        FillTransition col2 = new FillTransition(Duration.millis(10),b2,Color.web("#7092BE"),Color.AQUA);
+        ParallelTransition colx = new ParallelTransition(col1,col2);
 
 
         // first block , 3 transitions  UP LEFT DOWN
@@ -255,12 +268,12 @@ public class SortVisual {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
 
-        seq = new SequentialTransition(col1, col2, tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
+        seq = new SequentialTransition(colx, tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FillTransition col1x = new FillTransition(Duration.millis(10), b1, Color.AQUA, Color.INDIANRED);
-                FillTransition col2x = new FillTransition(Duration.millis(10), b2, Color.AQUA, Color.INDIANRED);
+                FillTransition col1x = new FillTransition(Duration.millis(300), b1, Color.AQUA, Color.web("#7092BE"));
+                FillTransition col2x = new FillTransition(Duration.millis(300), b2, Color.AQUA, Color.web("#7092BE"));
                 ParallelTransition colShift = new ParallelTransition(col1x, col2x);
                 colShift.play();
 
