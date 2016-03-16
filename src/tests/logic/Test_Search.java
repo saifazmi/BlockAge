@@ -76,7 +76,13 @@ public class Test_Search extends Test_Logic {
         GraphNode goalNode = graph.nodeWith((new GraphNode(xGoal, yGoal)));
 
         SpriteImage sprite = new SpriteImage(null, null);
-        Unit newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+
+        Unit newUnit;
+        try {newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);}
+        catch (ExceptionInInitializerError e) {
+            newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+        }
+
         sprite.setEntity(newUnit);
         startNode.getUnits().add(newUnit);
         this.testUnit = newUnit;
@@ -132,5 +138,6 @@ public class Test_Search extends Test_Logic {
 
         Assert.assertEquals(passed, true);
     }
+
 
 }
