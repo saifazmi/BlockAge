@@ -4,20 +4,16 @@ import core.BaseSpawner;
 import core.CoreEngine;
 import core.GameRunTime;
 import core.UnitSpawner;
-import entity.Base;
 import entity.Entity;
 import entity.Unit;
 import graph.GraphNode;
-import gui.CoreGUI;
 import gui.GameInterface;
 import gui.Renderer;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import maps.MapChooserInterface;
 import maps.MapEditor;
 import maps.MapEditorInterface;
@@ -170,7 +166,7 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             quitGame();
             //@TODO added while new game is broken
-            System.exit(0);
+//            System.exit(0);
         }
 
         // Elements in the End Game Menu Scene
@@ -179,7 +175,7 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             quitGame();
             //@TODO added while new game is broken
-            System.exit(0);
+//            System.exit(0);
         }
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
