@@ -4,8 +4,12 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
- * @author : First created by Evgeniy Kim with code by Evgeniy Kim
+ * @author : Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
+ * <p>
+ * Custom visual object extending Rectangle, which stores a value to help track
+ * what the object is in accordance to the sort, and has an additional x value
+ * specifically for updating logical location. (Normal javaFX x values are not adequate)
  */
 public class SortVisualBar extends Rectangle {
     private int value;
@@ -18,16 +22,6 @@ public class SortVisualBar extends Rectangle {
     public void setUpdateX(double updateX) {
         this.updateX = updateX;
     }
-
-    public int getLogicalPosition() {
-        return logicalPosition;
-    }
-
-    public void setLogicalPosition(int logicalPosition) {
-        this.logicalPosition = logicalPosition;
-    }
-
-    private int logicalPosition;
 
     public SortVisualBar(double width, double height, Paint fill, int value) {
         super(width, height, fill);

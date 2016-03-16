@@ -49,6 +49,11 @@ public class MapChooserInterface {
         return instance;
     }
 
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     private MapChooserInterface() {
         mapChooseStage = new Stage();
         images = new HBox();

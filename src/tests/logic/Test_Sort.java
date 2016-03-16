@@ -3,7 +3,6 @@ package tests.logic;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import sorts.logic.BubbleSort;
-import sorts.logic.QuickSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
 
@@ -54,28 +53,15 @@ public class Test_Sort {
      */
     @Test()
     public void bubbleSort() {
-        ArrayList<Integer> list = createList(200);
+        int testAmount = 10;
+        boolean passed = true;
 
-        ArrayList<SortableComponent> states = BubbleSort.sort(list);
-
-        boolean passed = sortTest(states);
-
-        Assert.assertEquals(passed, true);
-    }
-
-    /**
-     * Testing function of the output of the quick sort mechanism
-     * Check if list is sorted
-     */
-    @Test()
-    public void quickSort() {
-        QuickSort o = new QuickSort();
-        ArrayList states = o.sort(200);
-
-        boolean passed = sortTest(states);
+        while (passed && testAmount > 0) {
+            passed = sortTest(BubbleSort.sort(createList(100)));
+            testAmount--;
+        }
 
         Assert.assertEquals(passed, true);
-
     }
 
     /**
@@ -84,11 +70,13 @@ public class Test_Sort {
      */
     @Test()
     public void selectionSort() {
-        ArrayList<Integer> list = createList(200);
+        int testAmount = 10;
+        boolean passed = true;
 
-        ArrayList<SortableComponent> states = SelectionSort.sort(list);
-
-        boolean passed = sortTest(states);
+        while (passed && testAmount > 0) {
+            passed = sortTest(SelectionSort.sort(createList(100)));
+            testAmount--;
+        }
 
         Assert.assertEquals(passed, true);
 

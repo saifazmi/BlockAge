@@ -51,6 +51,11 @@ public class GameRunTime {
         return instance;
     }
 
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     /**
      * Constructor for the game run time.
      * Initialises the engine, renderer, and unit unitSpawner
@@ -101,7 +106,7 @@ public class GameRunTime {
         mainGamePane.setBackground(new Background(myBIF));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
 
-        new Renderer();
+        Renderer.Instance();
         mainGamePane.setCenter(Renderer.Instance());
 
         mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
@@ -165,13 +170,5 @@ public class GameRunTime {
     public void setBasePlaced(boolean basePlaced) {
 
         this.basePlaced = basePlaced;
-    }
-
-    /**
-     * Starts the game by instantiating the BaseSpawner
-     */
-    public void startGame() {
-
-        new BaseSpawner();
     }
 }

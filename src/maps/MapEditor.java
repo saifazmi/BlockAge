@@ -6,7 +6,6 @@ import graph.GraphNode;
 import gui.CoreGUI;
 import gui.Renderer;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -21,6 +20,7 @@ import menus.Menu;
 import stores.ImageStore;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by hung on 04/03/16.
@@ -36,13 +36,34 @@ public class MapEditor implements Menu {
     private MapEditorInterface mapEditorInterface;
     private MapChooserInterface mapChooserInterface;
 
+    private static MapEditor instance = null;
+
+    /**
+     * Implements Singleton for this class (Only one can exist)
+     *
+     * @return the only game runtime to be created
+     */
+    public static MapEditor Instance() {
+
+        if (instance == null) {
+            instance = new MapEditor();
+        }
+        return instance;
+    }
+
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     // General Map Editor manager for scene, renderer and events
-    public MapEditor() {
+    private MapEditor() {
         createGraph();
 
-        mapEditorRenderer = new Renderer();
+        //@todo delete after map quits
+        Renderer.delete();
+        mapEditorRenderer = Renderer.Instance();
         mapEditorRenderer.calculateSpacing();
-        mapEditorRenderer.initialDraw();
 
         //initialiseScene();
         mapEditorPane = new BorderPane();
@@ -53,10 +74,11 @@ public class MapEditor implements Menu {
 
         BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         mapEditorPane.setBackground(new Background(myBIF));
-        Group mapEditor = new Group(mapEditorPane);
-        mapEditorScene = new Scene(mapEditor, CoreGUI.WIDTH, CoreGUI.HEIGHT);
-        ((BorderPane) ((Group) mapEditorScene.getRoot()).getChildren().get(0)).setCenter(mapEditorRenderer);
+        //Group mapEditor = new Group(mapEditorPane);
+        mapEditorScene = new Scene(mapEditorPane, CoreGUI.WIDTH, CoreGUI.HEIGHT);
+        ((BorderPane) mapEditorScene.getRoot()).setCenter(mapEditorRenderer);
         mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
+        mapEditorRenderer.initialDraw();
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
     }
 
@@ -104,14 +126,13 @@ public class MapEditor implements Menu {
     }
 
     public void clearNodes() {
-        for (int i = 0; i < mapEditorGraph.getNodes().size(); i++) {
-            Blockade blockade = mapEditorGraph.getNodes().get(i).getBlockade();
+        List<GraphNode> graph = mapEditorGraph.getNodes();
+        for (GraphNode aGraph : graph) {
+            Blockade blockade = aGraph.getBlockade();
             if (blockade != null) {
                 mapEditorRenderer.remove(blockade.getSprite());
-                mapEditorGraph.getNodes().get(i).setBlockade(null);
+                aGraph.setBlockade(null);
             }
         }
-
-
     }
 }

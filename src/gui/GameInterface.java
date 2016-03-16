@@ -57,7 +57,21 @@ public class GameInterface {
     public SortVisual sortVisual = null;
     public SortableBlockade sortableBlockade;
 
-    public GameInterface() {
+    private static GameInterface instance = null;
+
+    public static GameInterface Instance() {
+        if (instance == null) {
+            instance = new GameInterface();
+        }
+        return instance;
+    }
+
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
+    private GameInterface() {
         loadFont();
         declareElements();
         rightPane();
@@ -129,11 +143,6 @@ public class GameInterface {
         unitDescriptionLabel.setLayoutX(rightPaneWidth / 2 - 175 / 2);
         unitDescriptionLabel.setLayoutY(initialPositionY);
         unitDescriptionLabel.setTextFill(Color.web("#FFE130"));
-
-        unitDescriptionText.setPrefSize(300, 90);
-        unitDescriptionText.setLayoutX(rightPaneWidth / 2 - 300 / 2);
-        unitDescriptionText.setLayoutY(initialPositionY + heightSpacing);
-        unitDescriptionText.setEditable(false);
 
         // UNIT TEXT PANE
         unitTextPane.setPrefSize(300, 90);

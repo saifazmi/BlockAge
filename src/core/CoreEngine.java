@@ -58,6 +58,11 @@ public class CoreEngine {
         return instance;
     }
 
+    public static boolean delete() {
+        instance = null;
+        return true;
+    }
+
     /**
      * The graph used by the game instance will be instantiated in the CoreEngine,
      * All the nodes will be created and added to the graph, each will have their corresponding neighbours added
@@ -327,7 +332,7 @@ public class CoreEngine {
 
         // remove the given entity
         boolean removed = entities.remove(entity);
-
+        entities.trimToSize();
         // check if the entity was logically removed
         if (removed) {
 

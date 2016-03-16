@@ -44,8 +44,6 @@ public class GraphNode {
     }
 
     /**
-     *
-     *
      * @param graph
      */
     public void addNeighbours(Graph graph) {
@@ -105,8 +103,6 @@ public class GraphNode {
     }
 
     /**
-     *
-     *
      * @param node
      * @param graph
      */

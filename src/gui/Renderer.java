@@ -45,10 +45,14 @@ public class Renderer extends Group {
         return instance;
     }
 
-    public Renderer() {
+    private Renderer() {
         super();
-        instance = this;
         this.entitiesToDraw = new ArrayList<>();
+    }
+
+    public static boolean delete() {
+        instance = null;
+        return true;
     }
 
     public double getXSpacing() {
