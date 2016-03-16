@@ -2,7 +2,6 @@ package stores;
 
 import core.CoreEngine;
 import core.GameRunTime;
-import core.UnitSpawner;
 import entity.Blockade;
 import entity.Entity;
 import entity.SortableBlockade;
@@ -18,7 +17,6 @@ import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -94,8 +92,8 @@ public final class LambdaStore {
     private final EventHandler<MouseEvent> unitClickEvent = e -> {
         System.out.println("Here guys");
 
-        SpriteImage sprite = (SpriteImage)e.getSource();
-        Unit unit = (Unit)sprite.getEntity();
+        SpriteImage sprite = (SpriteImage) e.getSource();
+        Unit unit = (Unit) sprite.getEntity();
         sprite.requestFocus();
 
         Unit.Search search = unit.getSearch();
@@ -146,9 +144,13 @@ public final class LambdaStore {
         }
     };
 
-    public EventHandler<MouseEvent> getPlaceUnbreakableBlockade() { return sceneClickPlaceUnbreakableBlockade; }
+    public EventHandler<MouseEvent> getPlaceUnbreakableBlockade() {
+        return sceneClickPlaceUnbreakableBlockade;
+    }
 
-    public EventHandler<MouseEvent> getPlaceBreakableBlockade() { return sceneClickPlaceBreakableBlockade; }
+    public EventHandler<MouseEvent> getPlaceBreakableBlockade() {
+        return sceneClickPlaceBreakableBlockade;
+    }
 
     public void setBlockadeClickEvent(boolean sortable) {
         if (scene.getOnMouseClicked() == null) {
@@ -178,5 +180,7 @@ public final class LambdaStore {
         }
     }
 
-    public EventHandler<MouseEvent> getUnitClickEvent() { return unitClickEvent; }
+    public EventHandler<MouseEvent> getUnitClickEvent() {
+        return unitClickEvent;
+    }
 }

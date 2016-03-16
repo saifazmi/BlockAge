@@ -22,14 +22,13 @@ import java.util.ArrayList;
 /**
  * @author : Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- *
+ * <p>
  * The central class for displaying the sort visual. Loosely based on the Model-View-Controller model.
  * This class contains both: Controller and View, and the Model being individual Sort classes.
  * However instead of the Controller constantly changing the Model, it does it all in one go:
  * after a sort is chosen, all sort 'states' which are steps from the beginning to the end where the
  * list is sorted, are stored with swapped flags where necessary. This class then unwraps that information
  * in a way that can be easily usable by a visualizer, which is also here.
- *
  */
 public class SortVisual {
     public int HEIGHT = 200;
@@ -104,6 +103,7 @@ public class SortVisual {
 
     /**
      * Used to generate a correct location for a block.
+     *
      * @param s
      * @return x position
      */
@@ -140,6 +140,7 @@ public class SortVisual {
     /**
      * Finds what needs to be swapped LOGICALLY
      * returns a tuple of what is to be swapped
+     *
      * @param sortState current state
      * @param currentID current number of state
      * @return Tuple which potentially has to be swapped
@@ -183,8 +184,8 @@ public class SortVisual {
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
         //TODO: provisional code insertion test, also label
-        FillTransition col1 = new FillTransition(Duration.millis(10),b1,Color.INDIANRED,Color.AQUA);
-        FillTransition col2 = new FillTransition(Duration.millis(10),b2,Color.INDIANRED,Color.AQUA);
+        FillTransition col1 = new FillTransition(Duration.millis(10), b1, Color.INDIANRED, Color.AQUA);
+        FillTransition col2 = new FillTransition(Duration.millis(10), b2, Color.INDIANRED, Color.AQUA);
 
 
         // first block , 3 transitions  UP LEFT DOWN
@@ -226,13 +227,13 @@ public class SortVisual {
         gyy.setFromY(-200); //this is how it works...dont ask
         gyy.setToY(0);
 
-        SequentialTransition seq = new SequentialTransition(col1,col2,tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
+        SequentialTransition seq = new SequentialTransition(col1, col2, tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FillTransition col1x = new FillTransition(Duration.millis(10),b1,Color.AQUA,Color.INDIANRED);
-                FillTransition col2x = new FillTransition(Duration.millis(10),b2,Color.AQUA,Color.INDIANRED);
-                ParallelTransition colShift = new ParallelTransition(col1x,col2x);
+                FillTransition col1x = new FillTransition(Duration.millis(10), b1, Color.AQUA, Color.INDIANRED);
+                FillTransition col2x = new FillTransition(Duration.millis(10), b2, Color.AQUA, Color.INDIANRED);
+                ParallelTransition colShift = new ParallelTransition(col1x, col2x);
                 colShift.play();
 
                 if (swapIndex != tuples.size() - 1) {

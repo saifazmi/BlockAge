@@ -3,7 +3,7 @@ package sorts.visual;
 /**
  * @author : Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- *  Simple tuple class for use in swap indexes for sorting.
+ * Simple tuple class for use in swap indexes for sorting.
  */
 public class Tuple {
 

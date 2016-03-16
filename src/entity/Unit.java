@@ -44,7 +44,7 @@ public class Unit extends Entity {
 
     public void setSorting(SortableBlockade sorting) {
         this.sorting = sorting;
-        if(sorting == null) {
+        if (sorting == null) {
             this.completedMove = true;
         }
     }
@@ -389,6 +389,7 @@ public class Unit extends Entity {
             return false;
         }
     }
+
     /**
      * Updates the unit's position per frame, if it has completed its previous move, called by CoreEngine.
      * Takes the first node from what remains of the route this unit is following and calculate the difference between
@@ -430,7 +431,7 @@ public class Unit extends Entity {
                     transition.play();
 
                 } else {
-                    if(sorting != null) {
+                    if (sorting != null) {
                         //nextNode = null;
                         //this.completedMove = true;
                     } else {
@@ -461,8 +462,9 @@ public class Unit extends Entity {
             }
         }
     }
+
     @Override
-    public void update(){
+    public void update() {
         if (completedMove) {
 
             if (route.size() > 0) {
@@ -477,7 +479,7 @@ public class Unit extends Entity {
 
                 boolean result = logicalMove(xChange, yChange);
 
-                if(result) {
+                if (result) {
 
                     double nextPixelX = x * renderer.getXSpacing();
                     double nextPixelY = y * renderer.getYSpacing();
@@ -488,7 +490,7 @@ public class Unit extends Entity {
                     transition.setOnFinished(e -> this.completedMove = true);
                     transition.play();
                 } else {
-                    if(this.sorting == null) {
+                    if (this.sorting == null) {
                         decideRoute();
                         this.completedMove = true;
                     } else {

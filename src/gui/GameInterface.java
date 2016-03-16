@@ -60,7 +60,7 @@ public class GameInterface {
     private static GameInterface instance = null;
 
     public static GameInterface Instance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new GameInterface();
         }
         return instance;

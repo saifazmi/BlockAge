@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- *
+ * <p>
  * SelectionSort with use of SortableComponent, making it possible to visuailze at SortVisual class
  */
 public class SelectionSort {
@@ -22,18 +22,18 @@ public class SelectionSort {
         ArrayList<SortableComponent> allStates = new ArrayList<>();
 
         int i, j;
-        for (j = 0;j<size-1;j++){
+        for (j = 0; j < size - 1; j++) {
             int minimum = j;
-            for (i=j+1;i<size;i++){
+            for (i = j + 1; i < size; i++) {
                 SortableComponent s = new SortableComponent(getByValue(state), minimum, i, false);
                 allStates.add(s);
-                if (state.get(i) < state.get(minimum)){
+                if (state.get(i) < state.get(minimum)) {
                     minimum = i;
                     SortableComponent c = new SortableComponent(getByValue(state), j, i, true);
                     allStates.add(c);
                 }
             }
-            if (minimum != j){ //swapping
+            if (minimum != j) { //swapping
                 Integer temp = state.get(j);
                 state.set(j, state.get(minimum));
                 state.set(minimum, temp);

@@ -223,7 +223,7 @@ public class ElementsHandler {
                 GameInterface.unitImage.setGraphic(null);
                 ArrayList<Entity> units = engine.getEntities();
                 for (int i = 0; i < units.size(); i++) {
-                    if(units.get(i) instanceof Unit) {
+                    if (units.get(i) instanceof Unit) {
                         SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
                         pressedToNotPressed(obtainedSprite);
                     }

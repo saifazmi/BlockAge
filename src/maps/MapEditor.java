@@ -6,7 +6,6 @@ import graph.GraphNode;
 import gui.CoreGUI;
 import gui.Renderer;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -77,7 +76,7 @@ public class MapEditor implements Menu {
         mapEditorPane.setBackground(new Background(myBIF));
         //Group mapEditor = new Group(mapEditorPane);
         mapEditorScene = new Scene(mapEditorPane, CoreGUI.WIDTH, CoreGUI.HEIGHT);
-        ((BorderPane)mapEditorScene.getRoot()).setCenter(mapEditorRenderer);
+        ((BorderPane) mapEditorScene.getRoot()).setCenter(mapEditorRenderer);
         mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
         mapEditorRenderer.initialDraw();
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);

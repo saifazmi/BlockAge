@@ -1,10 +1,8 @@
 package maps;
 
 import gui.GameInterface;
-import gui.Renderer;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -196,7 +194,7 @@ public class MapEditorInterface {
         rightMenuBox.getChildren().addAll(saveButton, backButton, clearButton, instructionTextLabel, fileNameLabel, fileNameBox, saveStatusLabel, saveStatus);
         rightMenuPane.getChildren().add(rightMenuBox);
 
-        ((BorderPane)scene.getRoot()).setRight(rightMenuPane);
+        ((BorderPane) scene.getRoot()).setRight(rightMenuPane);
     }
 
     public static void handle(ActionEvent event) {
@@ -211,7 +209,7 @@ public class MapEditorInterface {
             mapEditor.clearNodes();
             //Renderer.delete();
             //MapEditorInterface.delete();
-           //MapEditor.delete();
+            //MapEditor.delete();
         }
         if (event.getSource() == MapEditorInterface.no) {
             parser.setOverwrite(false);

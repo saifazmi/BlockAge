@@ -1,14 +1,11 @@
 package core;
 
-import entity.Entity;
 import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
-import gui.GameInterface;
 import gui.Renderer;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
 import stores.ImageStore;
@@ -182,11 +179,9 @@ public class UnitSpawner {
      */
     public void update() {
 
-        if (cooldown > 0)
-        {
+        if (cooldown > 0) {
             cooldown--;
-        }
-        else if (spawnCount < spawnlimit) {
+        } else if (spawnCount < spawnlimit) {
 
             this.cooldown = 300;
             spawnUnit();
@@ -198,7 +193,11 @@ public class UnitSpawner {
      *
      * @param spawnlimit number of unit allowed to spawn
      */
-    public void setSpawnlimit(int spawnlimit) { this.spawnlimit = spawnlimit; }
+    public void setSpawnlimit(int spawnlimit) {
+        this.spawnlimit = spawnlimit;
+    }
 
-    public Random getRndSearchGen() { return rndSearchGen; }
+    public Random getRndSearchGen() {
+        return rndSearchGen;
+    }
 }
