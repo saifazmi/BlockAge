@@ -75,14 +75,16 @@ public class SortVisual {
      * Highlights the current block the unit is sorting
      */
     public void highlightBlock() {
-        Platform.runLater(() -> Renderer.Instance().remove(block.getSprite()));
-        Platform.runLater(() -> ImageStore.setSpriteProperties(block, ImageStore.sortableBiggerImage));
-        Platform.runLater(() -> Renderer.Instance().drawInitialEntity(block));
+        Platform.runLater(() -> {
+            Renderer.Instance().remove(block.getSprite());
+            ImageStore.setSpriteProperties(block, ImageStore.sortableBiggerImage);
+            Renderer.Instance().drawInitialEntity(block);
+            block.getSprite().setOnMouseClicked(f -> block.getSortVisual().display(true));
+        });
     }
 
     public void start() {
         tuples = new ArrayList<>();
-
 
         // DFS unit
         if (this.sort == Unit.Sort.BUBBLE) sorts = BubbleSort.sort(block.getToSortArray());
@@ -94,10 +96,8 @@ public class SortVisual {
         if (this.sort == Unit.Sort.QUICK) sorts = SelectionSort.sort(block.getToSortArray());
 
         sortPane = new Pane();
-        sortPane.setOpacity(0.0);
-
         sortPane.setStyle("-fx-background-color: #838b83;");
-        GameInterface.sortVisualisationPane.setStyle("-fx-background-color: #838b83;");
+        sortPane.setOpacity(0.0);
         sortPane.setPrefSize(WIDTH, HEIGHT);
         //make blocks
         blocks = new ArrayList<>();
@@ -312,9 +312,11 @@ public class SortVisual {
         double opacity;
         if (display) {
             opacity = 1.0;
+            GameInterface.sortVisualisationPane.setStyle("-fx-background-color: #838b83;");
             rendered = this;
         } else {
             opacity = 0.0;
+            GameInterface.sortVisualisationPane.setStyle("-fx-background-color: transparent;");
             rendered = null;
         }
         ArrayList<SortVisualBar> bars = getBlocks();
@@ -322,5 +324,6 @@ public class SortVisual {
             bar.setOpacity(opacity);
         }
         sortPane.setOpacity(opacity);
+        GameInterface.sortVisualisationPane.setOpacity(opacity);
     }
 }
