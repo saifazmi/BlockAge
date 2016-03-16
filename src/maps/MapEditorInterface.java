@@ -196,7 +196,7 @@ public class MapEditorInterface {
         rightMenuBox.getChildren().addAll(saveButton, backButton, clearButton, instructionTextLabel, fileNameLabel, fileNameBox, saveStatusLabel, saveStatus);
         rightMenuPane.getChildren().add(rightMenuBox);
 
-        ((BorderPane) ((Group) scene.getRoot()).getChildren().get(0)).setRight(rightMenuPane);
+        ((BorderPane)scene.getRoot()).setRight(rightMenuPane);
     }
 
     public static void handle(ActionEvent event) {
@@ -209,9 +209,9 @@ public class MapEditorInterface {
         if (event.getSource() == MapEditorInterface.backButton) {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             mapEditor.clearNodes();
-            Renderer.delete();
-            MapEditorInterface.delete();
-            MapEditor.delete();
+            //Renderer.delete();
+            //MapEditorInterface.delete();
+           //MapEditor.delete();
         }
         if (event.getSource() == MapEditorInterface.no) {
             parser.setOverwrite(false);

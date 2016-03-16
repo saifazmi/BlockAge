@@ -164,7 +164,7 @@ public class ElementsHandler {
             engine.setRunning(false);
             MapChooserInterface.Instance().resetChosenMap();
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
-            quitGame();
+            //quitGame();
             //@TODO added while new game is broken
 //            System.exit(0);
         }

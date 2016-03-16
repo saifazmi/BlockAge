@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class MapEditor implements Menu {
 
-    private BorderPane mapEditorPane = null;
+    private Pane mapEditorPane = null;
     private Scene mapEditorScene = null;
 
     private Renderer mapEditorRenderer;
@@ -60,15 +60,15 @@ public class MapEditor implements Menu {
     // General Map Editor manager for scene, renderer and events
     private MapEditor() {
         createGraph();
-        mapEditorPane = new BorderPane();
 
         //@todo delete after map quits
         Renderer.delete();
         mapEditorRenderer = Renderer.Instance();
-        mapEditorPane.setCenter(mapEditorRenderer);
         mapEditorRenderer.calculateSpacing();
-        mapEditorRenderer.initialDraw();
 
+
+        //initialiseScene();
+        mapEditorPane = new BorderPane();
         final String SEPARATOR = File.separator;
         final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
@@ -76,10 +76,11 @@ public class MapEditor implements Menu {
 
         BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         mapEditorPane.setBackground(new Background(myBIF));
-        Group mapEditor = new Group(mapEditorPane);
-        mapEditorScene = new Scene(mapEditor, CoreGUI.WIDTH, CoreGUI.HEIGHT);
-        ((BorderPane) ((Group) mapEditorScene.getRoot()).getChildren().get(0)).setCenter(mapEditorRenderer);
+        //Group mapEditor = new Group(mapEditorPane);
+        mapEditorScene = new Scene(mapEditorPane, CoreGUI.WIDTH, CoreGUI.HEIGHT);
+        ((BorderPane)mapEditorScene.getRoot()).setCenter(mapEditorRenderer);
         mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
+        mapEditorRenderer.initialDraw();
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
     }
 
