@@ -23,6 +23,7 @@ import sorts.logic.BubbleSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
 import stores.ImageStore;
+import stores.LambdaStore;
 
 import java.util.ArrayList;
 
@@ -82,7 +83,7 @@ public class SortVisual {
             Renderer.Instance().remove(block.getSprite());
             ImageStore.setSpriteProperties(block, ImageStore.sortableBiggerImage);
             Renderer.Instance().drawInitialEntity(block);
-            block.getSprite().setOnMouseClicked(f -> block.getSortVisual().display(true));
+            block.getSprite().setOnMouseClicked(LambdaStore.Instance().getShowSort());
         });
     }
 
@@ -293,6 +294,9 @@ public class SortVisual {
                 CoreEngine.Instance().removeEntity(block);
                 unit.setSorting(null);
                 block.setSortVisual(null);
+                if(SortVisual.rendered != null && SortVisual.rendered.equals(this)) {
+                    SortVisual.rendered = null;
+                }
                 seq.remove(temp);
             }
         });
@@ -336,6 +340,40 @@ public class SortVisual {
             bar.setOpacity(opacity);
         }
         sortPane.setOpacity(opacity);
-        GameInterface.sortVisualisationPane.setOpacity(opacity);
+        //GameInterface.sortVisualisationPane.setOpacity(opacity);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SortVisual that = (SortVisual) o;
+
+        if (HEIGHT != that.HEIGHT) return false;
+        if (WIDTH != that.WIDTH) return false;
+        if (remove != that.remove) return false;
+        if (blocks != null ? !blocks.equals(that.blocks) : that.blocks != null) return false;
+        if (sorts != null ? !sorts.equals(that.sorts) : that.sorts != null) return false;
+        if (tuples != null ? !tuples.equals(that.tuples) : that.tuples != null) return false;
+        if (block != null ? !block.equals(that.block) : that.block != null) return false;
+        if (sortPane != null ? !sortPane.equals(that.sortPane) : that.sortPane != null) return false;
+        return unit != null ? unit.equals(that.unit) : that.unit == null && sort == that.sort;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = HEIGHT;
+        result = 31 * result + WIDTH;
+        result = 31 * result + (blocks != null ? blocks.hashCode() : 0);
+        result = 31 * result + (sorts != null ? sorts.hashCode() : 0);
+        result = 31 * result + (tuples != null ? tuples.hashCode() : 0);
+        result = 31 * result + (block != null ? block.hashCode() : 0);
+        result = 31 * result + (sortPane != null ? sortPane.hashCode() : 0);
+        result = 31 * result + (unit != null ? unit.hashCode() : 0);
+        result = 31 * result + (sort != null ? sort.hashCode() : 0);
+        result = 31 * result + (remove ? 1 : 0);
+        return result;
     }
 }
