@@ -41,9 +41,9 @@ public class Tutorial {
         GameInterface.sortVisualisationLabel.setText("Tutorial");
         GameInterface.sortVisualisationLabel.setLayoutX(212 - 87.5 / 2);
 
-        tutorial.setPrefSize(300, 260);
-        tutorial.setStyle("-fx-border-color: white");
-        tutorial.setFont(Font.loadFont(fontStream, 18));
+        tutorial.setPrefSize(270, 260);
+        tutorial.setFont(Font.loadFont(fontStream, 17));
+        tutorial.setLayoutX(15);
         tutorial.setTextFill(Color.web("#FFE130"));
         tutorial.setWrapText(true);
         tutorial.setOnKeyPressed(e ->
@@ -163,7 +163,7 @@ public class Tutorial {
         }
     }
 
-    private static void reset() {
+    public static void reset() {
         Tutorial.active = false;
         step = 0;
         tutorial = new Label();

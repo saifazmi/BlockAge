@@ -6,8 +6,10 @@ import graph.Graph;
 import graph.GraphNode;
 import gui.GameInterface;
 import gui.Renderer;
+import javafx.animation.SequentialTransition;
 import javafx.application.Platform;
 import sceneElements.Score;
+import sorts.visual.SortVisual;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -169,6 +171,11 @@ public class CoreEngine {
 
         LOG.log(Level.INFO, "Paused set:" + paused);
         this.paused = paused;
+        if(paused) {
+            SortVisual.seq.forEach(SequentialTransition::pause);
+        } else {
+            SortVisual.seq.forEach(SequentialTransition::play);
+        }
     }
 
     /**

@@ -371,95 +371,17 @@ public class Unit extends Entity {
             position.getUnits().add(this);
             setPosition(position);
             return true;
-
         } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null && sorting == null) {
-
             sorting = (SortableBlockade) blockade;
-            Thread t = new Thread(() ->
-            {
-                SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
-                ((SortableBlockade) blockade).setSortVisual(sortVisual);
-                Platform.runLater(() -> GameInterface.sortVisualisationPane.getChildren().add(sortVisual.getPane()));
-            });
-            t.start();
+            SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
+            ((SortableBlockade) blockade).setSortVisual(sortVisual);
+            sortVisual.getPane().setLayoutX(424 / 2 - 300 / 2 + 20);
+            sortVisual.getPane().setLayoutY(50 + 3 * 30 + 90);
+            Platform.runLater(() -> GameInterface.rightMenuBox.getChildren().add(sortVisual.getPane()));
             return false;
-
         } else {
 
             return false;
-        }
-    }
-
-    /**
-     * Updates the unit's position per frame, if it has completed its previous move, called by CoreEngine.
-     * Takes the first node from what remains of the route this unit is following and calculate the difference between
-     * that node and its current position, after that moves the unit with MoveUnit. This method also updates the unit's logical position,
-     * this is done after the unit moves graphically
-     */
-    //@Override
-    public void update2() {
-
-        if (completedMove) {
-            LOG.log(Level.INFO, "completed move");
-
-            if (this.nextNode != null) {
-
-                LOG.log(Level.INFO, "next node is " + this.nextNode);
-                this.position = this.nextNode;
-            }
-
-            if (route.size() > 0) {
-
-                this.completedMove = false;
-                this.nextNode = this.route.remove(0);
-
-                int x = this.nextNode.getX();
-                int y = this.nextNode.getY();
-                int xChange = this.nextNode.getX() - this.position.getX();
-                int yChange = this.nextNode.getY() - this.position.getY();
-
-                boolean result = logicalMove(xChange, yChange);
-                if (result) {
-
-                    double nextPixelX = x * renderer.getXSpacing();
-                    double nextPixelY = y * renderer.getYSpacing();
-
-                    TranslateTransition transition = new TranslateTransition(SPEED, sprite);
-                    transition.setToX(nextPixelX);
-                    transition.setToY(nextPixelY);
-                    transition.setOnFinished(e -> this.completedMove = true);
-                    transition.play();
-
-                } else {
-                    if (sorting != null) {
-                        //nextNode = null;
-                        //this.completedMove = true;
-                    } else {
-                        decideRoute();
-                        nextNode = null;
-                        this.completedMove = true;
-                    }
-
-                }
-
-            } else if (this.getPosition() == goal) {
-
-                nextNode = null;
-
-                Platform.runLater(() -> {
-
-                    CoreEngine.Instance().setPaused(true);
-                    MenuHandler.switchScene(MenuHandler.END_GAME_MENU);
-                });
-
-            } else {
-
-                nextNode = null;
-
-                CoreEngine.Instance().setPaused(true);
-                CoreEngine.Instance().getScore().halveScore();
-                Platform.runLater(() -> MenuHandler.switchScene(MenuHandler.END_GAME_MENU));
-            }
         }
     }
 

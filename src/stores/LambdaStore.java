@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sceneElements.ElementsHandler;
 import sceneElements.SpriteImage;
+import sorts.visual.SortVisual;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -83,18 +84,43 @@ public final class LambdaStore {
             SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
             if (blockade != null) {
                 renderer.drawInitialEntity(blockade);
+                blockade.getSprite().setOnMouseClicked(getShowSort());
                 CoreEngine.Instance().getEntities().add(blockade);
                 CoreEngine.Instance().breakableBlockadesPlaced();
             }
         }
     };
 
+    public EventHandler<MouseEvent> getShowSort() { return showSort; }
+
+    private final EventHandler<MouseEvent> showSort = e -> {
+
+        if(SortVisual.rendered != null) {
+                SortVisual.rendered.display(false);
+        }
+        SpriteImage sprite = (SpriteImage) e.getSource();
+        SortableBlockade blockade = (SortableBlockade)sprite.getEntity();
+        if(blockade.getSortVisual() != null) {
+            blockade.getSortVisual().display(true);
+        }
+    };
+
     private final EventHandler<MouseEvent> unitClickEvent = e -> {
-        System.out.println("Here guys");
 
         SpriteImage sprite = (SpriteImage) e.getSource();
         Unit unit = (Unit) sprite.getEntity();
         sprite.requestFocus();
+
+        for (int i = 0; i < 4; i++)
+            GameInterface.unitTextPane.getChildren().get(i).setVisible(true);
+
+        if(SortVisual.rendered != null) {
+            SortVisual.rendered.display(false);
+        }
+
+        if (unit.getSorting() != null) {
+            unit.getSorting().getSortVisual().display(true);
+        }
 
         Unit.Search search = unit.getSearch();
         Unit.Sort sort = unit.getSort();
