@@ -45,7 +45,13 @@ public class Renderer extends Group {
         return instance;
     }
 
-    private Renderer() {
+    /*private Renderer() {
+        super();
+        this.entitiesToDraw = new ArrayList<>();
+    }*/
+
+    public Renderer()
+    {
         super();
         this.entitiesToDraw = new ArrayList<>();
     }

@@ -21,7 +21,7 @@ public class MenuHandler {
     private PauseMenu pauseMenu = new PauseMenu();
     private static EndGameMenu endGameMenu = new EndGameMenu();
 
-    private MapEditor mapEditor = MapEditor.Instance();
+    //private MapEditor mapEditor = MapEditor.Instance();
 
     private static Scene[] sceneList = new Scene[20];
 
@@ -55,7 +55,7 @@ public class MenuHandler {
         sceneList[MAIN_MENU] = mainMenu.getScene();
         sceneList[OPTIONS_MENU] = optionsMenu.getScene();
         sceneList[PAUSE_MENU] = pauseMenu.getScene();
-        sceneList[MAP_EDITOR] = mapEditor.getScene();
+        sceneList[MAP_EDITOR] = MapEditor.Instance().getScene();
         sceneList[END_GAME_MENU] = endGameMenu.getScene();
     }
 

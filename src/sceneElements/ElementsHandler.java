@@ -194,7 +194,7 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             quitGame();
             //@TODO added while new game is broken
-            System.exit(0);
+            //System.exit(0);
         }
 
         // Elements in the End Game Menu Scene
@@ -203,7 +203,7 @@ public class ElementsHandler {
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             quitGame();
             //@TODO added while new game is broken
-            System.exit(0);
+            //System.exit(0);
         }
         if (event.getSource() == GameInterface.playButton) {
             engine.setPaused(false);
@@ -213,7 +213,7 @@ public class ElementsHandler {
             engine.setPaused(true);
         }
         if (event.getSource() == MainMenu.mapEditorButton) {
-            MapEditor.Instance();
+            //MapEditor.Instance();
             MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
         }
         if (event.getSource() == MainMenu.customGameButton) {
