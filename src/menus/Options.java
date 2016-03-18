@@ -7,7 +7,7 @@ public class Options {
     private boolean showDescription = true;
     private boolean showPath = true;
     private boolean initialBlockades = true;
-    private boolean tutorial = false;
+    private boolean tutorial = true;
 
     public Options() {
     }
