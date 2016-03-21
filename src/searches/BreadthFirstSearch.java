@@ -1,7 +1,9 @@
 package searches;
 
 import entity.Unit;
+import graph.Graph;
 import graph.GraphNode;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +30,7 @@ public class BreadthFirstSearch {
         ArrayList<GraphNode> visited = new ArrayList<>();
         LinkedHashMap<GraphNode, GraphNode> possiblePath = new LinkedHashMap<>();
         ArrayList<GraphNode> path = new ArrayList<>();
+        ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations = new ArrayList<>();
 
         GraphNode current;
         GraphNode parent;
@@ -52,12 +55,13 @@ public class BreadthFirstSearch {
                     visited.add(endNode);
                     unit.setVisited(visited);
                     unit.setRoute(path);
-                    ArrayList<GraphNode> clone = (ArrayList<GraphNode>) path.clone();
+                    unit.setNodeAssociations(nodeAssociations);
                     return path;
                 } else {
                     visited.add(current);
                     frontier.addAll(current.getSuccessors());
                     for (GraphNode successor : current.getSuccessors()) {
+                        nodeAssociations.add(new Pair<>(current, successor));
                         if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
                             possiblePath.put(successor, current);
                     }

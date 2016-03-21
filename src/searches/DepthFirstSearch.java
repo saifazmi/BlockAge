@@ -2,6 +2,7 @@ package searches;
 
 import entity.Unit;
 import graph.GraphNode;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +28,7 @@ public class DepthFirstSearch {
         ArrayList<GraphNode> visited = new ArrayList<>();
         LinkedHashMap<GraphNode, GraphNode> possiblePath = new LinkedHashMap<>();
         ArrayList<GraphNode> path = new ArrayList<>();
+        ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations = new ArrayList<>();
         GraphNode current;
         GraphNode parent;
 
@@ -48,14 +50,14 @@ public class DepthFirstSearch {
                     visited.add(endNode);
                     unit.setVisited(visited);
                     unit.setRoute(path);
-                    ArrayList<GraphNode> clone = (ArrayList<GraphNode>) path.clone();
+                    unit.setNodeAssociations(nodeAssociations);
                     return path;
                 } else {
                     visited.add(current);
-
                     current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(frontier::push);
 
                     for (GraphNode successor : current.getSuccessors()) {
+                        dfsSpecificNodeAssociation(nodeAssociations, successor, current);
                         if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
                             possiblePath.put(successor, current);
                     }
@@ -64,5 +66,21 @@ public class DepthFirstSearch {
         }
 
         return null;
+    }
+
+    private static void dfsSpecificNodeAssociation(ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations, GraphNode to, GraphNode from) {
+//        for(Pair pair : nodeAssociations) {
+//            if(to.equals(pair.getValue())) {
+//                nodeAssociations.remove(pair);
+//            }
+//        }
+        ArrayList<Pair<GraphNode, GraphNode>> toRemove = new ArrayList<>();
+        for (Pair<GraphNode, GraphNode> pair : nodeAssociations) {
+            if (to.equals(pair.getValue())) {
+                toRemove.add(pair);
+            }
+        }
+        nodeAssociations.removeAll(toRemove);
+        nodeAssociations.add(new Pair<>(from, to));
     }
 }

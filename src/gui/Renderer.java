@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
@@ -309,7 +310,7 @@ public class Renderer extends Group {
         drawn.add(visitedNodes.remove(0));
 
         for (GraphNode node : visitedNodes) {
-            GraphNode drawTo = nodeToDrawTo(node, drawn);
+            GraphNode drawTo = linkedNode(unit, node);//nodeToDrawTo(node, drawn);
             drawn.add(node);
             Line line = new Line(this.xSpacing / 2 + node.getX() * xSpacing,
                     this.ySpacing / 2 + node.getY() * ySpacing,
@@ -331,6 +332,16 @@ public class Renderer extends Group {
             }
         }
         return drawn.get(min);
+    }
+
+    private GraphNode linkedNode(Unit unit, GraphNode toNode) {
+        List<Pair<GraphNode, GraphNode>> nodeAssociations = unit.getNodeAssociations();
+        for(Pair pair : nodeAssociations) {
+            if(toNode.equals(pair.getValue())) {
+                return (GraphNode) pair.getKey();
+            }
+        }
+        return null;
     }
 
     private <A> List<A> hardCopy(List<A> list) {

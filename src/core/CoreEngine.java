@@ -258,7 +258,6 @@ public class CoreEngine {
 
         //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
         if (entities != null) {
-
             for (Entity entity : entities) {
                 entity.update();
             }

@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import menus.MenuHandler;
 import sceneElements.SpriteImage;
 import searches.AStar;
@@ -47,6 +48,14 @@ public class Unit extends Entity {
         if (sorting == null) {
             this.completedMove = true;
         }
+    }
+
+    public List<Pair<GraphNode, GraphNode>> getNodeAssociations() {
+        return nodeAssociations;
+    }
+
+    public void setNodeAssociations(List<Pair<GraphNode, GraphNode>> nodeAssociations) {
+        this.nodeAssociations = nodeAssociations;
     }
 
     /**
@@ -93,6 +102,7 @@ public class Unit extends Entity {
 
     private List<GraphNode> route;
     private List<GraphNode> visited;
+    private List<Pair<GraphNode, GraphNode>> nodeAssociations;
 
     private SequentialTransition visualTransition;
 
@@ -101,7 +111,6 @@ public class Unit extends Entity {
     private Search search;
     private Sort sort;
 
-    private GraphNode nextNode;
     private boolean completedMove = true;
 
     private SortableBlockade sorting = null;
