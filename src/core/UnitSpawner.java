@@ -19,7 +19,6 @@ import java.util.logging.Logger;
  * @author : First created by Hung Hoang with code by Hung Hoang, and Paul Popa
  * @date : 13/02/16, last edited by Paul Popa on 23/02/16
  */
-//TODO: PLEASE ADD CORRECT LABEL, RPELACE QUICK WITH INSERT (VISUALLY)
 public class UnitSpawner {
     private static final Logger LOG = Logger.getLogger(UnitSpawner.class.getName());
 
