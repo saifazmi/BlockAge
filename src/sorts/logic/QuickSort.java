@@ -6,7 +6,12 @@ import java.util.Collections;
 /**
  * @author : First created by Evgeniy Kim with code by Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- * INCOMPLETE, unsure of a reliable way to go around it.
+ *
+ *
+ *
+ * UNUSED - DO NOT USE
+ *
+ *
  */
 
 public class QuickSort {

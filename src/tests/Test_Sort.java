@@ -1,5 +1,6 @@
 package tests;
 
+import sorts.logic.InsertSort;
 import sorts.logic.QuickSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
@@ -16,12 +17,12 @@ public class Test_Sort {
         //ArrayList<SortableComponent> states = BubbleSort.sort(generateUniqSortArray());
         //System.out.println(((SortableComponent)states.get(0)).getValue());
         //printSort(states);
-        ArrayList<SortableComponent> statesX = SelectionSort.sort(generateUniqSortArray());
+        ArrayList<SortableComponent> statesX = InsertSort.sort(generateUniqSortArray());
         //printSort(statesX);
         QuickSort o = new QuickSort();
         ArrayList statesZ = o.sort(10);
-//        printSort(states);
-        System.out.println(statesX.get(0).getValue().size());
+        printSort(statesX);
+        //System.out.println(statesX.get(0).getValue().size());
     }
 
     public static void printSort(ArrayList<SortableComponent> list) {
