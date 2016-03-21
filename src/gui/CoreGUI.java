@@ -3,6 +3,7 @@ package gui;
 import core.CoreEngine;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import menus.MenuHandler;
 
 import java.util.logging.Level;
