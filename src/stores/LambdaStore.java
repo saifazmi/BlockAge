@@ -114,6 +114,8 @@ public final class LambdaStore {
             if (sprite.getEntity() == unit1) {
 
                 // sets the image pressed for each unit accordingly to the search
+            	GameInterface.unitDescriptionLabel.setText("Unit Description");
+            	GameInterface.unitDescriptionLabel.setLayoutX(GameInterface.rightPaneWidth/2 - 175/2);
                 GameInterface.namePaneLabel.setText("Name: " + sprite.getEntity().getName());
                 GameInterface.searchPaneLabel.setText("Search: " + search.name());
                 GameInterface.sortPaneLabel.setText("Sort: " + sort.name());
