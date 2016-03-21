@@ -290,7 +290,7 @@ public class GameInterface {
         unitDescriptionLabel.setText("Key Bindings");
         namePaneLabel.setText("R-Show route");
         searchPaneLabel.setText("S-Unselect unit");
-        sortPaneLabel.setText("B-Sortable blockade");
+        sortPaneLabel.setText("B-Unsortable blockade");
     }
 
     /**
@@ -315,12 +315,12 @@ public class GameInterface {
             		if(namePaneLabel.getText().equals("R-Show route")) {
             			namePaneLabel.setText("Shift+R-Show visualisation");
             	        searchPaneLabel.setText("SPACE-Pause game");
-            	        sortPaneLabel.setText("Shift+B-Unsortable blockade");
+            	        sortPaneLabel.setText("Shift+B-Sortable blockade");
             		}
             		else {
             			namePaneLabel.setText("R-Show route");
             	        searchPaneLabel.setText("S-Unselect unit");
-            	        sortPaneLabel.setText("B-Sortable blockade");
+            	        sortPaneLabel.setText("B-Unsortable blockade");
             		}
             	}
             	else {
