@@ -52,20 +52,12 @@ public class SortVisual {
         return blocks;
     }
 
+    public static SortVisual rendered = null;
     private Pane sortPane = null;
     private Unit unit; //the physical unit on the map passed in
     public Sort sort; //enum to choose sort
     private boolean remove = false; //flag for game elements to know whether the sort pane is removable ( done with animating )
 
-    public static SortVisual rendered = null;
-
-    public boolean isRemove() {
-        return remove;
-    }
-
-    public void setRemove(boolean remove) {
-        this.remove = remove;
-    }
 
     public SortVisual(SortableBlockade block, Unit unit) {
         block.setSortVisual(this);
@@ -77,22 +69,28 @@ public class SortVisual {
     }
 
 
-
+    /**
+     * Decides which sort to use.
+     * Creates the pane, and generates 11 bars, with one invisible using a custom SortVisualBar object.
+     * Then repositions them according to the first state of the sort (initial sort input)
+     * Then repositions the block objects in the same order, but logically within the data structure they are stored in
+     * This allows for the swap to cleanly move them logically AND visually simultaneously.
+     */
     public void start() {
         tuples = new ArrayList<>();
-
-        // DFS unit
+        //DECIDING WHICH SORT TO USE
+        // DFS unit -> Set to Bubble Sort
         if (this.sort == Unit.Sort.BUBBLE) sorts = BubbleSort.sort(block.getToSortArray());
-        // BFS unit
+        // BFS unit -> Set to Selection Sort
         if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
-        // Astar unit
+        // Astar unit -> Set to Insertion Sort
         if (this.sort == Unit.Sort.INSERT) sorts = InsertSort.sort(block.getToSortArray());
 
-        sortPane = new Pane();
+        sortPane = new Pane();//create a pane to store block objects on
         sortPane.setStyle("-fx-background-color: #838b83;");
         sortPane.setOpacity(0.0);
         sortPane.setPrefSize(WIDTH, HEIGHT);
-        //make blocks
+        //GENERATING BLOCKS, AND PLACING THEM IN THE CORRECT PLACE VISUALLY
         blocks = new ArrayList<>();
         for (double x = 0; x < 11; x++) {              //width  //height
 
@@ -103,14 +101,14 @@ public class SortVisual {
                 int pos = find(x - 1);
                 loc = 40 + (20 * pos);
             }
-            if (x == 0) loc = 10;
+            if (x == 0) loc = 10;// if 0th block, then hard set it to nearly the edge, invis block
             block.relocate(loc, HEIGHT - (x * 15) - 5); //place in location calculated
             block.setOpacity(0.0);
             sortPane.getChildren().add(block); //add to pane
             block.setUpdateX(block.getLayoutX()); //set custom variable needed for animation
             blocks.add(block); //add to global list of blocks
         }
-
+        //SIMPLE TEXT ON THE LEFT
         Text tempSign = new Text("TEMP"); //simple text on the left of pane
         tempSign.setFill(Color.AQUA);
         tempSign.setFont(Font.font("Verdana", FontWeight.BOLD,18));
@@ -118,7 +116,7 @@ public class SortVisual {
         sortPane.getChildren().add(tempSign);
         tempSign.relocate(-WIDTH/15,HEIGHT-45);
         tempSign.relocate(-WIDTH/15,HEIGHT-45);
-
+        //LOGICALLY ORDERING BLOCKS IN THE DATA STRUCTURE
         ArrayList<SortVisualBar> blocksTemp = new ArrayList<>();
         //logical positioning in the data structure, they are ordered visually above,
         //but now need to be in the corresponding place in the data structure as well
@@ -128,12 +126,13 @@ public class SortVisual {
         }
         blocks = blocksTemp;
         prepareTransitions();//processes sorts state list, populates the Tuple list
-        swapTwo(tuples.get(0).getFirst(), tuples.get(0).getSecond(), 0);// swap animation
+        swapTwo(tuples.get(0).getFirst(), tuples.get(0).getSecond(), 0);//play the FIRST swap animation, it will chain
     }
 
     /**
-     * Used to generate a correct location for a block.
-     *
+     * Used to generate a correct location for a block inside a data structure.
+     * This is done to synchronize the data structure that contains the blocks, with the first sort state.
+     * Giving the correct visual order.
      * @param s
      * @return x position
      */
@@ -169,7 +168,7 @@ public class SortVisual {
 
     /**
      * Finds what needs to be swapped LOGICALLY
-     * returns a tuple of what is to be swapped
+     * returns a tuple of what indexes are to be swapped
      *
      * @param sortState current state
      * @param currentID current number of state
@@ -196,7 +195,7 @@ public class SortVisual {
     /**
      * General Pattern:
      * Make transition, play it, after it's played make a new one (REQUIRED for nature of JavaFX not updating x)
-     * Take block1, push it to x=0, replace its old pos with block2, put block 1 in old block2 pos
+     * Take block1, push it to x=0 (edge of screen) , replace its old pos with block2, put block 1 in old block2 pos
      * USAGE: formatted to use the same corresponding numbers as the Tuples generated.
      *
      * @param: int block1 first block id
@@ -383,5 +382,13 @@ public class SortVisual {
             Renderer.Instance().drawInitialEntity(block);
             block.getSprite().setOnMouseClicked(LambdaStore.Instance().getShowSort());
         });
+    }
+
+    public boolean isRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
     }
 }
