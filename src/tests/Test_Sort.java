@@ -1,52 +1,91 @@
-package tests;
+package tests.logic;
 
-import sorts.logic.InsertSort;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import sorts.logic.BubbleSort;
+import sorts.logic.QuickSort;
+import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by decklol on 19/02/16.
  */
 public class Test_Sort {
-    public static void main(String[] args) {
 
-        //ArrayList<SortableComponent> states = BubbleSort.sort(generateUniqSortArray());
-        //System.out.println(((SortableComponent)states.get(0)).getValue());
-        //printSort(states);
-        ArrayList<SortableComponent> statesX = InsertSort.sort(generateUniqSortArray());
-        //printSort(statesX);
-        //QuickSort o = new QuickSort();
-        //ArrayList statesZ = o.sort(10);
-        printSort(statesX);
-        //System.out.println(statesX.get(0).getValue().size());
-    }
+    /**
+     * Testing function of output of the sorting function
+     * Check if the list is sorted
+     *
+     * @param states all the states got from the sort mechanism
+     * @return passed true if sorted, false otherwise
+     */
+    public boolean sortTest(ArrayList<SortableComponent> states) {
+        // Get the initial states and the final states of the list
+        ArrayList<Integer> initial = states.get(0).getValue();
+        ArrayList<Integer> sorted = states.get(states.size() - 1).getValue();
 
-    public static void printSort(ArrayList<SortableComponent> list) {
-        String out = "";
-        for (SortableComponent e : list) {
-            ArrayList h = e.getValue();
-            for (int z = 0; z < h.size(); z++) {
-                out += h.get(z) + ", ";
+        // If the initial state is already sorted, do the sorting with another list
+        while (initial.equals(sorted)) {
+            states = BubbleSort.sort(initial.size());
+            initial = states.get(0).getValue();
+            sorted = states.get(0).getValue();
+        }
 
+        // Check if the list is sorted
+        boolean passed = true;
+        for (int i = 0; i < sorted.size() && passed; i++) {
+            int a = sorted.get(i);
+            if (a != i) {
+                passed = false;
             }
-            if (e.isSwapped()) out += " SWAPPED";
-            out += "\n";
         }
-        System.out.println(out);
+
+        return passed;
     }
 
-    public static ArrayList<Integer> generateUniqSortArray() {
+    /**
+     * Testing function of the output of the bubble sort mechanism
+     * Check if list is sorted
+     */
+    @Test()
+    public void bubbleSort() {
+        ArrayList<SortableComponent> states = BubbleSort.sort(200);
 
-        ArrayList<Integer> arrToSort = new ArrayList<>();
+        boolean passed = sortTest(states);
 
-        for (int i = 0; i < 10; i++) {
-            arrToSort.add(i);
-        }
+        Assert.assertEquals(passed, true);
+    }
 
-        Collections.shuffle(arrToSort);
-        return arrToSort;
+    /**
+     * Testing function of the output of the quick sort mechanism
+     * Check if list is sorted
+     */
+    @Test()
+    public void quickSort() {
+        QuickSort o = new QuickSort();
+        ArrayList states = o.sort(200);
+
+        boolean passed = sortTest(states);
+
+        Assert.assertEquals(passed, true);
+
+    }
+
+    /**
+     * Testing function of the output of the selection sort mechanism
+     * Check if list is sorted
+     */
+    @Test()
+    public void selectionSort() {
+        ArrayList<SortableComponent> states = SelectionSort.sort(200);
+
+        boolean passed = sortTest(states);
+
+        Assert.assertEquals(passed, true);
+
+
     }
 
 }
