@@ -1,4 +1,4 @@
-package tests.logic;
+package tests;
 
 import entity.Blockade;
 import entity.Unit;
@@ -72,7 +72,13 @@ public class Test_Unit extends Test_Logic {
         GraphNode goalNode = graph.nodeWith((new GraphNode(xGoal, yGoal)));
 
         SpriteImage sprite = new SpriteImage(null, null);
-        Unit newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+
+        Unit newUnit;
+        try {newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);}
+        catch (ExceptionInInitializerError e) {
+            newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+        }
+
         sprite.setEntity(newUnit);
         startNode.getUnits().add(newUnit);
         this.testUnit = newUnit;
@@ -84,7 +90,7 @@ public class Test_Unit extends Test_Logic {
     @Test
     public void unitBlockCheck() {
 
-        createUnit(0, 0, 19, 19);
+        createUnit(3, 2, 19, 19);
 
         boolean blockade = true;
 
@@ -347,3 +353,4 @@ public class Test_Unit extends Test_Logic {
         Assert.assertEquals(passed, true);
     }
 }
+

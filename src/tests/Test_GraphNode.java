@@ -1,11 +1,9 @@
-package tests.logic;
+package tests;
 
-import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
 
@@ -38,26 +36,6 @@ public class Test_GraphNode extends Test_Logic {
         }
 
         return graph;
-    }
-
-    /**
-     * function for making a testing unit for the purpose of testing
-     *
-     * @param xStart the X-coordinate of the starting position of the unit
-     * @param yStart the Y-coordinate of the starting position of the unit
-     * @param xGoal  the X-coordinate of the goal of the unit
-     * @param yGoal  the Y-coordinate of the goal of the unit
-     */
-    public void createUnit(Unit unit, int xStart, int yStart, int xGoal, int yGoal) {
-
-        GraphNode startNode = graph.nodeWith(new GraphNode(xStart, yStart));
-        GraphNode goalNode = graph.nodeWith((new GraphNode(xGoal, yGoal)));
-
-        SpriteImage sprite = new SpriteImage(null, null);
-        Unit newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
-        sprite.setEntity(unit);
-        startNode.getUnits().add(unit);
-        unit = newUnit;
     }
 
     /**
