@@ -20,9 +20,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import sorts.logic.BubbleSort;
+import sorts.logic.InsertSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
 import stores.ImageStore;
+import stores.LambdaStore;
 
 import java.util.ArrayList;
 
@@ -50,20 +52,12 @@ public class SortVisual {
         return blocks;
     }
 
+    public static SortVisual rendered = null;
     private Pane sortPane = null;
     private Unit unit; //the physical unit on the map passed in
     public Sort sort; //enum to choose sort
-    private boolean remove = false;
+    private boolean remove = false; //flag for game elements to know whether the sort pane is removable ( done with animating )
 
-    public static SortVisual rendered = null;
-
-    public boolean isRemove() {
-        return remove;
-    }
-
-    public void setRemove(boolean remove) {
-        this.remove = remove;
-    }
 
     public SortVisual(SortableBlockade block, Unit unit) {
         block.setSortVisual(this);
@@ -74,61 +68,55 @@ public class SortVisual {
         start();
     }
 
-    /**
-     * Highlights the current block the unit is sorting
-     */
-    public void highlightBlock() {
-        Platform.runLater(() -> {
-            Renderer.Instance().remove(block.getSprite());
-            ImageStore.setSpriteProperties(block, ImageStore.sortableBiggerImage);
-            Renderer.Instance().drawInitialEntity(block);
-            block.getSprite().setOnMouseClicked(f -> block.getSortVisual().display(true));
-        });
-    }
 
+    /**
+     * Decides which sort to use.
+     * Creates the pane, and generates 11 bars, with one invisible using a custom SortVisualBar object.
+     * Then repositions them according to the first state of the sort (initial sort input)
+     * Then repositions the block objects in the same order, but logically within the data structure they are stored in
+     * This allows for the swap to cleanly move them logically AND visually simultaneously.
+     */
     public void start() {
         tuples = new ArrayList<>();
-
-        // DFS unit
+        //DECIDING WHICH SORT TO USE
+        // DFS unit -> Set to Bubble Sort
         if (this.sort == Unit.Sort.BUBBLE) sorts = BubbleSort.sort(block.getToSortArray());
-        //TODO: this is wrong, and quick isnt implemented yet
-        // BFS unit
+        // BFS unit -> Set to Selection Sort
         if (this.sort == Unit.Sort.SELECTION) sorts = SelectionSort.sort(block.getToSortArray());
+        // Astar unit -> Set to Insertion Sort
+        if (this.sort == Unit.Sort.INSERT) sorts = InsertSort.sort(block.getToSortArray());
 
-        // Astar unit
-        if (this.sort == Unit.Sort.QUICK) sorts = SelectionSort.sort(block.getToSortArray());
-
-        sortPane = new Pane();
+        sortPane = new Pane();//create a pane to store block objects on
         sortPane.setStyle("-fx-background-color: #838b83;");
         sortPane.setOpacity(0.0);
         sortPane.setPrefSize(WIDTH, HEIGHT);
-        //make blocks
+        //GENERATING BLOCKS, AND PLACING THEM IN THE CORRECT PLACE VISUALLY
         blocks = new ArrayList<>();
         for (double x = 0; x < 11; x++) {              //width  //height
 
             SortVisualBar block = new SortVisualBar(15.0, (x * 15.0), Color.web("#7092BE"), (int) x - 1); //-1 because extra invis block, so 1 holds 0...etc
             if (x == 0) block.setStroke(null);
             int loc = 40;
-            if (x != 0) {
+            if (x != 0) { //loc used to calculate location to decide where to place blocks
                 int pos = find(x - 1);
                 loc = 40 + (20 * pos);
             }
-            if (x == 0) loc = 10;
+            if (x == 0) loc = 10;// if 0th block, then hard set it to nearly the edge, invis block
             block.relocate(loc, HEIGHT - (x * 15) - 5); //place in location calculated
             block.setOpacity(0.0);
             sortPane.getChildren().add(block); //add to pane
             block.setUpdateX(block.getLayoutX()); //set custom variable needed for animation
             blocks.add(block); //add to global list of blocks
         }
-
-        Text tempSign = new Text("TEMP");
+        //SIMPLE TEXT ON THE LEFT
+        Text tempSign = new Text("TEMP"); //simple text on the left of pane
         tempSign.setFill(Color.AQUA);
         tempSign.setFont(Font.font("Verdana", FontWeight.BOLD,18));
         tempSign.setRotate(-90);
         sortPane.getChildren().add(tempSign);
         tempSign.relocate(-WIDTH/15,HEIGHT-45);
         tempSign.relocate(-WIDTH/15,HEIGHT-45);
-
+        //LOGICALLY ORDERING BLOCKS IN THE DATA STRUCTURE
         ArrayList<SortVisualBar> blocksTemp = new ArrayList<>();
         //logical positioning in the data structure, they are ordered visually above,
         //but now need to be in the corresponding place in the data structure as well
@@ -138,12 +126,13 @@ public class SortVisual {
         }
         blocks = blocksTemp;
         prepareTransitions();//processes sorts state list, populates the Tuple list
-        swapTwo(tuples.get(0).getFirst(), tuples.get(0).getSecond(), 0);// swap animation
+        swapTwo(tuples.get(0).getFirst(), tuples.get(0).getSecond(), 0);//play the FIRST swap animation, it will chain
     }
 
     /**
-     * Used to generate a correct location for a block.
-     *
+     * Used to generate a correct location for a block inside a data structure.
+     * This is done to synchronize the data structure that contains the blocks, with the first sort state.
+     * Giving the correct visual order.
      * @param s
      * @return x position
      */
@@ -159,7 +148,7 @@ public class SortVisual {
 
 
     /**
-     * Populates the tuple list for animations to play.
+     * Populates the tuple list which dictates how animations play.
      * Iterates through all the sort states and finds what to swap.
      */
     private void prepareTransitions() {
@@ -179,7 +168,7 @@ public class SortVisual {
 
     /**
      * Finds what needs to be swapped LOGICALLY
-     * returns a tuple of what is to be swapped
+     * returns a tuple of what indexes are to be swapped
      *
      * @param sortState current state
      * @param currentID current number of state
@@ -192,10 +181,10 @@ public class SortVisual {
         if (sortState.swapped) {
             SortableComponent previous = sorts.get(currentID - 1);
             for (int x = 0; x < sortState.getValue().size(); x++) {
-                if (first == -1 && previous.getValue().get(x) != sortState.getValue().get(x)) {
+                if (first == -1 && previous.getValue().get(x) != sortState.getValue().get(x)) { //fill first incidence of different values
                     first = x; //0 is
                 }
-                if (previous.getValue().get(x) != sortState.getValue().get(x)) {
+                if (previous.getValue().get(x) != sortState.getValue().get(x)) { //second
                     second = x;
                 }
             }
@@ -206,7 +195,7 @@ public class SortVisual {
     /**
      * General Pattern:
      * Make transition, play it, after it's played make a new one (REQUIRED for nature of JavaFX not updating x)
-     * Take block1, push it to x=0, replace its old pos with block2, put block 1 in old block2 pos
+     * Take block1, push it to x=0 (edge of screen) , replace its old pos with block2, put block 1 in old block2 pos
      * USAGE: formatted to use the same corresponding numbers as the Tuples generated.
      *
      * @param: int block1 first block id
@@ -217,13 +206,13 @@ public class SortVisual {
 
         SortVisualBar b1 = blocks.get(block1);
         SortVisualBar b2 = blocks.get(block2);
-        //update possible movements from older transitions
+        //update possible movements from older transitions (this value is updated after this animation ends)
         b1.relocate(b1.getUpdateX(), b1.getLayoutY());
         b2.relocate(b2.getUpdateX(), b2.getLayoutY());
 
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
-        //TODO: provisional code insertion test, also label
+
         FillTransition col1 = new FillTransition(Duration.millis(10),b1,Color.web("#7092BE"),Color.AQUA);
         FillTransition col2 = new FillTransition(Duration.millis(10),b2,Color.web("#7092BE"),Color.AQUA);
         ParallelTransition colx = new ParallelTransition(col1,col2);
@@ -270,13 +259,14 @@ public class SortVisual {
 
         SequentialTransition temp = new SequentialTransition(colx, tty, ttx, txx, ty, tx, txt, gy, gx, gyy);
         seq.add(temp);
+        //animations have to be calculated after the previous set is finished, as to keep the correct coordinates of X values hence onFinished
         temp.setOnFinished(event -> {
             FillTransition col1x = new FillTransition(Duration.millis(300), b1, Color.AQUA, Color.web("#7092BE"));
             FillTransition col2x = new FillTransition(Duration.millis(300), b2, Color.AQUA, Color.web("#7092BE"));
             ParallelTransition colShift = new ParallelTransition(col1x, col2x);
-            colShift.play();
+            colShift.play();//colShift is highlighting of bars into teal when they are being swapped
 
-            if (swapIndex != tuples.size() - 1) {
+            if (swapIndex != tuples.size() - 1) {//SWAPS still exist, more to animate
                 //update the special var x value, for the next time the block is used to update logically
                 b1.setUpdateX(oldSecondX);
                 b2.setUpdateX(oldX);
@@ -288,11 +278,14 @@ public class SortVisual {
                 blocks.set(block2, temp1);
                 seq.remove(temp);
                 swapTwo(next.getFirst(), next.getSecond(), swapIndex + 1); //next transition
-            } else {
+            } else { // no more swaps exist, do logic to cleanly remove the pane and its objects
                 remove = true;
                 CoreEngine.Instance().removeEntity(block);
                 unit.setSorting(null);
                 block.setSortVisual(null);
+                if(SortVisual.rendered != null && SortVisual.rendered.equals(this)) {
+                    SortVisual.rendered = null;
+                }
                 seq.remove(temp);
             }
         });
@@ -336,6 +329,66 @@ public class SortVisual {
             bar.setOpacity(opacity);
         }
         sortPane.setOpacity(opacity);
-        GameInterface.sortVisualisationPane.setOpacity(opacity);
+        //GameInterface.sortVisualisationPane.setOpacity(opacity);
+    }
+
+    @Override
+    /**
+     * Multiple sort blocks can be sorted at the same time. So need equals to distinguish.
+     */
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SortVisual that = (SortVisual) o;
+
+        if (HEIGHT != that.HEIGHT) return false;
+        if (WIDTH != that.WIDTH) return false;
+        if (remove != that.remove) return false;
+        if (blocks != null ? !blocks.equals(that.blocks) : that.blocks != null) return false;
+        if (sorts != null ? !sorts.equals(that.sorts) : that.sorts != null) return false;
+        if (tuples != null ? !tuples.equals(that.tuples) : that.tuples != null) return false;
+        if (block != null ? !block.equals(that.block) : that.block != null) return false;
+        if (sortPane != null ? !sortPane.equals(that.sortPane) : that.sortPane != null) return false;
+        return unit != null ? unit.equals(that.unit) : that.unit == null && sort == that.sort;
+
+    }
+
+    @Override
+    /**
+     * Accompanies equals method
+     */
+    public int hashCode() {
+        int result = HEIGHT;
+        result = 31 * result + WIDTH;
+        result = 31 * result + (blocks != null ? blocks.hashCode() : 0);
+        result = 31 * result + (sorts != null ? sorts.hashCode() : 0);
+        result = 31 * result + (tuples != null ? tuples.hashCode() : 0);
+        result = 31 * result + (block != null ? block.hashCode() : 0);
+        result = 31 * result + (sortPane != null ? sortPane.hashCode() : 0);
+        result = 31 * result + (unit != null ? unit.hashCode() : 0);
+        result = 31 * result + (sort != null ? sort.hashCode() : 0);
+        result = 31 * result + (remove ? 1 : 0);
+        return result;
+    }
+    /**
+     * Highlights the current block the unit is sorting
+     * In addition to changing colour in the transition, subtly changes.
+     */
+    public void highlightBlock() {
+        Platform.runLater(() -> {
+            Renderer.Instance().remove(block.getSprite());
+            ImageStore.setSpriteProperties(block, ImageStore.sortableBiggerImage);
+            Renderer.Instance().drawInitialEntity(block);
+            block.getSprite().setOnMouseClicked(LambdaStore.Instance().getShowSort());
+        });
+    }
+
+    public boolean isRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
     }
 }

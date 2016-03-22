@@ -58,11 +58,12 @@ public class MapEditor implements Menu {
 
     // General Map Editor manager for scene, renderer and events
     private MapEditor() {
+
         createGraph();
 
         //@todo delete after map quits
         Renderer.delete();
-        mapEditorRenderer = Renderer.Instance();
+        mapEditorRenderer = new Renderer();
         mapEditorRenderer.calculateSpacing();
 
         //initialiseScene();

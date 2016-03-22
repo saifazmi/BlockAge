@@ -14,30 +14,32 @@ public class SelectionSort {
      * Partitions list into sorted and unsorted halves, taking elements from the unsorted half and
      * placing them in the sorted, in it's correct position.
      *
-     * @param state ArrayList which contains a randomly ordered set of numbers
+     * @param n ArrayList which contains a randomly ordered set of numbers
      * @return ArrayList of ArrayLists , all opssible states
      */
-    public static ArrayList<SortableComponent> sort(ArrayList<Integer> state) {
+    public static ArrayList<SortableComponent> sort(ArrayList<Integer> n) {
+        ArrayList<Integer> state = n;
         int size = state.size();
         ArrayList<SortableComponent> allStates = new ArrayList<>();
 
-        int i, j;
-        for (j = 0; j < size - 1; j++) {
-            int minimum = j;
-            for (i = j + 1; i < size; i++) {
-                SortableComponent s = new SortableComponent(getByValue(state), minimum, i, false);
+        int x;
+        int y;
+        for (y = 0; y < size - 1; y++) {
+            int minimum = y;
+            for (x = y + 1; x < size; x++) {
+                SortableComponent s = new SortableComponent(getByValue(state), minimum, x, false);
                 allStates.add(s);
-                if (state.get(i) < state.get(minimum)) {
-                    minimum = i;
-                    SortableComponent c = new SortableComponent(getByValue(state), j, i, true);
+                if (state.get(x) < state.get(minimum)) {
+                    minimum = x;
+                    SortableComponent c = new SortableComponent(getByValue(state), y, x, true);
                     allStates.add(c);
                 }
             }
-            if (minimum != j) { //swapping
-                Integer temp = state.get(j);
-                state.set(j, state.get(minimum));
+            if (minimum != y) { //swapping
+                Integer temp = state.get(y);
+                state.set(y, state.get(minimum));
                 state.set(minimum, temp);
-                SortableComponent s = new SortableComponent(getByValue(state), minimum, j, true);
+                SortableComponent s = new SortableComponent(getByValue(state), minimum, y, true);
                 allStates.add(s);
             }
         }

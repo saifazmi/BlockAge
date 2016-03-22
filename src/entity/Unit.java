@@ -86,9 +86,9 @@ public class Unit extends Entity {
         SELECTION,
 
         /**
-         * Quick Sort
+         * Insert Sort
          */
-        QUICK
+        INSERT
     }
 
     private List<GraphNode> route;
@@ -483,7 +483,7 @@ public class Unit extends Entity {
     /**
      * Decides a route based on the search algorithm of the unit
      */
-    private void decideRoute() {
+    public void decideRoute() {
 
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
 

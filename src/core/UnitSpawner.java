@@ -25,6 +25,7 @@ public class UnitSpawner {
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
     private int unitPoolCount;
+
     // totalSpawnables must be >= to spawnlimit
     private int totalSpawnables = 5;
     private int spawnCount = 0;
@@ -32,6 +33,7 @@ public class UnitSpawner {
     private int spawnlimit;
     private Random rndSearchGen;
 
+    // Properties
     private String[] names;
     private int cooldown = 0;
 
@@ -54,14 +56,10 @@ public class UnitSpawner {
     }
 
     /**
-     * Deleting the instance of this when called
-     * 
-     * @return if the instance was deleted or not
+     * Delete the existing instance of this class
      */
-    public static boolean delete() {
-    	
+    public static void delete() {
         instance = null;
-        return true;
     }
 
     /**
@@ -123,7 +121,8 @@ public class UnitSpawner {
                 unitPoolCount,
                 names[index],
                 graph.nodeWith(new GraphNode(0, 0)),
-                sprite, Unit.Search.values()[index],
+                sprite,
+                Unit.Search.values()[index],
                 Unit.Sort.values()[index],
                 graph,
                 goal
@@ -142,7 +141,8 @@ public class UnitSpawner {
     }
 
     /**
-     * Actually puts the unit into the game by taking it out of the unit pool and putting it into the list of units in the Core Engine.
+     * Actually puts the unit into the game by taking it out of the unit pool
+     * and putting it into the list of units in the Core Engine.
      * If the pool is empty, creates a new Unit and put that into the Core Engine's list instead
      */
     private void spawnUnit() {
@@ -161,6 +161,18 @@ public class UnitSpawner {
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
+    //@TODO: is this methods being used anymore?
+    /**
+     * Moves the unit back into the pool if its not needed
+     *
+     * @param unit The Unit to move back
+     */
+    private void despawnUnit(Unit unit) {
+
+        this.unitPool.add(unit);
+        //remove from list here?
+    }
+
     /**
      * Updates the spawner itself, If the number of Units in game is less than the set limit, spawn a new one
      */
@@ -168,6 +180,7 @@ public class UnitSpawner {
 
         if (cooldown > 0) {
             cooldown--;
+
         } else if (spawnCount < spawnlimit) {
 
             this.cooldown = 300;
@@ -175,12 +188,14 @@ public class UnitSpawner {
         }
     }
 
+    //@TODO: never used, delete?
     /**
      * Sets the limit to the number of unit to spawn in one game
      *
      * @param spawnlimit number of unit allowed to spawn
      */
     public void setSpawnlimit(int spawnlimit) {
+
         this.spawnlimit = spawnlimit;
     }
 
@@ -190,6 +205,7 @@ public class UnitSpawner {
      * @return random generator
      */
     public Random getRndSearchGen() {
-        return rndSearchGen;
+
+        return this.rndSearchGen;
     }
 }

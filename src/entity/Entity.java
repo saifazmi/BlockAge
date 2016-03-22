@@ -24,24 +24,6 @@ public abstract class Entity extends Observable {
     /**
      * Builds an entity with the given attributes.
      *
-     * @param id          the ID of this entity
-     * @param name        name of the entity
-     * @param description additional detail for the entity
-     * @param position    position of the entity on the graph
-     * @param sprite      the sprite image representing this entity
-     */
-    public Entity(int id, String name, String description, GraphNode position, SpriteImage sprite) {
-
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.position = position;
-        this.sprite = sprite;
-    }
-
-    /**
-     * Builds an entity with the given attributes.
-     *
      * @param id       the ID of this entity
      * @param name     name of the entity
      * @param position position of the entity on the graph
