@@ -69,11 +69,6 @@ public class DepthFirstSearch {
     }
 
     private static void dfsSpecificNodeAssociation(ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations, GraphNode to, GraphNode from) {
-//        for(Pair pair : nodeAssociations) {
-//            if(to.equals(pair.getValue())) {
-//                nodeAssociations.remove(pair);
-//            }
-//        }
         ArrayList<Pair<GraphNode, GraphNode>> toRemove = new ArrayList<>();
         for (Pair<GraphNode, GraphNode> pair : nodeAssociations) {
             if (to.equals(pair.getValue())) {
