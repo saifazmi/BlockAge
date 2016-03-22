@@ -2,6 +2,7 @@ package searches;
 
 import entity.Unit;
 import graph.GraphNode;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +32,7 @@ public class AStar {
         Map<GraphNode, GraphNode> pred = new LinkedHashMap<>();
         Map<GraphNode, Integer> D = new LinkedHashMap<>();// empty map, contains costs from origin along best known path
         Map<GraphNode, Integer> f = new LinkedHashMap<>();//records estimated total cost
+        ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations = new ArrayList<>();
         Comparator<GraphNode> p = (o1, o2) -> {
             int value = f.get(o1);
             int value1 = f.get(o2);
@@ -70,6 +72,7 @@ public class AStar {
                     Collections.reverse(pathList);
                     unit.setVisited(new ArrayList<>(visited));
                     unit.setRoute(pathList);
+                    unit.setNodeAssociations(nodeAssociations);
                     return pathList;
                 }
 
@@ -85,6 +88,7 @@ public class AStar {
                         f.put(s, D.get(s) + distance(s, goal));
                         if (!pending.contains(s)) {
                             pending.add(s);
+                            nodeAssociations.add(new Pair<>(n, s));
                         }
                     }
                 }

@@ -282,7 +282,6 @@ public class CoreEngine {
     private void updateGameState() {
 
         if (entities != null) {
-
             for (Entity entity : entities) {
                 entity.update();
             }

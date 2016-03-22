@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import menus.MenuHandler;
 import sceneElements.SpriteImage;
 import searches.AStar;
@@ -34,6 +35,13 @@ public class Unit extends Entity {
 
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
 
+    public List<Pair<GraphNode, GraphNode>> getNodeAssociations() {
+        return nodeAssociations;
+    }
+
+    public void setNodeAssociations(List<Pair<GraphNode, GraphNode>> nodeAssociations) {
+        this.nodeAssociations = nodeAssociations;
+    }
     /**
      * Search flags
      */
@@ -83,6 +91,7 @@ public class Unit extends Entity {
     private Renderer renderer = Renderer.Instance();
     private List<GraphNode> route;
     private List<GraphNode> visited;
+    private List<Pair<GraphNode, GraphNode>> nodeAssociations;
 
     private SequentialTransition visualTransition;
 

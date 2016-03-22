@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
@@ -453,8 +454,7 @@ public class Renderer extends Group {
         drawn.add(visitedNodes.remove(0));
 
         for (GraphNode node : visitedNodes) {
-
-            GraphNode drawTo = nodeToDrawTo(node, drawn);
+            GraphNode drawTo = linkedNode(unit, node);//nodeToDrawTo(node, drawn);
             drawn.add(node);
 
             Line line = new Line(
@@ -492,6 +492,28 @@ public class Renderer extends Group {
         }
 
         return drawn.get(min);
+    }
+
+    /**
+     *
+     * @param unit
+     * @param toNode
+     * @return
+     */
+    private GraphNode linkedNode(Unit unit, GraphNode toNode) {
+        List<Pair<GraphNode, GraphNode>> nodeAssociations = unit.getNodeAssociations();
+//        for(Pair pair : nodeAssociations) {
+//            if(toNode.equals(pair.getValue())) {
+//                return (GraphNode) pair.getKey();
+//            }
+//        }
+        for(int i = nodeAssociations.size() - 1; i >= 0; i--) {
+            if(toNode.equals(nodeAssociations.get(i).getValue())) {
+                return nodeAssociations.get(i).getKey();
+            }
+        }
+
+        return null;
     }
 
     /**
