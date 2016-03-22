@@ -17,7 +17,6 @@ public abstract class Entity extends Observable {
     // Entity properties
     protected final int id;
     protected String name;
-    protected String description;
     protected GraphNode position;
     protected SpriteImage sprite;
 
@@ -34,7 +33,6 @@ public abstract class Entity extends Observable {
         this.id = id;
         this.name = name;
         this.position = position;
-        this.description = null;
         this.sprite = sprite;
     }
 
@@ -127,9 +125,7 @@ public abstract class Entity extends Observable {
         if (name != null
                 ? !name.equals(entity.name)
                 : entity.name != null) return false;
-        if (description != null
-                ? !description.equals(entity.description)
-                : entity.description != null) return false;
+
         if (!position.equals(entity.position)) return false;
 
         return sprite.equals(entity.sprite);
@@ -140,7 +136,6 @@ public abstract class Entity extends Observable {
 
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + position.hashCode();
         result = 31 * result + sprite.hashCode();
 

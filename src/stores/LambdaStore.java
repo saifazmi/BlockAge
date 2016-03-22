@@ -91,16 +91,18 @@ public final class LambdaStore {
         }
     };
 
-    public EventHandler<MouseEvent> getShowSort() { return showSort; }
+    public EventHandler<MouseEvent> getShowSort() {
+        return showSort;
+    }
 
     private final EventHandler<MouseEvent> showSort = e -> {
 
-        if(SortVisual.rendered != null) {
-                SortVisual.rendered.display(false);
+        if (SortVisual.rendered != null) {
+            SortVisual.rendered.display(false);
         }
         SpriteImage sprite = (SpriteImage) e.getSource();
-        SortableBlockade blockade = (SortableBlockade)sprite.getEntity();
-        if(blockade.getSortVisual() != null) {
+        SortableBlockade blockade = (SortableBlockade) sprite.getEntity();
+        if (blockade.getSortVisual() != null) {
             blockade.getSortVisual().display(true);
         }
     };
@@ -114,7 +116,7 @@ public final class LambdaStore {
         for (int i = 0; i < 4; i++)
             GameInterface.unitTextPane.getChildren().get(i).setVisible(true);
 
-        if(SortVisual.rendered != null) {
+        if (SortVisual.rendered != null) {
             SortVisual.rendered.display(false);
         }
 
@@ -133,8 +135,8 @@ public final class LambdaStore {
             if (sprite.getEntity() == unit1) {
 
                 // sets the image pressed for each unit accordingly to the search
-            	GameInterface.unitDescriptionLabel.setText("Unit Description");
-            	GameInterface.unitDescriptionLabel.setLayoutX(GameInterface.rightPaneWidth/2 - 175/2);
+                GameInterface.unitDescriptionLabel.setText("Unit Description");
+                GameInterface.unitDescriptionLabel.setLayoutX(GameInterface.rightPaneWidth / 2 - 175 / 2);
                 GameInterface.namePaneLabel.setText("Name: " + sprite.getEntity().getName());
                 GameInterface.searchPaneLabel.setText("Search: " + search.name());
                 GameInterface.sortPaneLabel.setText("Sort: " + sort.name());

@@ -42,7 +42,7 @@ public class Test_Sort {
 
     private ArrayList<Integer> createList(int size) {
         ArrayList<Integer> list = new ArrayList<>();
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             list.add(i);
         }
         Collections.shuffle(list);
