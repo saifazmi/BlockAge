@@ -40,9 +40,12 @@ public class DepthFirstSearch {
             if (!visited.contains(current) && (current.getBlockade() == null || current.getBlockade().isBreakable())) {
 
                 if (current.equals(endNode)) {
+                    System.out.println("path back");
                     while (possiblePath.keySet().contains(current)) {
                         path.add(current);
+                        System.out.println("current: " + current);
                         parent = possiblePath.get(current);
+                        System.out.println("parent: " + parent);
                         current = parent;
                     }
 
@@ -53,13 +56,17 @@ public class DepthFirstSearch {
                     unit.setNodeAssociations(nodeAssociations);
                     return path;
                 } else {
+
                     visited.add(current);
                     current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(frontier::push);
 
                     for (GraphNode successor : current.getSuccessors()) {
-                        dfsSpecificNodeAssociation(nodeAssociations, successor, current);
-                        if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
+                        if (!possiblePath.containsValue(successor))
+                        {
+                            dfsSpecificNodeAssociation(nodeAssociations, successor, current);
                             possiblePath.put(successor, current);
+                        }
+
                     }
                 }
             }

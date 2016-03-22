@@ -1,4 +1,4 @@
-package tests.logic;
+package tests;
 
 import entity.Blockade;
 import entity.Unit;
@@ -76,7 +76,14 @@ public class Test_Search extends Test_Logic {
         GraphNode goalNode = graph.nodeWith((new GraphNode(xGoal, yGoal)));
 
         SpriteImage sprite = new SpriteImage(null, null);
-        Unit newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+
+        Unit newUnit;
+        try {
+            newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+        } catch (ExceptionInInitializerError e) {
+            newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+        }
+
         sprite.setEntity(newUnit);
         startNode.getUnits().add(newUnit);
         this.testUnit = newUnit;
@@ -91,6 +98,19 @@ public class Test_Search extends Test_Logic {
         GraphNode endPoint = graph.nodeWith(new GraphNode(19, 19));
 
         createUnit(1, 2, 19, 19);
+
+        List<GraphNode> route = BreadthFirstSearch.findPathFrom(testUnit, endPoint);
+
+        boolean passed = validRoute(route, endPoint);
+
+        Assert.assertEquals(passed, true);
+    }
+
+    @Test()
+    public void breadthFirstSearchTesting2() {
+        GraphNode endPoint = graph.nodeWith(new GraphNode(1, 1));
+
+        createUnit(6, 7, 1, 1);
 
         List<GraphNode> route = BreadthFirstSearch.findPathFrom(testUnit, endPoint);
 
@@ -116,6 +136,19 @@ public class Test_Search extends Test_Logic {
         Assert.assertEquals(passed, true);
     }
 
+    @Test()
+    public void depthFirstSearchTesting2() {
+        GraphNode endPoint = graph.nodeWith(new GraphNode(1, 1));
+
+        createUnit(6, 7, 1, 1);
+
+        List<GraphNode> route = DepthFirstSearch.findPathFrom(testUnit, endPoint);
+
+        boolean passed = validRoute(route, endPoint);
+
+        Assert.assertEquals(passed, true);
+    }
+
     /**
      * Testing function of output of the A-Star search mechanism
      * Check if the route is valid
@@ -132,5 +165,19 @@ public class Test_Search extends Test_Logic {
 
         Assert.assertEquals(passed, true);
     }
+
+    @Test()
+    public void aStarSearchTesting2() {
+        GraphNode endPoint = graph.nodeWith(new GraphNode(1, 1));
+
+        createUnit(6, 7, 1, 1);
+
+        List<GraphNode> route = AStar.search(testUnit, endPoint);
+
+        boolean passed = validRoute(route, endPoint);
+
+        Assert.assertEquals(passed, true);
+    }
+
 
 }

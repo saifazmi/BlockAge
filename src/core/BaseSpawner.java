@@ -10,13 +10,13 @@ import javafx.scene.image.Image;
 import maps.MapChooserInterface;
 import maps.MapEditor;
 import maps.MapParser;
-import sceneElements.ElementsHandler;
 import stores.ImageStore;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -55,12 +55,16 @@ public class BaseSpawner {
         if (instance == null) {
             instance = new BaseSpawner();
         }
+
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
+
         instance = null;
-        return true;
     }
 
     /**
@@ -71,6 +75,7 @@ public class BaseSpawner {
         runTime.getScene().setOnMouseClicked(e -> {
 
             this.goal = Blockade.calcGraphNode(e);
+
             if (goal != null) {
                 Base base = new Base(9999, "Base", goal, null);
                 Image image = ImageStore.base;
@@ -94,7 +99,8 @@ public class BaseSpawner {
      * @return GraphNode location of base.
      */
     public GraphNode getGoal() {
-        return goal;
+
+        return this.goal;
     }
 
     /**
@@ -149,6 +155,21 @@ public class BaseSpawner {
 
         MapParser parser = new MapParser(reader);
         parser.generateBlockades();
+
+        // Close streams
+        try {
+            if (in != null) {
+                in.close();
+            }
+            if (fReader != null) {
+                fReader.close();
+            }
+            if (reader != null) {
+                reader.close();
+            }
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.toString(), e);
+        }
     }
 
     /**
@@ -177,46 +198,12 @@ public class BaseSpawner {
 
                     ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
                     SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
-                    //System.out.println(blockade.arrayToString(blockade.getToSortArray()));
+
                     if (blockade != null) {
                         renderer.drawInitialEntity(blockade);
                         blockade.getSprite().setOnMouseClicked(f -> blockade.getSortVisual().display(true));
                         CoreEngine.Instance().getEntities().add(blockade);
                     }
-                }
-            }
-        }
-    }
-
-    /**
-     * Generates random initial blockades.
-     *
-     * @param count number of random blockades.
-     */
-    @Deprecated
-    private void spawnBlockades(int count) {
-
-        if (ElementsHandler.options.getInitialBlockades()) {
-
-            while (count > 0) {
-
-                LOG.log(Level.INFO, "Blockade " + count);
-                Random rand = new Random();
-                int randomX = rand.nextInt(Graph.HEIGHT);
-                int randomY = rand.nextInt(Graph.WIDTH);
-
-                Blockade blockadeInstance = new Blockade(
-                        1,
-                        "Blockade",
-                        new GraphNode(randomX, randomY),
-                        null
-                );
-
-                ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
-                Blockade blockade = Blockade.randomBlockade(blockadeInstance);
-                if (blockade != null) {
-                    renderer.drawInitialEntity(blockade);
-                    count--;
                 }
             }
         }

@@ -48,17 +48,21 @@ public class GameRunTime {
         if (instance == null) {
             instance = new GameRunTime();
         }
+
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
+
         instance = null;
-        return true;
     }
 
     /**
      * Constructor for the game run time.
-     * Initialises the engine, renderer, and unit unitSpawner
+     * Initialises the engine, renderer, unit and unitSpawner
      */
     public GameRunTime() {
 

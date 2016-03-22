@@ -35,21 +35,6 @@ public class Unit extends Entity {
 
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
 
-    private static final Duration SPEED = Duration.millis(600);
-
-    private Renderer renderer = Renderer.Instance();
-
-    public SortableBlockade getSorting() {
-        return sorting;
-    }
-
-    public void setSorting(SortableBlockade sorting) {
-        this.sorting = sorting;
-        if (sorting == null) {
-            this.completedMove = true;
-        }
-    }
-
     public List<Pair<GraphNode, GraphNode>> getNodeAssociations() {
         return nodeAssociations;
     }
@@ -57,7 +42,6 @@ public class Unit extends Entity {
     public void setNodeAssociations(List<Pair<GraphNode, GraphNode>> nodeAssociations) {
         this.nodeAssociations = nodeAssociations;
     }
-
     /**
      * Search flags
      */
@@ -95,11 +79,16 @@ public class Unit extends Entity {
         SELECTION,
 
         /**
-         * Quick Sort
+         * Insert Sort
          */
-        QUICK
+        INSERT
     }
 
+    // Unit movement speed
+    private static final Duration SPEED = Duration.millis(600);
+
+    // Dependencies
+    private Renderer renderer = Renderer.Instance();
     private List<GraphNode> route;
     private List<GraphNode> visited;
     private List<Pair<GraphNode, GraphNode>> nodeAssociations;
@@ -156,6 +145,7 @@ public class Unit extends Entity {
      * @return sort algorithm used
      */
     public Sort getSort() {
+
         return this.sort;
     }
 
@@ -189,6 +179,16 @@ public class Unit extends Entity {
         return this.visited;
     }
 
+    /**
+     * Gets the blockade being sorted by this unit
+     *
+     * @return a sortable blockade
+     */
+    public SortableBlockade getSorting() {
+
+        return this.sorting;
+    }
+
     // SETTER methods
 
     /**
@@ -219,6 +219,20 @@ public class Unit extends Entity {
     public void setVisited(List<GraphNode> visited) {
 
         this.visited = visited;
+    }
+
+    /**
+     * Sets the blockade being sorted by this unit
+     *
+     * @param sorting a sortable blockade
+     */
+    public void setSorting(SortableBlockade sorting) {
+
+        this.sorting = sorting;
+
+        if (sorting == null) {
+            this.completedMove = true;
+        }
     }
 
     // MOVEMENT methods
@@ -373,29 +387,45 @@ public class Unit extends Entity {
      * @return whether the position has a block
      */
     public boolean blockCheck(GraphNode position) {
+
         Blockade blockade = position.getBlockade();
+
         if (blockade == null) {
 
             getPosition().getUnits().remove(this);
             position.getUnits().add(this);
             setPosition(position);
+
             return true;
-        } else if (blockade instanceof SortableBlockade && ((SortableBlockade) blockade).getSortVisual() == null && sorting == null) {
+
+        } else if (blockade instanceof SortableBlockade &&
+                ((SortableBlockade) blockade).getSortVisual() == null &&
+                sorting == null) {
+
             sorting = (SortableBlockade) blockade;
             SortVisual sortVisual = new SortVisual((SortableBlockade) blockade, this);
+
             ((SortableBlockade) blockade).setSortVisual(sortVisual);
             sortVisual.getPane().setLayoutX(424 / 2 - 300 / 2 + 20);
             sortVisual.getPane().setLayoutY(50 + 3 * 30 + 90);
-            Platform.runLater(() -> GameInterface.rightMenuBox.getChildren().add(sortVisual.getPane()));
-            return false;
-        } else {
 
+            Platform.runLater(() -> GameInterface.rightMenuBox.getChildren().add(sortVisual.getPane()));
+
+            return false;
+
+        } else {
             return false;
         }
     }
 
+    //@TODO: document this method
+
+    /**
+     *
+     */
     @Override
     public void update() {
+
         if (completedMove) {
 
             if (route.size() > 0) {
@@ -420,14 +450,19 @@ public class Unit extends Entity {
                     transition.setToY(nextPixelY);
                     transition.setOnFinished(e -> this.completedMove = true);
                     transition.play();
+
                 } else {
+
                     if (this.sorting == null) {
+
                         decideRoute();
                         this.completedMove = true;
+
                     } else {
                         route.add(0, nextNode);
                     }
                 }
+
             } else if (this.getPosition() == goal) {
 
                 Platform.runLater(() -> {
@@ -446,7 +481,8 @@ public class Unit extends Entity {
     }
 
     /**
-     * Does a logical move of the unit in the specified direction, i.e. move it in the graph and change its graph position
+     * Does a logical move of the unit in the specified direction,
+     * i.e. move it in the graph and change its graph position
      *
      * @param xChange amount of nodes to move in the x axis
      * @param yChange amount of nodes to move in the y axis
@@ -492,7 +528,7 @@ public class Unit extends Entity {
     /**
      * Decides a route based on the search algorithm of the unit
      */
-    private void decideRoute() {
+    public void decideRoute() {
 
         LOG.log(Level.INFO, "my position is " + getPosition().toString());
 
@@ -509,7 +545,7 @@ public class Unit extends Entity {
         LOG.log(Level.INFO, route.toString());
     }
 
-    //@TODO: document these methods
+    //@TODO: document this method
 
     /**
      * @param route
@@ -569,6 +605,8 @@ public class Unit extends Entity {
             }
         }
     }
+
+    //@TODO: document this method
 
     /**
      * @param object

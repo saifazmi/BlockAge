@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
  * Specific object made for storing 'states' of a given sort. For visualisation.
  */
-//For indication of what is being sorted on the visual level.
+
 public class SortableComponent {
-    public ArrayList<Integer> value; //WHOLE ARRAYLIST
+    public ArrayList<Integer> value; //WHOLE ARRAYLIST at that time
     public int comparing1; //INDEX OF WHATS BEING COMPARED
     public int comparing2;
     public boolean swapped; //SWAP STATE - FLAG FOR ANIMATION

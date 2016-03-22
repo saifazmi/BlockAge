@@ -25,6 +25,7 @@ public class UnitSpawner {
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;
     private int unitPoolCount;
+
     // totalSpawnables must be >= to spawnlimit
     private int totalSpawnables = 5;
     private int spawnCount = 0;
@@ -32,6 +33,7 @@ public class UnitSpawner {
     private int spawnlimit;
     private Random rndSearchGen;
 
+    // Properties
     private String[] names;
     private String[] descriptions;
     private int cooldown = 0;
@@ -54,9 +56,12 @@ public class UnitSpawner {
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
+
         instance = null;
-        return true;
     }
 
     /**
@@ -123,7 +128,8 @@ public class UnitSpawner {
                 unitPoolCount,
                 names[index],
                 graph.nodeWith(new GraphNode(0, 0)),
-                sprite, Unit.Search.values()[index],
+                sprite,
+                Unit.Search.values()[index],
                 Unit.Sort.values()[index],
                 graph,
                 goal
@@ -142,7 +148,8 @@ public class UnitSpawner {
     }
 
     /**
-     * Actually puts the unit into the game by taking it out of the unit pool and putting it into the list of units in the Core Engine.
+     * Actually puts the unit into the game by taking it out of the unit pool
+     * and putting it into the list of units in the Core Engine.
      * If the pool is empty, creates a new Unit and put that into the Core Engine's list instead
      */
     private void spawnUnit() {
@@ -181,6 +188,7 @@ public class UnitSpawner {
 
         if (cooldown > 0) {
             cooldown--;
+
         } else if (spawnCount < spawnlimit) {
 
             this.cooldown = 300;
@@ -188,16 +196,21 @@ public class UnitSpawner {
         }
     }
 
+    //@TODO: never used, delete?
+
     /**
      * Sets the limit to the number of unit to spawn in one game
      *
      * @param spawnlimit number of unit allowed to spawn
      */
     public void setSpawnlimit(int spawnlimit) {
+
         this.spawnlimit = spawnlimit;
     }
 
+    //@TODO: never used, delete? else javadoc
     public Random getRndSearchGen() {
-        return rndSearchGen;
+
+        return this.rndSearchGen;
     }
 }

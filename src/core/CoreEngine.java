@@ -57,12 +57,16 @@ public class CoreEngine {
         if (instance == null) {
             instance = new CoreEngine();
         }
+
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
+
         instance = null;
-        return true;
     }
 
     /**
@@ -140,6 +144,26 @@ public class CoreEngine {
         return this.score;
     }
 
+    /**
+     * Get the amount of unbreakable blockade left
+     *
+     * @return unbreakableBlockadesLimit the amount of unbreakable blockade left
+     */
+    public int getUnbreakableBlockadesLimit() {
+
+        return this.unbreakableBlockadesLimit;
+    }
+
+    /**
+     * Get the amount of breakable blockade left
+     *
+     * @return breakableBlockadesLimit the amount of breakable blockade left
+     */
+    public int getBreakableBlockadesLimit() {
+
+        return this.breakableBlockadesLimit;
+    }
+
     // SETTER methods
 
     /**
@@ -171,7 +195,8 @@ public class CoreEngine {
 
         LOG.log(Level.INFO, "Paused set:" + paused);
         this.paused = paused;
-        if(paused) {
+
+        if (paused) {
             SortVisual.seq.forEach(SequentialTransition::pause);
         } else {
             SortVisual.seq.forEach(SequentialTransition::play);
@@ -181,8 +206,8 @@ public class CoreEngine {
     /**
      * Called to start the game's ticker.
      * The frame rate is 60 frames per second, so checks if its time to update yet (every 1/60 a second),
-     * if it is, update the game's state, otherwise wait until next frame. Waiting only occurs if this thread has not yet slept,
-     * because waiting will put the thread to sleep.
+     * if it is, update the game's state, otherwise wait until next frame.
+     * Waiting only occurs if this thread has not yet slept, because waiting will put the thread to sleep.
      */
     public void startGame() {
 
@@ -219,7 +244,8 @@ public class CoreEngine {
     /**
      * Checks if its time to update,
      * this is done by checking if the change in time since the last update is larger than or equals to
-     * the frame rate (1/60 a second). Resets the time the clock starts counting for the next update if it is time to update
+     * the frame rate (1/60 a second).
+     * Resets the time the clock starts counting for the next update if it is time to update
      *
      * @param startTime the time since the last update
      * @return Whether its time to update or not
@@ -256,7 +282,6 @@ public class CoreEngine {
      */
     private void updateGameState() {
 
-        //may be null because startGame is called before renderer even instantiates (different threads but still not guaranteed)
         if (entities != null) {
             for (Entity entity : entities) {
                 entity.update();
@@ -278,17 +303,16 @@ public class CoreEngine {
      * @return false if there are none left
      */
     public boolean breakableBlockadesLeft() {
-        if (breakableBlockadesLimit > 0) {
-            return true;
-        }
-        return false;
+
+        return this.breakableBlockadesLimit > 0;
     }
 
     /**
      * Reduce the amount of sortable blockades available by 1
      */
     public void breakableBlockadesPlaced() {
-        breakableBlockadesLimit--;
+
+        this.breakableBlockadesLimit--;
     }
 
     /**
@@ -297,35 +321,16 @@ public class CoreEngine {
      * @return false if there are none left
      */
     public boolean unbreakableBlockadesLeft() {
-        if (unbreakableBlockadesLimit > 0) {
-            return true;
-        }
-        return false;
+
+        return this.unbreakableBlockadesLimit > 0;
     }
 
     /**
      * Reduce the amount of unsortable blockades available by 1
      */
     public void unbreakableBlockadesPlaced() {
-        unbreakableBlockadesLimit--;
-    }
 
-    /**
-     * Get the amount of unbreakable blockade left
-     *
-     * @return unbreakableBlockadesLimit the amount of unbreakable blockade left
-     */
-    public int getUnbreakableBlockadesLimit() {
-        return unbreakableBlockadesLimit;
-    }
-
-    /**
-     * Get the amount of breakable blockade left
-     *
-     * @return breakableBlockadesLimit the amount of breakable blockade left
-     */
-    public int getBreakableBlockadesLimit() {
-        return breakableBlockadesLimit;
+        this.unbreakableBlockadesLimit--;
     }
 
     /**
@@ -339,12 +344,14 @@ public class CoreEngine {
         // remove the given entity
         boolean removed = entities.remove(entity);
         entities.trimToSize();
+
         // check if the entity was logically removed
         if (removed) {
 
             // remove the sprite of the entity from renderer
             Renderer.Instance().remove(entity.getSprite());
         }
+
         if (entity instanceof Blockade) {
             entity.getPosition().setBlockade(null);
         }

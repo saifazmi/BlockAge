@@ -28,6 +28,8 @@ public class Graph {
         this.nodes = new ArrayList<>();
     }
 
+    //@TODO: document this method
+
     /**
      * @param node
      * @return
@@ -39,7 +41,7 @@ public class Graph {
                 return aNode;
             }
         }
-        nodes.add(node);
+        this.nodes.add(node);
 
         return node;
     }
@@ -51,6 +53,6 @@ public class Graph {
      */
     public List<GraphNode> getNodes() {
 
-        return nodes;
+        return this.nodes;
     }
 }
