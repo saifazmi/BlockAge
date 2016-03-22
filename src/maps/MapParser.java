@@ -14,16 +14,24 @@ import java.io.IOException;
 /**
  * Created by hung on 01/03/16.
  */
+
+/**
+ * This class will parse a .map file and generate blockades for the game runtime instance to match the data in the map
+ */
 public class MapParser {
 
     private BufferedReader reader;
     private String row;
 
-    //args is portability, teacher can just give student map files
     public MapParser(BufferedReader reader) {
         this.reader = reader;
     }
 
+    /**
+     * Goes through the lines in the file and get the next integer,
+     * if the integer is 1, create a blockade and add it to the list of entities for the game run-time's renderer and core engine
+     * otherwise don't do anything
+     */
     public void generateBlockades() {
 
         int x = 0, y = 0;
@@ -69,6 +77,10 @@ public class MapParser {
         }
     }
 
+    /**
+     * Get the next integer by getting the character parse it as an integer.
+     * @return the next integer in the file
+     */
     private int getNextInt() {
         int i = 0;
 
@@ -83,6 +95,11 @@ public class MapParser {
         return nextInt;
     }
 
+    /**
+     * Checks if character is a space
+     * @param c the character
+     * @return whether the character passed is a space
+     */
     private boolean isSpace(char c) {
         return c == ' ';
     }

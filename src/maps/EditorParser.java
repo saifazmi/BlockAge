@@ -15,6 +15,10 @@ import java.io.IOException;
 /**
  * Created by hung on 05/03/16.
  */
+
+/**
+ * This class handles saving of maps created via the map editor
+ */
 public class EditorParser {
 
     private MapEditor editor;
@@ -23,7 +27,13 @@ public class EditorParser {
     private String RTS_DIRECTORY;
     private boolean overwrite = true;
 
-    public EditorParser(MapEditor mapEditor) {
+    /**
+     * The constructor creates a new directory for the application to store its files
+     * The files stored include both a .map file (our own extension but should be readable by any text editor) and a .png file
+     * @param mapEditor The Map Editing manager which this class can get information from (about the graph etc.)
+     */
+    public EditorParser(MapEditor mapEditor)
+    {
         String dir = System.getProperty("user.home");
         System.out.println(dir);
         String SEPERATOR = File.separator;
@@ -37,7 +47,15 @@ public class EditorParser {
     }
 
 
-    public void saveToUserFile() {
+    /**
+     * Called when the 'saved' button is clicked
+     * Gets the name of the map and ensures it isn't empty
+     * Creates a new directory if necessary, i.e. a directory for the application doesn't exist yet
+     * Goes through the map, obtained from the Map Editor instance, and for each node with a blockade, place a 1 in the saved file, else place a 0
+     * Saves the map in the form <name>.map and a .png image
+     */
+    public void saveToUserFile()
+    {
         String fileName = editor.getInterface().getFileName() + ".map";
         String imageName = editor.getInterface().getFileName() + ".png";
 
@@ -140,6 +158,13 @@ public class EditorParser {
         }
     }
 
+    /**
+     * Checks the file name is invalid
+     * File name is invalid if:
+     * It contains a '.'
+     * @param fileName The name to invalidate
+     * @return whether the file name is invalid
+     */
     private boolean invalidName(String fileName) {
         if (fileName.contains(".")) {
             editor.getInterface().getSaveStatusBox().setText("File name can only be contain alphanumerical characters, no special symbols allowed");
@@ -149,6 +174,10 @@ public class EditorParser {
         return false;
     }
 
+    /**
+     * Sets the boolean to overwrite an existing map if it already exists, called when
+     * @param overwrite
+     */
     public void setOverwrite(boolean overwrite) {
         this.overwrite = overwrite;
     }
