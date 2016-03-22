@@ -1,8 +1,14 @@
 package gui;
 
+import java.io.InputStream;
+
 import core.CoreEngine;
 import core.GameRunTime;
 import entity.SortableBlockade;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -21,6 +27,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import menus.Menu;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
@@ -28,8 +35,6 @@ import sceneElements.LabelProperties;
 import sorts.visual.SortVisual;
 import stores.ImageStore;
 import stores.LambdaStore;
-
-import java.io.InputStream;
 
 /**
  * @author : First created by Paul Popa with code by Paul Popa
@@ -45,9 +50,9 @@ public class GameInterface {
     public static TextArea unitDescriptionText;
     public static Font bellotaFont, bellotaFontBigger;
     public static Pane unitTextPane, sortVisualisationPane, rightMenuPane, rightMenuBox;
-    public static Label unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel, sortableLimitLabel, unsortableLimitLabel, scoreLabel, sortVisualisationLabel;
+    public static Label unitDescriptionLabel, unitImage, namePaneLabel, searchPaneLabel, sortPaneLabel, sortableLimitLabel, unsortableLimitLabel, scoreLabel, sortVisualisationLabel;
 
-    private Label unitDescriptionLabel, blockadesLabel, sortLabel;
+    private Label blockadesLabel, sortLabel;
     private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
     private ButtonProperties b;
     private LabelProperties l;
@@ -73,6 +78,7 @@ public class GameInterface {
     private GameInterface() {
         loadFont();
         declareElements();
+        toggle();
         rightPane();
     }
 
@@ -84,7 +90,7 @@ public class GameInterface {
         if (fontStream == null) {
             System.out.println("No font at that path");
         }
-        bellotaFont = Font.loadFont(fontStream, 25);
+        bellotaFont = Font.loadFont(fontStream, 23);
 
         InputStream fontStream1 = GameInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
         if (fontStream == null) {
@@ -137,9 +143,8 @@ public class GameInterface {
      */
     public void rightPane() {
         //UNIT DESCRIPTION PANE
-        unitDescriptionLabel.setText("Unit Description");
         unitDescriptionLabel.setFont(bellotaFont);
-        unitDescriptionLabel.setLayoutX(rightPaneWidth / 2 - 175 / 2);
+        unitDescriptionLabel.setLayoutX(rightPaneWidth / 2 - 131.25 / 2);
         unitDescriptionLabel.setLayoutY(initialPositionY);
         unitDescriptionLabel.setTextFill(Color.web("#FFE130"));
 
@@ -150,22 +155,19 @@ public class GameInterface {
         unitTextPane.setLayoutY(initialPositionY + heightSpacing);
 
         // Sets the image and the text of the unit accordingly with the mouse pressed
-        namePaneLabel.setText("");
         namePaneLabel.setFont(bellotaFont);
         namePaneLabel.setLayoutX(15);
         namePaneLabel.setLayoutY(5);
         namePaneLabel.setTextFill(Color.web("#FFE130"));
 
-        searchPaneLabel.setText("");
         searchPaneLabel.setFont(bellotaFont);
         searchPaneLabel.setPrefSize(250, 25);
         searchPaneLabel.setLayoutX(15);
         searchPaneLabel.setLayoutY(5 + 25 + 2.5);
         searchPaneLabel.setTextFill(Color.web("#FFE130"));
 
-        sortPaneLabel.setText("");
         sortPaneLabel.setFont(bellotaFont);
-        sortPaneLabel.setPrefSize(250, 25);
+        sortPaneLabel.setPrefSize(325, 25);
         sortPaneLabel.setLayoutX(15);
         sortPaneLabel.setLayoutY(5 + 25 + 25 + 2.5);
         sortPaneLabel.setTextFill(Color.web("#FFE130"));
@@ -184,7 +186,7 @@ public class GameInterface {
         sortVisualisationLabel.setAlignment(Pos.CENTER);
         sortVisualisationLabel.setTextFill(Color.web("#FFE130"));
 
-        sortVisualisationLabel.widthProperty().addListener((observable, oldWidth, newWidth) -> {
+        unitDescriptionLabel.widthProperty().addListener((observable, oldWidth, newWidth) -> {
             System.out.println("The new width" + newWidth);
         });
 
@@ -283,11 +285,50 @@ public class GameInterface {
             if (!rightMenuBox.getChildren().contains(sortLabel))
                 rightMenuBox.getChildren().add(sortLabel);
         });
+        
+        //Initial pane of 
+        unitDescriptionLabel.setText("Key Bindings");
+        namePaneLabel.setText("R-Show route");
+        searchPaneLabel.setText("S-Unselect unit");
+        sortPaneLabel.setText("B-Unsortable blockade");
     }
 
+    /**
+     * Updates the current score as well as the limits for the breakable and unbreakable blockades
+     */
     public static void update() {
         scoreLabel.setText("Score: " + String.format("%.2f", CoreEngine.Instance().getScore().getScore()));
         unsortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getUnbreakableBlockadesLimit()));
         sortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getBreakableBlockadesLimit()));
+    }
+    
+    /**
+     * Sets up the key binding pane with the keys that can be used in game
+     */
+    public static void toggle() {
+
+    	// The labels will be updated every 3 seconds
+        Timeline update = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	if(unitDescriptionLabel != null && unitDescriptionLabel.getText().equals("Key Bindings")) {
+            		if(namePaneLabel.getText().equals("R-Show route")) {
+            			namePaneLabel.setText("Shift+R-Show visualisation");
+            	        searchPaneLabel.setText("SPACE-Pause game");
+            	        sortPaneLabel.setText("Shift+B-Sortable blockade");
+            		}
+            		else {
+            			namePaneLabel.setText("R-Show route");
+            	        searchPaneLabel.setText("S-Unselect unit");
+            	        sortPaneLabel.setText("B-Unsortable blockade");
+            		}
+            	}
+            	else {
+            		System.out.println("Do nothing");
+            	}
+            }
+        }));
+        update.setCycleCount(Timeline.INDEFINITE);
+        update.play();
     }
 }
