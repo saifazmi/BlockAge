@@ -47,7 +47,7 @@ public class Blockade extends Entity {
      */
     public Blockade(int id, String name, String description, GraphNode position, SpriteImage sprite) {
 
-        super(id, name, description, position, sprite);
+        super(id, name, position, sprite);
         this.breakable = false;
     }
 

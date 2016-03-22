@@ -265,7 +265,7 @@ public class Renderer extends Group {
      * @param route the route that the unit is logically following
      * @param start the start node that the visualisation is going to be produced
      * @return the lines that need to be drawn on the grid starting from the initial spawned unit
-     */ List<Line> produceRoute(List<GraphNode> route, GraphNode start) {
+     */ public List<Line> produceRoute(List<GraphNode> route, GraphNode start) {
         List<GraphNode> nodes = new ArrayList<>();
         nodes.add(start);
         nodes.addAll(route);
