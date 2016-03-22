@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sorts.logic.InsertSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
 import sorts.visual.SortVisualBar;
@@ -33,7 +34,7 @@ public class TestVisualLive extends Application {
 
     public void start(Stage stage) {
         tuples = new ArrayList<Tuple>();
-        sorts = SelectionSort.sort(Test_Sort.generateUniqSortArray());
+        sorts = InsertSort.sort(Test_Sort.generateUniqSortArray());
         Pane sortPane = new Pane();
         sortPane.setStyle("-fx-background-color: gray;");
         sortPane.setPrefSize(WIDTH, HEIGHT);

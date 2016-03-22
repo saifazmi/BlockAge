@@ -86,9 +86,9 @@ public class Unit extends Entity {
         SELECTION,
 
         /**
-         * Quick Sort
+         * Insert Sort
          */
-        QUICK
+        INSERT
     }
 
     private List<GraphNode> route;
