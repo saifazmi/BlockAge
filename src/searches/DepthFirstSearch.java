@@ -38,9 +38,12 @@ public class DepthFirstSearch {
             if (!visited.contains(current) && (current.getBlockade() == null || current.getBlockade().isBreakable())) {
 
                 if (current.equals(endNode)) {
+                    System.out.println("path back");
                     while (possiblePath.keySet().contains(current)) {
                         path.add(current);
+                        System.out.println("current: " + current);
                         parent = possiblePath.get(current);
+                        System.out.println("parent: " + parent);
                         current = parent;
                     }
 
@@ -51,13 +54,24 @@ public class DepthFirstSearch {
                     ArrayList<GraphNode> clone = (ArrayList<GraphNode>) path.clone();
                     return path;
                 } else {
+
                     visited.add(current);
+
+                    System.out.print("explored: ");
+                    System.out.println(current);
 
                     current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(frontier::push);
 
                     for (GraphNode successor : current.getSuccessors()) {
-                        if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
+
+                        /*if (possiblePath.keySet().contains(successor))
+                            System.out.println(successor + " already in set");*/
+
+                        if (!possiblePath.containsValue(successor))
+                        {
                             possiblePath.put(successor, current);
+                        }
+
                     }
                 }
             }
