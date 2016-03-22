@@ -65,10 +65,6 @@ public class GameInterface {
     private LabelProperties l;
     private int initialPositionY = 50;
     private int heightSpacing = 30;
-    //TODO: never used, delete?
-    public SortVisual sortVisual = null;
-    //TODO: never used, delete?
-    public SortableBlockade sortableBlockade;
 
     // Instance for singleton.
     private static GameInterface instance = null;

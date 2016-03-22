@@ -168,19 +168,6 @@ public class UnitSpawner {
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
-    //@TODO: is this methods being used anymore?
-
-    /**
-     * Moves the unit back into the pool if its not needed
-     *
-     * @param unit The Unit to move back
-     */
-    private void despawnUnit(Unit unit) {
-
-        this.unitPool.add(unit);
-        //remove from list here?
-    }
-
     /**
      * Updates the spawner itself, If the number of Units in game is less than the set limit, spawn a new one
      */
@@ -194,23 +181,5 @@ public class UnitSpawner {
             this.cooldown = 300;
             spawnUnit();
         }
-    }
-
-    //@TODO: never used, delete?
-
-    /**
-     * Sets the limit to the number of unit to spawn in one game
-     *
-     * @param spawnlimit number of unit allowed to spawn
-     */
-    public void setSpawnlimit(int spawnlimit) {
-
-        this.spawnlimit = spawnlimit;
-    }
-
-    //@TODO: never used, delete? else javadoc
-    public Random getRndSearchGen() {
-
-        return this.rndSearchGen;
     }
 }

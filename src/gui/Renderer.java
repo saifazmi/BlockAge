@@ -124,12 +124,11 @@ public class Renderer extends Group {
         return success;
     }
 
-    //@TODO: why this returning a node? check doc
     /**
      * Removes a given node from renderer
      *
      * @param node the node to be removed
-     * @return
+     * @return the node that was removed, or null if no node was removed
      */
     public Node remove(Node node) {
 

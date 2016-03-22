@@ -55,7 +55,6 @@ public class AStar {
                 visited.add(n);
                 ArrayList<GraphNode> pathList = new ArrayList<>(); // make list, add goal first
                 if (start == goal) {
-                    //@TODO
                     pathList.add(start);
                     unit.setVisited(new ArrayList<>(visited));
                     unit.setRoute(pathList);
