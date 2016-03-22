@@ -31,7 +31,7 @@ import java.util.ArrayList;
 /**
  * @author : Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- * <p>
+ * 
  * The central class for displaying the sort visual. Loosely based on the Model-View-Controller model.
  * This class contains both: Controller and View, and the Model being individual Sort classes.
  * However instead of the Controller constantly changing the Model, it does it all in one go:
