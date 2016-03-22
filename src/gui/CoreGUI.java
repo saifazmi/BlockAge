@@ -15,31 +15,35 @@ import java.util.logging.Logger;
 public class CoreGUI extends Application {
 
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
-    //public static Integer HEIGHT;
-    //public static Integer WIDTH;
+
+    // Height of the GUI
     public static final Integer HEIGHT = 720;
+    // Width of the GUI
     public static final Integer WIDTH = 1280;
 
     public static void main(String[] args) {
+
+        // Start the GUI
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //WIDTH = (int)screenSize.getWidth();
-        //HEIGHT = (int)screenSize.getHeight();
-        //primaryStage.setMaximized(true);
+
         new MenuHandler(primaryStage);
         MenuHandler.switchScene(MenuHandler.MAIN_MENU);
         primaryStage.setOnCloseRequest(e -> {
+
             CoreEngine engine = CoreEngine.Instance();
+
             if (engine != null) {
                 engine.setRunning(false);
             }
+
             LOG.log(Level.INFO, "Exiting...");
             System.exit(0);
         });
+
         primaryStage.show();
     }
 }

@@ -50,7 +50,7 @@ public class CoreEngine {
     /**
      * Implements Singleton for this class (Only one can exist)
      *
-     * @return the only engine to be created
+     * @return the core engine instance
      */
     public static CoreEngine Instance() {
 

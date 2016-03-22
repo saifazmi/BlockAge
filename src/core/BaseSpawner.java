@@ -48,7 +48,7 @@ public class BaseSpawner {
     /**
      * Implements Singleton for this class (Only one can exist).
      *
-     * @return the only base spawner to be created.
+     * @return the base spawner instance
      */
     public static BaseSpawner Instance() {
 

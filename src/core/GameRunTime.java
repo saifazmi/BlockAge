@@ -41,7 +41,7 @@ public class GameRunTime {
     /**
      * Implements Singleton for this class (Only one can exist)
      *
-     * @return the only game runtime to be created
+     * @return the game runtime instance
      */
     public static GameRunTime Instance() {
 

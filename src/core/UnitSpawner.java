@@ -49,7 +49,7 @@ public class UnitSpawner {
     /**
      * Implements Singleton for this class (Only one can exist)
      *
-     * @return the only unit spawner to be created
+     * @return the unit spawner instance
      */
     public static UnitSpawner Instance() {
 
