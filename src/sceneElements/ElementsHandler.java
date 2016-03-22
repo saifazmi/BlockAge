@@ -205,13 +205,6 @@ public class ElementsHandler {
             //@TODO added while new game is broken
             System.exit(0);
         }
-        if (event.getSource() == GameInterface.playButton) {
-            engine.setPaused(false);
-        }
-
-        if (event.getSource() == GameInterface.pauseButton) {
-            engine.setPaused(true);
-        }
         if (event.getSource() == MainMenu.mapEditorButton) {
             MapEditor.Instance();
             MenuHandler.switchScene(MenuHandler.MAP_EDITOR);

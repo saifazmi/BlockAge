@@ -60,7 +60,13 @@ public class CoreEngine {
         return instance;
     }
 
+    /**
+     * Deleting the instance of this when called
+     * 
+     * @return if the instance was deleted or not
+     */
     public static boolean delete() {
+    	
         instance = null;
         return true;
     }

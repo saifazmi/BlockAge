@@ -22,6 +22,9 @@ import java.util.logging.Logger;
 /**
  * @author : First created by Dominic Walters with code by Dominic Walters, and Paul Popa
  * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
+ * 
+ * Creates the main interface for the game. This will contain the grid 
+ * where all the entities will be drawn on.
  */
 public class GameRunTime {
 
@@ -34,6 +37,9 @@ public class GameRunTime {
     // Dependencies
     private CoreEngine engine;
     private static Scene mainGameScene = null;
+    private final String SEPARATOR = File.separator;
+    private final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
+    private final String BACKGROUNDS = "backgrounds" + SEPARATOR;
 
     // Instance for singleton.
     private static GameRunTime instance = null;
@@ -51,7 +57,13 @@ public class GameRunTime {
         return instance;
     }
 
+    /**
+     * Deleting the instance of this when called
+     * 
+     * @return if the instance was deleted or not
+     */
     public static boolean delete() {
+    	
         instance = null;
         return true;
     }
@@ -61,18 +73,16 @@ public class GameRunTime {
      * Initialises the engine, renderer, and unit unitSpawner
      */
     public GameRunTime() {
-
+    	
         instance = this;
-
+        
         Thread engThread = new Thread(() -> {
-
             this.engine = new CoreEngine();
             this.engine.startGame();
         });
         engThread.start();
 
         while (this.engine == null) {
-
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -80,21 +90,19 @@ public class GameRunTime {
             }
         }
 
+        // The pane that will be placed on the grid in order to set a background
         BorderPane mainGamePane = new BorderPane();
+        
+        // Setting width and height for this pane
         mainGamePane.setPrefWidth(CoreGUI.WIDTH - GameInterface.rightPaneWidth);
         mainGamePane.setPrefHeight(CoreGUI.HEIGHT);
 
+        // Creating the scene that will display the pane
         Group mainGame = new Group(mainGamePane);
         mainGameScene = new Scene(mainGame, CoreGUI.WIDTH, CoreGUI.HEIGHT);
 
-        //@TODO: why are these here?
-        final String SEPARATOR = File.separator;
-        final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
-        final String BACKGROUNDS = "backgrounds" + SEPARATOR;
-        Image hellBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "hell_background.png");
+        // The image which will be displayed on the grid
         Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
-        Image grassBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "GrassBackground.png");
-
         BackgroundImage myBIF = new BackgroundImage(
                 sandBackground,
                 BackgroundRepeat.REPEAT,
@@ -103,19 +111,22 @@ public class GameRunTime {
                 BackgroundSize.DEFAULT
         );
 
+        // Setting the image on the pane
         mainGamePane.setBackground(new Background(myBIF));
         mainGameScene.setOnKeyPressed(ElementsHandler::handleKeys);
 
         Renderer.Instance();
+        // Setting the renderer on the pane which will be on top of the background
         mainGamePane.setCenter(Renderer.Instance());
 
-        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
-            Renderer.Instance().redraw();
-        });
-
-        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
-            Renderer.Instance().redraw();
-        });
+        // Dom?
+//        mainGameScene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
+//            Renderer.Instance().redraw();
+//        });
+//
+//        mainGameScene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
+//            Renderer.Instance().redraw();
+//        });
     }
 
     // GETTER methods

@@ -16,8 +16,6 @@ import java.util.logging.Logger;
 public class CoreGUI extends Application {
 
     private static final Logger LOG = Logger.getLogger(CoreGUI.class.getName());
-    //public static Integer HEIGHT;
-    //public static Integer WIDTH;
     public static final Integer HEIGHT = 720;
     public static final Integer WIDTH = 1280;
 
@@ -25,14 +23,15 @@ public class CoreGUI extends Application {
         launch(args);
     }
 
+    /**
+     * This is the main stage that everything will be added on. 
+     * Including: Main menu,Options Menu, Map Editor and the game itself.
+     */
     @Override
     public void start(Stage primaryStage) {
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //WIDTH = (int)screenSize.getWidth();
-        //HEIGHT = (int)screenSize.getHeight();
-        //primaryStage.setMaximized(true);
         new MenuHandler(primaryStage);
         MenuHandler.switchScene(MenuHandler.MAIN_MENU);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setOnCloseRequest(e -> {
             CoreEngine engine = CoreEngine.Instance();
             if (engine != null) {
