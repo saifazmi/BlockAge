@@ -13,6 +13,7 @@ public class InsertSort {
 
     /**
      * Simple, with inclusion of the abstract layer, which keeps track of all relevant states for animating
+     *
      * @param n input list to sort
      * @return allStates relevant states used for swapping
      */
@@ -20,18 +21,18 @@ public class InsertSort {
         ArrayList<Integer> state = n;
         ArrayList<SortableComponent> allStates = new ArrayList<>();
 
-        for(int x=1; x<state.size();x++) {
+        for (int x = 1; x < state.size(); x++) {
             int y = x;
-            while(y>0 && (state.get(y-1) > state.get(y) )){
-                SortableComponent s = new SortableComponent(getByValue(state), y-1 , y, false);
+            while (y > 0 && (state.get(y - 1) > state.get(y))) {
+                SortableComponent s = new SortableComponent(getByValue(state), y - 1, y, false);
                 allStates.add(s); //save state prior to a swap
                 //swap y and y-1
-                int temp = state.get(y-1);
-                state.set(y-1,state.get(y));
-                state.set(y,temp);
-                SortableComponent sw = new SortableComponent(getByValue(state), y-1 , y, true);
+                int temp = state.get(y - 1);
+                state.set(y - 1, state.get(y));
+                state.set(y, temp);
+                SortableComponent sw = new SortableComponent(getByValue(state), y - 1, y, true);
                 allStates.add(sw); //save swap state
-                y=y-1;
+                y = y - 1;
             }
         }
         return allStates;

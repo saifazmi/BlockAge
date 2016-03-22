@@ -43,11 +43,15 @@ public class GraphNode {
         base = null;
     }
 
+    //@TODO: document this method
+
     /**
      * @param graph
      */
     public void addNeighbours(Graph graph) {
+
         for (int i = 0; i < graph.getNodes().size(); i++) {
+
             GraphNode node = graph.getNodes().get(i);
             double deltaX = Math.abs(this.x - node.getX());
             double deltaY = Math.abs(this.y - node.getY());
@@ -55,6 +59,7 @@ public class GraphNode {
             if (!node.equals(this) &&
                     (deltaX <= 1 && deltaY <= 1) &&
                     (deltaX + deltaY) < 2) {
+
                 addSuccessor(node, graph);
             }
         }
@@ -103,38 +108,74 @@ public class GraphNode {
     }
 
     /**
-     * @param node
-     * @param graph
+     * Gets the list of units
+     *
+     * @return a list of units
+     */
+    public List<Unit> getUnits() {
+
+        return this.units;
+    }
+
+    /**
+     * Gets the base
+     *
+     * @return the base object
+     */
+    public Base getBase() {
+
+        return this.base;
+    }
+
+    // SETTER methods.
+
+    /**
+     * Sets the blockade property for this graph node
+     *
+     * @param blockade the blockade for this graph node
+     */
+    public void setBlockade(Blockade blockade) {
+
+        this.blockade = blockade;
+    }
+
+    /**
+     * Sets the base
+     *
+     * @param base the base object
+     */
+    public void setBase(Base base) {
+
+        this.base = base;
+    }
+
+    /**
+     * Adds the successors for the given node
+     *
+     * @param node  the node to generate add successors for
+     * @param graph the graph on which the successors are based
      */
     public void addSuccessor(GraphNode node, Graph graph) {
+
         GraphNode successor = graph.nodeWith(node);
         this.successors.add(successor);
     }
 
-    public void setBlockade(Blockade blockade) {
-        this.blockade = blockade;
-    }
-
-    public List<Unit> getUnits() {
-        return units;
-    }
-
-    public Base getBase() {
-        return base;
-    }
-
-    public void setBase(Base base) {
-        this.base = base;
-    }
-
+    /**
+     * @return a string representation for this graph node
+     */
     @Override
     public String toString() {
+
         StringBuilder sb = new StringBuilder();
+
         sb.append("GraphNode{x=").append(x).append(", y=").append(y).append('}');
         sb.append(" ");
+
         for (GraphNode successor : this.successors) {
             sb.append("(").append(successor.getX()).append(",").append(successor.getY()).append(")");
         }
+
         return sb.toString();
     }
 
@@ -157,6 +198,7 @@ public class GraphNode {
 
     @Override
     public int hashCode() {
+
         int result = x;
         result = 31 * result + y;
         return result;

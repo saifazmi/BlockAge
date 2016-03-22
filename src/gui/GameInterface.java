@@ -1,7 +1,5 @@
 package gui;
 
-import java.io.InputStream;
-
 import core.CoreEngine;
 import core.GameRunTime;
 import entity.SortableBlockade;
@@ -35,6 +33,8 @@ import sceneElements.LabelProperties;
 import sorts.visual.SortVisual;
 import stores.ImageStore;
 import stores.LambdaStore;
+
+import java.io.InputStream;
 
 /**
  * @author : First created by Paul Popa with code by Paul Popa
@@ -308,13 +308,13 @@ public class GameInterface {
         unsortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getUnbreakableBlockadesLimit()));
         sortableLimitLabel.setText(String.valueOf(CoreEngine.Instance().getBreakableBlockadesLimit()));
     }
-    
+
     /**
      * Sets up the key binding pane with the keys that can be used in game
      */
     public static void toggle() {
 
-    	// The labels will be updated every 3 seconds
+        // The labels will be updated every 3 seconds
         Timeline update = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

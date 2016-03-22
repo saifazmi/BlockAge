@@ -11,8 +11,6 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -111,11 +109,11 @@ public class SortVisual {
         //SIMPLE TEXT ON THE LEFT
         Text tempSign = new Text("TEMP"); //simple text on the left of pane
         tempSign.setFill(Color.AQUA);
-        tempSign.setFont(Font.font("Verdana", FontWeight.BOLD,18));
+        tempSign.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
         tempSign.setRotate(-90);
         sortPane.getChildren().add(tempSign);
-        tempSign.relocate(-WIDTH/15,HEIGHT-45);
-        tempSign.relocate(-WIDTH/15,HEIGHT-45);
+        tempSign.relocate(-WIDTH / 15, HEIGHT - 45);
+        tempSign.relocate(-WIDTH / 15, HEIGHT - 45);
         //LOGICALLY ORDERING BLOCKS IN THE DATA STRUCTURE
         ArrayList<SortVisualBar> blocksTemp = new ArrayList<>();
         //logical positioning in the data structure, they are ordered visually above,
@@ -133,6 +131,7 @@ public class SortVisual {
      * Used to generate a correct location for a block inside a data structure.
      * This is done to synchronize the data structure that contains the blocks, with the first sort state.
      * Giving the correct visual order.
+     *
      * @param s
      * @return x position
      */
@@ -213,9 +212,9 @@ public class SortVisual {
         double oldX = b1.getLayoutX();
         double oldSecondX = b2.getLayoutX();
 
-        FillTransition col1 = new FillTransition(Duration.millis(10),b1,Color.web("#7092BE"),Color.AQUA);
-        FillTransition col2 = new FillTransition(Duration.millis(10),b2,Color.web("#7092BE"),Color.AQUA);
-        ParallelTransition colx = new ParallelTransition(col1,col2);
+        FillTransition col1 = new FillTransition(Duration.millis(10), b1, Color.web("#7092BE"), Color.AQUA);
+        FillTransition col2 = new FillTransition(Duration.millis(10), b2, Color.web("#7092BE"), Color.AQUA);
+        ParallelTransition colx = new ParallelTransition(col1, col2);
 
 
         // first block , 3 transitions  UP LEFT DOWN
@@ -283,7 +282,7 @@ public class SortVisual {
                 CoreEngine.Instance().removeEntity(block);
                 unit.setSorting(null);
                 block.setSortVisual(null);
-                if(SortVisual.rendered != null && SortVisual.rendered.equals(this)) {
+                if (SortVisual.rendered != null && SortVisual.rendered.equals(this)) {
                     SortVisual.rendered = null;
                 }
                 seq.remove(temp);
@@ -371,6 +370,7 @@ public class SortVisual {
         result = 31 * result + (remove ? 1 : 0);
         return result;
     }
+
     /**
      * Highlights the current block the unit is sorting
      * In addition to changing colour in the transition, subtly changes.

@@ -67,8 +67,7 @@ public class Renderer extends Group {
     }
 
 
-    public Renderer()
-    {
+    public Renderer() {
         super();
         this.entitiesToDraw = new ArrayList<>();
     }

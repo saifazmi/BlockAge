@@ -37,6 +37,7 @@ public class Blockade extends Entity {
     }
 
     /**
+<<<<<<< HEAD
      * Builds a normal blockade with the given attributes.
      *
      * @param id          the ID of this entity
@@ -52,6 +53,8 @@ public class Blockade extends Entity {
     }
 
     /**
+=======
+>>>>>>> master
      * Abstract method from Entity that required implementation.
      * Left empty as nothing is necessary.
      */
@@ -86,7 +89,7 @@ public class Blockade extends Entity {
      *
      * @param e                the mouse event to get the graph node from
      * @param blockadeInstance the blockade object to 'duplicate'
-     * @return the blockade created (null if not in grid, clicked on a blockade, clicked on a unit)
+     * @return the blockade if created else null
      */
     public static Blockade createBlockade(MouseEvent e, Blockade blockadeInstance) {
 
@@ -161,7 +164,7 @@ public class Blockade extends Entity {
     }
 
     /**
-     * Calculates the id that should be assigned to the next blockade
+     * Calculate the id that should be assigned to the next blockade
      *
      * @return the id to use for the new blockade
      */
@@ -211,7 +214,7 @@ public class Blockade extends Entity {
         return null;
     }
 
-    //@TODO: document these methods
+    //@TODO: document this method
 
     /**
      * @param e
@@ -226,6 +229,8 @@ public class Blockade extends Entity {
 
         return create(blockadeInstance, node);
     }
+
+    //@TODO: document this method
 
     /**
      * @param e
