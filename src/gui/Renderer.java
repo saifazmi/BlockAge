@@ -347,7 +347,6 @@ public class Renderer extends Group {
         
         // When the goal node is found, the actual route that the unit is going to follow will 
         // be highlighted in green
-
         for (Line line : routeLines) {
             remove(line);
             line.setStroke(Color.GREEN);

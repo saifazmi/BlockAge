@@ -21,6 +21,9 @@ import stores.ImageStore;
 /**
  * @author : First created by Paul Popa with code by Paul Popa
  * @date : 09/02/16, last edited by Paul Popa on 12/02/16
+ * 
+ * This class is the Options Menu. There are four options that can be turned on or off: Show Search,
+ * Sound, Tutorial, No initial blockades.
  */
 public class OptionsMenu implements Menu {
     public static Button yesButtonSearch, yesButtonSound, noButtonSearch, noButtonSound, yesButtonTutorial, noButtonTutorial, yesButtonB, noButtonB, backButton = null;
@@ -35,6 +38,10 @@ public class OptionsMenu implements Menu {
     private LabelProperties l = null;
     private ButtonProperties b = null;
 
+    /**
+     * Initialises the scene which will contain the pane with all
+     * the buttons, labels and images placed accordingly
+     */
     public OptionsMenu() {
         initialiseScene();
     }
@@ -43,6 +50,7 @@ public class OptionsMenu implements Menu {
      * Declaring the elements which will be placed on the scene
      */
     public void declareElements() {
+    	//Buttons
         yesButtonSearch = new Button();
         noButtonSearch = new Button();
         yesButtonSound = new Button();
@@ -52,16 +60,16 @@ public class OptionsMenu implements Menu {
         yesButtonB = new Button();
         noButtonB = new Button();
         backButton = new Button();
-
+        //Labels
         searchLabel = new Label();
         soundLabel = new Label();
         tutorialLabel = new Label();
         blockadeLabel = new Label();
-
+        //Pane
         optionsMenuPane = new Pane();
         l = new LabelProperties();
         b = new ButtonProperties();
-
+        //Images
         onImage = ImageStore.onImage;
         onImageHovered = ImageStore.onImageHovered;
         offImage = ImageStore.offImage;
@@ -79,9 +87,6 @@ public class OptionsMenu implements Menu {
      */
     public void initialiseScene() {
         declareElements();
-        double xPos1 = Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText;
-        double xPos2 = Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4;
-        double yPos1 = Menu.HEIGHT / 3;
         // Set properties for the on/off SEARCH button
         b.setButtonProperties(yesButtonSearch, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3,
                 ElementsHandler::handle, new ImageView(onImage));
@@ -113,7 +118,7 @@ public class OptionsMenu implements Menu {
         l.setLabelProperties(tutorialLabel, "", Menu.WIDTH / 1.75 - tutorialImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH, new ImageView(tutorialImage));
         l.setLabelProperties(blockadeLabel, "", Menu.WIDTH / 1.75 - blockadeImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3 + 3 * spaceBetweenImgH, new ImageView(blockadeImage));
 
-        // To do sound configurations for button as well
+        // Adds everything to the pane
         optionsMenuPane.getChildren().addAll(searchLabel, soundLabel, tutorialLabel, blockadeLabel, yesButtonSearch, noButtonSound, yesButtonTutorial, yesButtonB, backButton);
         BackgroundImage myBI = new BackgroundImage(ImageStore.backgroundOptionsMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
@@ -122,6 +127,7 @@ public class OptionsMenu implements Menu {
         optionsMenuPane.setPrefHeight(Menu.HEIGHT);
         final Group group = new Group(optionsMenuPane);
 
+        // Create the scene that will be placed on the primary stage
         optionsMenuScene = new Scene(group, Menu.WIDTH, Menu.HEIGHT, Color.WHITE);
         optionsMenuScene.setOnKeyPressed(ElementsHandler::handleKeys);
     }
