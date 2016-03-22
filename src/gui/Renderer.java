@@ -50,8 +50,7 @@ public class Renderer extends Group {
         this.entitiesToDraw = new ArrayList<>();
     }*/
 
-    public Renderer()
-    {
+    public Renderer() {
         super();
         this.entitiesToDraw = new ArrayList<>();
     }

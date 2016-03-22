@@ -196,7 +196,7 @@ public class CoreEngine {
         LOG.log(Level.INFO, "Paused set:" + paused);
         this.paused = paused;
 
-        if(paused) {
+        if (paused) {
             SortVisual.seq.forEach(SequentialTransition::pause);
         } else {
             SortVisual.seq.forEach(SequentialTransition::play);

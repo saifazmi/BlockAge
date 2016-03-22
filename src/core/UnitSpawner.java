@@ -169,6 +169,7 @@ public class UnitSpawner {
     }
 
     //@TODO: is this methods being used anymore?
+
     /**
      * Moves the unit back into the pool if its not needed
      *
@@ -196,6 +197,7 @@ public class UnitSpawner {
     }
 
     //@TODO: never used, delete?
+
     /**
      * Sets the limit to the number of unit to spawn in one game
      *

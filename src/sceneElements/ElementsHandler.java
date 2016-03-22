@@ -245,11 +245,11 @@ public class ElementsHandler {
 
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
             } else if (k == KeyCode.S) {
-            	GameInterface.unitDescriptionLabel.setText("Key Bindings");
-            	GameInterface.unitDescriptionLabel.setLayoutX(GameInterface.rightPaneWidth/2 - 131.25/2);
-            	GameInterface.namePaneLabel.setText("R-Show route");
-            	GameInterface.searchPaneLabel.setText("S-Unselect unit");
-            	GameInterface.sortPaneLabel.setText("B-Unsortable blockade");
+                GameInterface.unitDescriptionLabel.setText("Key Bindings");
+                GameInterface.unitDescriptionLabel.setLayoutX(GameInterface.rightPaneWidth / 2 - 131.25 / 2);
+                GameInterface.namePaneLabel.setText("R-Show route");
+                GameInterface.searchPaneLabel.setText("S-Unselect unit");
+                GameInterface.sortPaneLabel.setText("B-Unsortable blockade");
                 ArrayList<Entity> units = engine.getEntities();
                 for (int i = 0; i < units.size(); i++) {
                     if (units.get(i) instanceof Unit) {

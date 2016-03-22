@@ -78,8 +78,9 @@ public class Test_Search extends Test_Logic {
         SpriteImage sprite = new SpriteImage(null, null);
 
         Unit newUnit;
-        try {newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);}
-        catch (ExceptionInInitializerError e) {
+        try {
+            newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
+        } catch (ExceptionInInitializerError e) {
             newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
         }
 
