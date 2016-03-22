@@ -27,6 +27,10 @@ import java.util.stream.Collectors;
 /**
  * @author : First created by Dominic Walters with code by Dominic Walters
  * @date : 29/01/16, last edited by Dominic Walters on 26/02/16
+ * 
+ * This class creates all the elements that will be placed on the map such as
+ * grid lines and entities(base, blocks, units). It also has a function to delete certain nodes
+ * if needed to.
  */
 public class Renderer extends Group {
 
@@ -49,7 +53,6 @@ public class Renderer extends Group {
      * @return the renderer instance
      */
     public static Renderer Instance() {
-
         if (instance == null) {
             instance = new Renderer();
         }
@@ -125,10 +128,16 @@ public class Renderer extends Group {
     }
 
     /**
+<<<<<<< HEAD
      * Removes a given node from renderer
      *
      * @param node the node to be removed
      * @return the node that was removed, or null if no node was removed
+=======
+     * Removes a node from the renderer meaning that it will get deleted from the map
+     * @param node the node which will be deleted
+     * @return the node if it contains it or null if it does not
+>>>>>>> New
      */
     public Node remove(Node node) {
 
@@ -145,7 +154,11 @@ public class Renderer extends Group {
     }
 
     /**
+<<<<<<< HEAD
      * Clears the renderer
+=======
+     * Deletes all the nodes that currently exist on the map
+>>>>>>> New
      */
     public void clear() {
 
@@ -248,9 +261,16 @@ public class Renderer extends Group {
     }
 
     /**
+<<<<<<< HEAD
      *
      * @param lines
      * @return
+=======
+     * Produces a visualisation of the route that the clicked unit is going to follow
+     * 
+     * @param lines the lines that will be drawn on the grid
+     * @return the transition for the drawing lines
+>>>>>>> New
      */
     public SequentialTransition produceRouteVisual(List<Line> lines) {
 
@@ -271,9 +291,16 @@ public class Renderer extends Group {
     }
 
     /**
+<<<<<<< HEAD
      *
      * @param route
      * @return
+=======
+     * Creates the route in terms of lines that is going to be drawn on the grid
+     * 
+     * @param route the route that the unit is logically following
+     * @return the lines that need to be drawn on the grid starting from the initial spawned unit
+>>>>>>> New
      */
     public List<Line> produceRoute(List<GraphNode> route) {
 
@@ -306,13 +333,13 @@ public class Renderer extends Group {
     }
 
     /**
-     *
-     * @param route
-     * @param start
-     * @return
+     * Creates the route in terms of lines that is going to be drawn on the grid
+     * 
+     * @param route the route that the unit is logically following
+     * @param start the start node that the visualisation is going to be produced
+     * @return the lines that need to be drawn on the grid starting from the initial spawned unit
      */
     public List<Line> produceRoute(List<GraphNode> route, GraphNode start) {
-
         List<GraphNode> nodes = new ArrayList<>();
 
         nodes.add(start);
@@ -342,9 +369,10 @@ public class Renderer extends Group {
     }
 
     /**
-     *
-     * @param unit
-     * @return
+     * Produces the algorithm visualisation of the current unit
+     * 
+     * @param unit the unit for which the visualisation is going to be created
+     * @return the transition which will consists of the visualisation of the current's unit algorithm
      */
     public SequentialTransition produceAlgoRouteVisual(Unit unit) {
 
@@ -353,24 +381,28 @@ public class Renderer extends Group {
         List<Line> lines = produceAlgoRoute(unit);
 
         for (Line line : lines) {
-
-            line.setMouseTransparent(true);
+            line.setMouseTransparent(true); // makes the click event transparent for this sprite
+            
+            // Creates the green rectangles that are displayed on the map (which follow the search algorithm). when
+            // the transition is played
             Rectangle rect = new Rectangle(xSpacing, ySpacing);
             rect.setFill(Color.GREEN);
             rect.setOpacity(0.0);
             rect.setX(line.getStartX() - xSpacing / 2);
             rect.setY(line.getStartY() - ySpacing / 2);
 
-            if (!getChildren().contains(rect)) {
-
+            // Adds the rectangles if the renderer does not contain them
+            if (!this.getChildren().contains(rect)) {
                 rect.setMouseTransparent(true);
                 getChildren().addAll(rect);
                 unit.getSprite().requestFocus();
             }
 
-            getChildren().add(line);
+            // Adds all the lines on the renderer which the unit went through
+            this.getChildren().add(line);
             line.setOpacity(0.0);
 
+            // Creates a fade transition for the rectangles and lines
             FadeTransition rectIn = buildFadeAnimation(25.0, 0.0, 1.0, rect);
             FadeTransition lineTransition = buildFadeAnimation(50, 0.0, 1.0, line);
             FadeTransition rectOut = buildFadeAnimation(25.0, 1.0, 0.0, rect);
@@ -378,18 +410,22 @@ public class Renderer extends Group {
             trans.getChildren().addAll(rectIn, lineTransition, rectOut);
         }
 
+        // Creates a rectangle which will appear when the algorithm found the goal node
         Rectangle rect = new Rectangle(xSpacing, ySpacing);
         rect.setOpacity(0.0);
         rect.setFill(Color.ORANGE);
         rect.setX(lines.get(lines.size() - 1).getStartX() - xSpacing / 2);
         rect.setY(lines.get(lines.size() - 1).getStartY() - ySpacing / 2);
-        getChildren().add(rect);
+        this.getChildren().add(rect);
+        
+        // Creates a transition for this rectangle 
         FadeTransition rectIn2 = buildFadeAnimation(1000.0, 0.0, 1.0, rect);
         FadeTransition rectOut2 = buildFadeAnimation(1000.0, 1.0, 0.0, rect);
 
         trans.getChildren().addAll(rectIn2, rectOut2);
         List<Line> routeLines = produceRoute(unit.getRoute(), unit.getPosition());
-
+        // When the goal node is found, the actual route that the unit is going to follow will 
+        // be highlighted in green
         for (Line line : routeLines) {
 
             remove(line);

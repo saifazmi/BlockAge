@@ -37,6 +37,24 @@ public class Blockade extends Entity {
     }
 
     /**
+<<<<<<< HEAD
+     * Builds a normal blockade with the given attributes.
+     *
+     * @param id          the ID of this entity
+     * @param name        name of the entity
+     * @param description additional detail for the entity
+     * @param position    position of the entity on the graph
+     * @param sprite      the sprite image representing this entity
+     */
+    public Blockade(int id, String name, String description, GraphNode position, SpriteImage sprite) {
+
+        super(id, name, position, sprite);
+        this.breakable = false;
+    }
+
+    /**
+=======
+>>>>>>> master
      * Abstract method from Entity that required implementation.
      * Left empty as nothing is necessary.
      */

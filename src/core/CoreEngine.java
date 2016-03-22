@@ -65,7 +65,6 @@ public class CoreEngine {
      * Delete the existing instance of this class
      */
     public static void delete() {
-
         instance = null;
     }
 

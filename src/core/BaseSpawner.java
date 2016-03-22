@@ -27,6 +27,10 @@ import java.util.logging.Logger;
 /**
  * @author : First created by Saif Amzi with code by Anh Pham, and Hung Hoang
  * @date : 25/02/16, last edited by ___ on
+ * 
+ * This is the class that will create the spawner for the base. This base is
+ * surrounded by blocks that units will have to sort in order to reach to the
+ * goal node.
  */
 public class BaseSpawner {
 
@@ -63,7 +67,6 @@ public class BaseSpawner {
      * Delete the existing instance of this class
      */
     public static void delete() {
-
         instance = null;
     }
 

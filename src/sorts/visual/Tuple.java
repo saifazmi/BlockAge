@@ -11,24 +11,49 @@ public class Tuple {
     private int second;
 
 
+    /**
+     * Creates a tuple
+     * 
+     * @param first the first element of the tuple
+     * @param second the second element of the tuple
+     */
     public Tuple(int first, int second) {
         this.first = first;
         this.second = second;
-
     }
 
+    /**
+     * Gets the second element of the tuple
+     * 
+     * @return the second element of the tuple
+     */
     public int getSecond() {
         return second;
     }
 
+    /**
+     * Sets the second element of the tuple
+     * 
+     * @param second the value that will be set
+     */
     public void setSecond(int second) {
         this.second = second;
     }
 
+    /**
+     * Gets the first element of the tuple
+     * 
+     * @return the first element of the tuple
+     */
     public int getFirst() {
         return first;
     }
 
+    /**
+     * Sets the first element of the tuple
+     * 
+     * @param first the value that will be set
+     */
     public void setFirst(int first) {
         this.first = first;
     }
