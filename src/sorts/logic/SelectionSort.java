@@ -19,7 +19,6 @@ public class SelectionSort {
      */
     public static ArrayList<SortableComponent> sort(ArrayList<Integer> state) {
 
-        //@TODO: comments to explain the sort
         ArrayList<SortableComponent> allStates = new ArrayList<>();
         int size = state.size();
         int x;
@@ -56,13 +55,11 @@ public class SelectionSort {
         return allStates;
     }
 
-    //@TODO: complete doc
-
     /**
-     * Pass by value
+     * Pass by value (hard copy)
      *
-     * @param list
-     * @return
+     * @param list the list to copy
+     * @return the copy
      */
     public static ArrayList<Integer> getByValue(ArrayList<Integer> list) {
 
