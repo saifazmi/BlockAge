@@ -256,7 +256,6 @@ public class GameInterface {
         // Set the properties for the unsortable button
         b.setButtonProperties(
                 unsortableButton,
-                "",
                 135,
                 initialPositionY + 5 * heightSpacing + 350,
                 ElementsHandler::handle,
@@ -284,7 +283,6 @@ public class GameInterface {
         // Set the properties for the sortable button
         b.setButtonProperties(
                 sortableButton,
-                "",
                 rightPaneWidth - 150 - sortableImage.getWidth(),
                 initialPositionY + 5 * heightSpacing + 350,
                 ElementsHandler::handle,

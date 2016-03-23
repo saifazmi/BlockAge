@@ -153,7 +153,14 @@ public class MapChooserInterface {
 
                     // Creates the button for choosing the map
                     Button newMap = new Button();
-                    b.setButtonProperties(newMap, "", 0, 0, e -> chooseMap(container), mapImageView);
+                    b.setButtonProperties(
+                            newMap,
+                            0,
+                            0,
+                            e -> chooseMap(container),
+                            mapImageView
+                    );
+
                     b.addHoverEffect3(newMap);
 
                     container.getChildren().addAll(mapNameLabel, newMap);

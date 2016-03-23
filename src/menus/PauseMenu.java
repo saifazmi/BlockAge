@@ -70,7 +70,6 @@ public class PauseMenu implements Menu {
         // BACK GAME BUTTON
         b.setButtonProperties(
                 backGameButton,
-                "",
                 Menu.WIDTH / 5 - backGameImage.getWidth() / 2,
                 Menu.HEIGHT / 3,
                 ElementsHandler::handle,
@@ -88,7 +87,6 @@ public class PauseMenu implements Menu {
         // OPTIONS BUTTON
         b.setButtonProperties(
                 optionsButton,
-                "",
                 Menu.WIDTH / 5 - optionsImage.getWidth() / 2,
                 Menu.HEIGHT / 3 + spaceBetweenImgH,
                 ElementsHandler::handle,
@@ -106,7 +104,6 @@ public class PauseMenu implements Menu {
         // BACK TO MAIN MENU BUTTON
         b.setButtonProperties(
                 backMainButton,
-                "",
                 Menu.WIDTH / 5 - backMainImage.getWidth() / 2,
                 Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 ElementsHandler::handle,

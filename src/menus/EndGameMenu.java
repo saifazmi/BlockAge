@@ -67,7 +67,6 @@ public class EndGameMenu implements Menu {
 
         l.setLabelProperties(
                 scoreLabel,
-                "",
                 Menu.WIDTH / 5 - 210,
                 Menu.HEIGHT / 3,
                 null
@@ -89,7 +88,6 @@ public class EndGameMenu implements Menu {
 
         b.setButtonProperties(
                 backMainButton,
-                "",
                 Menu.WIDTH / 5 - backMainImage.getWidth() / 2,
                 Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 ElementsHandler::handle, new ImageView(backMainImage)

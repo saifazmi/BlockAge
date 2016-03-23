@@ -170,9 +170,8 @@ public class MapEditorInterface {
         //@TODO: add comments specifying what everything is
         b.setButtonProperties(
                 yes,
-                "",
                 sceneWidth / 2 + 25 - noImage.getWidth() / 2, 125,
-                e -> handle(e),
+                MapEditorInterface::handle,
                 new ImageView(yesImage)
         );
 
@@ -186,10 +185,9 @@ public class MapEditorInterface {
 
         b.setButtonProperties(
                 no,
-                "",
                 sceneWidth / 2 - 60 - noImage.getWidth() / 2,
                 125,
-                e -> handle(e),
+                MapEditorInterface::handle,
                 new ImageView(noImage)
         );
 
@@ -302,10 +300,9 @@ public class MapEditorInterface {
         // Adding buttons properties
         b.setButtonProperties(
                 saveButton,
-                "",
                 rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80,
                 initialPositionY,
-                e -> handle(e),
+                MapEditorInterface::handle,
                 new ImageView(saveButtonImage)
         );
 
@@ -319,10 +316,9 @@ public class MapEditorInterface {
 
         b.setButtonProperties(
                 backButton,
-                "",
                 rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80,
                 initialPositionY,
-                e -> handle(e),
+                MapEditorInterface::handle,
                 new ImageView(backButtonImage)
         );
 
@@ -336,10 +332,9 @@ public class MapEditorInterface {
 
         b.setButtonProperties(
                 clearButton,
-                "",
                 rightPaneWidth / 2 - clearButtonImage.getWidth() / 2,
                 Menu.HEIGHT - 100,
-                e -> handle(e),
+                MapEditorInterface::handle,
                 new ImageView(clearButtonImage)
         );
 

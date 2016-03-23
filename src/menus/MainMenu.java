@@ -79,7 +79,6 @@ public class MainMenu implements Menu {
         // NEW GAME BUTTON
         b.setButtonProperties(
                 newGameButton,
-                "",
                 xPos(newGameImage),
                 Menu.HEIGHT / 3,
                 ElementsHandler::handle,
@@ -98,7 +97,6 @@ public class MainMenu implements Menu {
         // NEW GAME CHOSEN MAP
         b.setButtonProperties(
                 customGameButton,
-                "",
                 xPos(customGameImage),
                 Menu.HEIGHT / 3 + spaceBetweenImgH,
                 ElementsHandler::handle,
@@ -116,7 +114,6 @@ public class MainMenu implements Menu {
         // OPTIONS BUTTON
         b.setButtonProperties(
                 optionsButton,
-                "",
                 xPos(optionsImage),
                 Menu.HEIGHT / 3 + spaceBetweenImgH * 2,
                 ElementsHandler::handle,
@@ -134,7 +131,6 @@ public class MainMenu implements Menu {
         //Map Editor Button
         b.setButtonProperties(
                 mapEditorButton,
-                "",
                 Menu.WIDTH / 5 - mapEditorImage.getWidth() / 2,
                 Menu.HEIGHT / 3 + spaceBetweenImgH * 3,
                 ElementsHandler::handle,
@@ -152,7 +148,6 @@ public class MainMenu implements Menu {
         // EXIT BUTTON
         b.setButtonProperties(
                 exitButton,
-                "",
                 Menu.WIDTH / 5 - exitImage.getWidth() / 2,
                 Menu.HEIGHT / 3 + spaceBetweenImgH * 4,
                 ElementsHandler::handle, new ImageView(exitImage)

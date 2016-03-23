@@ -99,7 +99,6 @@ public class OptionsMenu implements Menu {
         // Set properties for the on/off SEARCH button
         b.setButtonProperties(
                 yesButtonSearch,
-                "",
                 Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
                 Menu.HEIGHT / 3,
                 ElementsHandler::handle,
@@ -117,7 +116,6 @@ public class OptionsMenu implements Menu {
         // Set properties for the on/off SOUND button
         b.setButtonProperties(
                 noButtonSound,
-                "",
                 Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
                 Menu.HEIGHT / 3 + spaceBetweenImgH,
                 ElementsHandler::handle,
@@ -135,7 +133,6 @@ public class OptionsMenu implements Menu {
         // Set properties for the on/off SOUND button
         b.setButtonProperties(
                 yesButtonTutorial,
-                "",
                 Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
                 Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 ElementsHandler::handle,
@@ -153,7 +150,6 @@ public class OptionsMenu implements Menu {
         // Set properties for the on/off BLOCKADES button
         b.setButtonProperties(
                 yesButtonB,
-                "",
                 Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
                 Menu.HEIGHT / 3 + 3 * spaceBetweenImgH,
                 ElementsHandler::handle,
@@ -171,7 +167,6 @@ public class OptionsMenu implements Menu {
         // Set properties for the back button
         b.setButtonProperties(
                 backButton,
-                "",
                 Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4,
                 Menu.HEIGHT / 1.2,
                 ElementsHandler::handle,
@@ -189,7 +184,6 @@ public class OptionsMenu implements Menu {
         // Set labels with images
         l.setLabelProperties(
                 searchLabel,
-                "",
                 Menu.WIDTH / 1.75 - showSearchImage.getWidth() - spaceBetweenText,
                 Menu.HEIGHT / 3,
                 new ImageView(showSearchImage)
@@ -197,7 +191,6 @@ public class OptionsMenu implements Menu {
 
         l.setLabelProperties(
                 soundLabel,
-                "",
                 Menu.WIDTH / 1.75 - soundImage.getWidth() - spaceBetweenText,
                 Menu.HEIGHT / 3 + spaceBetweenImgH,
                 new ImageView(soundImage)
@@ -205,7 +198,6 @@ public class OptionsMenu implements Menu {
 
         l.setLabelProperties(
                 tutorialLabel,
-                "",
                 Menu.WIDTH / 1.75 - tutorialImage.getWidth() - spaceBetweenText,
                 Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 new ImageView(tutorialImage)
@@ -213,7 +205,6 @@ public class OptionsMenu implements Menu {
 
         l.setLabelProperties(
                 blockadeLabel,
-                "",
                 Menu.WIDTH / 1.75 - blockadeImage.getWidth() - spaceBetweenText,
                 Menu.HEIGHT / 3 + 3 * spaceBetweenImgH,
                 new ImageView(blockadeImage)
