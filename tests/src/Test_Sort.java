@@ -1,5 +1,3 @@
-package tests;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import sorts.logic.BubbleSort;

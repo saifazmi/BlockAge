@@ -64,10 +64,10 @@ public class SortVisualBar extends Rectangle {
     /**
      * Constructor for sort visual bars
      *
-     * @param width the width of the bar
+     * @param width  the width of the bar
      * @param height the height of the bar
-     * @param fill the colour of the bar
-     * @param value the value associated to the bar
+     * @param fill   the colour of the bar
+     * @param value  the value associated to the bar
      */
     public SortVisualBar(double width, double height, Paint fill, int value) {
 

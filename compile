@@ -1,4 +1,0 @@
-#!/bin/bash
-mkdir out
-find -name "*.java" > .source
-javac -sourcepath src/ -d out/ @.source

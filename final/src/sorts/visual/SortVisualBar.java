@@ -17,11 +17,12 @@ public class SortVisualBar extends Rectangle {
     private int value;
     private double updateX;
 
-    //@TODO: every method needs doc
     // GETTER method
 
     /**
-     * @return
+     * gets the updateX value
+     *
+     * @return the value
      */
     public double getUpdateX() {
 
@@ -29,7 +30,9 @@ public class SortVisualBar extends Rectangle {
     }
 
     /**
-     * @return
+     * gets the value value
+     *
+     * @return the value
      */
     public int getValue() {
 
@@ -39,7 +42,9 @@ public class SortVisualBar extends Rectangle {
     // SETTER methods
 
     /**
-     * @param updateX
+     * sets the updateX value
+     *
+     * @param updateX the value to set to
      */
     public void setUpdateX(double updateX) {
 
@@ -47,7 +52,9 @@ public class SortVisualBar extends Rectangle {
     }
 
     /**
-     * @param value
+     * sets the value value
+     *
+     * @param value the value to set to
      */
     public void setValue(int value) {
 
@@ -55,10 +62,12 @@ public class SortVisualBar extends Rectangle {
     }
 
     /**
-     * @param width
-     * @param height
-     * @param fill
-     * @param value
+     * Constructor for sort visual bars
+     *
+     * @param width  the width of the bar
+     * @param height the height of the bar
+     * @param fill   the colour of the bar
+     * @param value  the value associated to the bar
      */
     public SortVisualBar(double width, double height, Paint fill, int value) {
 

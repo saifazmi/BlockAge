@@ -1,5 +1,3 @@
-package tests;
-
 import graph.GraphNode;
 
 import java.util.List;

@@ -56,13 +56,11 @@ public class BubbleSort {
 
     }
 
-    //@TODO: complete doc
-
     /**
-     * Pass by value
+     * Pass by value (hard copy)
      *
-     * @param list
-     * @return
+     * @param list the list to copy
+     * @return the list copy
      */
     public static ArrayList<Integer> getByValue(ArrayList<Integer> list) {
 

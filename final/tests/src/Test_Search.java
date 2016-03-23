@@ -1,5 +1,3 @@
-package tests;
-
 import entity.Blockade;
 import entity.Unit;
 import graph.Graph;

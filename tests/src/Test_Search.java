@@ -1,5 +1,3 @@
-package tests;
-
 import entity.Blockade;
 import entity.Unit;
 import graph.Graph;
@@ -80,7 +78,7 @@ public class Test_Search extends Test_Logic {
         Unit newUnit;
         try {
             newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
         }
 

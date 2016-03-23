@@ -267,7 +267,7 @@ public final class ImageStore {
      * Sets the sprite property of an entity
      *
      * @param entity the entity to set for
-     * @param image the image to use
+     * @param image  the image to use
      */
     public static void setSpriteProperties(Entity entity, Image image) {
         SpriteImage spriteImage = new SpriteImage(image, entity);

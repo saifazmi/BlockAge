@@ -8,10 +8,10 @@ public class CircularBufferNode<M> {
     private M value;
     private CircularBufferNode<M> next;
 
-    //@TODO: every method needs doc
-
     /**
-     * @param data
+     * A node in the circular buffer
+     *
+     * @param data the data for the node
      */
     public CircularBufferNode(M data) {
 
@@ -21,14 +21,18 @@ public class CircularBufferNode<M> {
     //GETTER methods
 
     /**
-     * @return
+     * Get the data in the node
+     *
+     * @return the data
      */
     public M getValue() {
         return this.value;
     }
 
     /**
-     * @return
+     * Gets the next node in the circular buffer
+     *
+     * @return the next node
      */
     public CircularBufferNode<M> getNext() {
 
@@ -38,7 +42,9 @@ public class CircularBufferNode<M> {
     // SETTER methods
 
     /**
-     * @param value
+     * Sets the value of the node
+     *
+     * @param value the new value
      */
     public void setValue(M value) {
 
@@ -46,7 +52,9 @@ public class CircularBufferNode<M> {
     }
 
     /**
-     * @param next
+     * Sets the next node of the circular buffer
+     *
+     * @param next the next node
      */
     public void setNext(CircularBufferNode<M> next) {
 

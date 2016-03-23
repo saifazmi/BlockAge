@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 /**
  * @author : First created by Anh with code by Paul Popa
  * @date : 11/03/16, last edited by Anh on 11/03/16
- *
+ * <p>
  * This class creates the menu with the end game state. The menu will display
  * the final score the user achieved as well as with a button to go back to the main menu.
  */
@@ -132,6 +132,7 @@ public class EndGameMenu implements Menu {
 
     /**
      * Gets the end game scene
+     *
      * @return the end game scene
      */
     public Scene getScene() {
@@ -141,6 +142,7 @@ public class EndGameMenu implements Menu {
 
     /**
      * Sets the score which will be displayed on the pane
+     *
      * @param score the score to be displayed
      */
     public void setScore(double score) {

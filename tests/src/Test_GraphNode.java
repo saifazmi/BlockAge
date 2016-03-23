@@ -1,5 +1,3 @@
-package tests;
-
 import graph.Graph;
 import graph.GraphNode;
 import org.testng.Assert;

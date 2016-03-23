@@ -1,8 +1,7 @@
-package tests;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import sorts.logic.BubbleSort;
+import sorts.logic.InsertSort;
 import sorts.logic.SelectionSort;
 import sorts.logic.SortableComponent;
 
@@ -13,7 +12,6 @@ import java.util.Collections;
  * Created by decklol on 19/02/16.
  */
 
-//@TODO: test for insertion sort
 public class Test_Sort {
 
     /**
@@ -77,6 +75,25 @@ public class Test_Sort {
 
         while (passed && testAmount > 0) {
             passed = sortTest(SelectionSort.sort(createList(100)));
+            testAmount--;
+        }
+
+        Assert.assertEquals(passed, true);
+
+
+    }
+
+    /**
+     * Testing function of the output of the insert sort mechanism
+     * Check if list is sorted
+     */
+    @Test()
+    public void insertSort() {
+        int testAmount = 10;
+        boolean passed = true;
+
+        while (passed && testAmount > 0) {
+            passed = sortTest(InsertSort.sort(createList(100)));
             testAmount--;
         }
 

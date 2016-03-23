@@ -42,7 +42,6 @@ public class SoundManager {
     }
 
 
-
     /**
      * Constructor that creates a new Circular Buffer that will store the sound data
      * It also loads in the URL paths for the sound file
@@ -82,7 +81,7 @@ public class SoundManager {
         }
 
     }
-    
+
     /**
      * Starts playing the soundtrack
      */

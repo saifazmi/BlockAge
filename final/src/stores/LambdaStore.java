@@ -61,40 +61,40 @@ public final class LambdaStore {
 
     // GETTER methods
 
-    //@TODO: complete doc
-
     /**
-     * @return
+     * gets the show sort mouse eventhandler
+     *
+     * @return the eventhandler
      */
     public EventHandler<MouseEvent> getShowSort() {
 
         return this.showSort;
     }
 
-    //@TODO: complete doc
-
     /**
-     * @return
+     * gets the place unbreakable blockade mouse eventhandler
+     *
+     * @return the eventhandler
      */
     public EventHandler<MouseEvent> getPlaceUnbreakableBlockade() {
 
         return this.sceneClickPlaceUnbreakableBlockade;
     }
 
-    //@TODO: complete doc
-
     /**
-     * @return
+     * gets the place breakable blockade mouse eventhandler
+     *
+     * @return the eventhandler
      */
     public EventHandler<MouseEvent> getPlaceBreakableBlockade() {
 
         return this.sceneClickPlaceBreakableBlockade;
     }
 
-    //@TODO: complete doc
-
     /**
-     * @return
+     * gets the unit click mouse eventhandler
+     *
+     * @return the eventhandler
      */
     public EventHandler<MouseEvent> getUnitClickEvent() {
 
@@ -102,7 +102,7 @@ public final class LambdaStore {
     }
 
     /**
-     * Places a unsortable blockade on the grid where the mouse is clicked
+     * Places an unsortable blockade on the grid where the mouse is clicked
      */
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
 
@@ -158,9 +158,8 @@ public final class LambdaStore {
         }
     };
 
-    //@TODO: complete doc
     /**
-     *
+     * displays the sort associated to a blockade
      */
     private final EventHandler<MouseEvent> showSort = e -> {
 
@@ -176,9 +175,8 @@ public final class LambdaStore {
         }
     };
 
-    //@TODO: complete doc
     /**
-     *
+     * displays the information associated with a unit
      */
     private final EventHandler<MouseEvent> unitClickEvent = e -> {
 
@@ -214,7 +212,6 @@ public final class LambdaStore {
                 GameInterface.namePaneLabel.setText("Name: " + sprite.getEntity().getName());
                 GameInterface.searchPaneLabel.setText("Search: " + search.name());
                 GameInterface.sortPaneLabel.setText("Sort: " + sort.name());
-                //@TODO: explain whats happening in here maybe?
                 if (search == Unit.Search.BFS) {
 
                     sprite.setImage(ImageStore.imagePressedDemon);
@@ -248,14 +245,13 @@ public final class LambdaStore {
         }
     };
 
-    //@TODO: complete doc
-
     /**
-     * @param sortable
+     * Sets the click event on a blockade dependent on whether it is sortable or not
+     *
+     * @param sortable the boolean checking if the blockade is sortable or not
      */
     public void setBlockadeClickEvent(boolean sortable) {
 
-        //@TODO: explain whats happening in here maybe?
         if (scene.getOnMouseClicked() == null) {
 
             if (!sortable) {

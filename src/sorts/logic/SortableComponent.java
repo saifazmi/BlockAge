@@ -44,10 +44,10 @@ public class SortableComponent {
     /**
      * Constructor for Sortable Components
      *
-     * @param value the value of the component
+     * @param value      the value of the component
      * @param comparing1 the flag representing the first thing to swap
      * @param comparing2 the flag representing the second thing to swap
-     * @param swapped the boolean representing whether it has been swapped or not
+     * @param swapped    the boolean representing whether it has been swapped or not
      */
     public SortableComponent(ArrayList<Integer> value, int comparing1, int comparing2, boolean swapped) {
 
