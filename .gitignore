@@ -32,4 +32,8 @@ local.properties
 
 # Locally stored "Eclipse launch configurations"
 *.launch
+
+# Project scripts and dependencies
 svnpush
+makefinal
+final/
