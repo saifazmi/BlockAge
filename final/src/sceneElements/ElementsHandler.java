@@ -173,7 +173,7 @@ public class ElementsHandler {
             // Changes the button from on to off
             b.setButtonProperties(
                     OptionsMenu.noButtonSound,
-                    OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText,
+                    Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText,
                     Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle,
                     new ImageView(OptionsMenu.offImage)
@@ -379,6 +379,9 @@ public class ElementsHandler {
 
             // Displays different options
             // In this case the initial blockades is not displayed as the map has already been generated
+            OptionsMenu.searchLabel.setVisible(false);
+            OptionsMenu.noButtonSearch.setVisible(false);
+            OptionsMenu.yesButtonSearch.setVisible(false);
             OptionsMenu.blockadeLabel.setVisible(false);
             OptionsMenu.noButtonB.setVisible(false);
             OptionsMenu.yesButtonB.setVisible(false);
@@ -391,6 +394,9 @@ public class ElementsHandler {
             OptionsMenu.tutorialLabel.setDisable(true);
             OptionsMenu.noButtonTutorial.setDisable(true);
             OptionsMenu.yesButtonTutorial.setDisable(true);
+            OptionsMenu.searchLabel.setDisable(true);
+            OptionsMenu.noButtonSearch.setDisable(true);
+            OptionsMenu.yesButtonSearch.setDisable(true);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
 

@@ -123,7 +123,7 @@ public class Tutorial {
                     mapBlockadeCount = CoreEngine.Instance().getBlockades().size();
                     System.out.println(mapBlockadeCount);
 
-                    tutorial.setText("Good, the enemy units will spawn in the upper right hand corner and try to reach the base. " +
+                    tutorial.setText("Good, the enemy units will spawn in the upper left hand corner and try to reach the base. " +
                             "Once these units reach your base, you lose the game. " +
                             "You can place blockades to slow down the units and/or redirect them. " +
                             "However, if you fully surround a unit so it can't reach the base, the game will end and your score will halve. " +
