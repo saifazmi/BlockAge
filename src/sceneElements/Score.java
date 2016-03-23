@@ -28,12 +28,10 @@ public class Score {
 
     // SETTER methods
 
-    //@TODO: complete doc, Anh
-
     /**
      * Updates the score
      *
-     * @param rate
+     * @param rate the amount by which to increase the score
      */
     public void update(double rate) {
 

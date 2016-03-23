@@ -43,8 +43,6 @@ public class ElementsHandler {
 
     private static ButtonProperties b = new ButtonProperties();
     public static Options options = new Options();
-    //@TODO: never used, delete?
-    public static Tutorial tutorial = new Tutorial();
 
     /**
      * Handles the events for the buttons
@@ -64,15 +62,15 @@ public class ElementsHandler {
 
             // Sets which options will be displayed
             // In this case all the options will be displayed
-            OptionsMenu.blockadeLabel.setVisible(true);
-            OptionsMenu.noButtonB.setVisible(true);
-            OptionsMenu.yesButtonB.setVisible(true);
+            OptionsMenu.blockadeLabel.setVisible(false);
+            OptionsMenu.noButtonB.setVisible(false);
+            OptionsMenu.yesButtonB.setVisible(false);
             OptionsMenu.tutorialLabel.setVisible(true);
             OptionsMenu.noButtonTutorial.setVisible(true);
             OptionsMenu.yesButtonTutorial.setVisible(true);
-            OptionsMenu.blockadeLabel.setDisable(false);
-            OptionsMenu.noButtonB.setDisable(false);
-            OptionsMenu.yesButtonB.setDisable(false);
+            OptionsMenu.blockadeLabel.setDisable(true);
+            OptionsMenu.noButtonB.setDisable(true);
+            OptionsMenu.yesButtonB.setDisable(true);
             OptionsMenu.tutorialLabel.setDisable(false);
             OptionsMenu.noButtonTutorial.setDisable(false);
             OptionsMenu.yesButtonTutorial.setDisable(false);

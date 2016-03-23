@@ -431,8 +431,6 @@ public class Unit extends Entity {
         }
     }
 
-    //@TODO: document this method
-
     /**
      * Updates the unit's position. Whenever the unit is changing it's direction
      * the sprite also rotates accordingly.
@@ -560,8 +558,6 @@ public class Unit extends Entity {
         LOG.log(Level.INFO, route.toString());
     }
 
-    //@TODO: document this method
-
     /**
      * Shows the transition of this unit. There is the option of choosing if it produces the route or the
      * algorithm visualisation.
@@ -625,15 +621,12 @@ public class Unit extends Entity {
                         nullObject(trans2.getNode()); // delete the current node
                     }
                 }
-                transition = null;
                 setVisualTransition(null);
                 Tutorial.routeShown = false; // route set to not shown if the tutorial is on
                 Tutorial.visualShown = false; // visual set to not shown if the tutorial is on
             }
         }
     }
-
-    //@TODO: document this method
 
     /**
      * Deletes the lines and rectangles that were displayed for this unit
@@ -647,7 +640,6 @@ public class Unit extends Entity {
 
             Line line = (Line) object;
             line.setOpacity(0.0);
-            line = null;
 
         }
         // if the object is a rectangle, delete the rectangle
@@ -655,7 +647,6 @@ public class Unit extends Entity {
 
             Rectangle rect = (Rectangle) object;
             rect.setOpacity(0.0);
-            rect = null;
         }
     }
 }

@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
  */
 public class Renderer extends Group {
 
-    //TODO: multiple methods need doc.
     private static final Logger LOG = Logger.getLogger(Renderer.class.getName());
 
     // Dependencies
@@ -129,13 +128,10 @@ public class Renderer extends Group {
     }
 
     /**
-     * <<<<<<< HEAD
      * Removes a given node from renderer
      *
      * @param node the node to be removed
-     * @param node the node which will be deleted
      * @return the node if it contains it or null if it does not
-     * >>>>>>> New
      */
     public Node remove(Node node) {
 
@@ -148,24 +144,6 @@ public class Renderer extends Group {
 
         } else {
             return null;
-        }
-    }
-
-    /**
-     * <<<<<<< HEAD
-     * Clears the renderer
-     * =======
-     * Deletes all the nodes that currently exist on the map
-     * >>>>>>> New
-     */
-    public void clear() {
-
-        ObservableList list = getChildren();
-
-        for (Object object : list) {
-
-            Node node = (Node) object;
-            remove(node);
         }
     }
 
@@ -259,12 +237,10 @@ public class Renderer extends Group {
     }
 
     /**
-     * <<<<<<< HEAD
+     * Produces a sequence of transitions from a list of lines.
      *
-     * @param lines
      * @param lines the lines that will be drawn on the grid
      * @return the transition for the drawing lines
-     * >>>>>>> New
      */
     public SequentialTransition produceRouteVisual(List<Line> lines) {
 
@@ -285,12 +261,11 @@ public class Renderer extends Group {
     }
 
     /**
-     * <<<<<<< HEAD
+     * Produces a list of lines, connecting the members of a list of graphnodes.
+     * This assumes the list of graphnodes are adjacent.
      *
-     * @param route
      * @param route the route that the unit is logically following
      * @return the lines that need to be drawn on the grid starting from the initial spawned unit
-     * >>>>>>> New
      */
     public List<Line> produceRoute(List<GraphNode> route) {
 
@@ -429,22 +404,21 @@ public class Renderer extends Group {
     }
 
     /**
-     * @param unit
-     * @return
+     * Produces a list of lines based on the calculation of a units search.
+     *
+     * @param unit the unit to use for the visual
+     * @return the list of lines for the visual
      */
     private List<Line> produceAlgoRoute(Unit unit) {
 
         List<Line> lines = new ArrayList<>();
         List<GraphNode> temp = unit.getVisited();
         List<GraphNode> visitedNodes = hardCopy(temp);
-        List<GraphNode> drawn = new ArrayList<>();
-
-        drawn.add(visitedNodes.remove(0));
 
         for (GraphNode node : visitedNodes) {
-            GraphNode drawTo = linkedNode(unit, node);//nodeToDrawTo(node, drawn);
-            drawn.add(node);
+            GraphNode drawTo = linkedNode(unit, node);
 
+            assert drawTo != null;
             Line line = new Line(
                     this.xSpacing / 2 + node.getX() * xSpacing,
                     this.ySpacing / 2 + node.getY() * ySpacing,
@@ -460,52 +434,29 @@ public class Renderer extends Group {
     }
 
     /**
-     * @param from
-     * @param drawn
-     * @return
-     */
-    private GraphNode nodeToDrawTo(GraphNode from, List<GraphNode> drawn) {
-
-        List<GraphNode> successors = from.getSuccessors();
-        int min = Integer.MAX_VALUE;
-
-        for (GraphNode node : successors) {
-
-            int temp = drawn.indexOf(node);
-
-            if (temp != -1 && temp < min) {
-                min = temp;
-            }
-        }
-
-        return drawn.get(min);
-    }
-
-    /**
-     * @param unit
-     * @param toNode
-     * @return
+     * Finds the node that added the provided node to the search tree
+     *
+     * @param unit the unit that started the search
+     * @param toNode the node to find the parent of
+     * @return the parent of the supplied node
      */
     private GraphNode linkedNode(Unit unit, GraphNode toNode) {
         List<Pair<GraphNode, GraphNode>> nodeAssociations = unit.getNodeAssociations();
-//        for(Pair pair : nodeAssociations) {
-//            if(toNode.equals(pair.getValue())) {
-//                return (GraphNode) pair.getKey();
-//            }
-//        }
         for (int i = nodeAssociations.size() - 1; i >= 0; i--) {
             if (toNode.equals(nodeAssociations.get(i).getValue())) {
                 return nodeAssociations.get(i).getKey();
             }
         }
-
+        //shouldn't ever get here
         return null;
     }
 
     /**
-     * @param list
-     * @param <A>
-     * @return
+     * Produces a hard copy of a list
+     *
+     * @param list the list to hard copy
+     * @param <A> the type of the elements of the list
+     * @return the hard copy of the list
      */
     private <A> List<A> hardCopy(List<A> list) {
 
