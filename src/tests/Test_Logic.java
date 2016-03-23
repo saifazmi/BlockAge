@@ -5,7 +5,11 @@ import graph.GraphNode;
 import java.util.List;
 
 /**
- * Created by user on 12/03/2016.
+ * @author : Anh Pham
+ * @version : 11/03/2016
+ *          <p>
+ *          This is the general logical testing class
+ * @date : 24/02/16
  */
 public class Test_Logic {
 

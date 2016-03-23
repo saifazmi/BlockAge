@@ -4,9 +4,9 @@ package sceneElements;
  * @author : Anh Pham; Contributors - Anh Pham
  * @version : 23/03/2016;
  *          <p>
- *          This class tracks the users score.
+ *          This is the class that will monitor the score of the game
  *
- * @date : 14/03/16
+ * @date : 11/03/16
  */
 public class Score {
 
