@@ -21,8 +21,6 @@ public class MenuHandler {
     private PauseMenu pauseMenu = new PauseMenu();
     private static EndGameMenu endGameMenu = new EndGameMenu();
 
-    //private MapEditor mapEditor = MapEditor.Instance(); Delete this
-
     private static Scene[] sceneList = new Scene[20];
 
     //Declaring indexes for the menus so that we know how to access them easily in the scene array
@@ -33,8 +31,10 @@ public class MenuHandler {
     public final static int MAP_EDITOR = 4;
     public final static int END_GAME_MENU = 5;
 
-    public static int currentScene = MAIN_MENU; // the first initialisation the current scene
-    public static int lastScene = MAIN_MENU; // the first initialisation the last scene accessed
+    // the first initialisation the current scene
+    public static int currentScene = MAIN_MENU;
+    // the first initialisation the last scene accessed
+    public static int lastScene = MAIN_MENU;
 
     /**
      * Initialises the stage to be the same used for all scenes
@@ -42,6 +42,7 @@ public class MenuHandler {
      * @param primaryStage - our primary stage
      */
     public MenuHandler(Stage primaryStage) {
+
         MenuHandler.primaryStage = primaryStage;
         setScenes();
     }
@@ -50,6 +51,7 @@ public class MenuHandler {
      * Places all the scenes into an array of scenes
      */
     public void setScenes() {
+
         sceneList[MAIN_MENU] = mainMenu.getScene();
         sceneList[OPTIONS_MENU] = optionsMenu.getScene();
         sceneList[PAUSE_MENU] = pauseMenu.getScene();
@@ -61,6 +63,7 @@ public class MenuHandler {
      * Sets the main game scene where the game will happen
      */
     public static void setMainGameScene() {
+
         sceneList[MAIN_GAME] = GameRunTime.Instance().getScene();
     }
 
@@ -70,6 +73,7 @@ public class MenuHandler {
      * @param scene - the scene that we want to switch to
      */
     public static void switchScene(int scene) {
+
         sceneList[currentScene].getRoot().setVisible(false);
         sceneList[currentScene].getRoot().setDisable(true);
 

@@ -10,7 +10,11 @@ public class Options {
     private boolean tutorial = false;
 
     public Options() {
+
+        //@TODO: initialise properties here thats what constructors are for
     }
+
+    //@TODO: never used, delete?
 
     /**
      * Sets the show Description option for the game that will start
@@ -21,6 +25,8 @@ public class Options {
         this.showDescription = showDescription;
     }
 
+    //@TODO: fix doc; wrong param
+
     /**
      * Sets the show Description option for the game that will start
      *
@@ -29,6 +35,8 @@ public class Options {
     public void setPath(boolean showPath) {
         this.showPath = showPath;
     }
+
+    //@TODO: fix doc; wrong param
 
     /**
      * Sets the initial blockades option for the game that will start
@@ -45,12 +53,15 @@ public class Options {
      * @param sound - sets the sound on or off
      */
     public void setSound(boolean sound) {
-        if (sound == false) {
+
+        if (!sound) {
             SoundManager.Instance().pauseSoundtrack();
         } else {
             SoundManager.Instance().startSoundtrack();
         }
     }
+
+    //@TODO: never used, delete?
 
     /**
      * Gets if the description of a unit will be shown or not
@@ -67,8 +78,11 @@ public class Options {
      * @return - the option if the path will be shown or not
      */
     public boolean getShowPath() {
-        return showPath;
+
+        return this.showPath;
     }
+
+    //@TODO: never used, delete?
 
     /**
      * Gets if the initial blockades will be shown or not
@@ -79,11 +93,23 @@ public class Options {
         return initialBlockades;
     }
 
+    //@TODO: doc mthd.
+
+    /**
+     * @return
+     */
     public boolean isTutorial() {
-        return tutorial;
+
+        return this.tutorial;
     }
 
+    //@TODO: doc mthd.
+
+    /**
+     * @param tutorial
+     */
     public void setTutorial(boolean tutorial) {
+
         this.tutorial = tutorial;
     }
 }

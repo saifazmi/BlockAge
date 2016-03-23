@@ -19,13 +19,19 @@ import sceneElements.ElementsHandler;
 import sceneElements.LabelProperties;
 import stores.ImageStore;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author : First created by Anh with code by Paul Popa
  * @date : 11/03/16, last edited by Anh on 11/03/16
  */
 public class EndGameMenu implements Menu {
+
+    //@TODO: whole class needs documentation
+    private static final Logger LOG = Logger.getLogger(EndGameMenu.class.getName());
 
     public static Button backMainButton;
     public static Label scoreLabel;
@@ -38,10 +44,12 @@ public class EndGameMenu implements Menu {
     private Image backMainImage, backMainImageHovered;
 
     public EndGameMenu() {
+
         initialiseScene();
     }
 
     public void declareElements() {
+
         endGameMenuPane = new Pane();
         backMainButton = new Button();
         b = new ButtonProperties();
@@ -54,43 +62,72 @@ public class EndGameMenu implements Menu {
     }
 
     public void initialiseScene() {
+
         declareElements();
-        l.setLabelProperties(scoreLabel, "", Menu.WIDTH / 5 - 210, Menu.HEIGHT / 3, null);
+
+        l.setLabelProperties(
+                scoreLabel,
+                "",
+                Menu.WIDTH / 5 - 210,
+                Menu.HEIGHT / 3,
+                null
+        );
 
         // Loading font
-        InputStream fontStream = EndGameMenu.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
-        if (fontStream == null) {
-            System.out.println("No font at that path");
+        try (InputStream fontStream = EndGameMenu.class.getResourceAsStream(
+                SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf")) {
+
+            scoreLabel.setFont(Font.loadFont(fontStream, 100));
+            scoreLabel.setTextFill(Color.web("#FFE130"));
+
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "No font found");
+            LOG.log(Level.SEVERE, e.toString(), e);
         }
 
-        scoreLabel.setFont(Font.loadFont(fontStream, 100));
-        scoreLabel.setTextFill(Color.web("#FFE130"));
-
         int spaceBetweenImgH = 70;
-        /**
-         b.setButtonProperties(optionsButton, "", Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH,
-         ElementsHandler::handle, new ImageView(optionsImage));
-         b.addHoverEffect(optionsButton, optionsImageHovered, optionsImage, Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH);
-         */
-        b.setButtonProperties(backMainButton, "", Menu.WIDTH / 5 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
-                ElementsHandler::handle, new ImageView(backMainImage));
-        b.addHoverEffect(backMainButton, backMainImageHovered, backMainImage, Menu.WIDTH / 5 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH);
+
+        b.setButtonProperties(
+                backMainButton,
+                "",
+                Menu.WIDTH / 5 - backMainImage.getWidth() / 2,
+                Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
+                ElementsHandler::handle, new ImageView(backMainImage)
+        );
+
+        b.addHoverEffect(
+                backMainButton,
+                backMainImageHovered,
+                backMainImage,
+                Menu.WIDTH / 5 - backMainImage.getWidth() / 2,
+                Menu.HEIGHT / 3 + 2 * spaceBetweenImgH
+        );
 
         endGameMenuPane.setPrefSize(Menu.WIDTH, Menu.HEIGHT);
-        BackgroundImage myBI = new BackgroundImage(ImageStore.pauseMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+
+        BackgroundImage myBI = new BackgroundImage(
+                ImageStore.pauseMenu,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+
         endGameMenuPane.setBackground(new Background(myBI));
         endGameMenuPane.getChildren().addAll(backMainButton, scoreLabel);
+
         Group mainMenuGroup = new Group(endGameMenuPane);
         endGameMenuScene = new Scene(mainMenuGroup, Menu.WIDTH, Menu.HEIGHT);
     }
 
     public Scene getScene() {
-        return endGameMenuScene;
+
+        return this.endGameMenuScene;
     }
 
     public void setScore(double score) {
-        this.scoreLabel.setText("Score: " + String.format("%.2f", score));
+
+        EndGameMenu.scoreLabel.setText("Score: " + String.format("%.2f", score));
     }
 
 }

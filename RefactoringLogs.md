@@ -6,6 +6,12 @@ reading.
 - Finished formatting and documenting "core"
 - Formatted "entity" package needs doc for some methods.
 
+**NOTES:**  
+
+- Use images directly from image store
+- Remove constructors with unused properties - button properties
+- Initialise member variables in constructor
+
 REFACTORING
 ===========  
   

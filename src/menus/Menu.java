@@ -10,6 +10,7 @@ import javafx.scene.Scene;
  * @date : 09/02/16, last edited by Paul Popa on 09/02/16
  */
 public interface Menu {
+
     Integer WIDTH = CoreGUI.WIDTH;
     Integer HEIGHT = CoreGUI.HEIGHT;
 

@@ -26,8 +26,11 @@ import stores.ImageStore;
  * Sound, Tutorial, No initial blockades.
  */
 public class OptionsMenu implements Menu {
-    public static Button yesButtonSearch, yesButtonSound, noButtonSearch, noButtonSound, yesButtonTutorial, noButtonTutorial, yesButtonB, noButtonB, backButton = null;
-    public static Image showSearchImage, soundImage, tutorialImage, blockadeImage, onImage, onImageHovered, offImage, offImageHovered, backImage, backImageHovered = null;
+
+    public static Button yesButtonSearch, yesButtonSound, noButtonSearch, noButtonSound, yesButtonTutorial,
+            noButtonTutorial, yesButtonB, noButtonB, backButton = null;
+    public static Image showSearchImage, soundImage, tutorialImage, blockadeImage, onImage, onImageHovered,
+            offImage, offImageHovered, backImage, backImageHovered = null;
     public static int spaceBetweenText = 100;
     public static int spaceBetweenImgH = 50;
     public static Label searchLabel, soundLabel, tutorialLabel, blockadeLabel = null;
@@ -43,6 +46,7 @@ public class OptionsMenu implements Menu {
      * the buttons, labels and images placed accordingly
      */
     public OptionsMenu() {
+
         initialiseScene();
     }
 
@@ -50,6 +54,7 @@ public class OptionsMenu implements Menu {
      * Declaring the elements which will be placed on the scene
      */
     public void declareElements() {
+
         //Buttons
         yesButtonSearch = new Button();
         noButtonSearch = new Button();
@@ -60,15 +65,18 @@ public class OptionsMenu implements Menu {
         yesButtonB = new Button();
         noButtonB = new Button();
         backButton = new Button();
+
         //Labels
         searchLabel = new Label();
         soundLabel = new Label();
         tutorialLabel = new Label();
         blockadeLabel = new Label();
+
         //Pane
         optionsMenuPane = new Pane();
         l = new LabelProperties();
         b = new ButtonProperties();
+
         //Images
         onImage = ImageStore.onImage;
         onImageHovered = ImageStore.onImageHovered;
@@ -86,42 +94,152 @@ public class OptionsMenu implements Menu {
      * Initialise the scene for the options menu and what will be inside the scene
      */
     public void initialiseScene() {
+
         declareElements();
         // Set properties for the on/off SEARCH button
-        b.setButtonProperties(yesButtonSearch, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3,
-                ElementsHandler::handle, new ImageView(onImage));
-        b.addHoverEffect(yesButtonSearch, onImageHovered, onImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3);
+        b.setButtonProperties(
+                yesButtonSearch,
+                "",
+                Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
+                Menu.HEIGHT / 3,
+                ElementsHandler::handle,
+                new ImageView(onImage)
+        );
+
+        b.addHoverEffect(
+                yesButtonSearch,
+                onImageHovered,
+                onImage,
+                Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
+                Menu.HEIGHT / 3
+        );
 
         // Set properties for the on/off SOUND button
-        b.setButtonProperties(noButtonSound, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH,
-                ElementsHandler::handle, new ImageView(offImage));
-        b.addHoverEffect(noButtonSound, offImageHovered, offImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH);
+        b.setButtonProperties(
+                noButtonSound,
+                "",
+                Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
+                Menu.HEIGHT / 3 + spaceBetweenImgH,
+                ElementsHandler::handle,
+                new ImageView(offImage)
+        );
+
+        b.addHoverEffect(
+                noButtonSound,
+                offImageHovered,
+                offImage,
+                Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
+                Menu.HEIGHT / 3 + spaceBetweenImgH
+        );
 
         // Set properties for the on/off SOUND button
-        b.setButtonProperties(yesButtonTutorial, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
-                ElementsHandler::handle, new ImageView(onImage));
-        b.addHoverEffect(yesButtonTutorial, onImageHovered, onImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH);
+        b.setButtonProperties(
+                yesButtonTutorial,
+                "",
+                Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
+                Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
+                ElementsHandler::handle,
+                new ImageView(onImage)
+        );
+
+        b.addHoverEffect(
+                yesButtonTutorial,
+                onImageHovered,
+                onImage,
+                Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
+                Menu.HEIGHT / 3 + 2 * spaceBetweenImgH
+        );
 
         // Set properties for the on/off BLOCKADES button
-        b.setButtonProperties(yesButtonB, "", Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 3 * spaceBetweenImgH,
-                ElementsHandler::handle, new ImageView(onImage));
-        b.addHoverEffect(yesButtonB, onImageHovered, onImage, Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText, Menu.HEIGHT / 3 + 3 * spaceBetweenImgH);
+        b.setButtonProperties(
+                yesButtonB,
+                "",
+                Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
+                Menu.HEIGHT / 3 + 3 * spaceBetweenImgH,
+                ElementsHandler::handle,
+                new ImageView(onImage)
+        );
+
+        b.addHoverEffect(
+                yesButtonB,
+                onImageHovered,
+                onImage,
+                Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
+                Menu.HEIGHT / 3 + 3 * spaceBetweenImgH
+        );
 
         // Set properties for the back button
-        b.setButtonProperties(backButton, "", Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4, Menu.HEIGHT / 1.2,
-                ElementsHandler::handle, new ImageView(backImage));
-        b.addHoverEffect(backButton, backImageHovered, backImage, Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4, Menu.HEIGHT / 1.2);
+        b.setButtonProperties(
+                backButton,
+                "",
+                Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4,
+                Menu.HEIGHT / 1.2,
+                ElementsHandler::handle,
+                new ImageView(backImage)
+        );
+
+        b.addHoverEffect(
+                backButton,
+                backImageHovered,
+                backImage,
+                Menu.WIDTH / 2 - backImage.getWidth() - spaceBetweenText * 4,
+                Menu.HEIGHT / 1.2
+        );
 
         // Set labels with images
-        l.setLabelProperties(searchLabel, "", Menu.WIDTH / 1.75 - showSearchImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3, new ImageView(showSearchImage));
-        l.setLabelProperties(soundLabel, "", Menu.WIDTH / 1.75 - soundImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3 + spaceBetweenImgH, new ImageView(soundImage));
-        l.setLabelProperties(tutorialLabel, "", Menu.WIDTH / 1.75 - tutorialImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH, new ImageView(tutorialImage));
-        l.setLabelProperties(blockadeLabel, "", Menu.WIDTH / 1.75 - blockadeImage.getWidth() - spaceBetweenText, Menu.HEIGHT / 3 + 3 * spaceBetweenImgH, new ImageView(blockadeImage));
+        l.setLabelProperties(
+                searchLabel,
+                "",
+                Menu.WIDTH / 1.75 - showSearchImage.getWidth() - spaceBetweenText,
+                Menu.HEIGHT / 3,
+                new ImageView(showSearchImage)
+        );
+
+        l.setLabelProperties(
+                soundLabel,
+                "",
+                Menu.WIDTH / 1.75 - soundImage.getWidth() - spaceBetweenText,
+                Menu.HEIGHT / 3 + spaceBetweenImgH,
+                new ImageView(soundImage)
+        );
+
+        l.setLabelProperties(
+                tutorialLabel,
+                "",
+                Menu.WIDTH / 1.75 - tutorialImage.getWidth() - spaceBetweenText,
+                Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
+                new ImageView(tutorialImage)
+        );
+
+        l.setLabelProperties(
+                blockadeLabel,
+                "",
+                Menu.WIDTH / 1.75 - blockadeImage.getWidth() - spaceBetweenText,
+                Menu.HEIGHT / 3 + 3 * spaceBetweenImgH,
+                new ImageView(blockadeImage)
+        );
 
         // Adds everything to the pane
-        optionsMenuPane.getChildren().addAll(searchLabel, soundLabel, tutorialLabel, blockadeLabel, yesButtonSearch, noButtonSound, yesButtonTutorial, yesButtonB, backButton);
-        BackgroundImage myBI = new BackgroundImage(ImageStore.backgroundOptionsMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        optionsMenuPane.getChildren().addAll(
+                searchLabel,
+                soundLabel,
+                tutorialLabel,
+                blockadeLabel,
+                yesButtonSearch,
+                noButtonSound,
+                yesButtonTutorial,
+                yesButtonB,
+                backButton
+        );
+
+        BackgroundImage myBI = new BackgroundImage(
+                ImageStore.backgroundOptionsMenu,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+
         optionsMenuPane.setBackground(new Background(myBI));
         optionsMenuPane.setPrefWidth(Menu.WIDTH);
         optionsMenuPane.setPrefHeight(Menu.HEIGHT);
@@ -138,7 +256,8 @@ public class OptionsMenu implements Menu {
      * @return - the scene of the options menu
      */
     public Scene getScene() {
-        return optionsMenuScene;
+
+        return this.optionsMenuScene;
     }
 }
 

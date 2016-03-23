@@ -29,7 +29,8 @@ public class PauseMenu implements Menu {
     private Pane pauseMenuPane = null;
     private Scene pauseMenuScene = null;
     private ButtonProperties b = null;
-    private Image backGameImage, backGameImageHovered, optionsImage, optionsImageHovered, backMainImage, backMainImageHovered;
+    private Image backGameImage, backGameImageHovered, optionsImage,
+            optionsImageHovered, backMainImage, backMainImageHovered;
 
     public PauseMenu() {
         initialiseScene();
@@ -40,13 +41,16 @@ public class PauseMenu implements Menu {
      * scene
      */
     public void declareElements() {
+
         //Panes
         pauseMenuPane = new Pane();
+
         //Buttons
         backGameButton = new Button();
         optionsButton = new Button();
         backMainButton = new Button();
         b = new ButtonProperties();
+
         //Images
         backGameImage = ImageStore.backGameImage;
         backGameImageHovered = ImageStore.backGameImageHovered;
@@ -60,27 +64,74 @@ public class PauseMenu implements Menu {
      * Initialises the scene which will contain all the buttons and images
      */
     public void initialiseScene() {
+
         declareElements();
 
         // BACK GAME BUTTON
-        b.setButtonProperties(backGameButton, "", Menu.WIDTH / 5 - backGameImage.getWidth() / 2, Menu.HEIGHT / 3,
-                ElementsHandler::handle, new ImageView(backGameImage));
-        b.addHoverEffect(backGameButton, backGameImageHovered, backGameImage, Menu.WIDTH / 5 - backGameImage.getWidth() / 2, Menu.HEIGHT / 3);
+        b.setButtonProperties(
+                backGameButton,
+                "",
+                Menu.WIDTH / 5 - backGameImage.getWidth() / 2,
+                Menu.HEIGHT / 3,
+                ElementsHandler::handle,
+                new ImageView(backGameImage)
+        );
+
+        b.addHoverEffect(
+                backGameButton,
+                backGameImageHovered,
+                backGameImage,
+                Menu.WIDTH / 5 - backGameImage.getWidth() / 2,
+                Menu.HEIGHT / 3
+        );
 
         // OPTIONS BUTTON
-        b.setButtonProperties(optionsButton, "", Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH,
-                ElementsHandler::handle, new ImageView(optionsImage));
-        b.addHoverEffect(optionsButton, optionsImageHovered, optionsImage, Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH);
+        b.setButtonProperties(
+                optionsButton,
+                "",
+                Menu.WIDTH / 5 - optionsImage.getWidth() / 2,
+                Menu.HEIGHT / 3 + spaceBetweenImgH,
+                ElementsHandler::handle,
+                new ImageView(optionsImage)
+        );
+
+        b.addHoverEffect(
+                optionsButton,
+                optionsImageHovered,
+                optionsImage,
+                Menu.WIDTH / 5 - optionsImage.getWidth() / 2,
+                Menu.HEIGHT / 3 + spaceBetweenImgH
+        );
 
         // BACK TO MAIN MENU BUTTON
-        b.setButtonProperties(backMainButton, "", Menu.WIDTH / 5 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
-                ElementsHandler::handle, new ImageView(backMainImage));
-        b.addHoverEffect(backMainButton, backMainImageHovered, backMainImage, Menu.WIDTH / 5 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH);
+        b.setButtonProperties(
+                backMainButton,
+                "",
+                Menu.WIDTH / 5 - backMainImage.getWidth() / 2,
+                Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
+                ElementsHandler::handle,
+                new ImageView(backMainImage)
+        );
+
+        b.addHoverEffect(
+                backMainButton,
+                backMainImageHovered,
+                backMainImage,
+                Menu.WIDTH / 5 - backMainImage.getWidth() / 2,
+                Menu.HEIGHT / 3 + 2 * spaceBetweenImgH
+        );
 
         // Sets the size of the pane
         pauseMenuPane.setPrefSize(Menu.WIDTH, Menu.HEIGHT);
-        BackgroundImage myBI = new BackgroundImage(ImageStore.pauseMenu, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+
+        BackgroundImage myBI = new BackgroundImage(
+                ImageStore.pauseMenu,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+
         // Sets the background on the pane
         pauseMenuPane.setBackground(new Background(myBI));
         pauseMenuPane.getChildren().addAll(backGameButton, optionsButton, backMainButton);
@@ -94,7 +145,8 @@ public class PauseMenu implements Menu {
      * Gets the Pause menu scene
      */
     public Scene getScene() {
-        return pauseMenuScene;
+
+        return this.pauseMenuScene;
     }
 
 }
