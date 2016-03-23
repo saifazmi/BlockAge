@@ -35,7 +35,6 @@ public class BreadthFirstSearch {
         GraphNode current;
         GraphNode parent;
 
-        //@TODO: comments explaining the search steps
         frontier.add(unit.getPosition());
 
         while (!frontier.isEmpty()) {

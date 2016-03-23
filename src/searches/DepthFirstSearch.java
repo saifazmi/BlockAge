@@ -34,7 +34,6 @@ public class DepthFirstSearch {
         GraphNode current;
         GraphNode parent;
 
-        //@TODO: comments explaining the search steps
         frontier.push(unit.getPosition());
 
         while (!frontier.isEmpty()) {
