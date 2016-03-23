@@ -34,8 +34,6 @@ public class MapEditor implements Menu {
     private Graph mapEditorGraph;
 
     private MapEditorInterface mapEditorInterface;
-    //@TODO: never used, delete?
-    private MapChooserInterface mapChooserInterface;
 
     // Instance for singleton.
     private static MapEditor instance = null;
@@ -62,11 +60,8 @@ public class MapEditor implements Menu {
         instance = null;
     }
 
-    //@TODO: what is this comment?
-    // General Map Editor manager for scene, renderer and events
-
     /**
-     * Creates a class that handles different aspect of map editing
+     * Creates a class that handles different aspect of map editing, including scene, renderer and events
      * The map editor includes a Graph and Renderer as a separate instance to the game's instances of the same classes
      * It also has its own panes
      */
@@ -74,8 +69,6 @@ public class MapEditor implements Menu {
 
         createGraph();
 
-        //@todo delete after map quits
-        Renderer.delete();
         mapEditorRenderer = new Renderer();
         mapEditorRenderer.calculateSpacing();
 
@@ -133,24 +126,20 @@ public class MapEditor implements Menu {
         return this.mapEditorRenderer;
     }
 
-    //@TODO: complete documentation
-
     /**
      * Returns the graph of the map editor
      *
-     * @return
+     * @return The graph of the map editor
      */
     public Graph getGraph() {
 
         return this.mapEditorGraph;
     }
 
-    //@TODO: complete documentation
-
     /**
      * Returns the map editor scene
      *
-     * @return
+     * @return The javafx scene of the map editor
      */
     @Override
     public Scene getScene() {
