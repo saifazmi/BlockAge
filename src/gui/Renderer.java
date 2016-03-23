@@ -25,12 +25,14 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * @author : First created by Dominic Walters with code by Dominic Walters
- * @date : 29/01/16, last edited by Dominic Walters on 26/02/16
- * <p>
- * This class creates all the elements that will be placed on the map such as
- * grid lines and entities(base, blocks, units). It also has a function to delete certain nodes
- * if needed to.
+ * @author : Dominic Walters; Contributors - Dominic Walters
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class creates all the elements that will be placed on the map such as
+ *          grid lines and entities(base, blocks, units). It also has a function to delete certain nodes
+ *          if needed to.
+ *
+ * @date : 29/01/16
  */
 public class Renderer extends Group {
 

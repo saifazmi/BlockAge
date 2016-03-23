@@ -4,8 +4,13 @@ import graph.GraphNode;
 import sceneElements.SpriteImage;
 
 /**
- * @author : First created by Anh Pham with code by Anh Pham
- * @date : 24/02/16, last edited by Paul Popa on 23/02/16
+ * @author : Anh Pham; Contributors - Anh Pham
+ * @version : 23/03/2016;
+ *          <p>
+ *          Defines a base data structure.
+ *          This represents the goal for the game.
+ *
+ * @date : 24/02/16
  */
 public class Base extends Entity {
 
