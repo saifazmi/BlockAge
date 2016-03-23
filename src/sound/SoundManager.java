@@ -15,22 +15,40 @@ public class SoundManager {
     private final String AUDIO_RESOURES = SEPARATOR + "resources" + SEPARATOR + "audio" + SEPARATOR;
 
     private CircularBufferNode<MediaPlayer> soundtracks[];
+    //@TODO: never used, delete?
     private CircularBufferNode<MediaPlayer> currentMPointer;
     private boolean paused = true;
 
+    // Instance for singleton.
     private static SoundManager instance = null;
 
+
+    /**
+     * Implements Singleton for this class (Only one can exist).
+     *
+     * @return the sound manager instance
+     */
     public static SoundManager Instance() {
-        if (instance == null)
+
+        if (instance == null) {
             instance = new SoundManager();
+        }
+
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
+
         instance = null;
-        return true;
     }
 
+    //@TODO; document every method
+    /**
+     *
+     */
     private SoundManager() {
 
         URL soundPaths[] = {
@@ -49,11 +67,13 @@ public class SoundManager {
         }
 
         soundtracks[soundtracks.length - 1].setNext(soundtracks[0]);
-        //System.out.println(soundtracks[soundtracks.length - 1].getValue().getMedia().toString() + " next now: " + soundtracks[0].getValue().getMedia().toString());
 
         for (int i = 0; i < soundtracks.length; i++) {
+
             final int finalI = i;
+
             soundtracks[i].getValue().setOnEndOfMedia(() -> {
+
                 MediaPlayer m = soundtracks[finalI].getNext().getValue();
                 m.seek(Duration.ZERO);
                 m.play();
@@ -62,23 +82,42 @@ public class SoundManager {
 
     }
 
-    public void startSoundtrack() {
-        paused = false;
-        soundtracks[0].getValue().play();
-    }
+    // GETTER methods
 
-    public void resumeSoudtrack() {
-        paused = false;
-        currentMPointer.getValue().play();
-    }
-
-    public void pauseSoundtrack() {
-        paused = true;
-        soundtracks[0].getValue().pause();
-        //currentMPointer.getValue().pause();
-    }
-
+    //@TODO: never used, delete?
+    /**
+     *
+     * @return
+     */
     public boolean isPaused() {
-        return paused;
+
+        return this.paused;
+    }
+
+    // SETTER methods
+
+    /**
+     *
+     */
+    public void startSoundtrack() {
+
+        this.paused = false;
+        this.soundtracks[0].getValue().play();
+    }
+
+    /**
+     *
+     */
+    public void pauseSoundtrack() {
+
+        this.paused = true;
+        this.soundtracks[0].getValue().pause();
+    }
+
+    //@TODO: never used, delete?
+    public void resumeSoudtrack() {
+
+        this.paused = false;
+        this.currentMPointer.getValue().play();
     }
 }
