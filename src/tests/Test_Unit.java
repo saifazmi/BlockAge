@@ -17,7 +17,6 @@ import java.util.List;
  * Testing class for the purpose of testing the output of different functions of different class
  */
 public class Test_Unit extends Test_Logic {
-    //@TODO: Fix the tests with proper methods.
 
     private Graph graph = createGraph();
     private ArrayList<Blockade> testBlockades;
@@ -76,7 +75,7 @@ public class Test_Unit extends Test_Logic {
         Unit newUnit;
         try {
             newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
-        } catch (ExceptionInInitializerError e) {
+        } catch (Exception e) {
             newUnit = new Unit(11, "TestUnit", startNode, sprite, Unit.Search.A_STAR, Unit.Sort.BUBBLE, graph, goalNode);
         }
 

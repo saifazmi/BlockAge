@@ -27,10 +27,12 @@ import java.util.logging.Logger;
 /**
  * @author : First created by Anh with code by Paul Popa
  * @date : 11/03/16, last edited by Anh on 11/03/16
+ *
+ * This class creates the menu with the end game state. The menu will display
+ * the final score the user achieved as well as with a button to go back to the main menu.
  */
 public class EndGameMenu implements Menu {
 
-    //@TODO: whole class needs documentation
     private static final Logger LOG = Logger.getLogger(EndGameMenu.class.getName());
 
     public static Button backMainButton;
@@ -48,19 +50,26 @@ public class EndGameMenu implements Menu {
         initialiseScene();
     }
 
+    /**
+     * Declares the elements that will be placed on the pane
+     */
     public void declareElements() {
-
+        //Pane
         endGameMenuPane = new Pane();
+        //Buttons
         backMainButton = new Button();
         b = new ButtonProperties();
-
+        //Labels
         scoreLabel = new Label();
         l = new LabelProperties();
-
+        //Images
         backMainImage = ImageStore.backMainImage;
         backMainImageHovered = ImageStore.backMainImageHovered;
     }
 
+    /**
+     * Initilizes the scene with the score and the back to main menu button
+     */
     public void initialiseScene() {
 
         declareElements();
@@ -86,6 +95,7 @@ public class EndGameMenu implements Menu {
 
         int spaceBetweenImgH = 70;
 
+        // Sets the properties for the back to main menu button
         b.setButtonProperties(
                 backMainButton,
                 Menu.WIDTH / 5 - backMainImage.getWidth() / 2,
@@ -101,6 +111,7 @@ public class EndGameMenu implements Menu {
                 Menu.HEIGHT / 3 + 2 * spaceBetweenImgH
         );
 
+        // Set the size and the background for the pane
         endGameMenuPane.setPrefSize(Menu.WIDTH, Menu.HEIGHT);
 
         BackgroundImage myBI = new BackgroundImage(
@@ -114,15 +125,24 @@ public class EndGameMenu implements Menu {
         endGameMenuPane.setBackground(new Background(myBI));
         endGameMenuPane.getChildren().addAll(backMainButton, scoreLabel);
 
+        // Create the scene where all the elements will be placed on
         Group mainMenuGroup = new Group(endGameMenuPane);
         endGameMenuScene = new Scene(mainMenuGroup, Menu.WIDTH, Menu.HEIGHT);
     }
 
+    /**
+     * Gets the end game scene
+     * @return the end game scene
+     */
     public Scene getScene() {
 
         return this.endGameMenuScene;
     }
 
+    /**
+     * Sets the score which will be displayed on the pane
+     * @param score the score to be displayed
+     */
     public void setScore(double score) {
 
         EndGameMenu.scoreLabel.setText("Score: " + String.format("%.2f", score));

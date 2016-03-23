@@ -80,14 +80,6 @@ public final class ImageStore {
             true
     );
 
-    //@TODO: never used, delete? ============================================================================
-    //button images
-    public static final Image playImage = new Image(SPRITE_RESOURCES + BUTTONS + "Play_Idle.png");
-    public static final Image playImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Play_Hover.png");
-    public static final Image pauseImage = new Image(SPRITE_RESOURCES + BUTTONS + "Pause_Idle.png");
-    public static final Image pauseImageHovered = new Image(SPRITE_RESOURCES + BUTTONS + "Pause_Hover.png");
-    //@TODO:=================================================================================================
-
     //blockade images
     public static final Image unsortableImage1 = new Image(
             SPRITE_RESOURCES + ENTITIES + BLOCKADES + "UnSortable_Blockade.jpg",
@@ -152,8 +144,6 @@ public final class ImageStore {
     public static final Image backgroundOptionsMenu = new Image(SPRITE_RESOURCES + BACKGROUNDS + "OptionsMenu.png");
     public static final Image pauseMenu = new Image(SPRITE_RESOURCES + BACKGROUNDS + "PauseMenu.png");
     public static final Image paneBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "Pane.png");
-    //@TODO: never used, delete?
-    public static final Image grassBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "GrassBackground.png");
     public static final Image yesNoBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "yesNoPane.png");
 
     //options images
@@ -273,11 +263,11 @@ public final class ImageStore {
     public static final Image customGameImage = new Image(SPRITE_RESOURCES + BUTTONS + "CustomGame_Idle.png");
     public static final Image customGameImageHover = new Image(SPRITE_RESOURCES + BUTTONS + "CustomGame_Hover.png");
 
-    //@TODO: complete doc
-
     /**
-     * @param entity
-     * @param image
+     * Sets the sprite property of an entity
+     *
+     * @param entity the entity to set for
+     * @param image the image to use
      */
     public static void setSpriteProperties(Entity entity, Image image) {
         SpriteImage spriteImage = new SpriteImage(image, entity);

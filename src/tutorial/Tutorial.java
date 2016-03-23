@@ -33,9 +33,8 @@ public class Tutorial {
     public static boolean visualShown = false;
     private static List<Node> oldKids = new ArrayList<>();
 
-    //@TODO: complete doc
     /**
-     *
+     * Setup for the Tutorial.
      */
     public static void setup() {
 
@@ -85,15 +84,14 @@ public class Tutorial {
         );
     }
 
-    //@TODO: complete doc
     /**
-     *
+     * This function is called on every press of enter.
+     * This then displays the relevant tutorial information.
      */
     public static void inc() {
 
         step++;
 
-        //@TODO: add comments indicating when everything is displayed
         switch (step) {
             case 1:
                 tutorial.setText("The aim of the game is to survive " +
@@ -217,9 +215,8 @@ public class Tutorial {
         }
     }
 
-    //@TODO: complete doc
     /**
-     *
+     * Resets the tutorial information to before it was initialised. Reenables the sort.
      */
     public static void reset() {
 
