@@ -159,7 +159,7 @@ public class UnitSpawner {
         }
 
         spawnCount++;
-        engine.getEntities().add(newUnit);
+        engine.getUnits().add(newUnit);
 
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }

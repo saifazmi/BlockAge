@@ -72,7 +72,7 @@ public class MapParser {
                         if (blockade != null) {
 
                             Renderer.Instance().drawInitialEntity(blockade);
-                            CoreEngine.Instance().getEntities().add(blockade);
+                            CoreEngine.Instance().getBlockades().add(blockade);
                         }
                     }
 

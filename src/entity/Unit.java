@@ -182,10 +182,10 @@ public class Unit extends Entity {
         return this.sorting;
     }
 
-    //@TODO: dom, doc this please
-
     /**
-     * @return
+     * Gets the list of logical node associations related to this units last search
+     *
+     * @return the list of pairs of node associations
      */
     public List<Pair<GraphNode, GraphNode>> getNodeAssociations() {
 
@@ -238,7 +238,11 @@ public class Unit extends Entity {
         }
     }
 
-    //@TODO: dom, doc this please
+    /**
+     * Sets the list of logical node associations related to this units last search
+     *
+     * @param nodeAssociations the list to of node associations to set to
+     */
     public void setNodeAssociations(List<Pair<GraphNode, GraphNode>> nodeAssociations) {
 
         this.nodeAssociations = nodeAssociations;
@@ -435,7 +439,6 @@ public class Unit extends Entity {
      * If the unit reaches the goal point then the scene is set to the End Menu which will
      * display the score.
      */
-    @Override
     public void update() {
 
         if (completedMove) {

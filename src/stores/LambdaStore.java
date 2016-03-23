@@ -71,7 +71,7 @@ public final class LambdaStore {
             if (blockade != null) {
                 System.out.println("Blockade rendered");
                 renderer.drawInitialEntity(blockade);
-                CoreEngine.Instance().getEntities().add(blockade);
+                CoreEngine.Instance().getBlockades().add(blockade);
                 CoreEngine.Instance().unbreakableBlockadesPlaced();
             }
         }
@@ -94,7 +94,7 @@ public final class LambdaStore {
             if (blockade != null) {
                 renderer.drawInitialEntity(blockade);
                 blockade.getSprite().setOnMouseClicked(getShowSort());
-                CoreEngine.Instance().getEntities().add(blockade);
+                CoreEngine.Instance().getBlockades().add(blockade);
                 CoreEngine.Instance().breakableBlockadesPlaced();
             }
         }
@@ -137,7 +137,7 @@ public final class LambdaStore {
         Unit.Sort sort = unit.getSort();
 
         GameRunTime.Instance().setLastClicked(sprite);
-        ArrayList<Entity> units = CoreEngine.Instance().getEntities();
+        ArrayList<Unit> units = CoreEngine.Instance().getUnits();
 
         for (Entity unit1 : units) {
 

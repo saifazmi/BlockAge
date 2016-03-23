@@ -87,7 +87,7 @@ public class Tutorial {
                             "Press the ENTER key to continue.");
                     step--;
                 } else {
-                    mapBlockadeCount = Blockade.getBlockades().size();
+                    mapBlockadeCount = CoreEngine.Instance().getBlockades().size();
                     System.out.println(mapBlockadeCount);
                     tutorial.setText("Good, the enemy units will spawn in the upper right hand corner and try to reach the base. " +
                             "Once these units reach your base, you lose the game. " +
@@ -98,8 +98,7 @@ public class Tutorial {
                 }
                 break;
             case 3:
-                if (Blockade.getBlockades().size() == mapBlockadeCount) {
-                    System.out.println(Blockade.getBlockades().size());
+                if (CoreEngine.Instance().getBlockades().size() == mapBlockadeCount) {
                     tutorial.setText("You haven't placed any blockades, please place one. " +
                             "Press the ENTER key to continue.");
                     step--;

@@ -76,12 +76,6 @@ public class GameInterface {
     // the spacing that will be added between elements of the pane
     private int heightSpacing = 30;
 
-    //@TODO: never used, delete?
-    // the visual which will be placed on the pane
-    public SortVisual sortVisual = null;
-    //@TODO: never used, delete?
-    public SortableBlockade sortableBlockade;
-
     // Instance for singleton.
     private static GameInterface instance = null;
 

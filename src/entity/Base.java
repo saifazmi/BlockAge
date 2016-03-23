@@ -21,14 +21,4 @@ public class Base extends Entity {
 
         super(id, name, position, sprite);
     }
-
-    /**
-     * Abstract method from Entity that required implementation.
-     * Left empty as nothing is necessary.
-     */
-    @Override
-    public void update() {
-
-        // Nothing to update.
-    }
 }
