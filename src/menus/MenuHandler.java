@@ -21,7 +21,7 @@ public class MenuHandler {
     private PauseMenu pauseMenu = new PauseMenu();
     private static EndGameMenu endGameMenu = new EndGameMenu();
 
-    //private MapEditor mapEditor = MapEditor.Instance();
+    //private MapEditor mapEditor = MapEditor.Instance(); Delete this
 
     private static Scene[] sceneList = new Scene[20];
 
@@ -30,13 +30,11 @@ public class MenuHandler {
     public final static int OPTIONS_MENU = 1;
     public final static int MAIN_GAME = 2;
     public final static int PAUSE_MENU = 3;
+    public final static int MAP_EDITOR = 4;
     public final static int END_GAME_MENU = 5;
 
-    // index for map editor
-    public final static int MAP_EDITOR = 4;
-
-    public static int currentScene = MAIN_MENU;
-    public static int lastScene = MAIN_MENU;
+    public static int currentScene = MAIN_MENU; // the first initialisation the current scene
+    public static int lastScene = MAIN_MENU; // the first initialisation the last scene accessed
 
     /**
      * Initialises the stage to be the same used for all scenes
@@ -59,6 +57,9 @@ public class MenuHandler {
         sceneList[END_GAME_MENU] = endGameMenu.getScene();
     }
 
+    /**
+     * Sets the main game scene where the game will happen
+     */
     public static void setMainGameScene() {
         sceneList[MAIN_GAME] = GameRunTime.Instance().getScene();
     }
@@ -78,9 +79,7 @@ public class MenuHandler {
         lastScene = currentScene;
         currentScene = scene;
 
-
         primaryStage.setScene(sceneList[scene]);
-
 
         if (scene == END_GAME_MENU) {
             endGameMenu.setScore(CoreEngine.Instance().getScore().getScore());

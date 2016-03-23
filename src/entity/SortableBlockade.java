@@ -66,13 +66,6 @@ public class SortableBlockade extends Blockade {
 
         return this.sortVisual;
     }
-
-    //@TODO: never used, delete?
-    public static int getSortID() {
-
-        return sortID;
-    }
-
     // SETTER methods.
 
     /**
@@ -83,12 +76,6 @@ public class SortableBlockade extends Blockade {
     public void setSortVisual(SortVisual sortVisual) {
 
         this.sortVisual = sortVisual;
-    }
-
-    //@TODO: never used, delete?
-    public static void setSortID(int sortID) {
-
-        SortableBlockade.sortID = sortID;
     }
 
     /**

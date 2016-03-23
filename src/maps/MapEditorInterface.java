@@ -33,6 +33,10 @@ import java.io.InputStream;
 /**
  * Created by hung on 05/03/16.
  */
+
+/**
+ * This class holds the information for the interface of the map editor
+ */
 public class MapEditorInterface {
 
     //for popup Scene
@@ -74,6 +78,11 @@ public class MapEditorInterface {
         return true;
     }
 
+    /**
+     * What?
+     * @param mapEditorScene The scene of the map editor
+     * @param mapEditor The Map Editor instance of which information about the editor can be accessed
+     */
     public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor) {
         instance = this;
         declareElements();
@@ -86,7 +95,9 @@ public class MapEditorInterface {
         setUpPopUp();
     }
 
-
+    /**
+     * Loads the chosen font to use for labels
+     */
     private void loadFont() {
         InputStream fontStream = MapEditorInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
         if (fontStream == null) {
@@ -95,6 +106,9 @@ public class MapEditorInterface {
         bellotaFont = Font.loadFont(fontStream, 28);
     }
 
+    /**
+     * Loads the chosen font, different to font from loadFont() to use for labels
+     */
     private void loadFont2() {
         InputStream fontStream = MapEditorInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
         if (fontStream == null) {
@@ -103,6 +117,10 @@ public class MapEditorInterface {
         bellotaFontSmaller = Font.loadFont(fontStream, 18);
     }
 
+    /**
+     * Declares all the elements of the UI on the scene
+     * This includes all the buttons, labels, text areas and panes
+     */
     private void declareElements() {
         // HBoxes & VBoxes
         rightMenuSaveBack = new HBox();
@@ -138,6 +156,11 @@ public class MapEditorInterface {
         b = new ButtonProperties();
     }
 
+    /**
+     * Constructs the right pane
+     * Gives all the buttons its properties, including click event handler, positioning and image
+     * Also sets the background for the right pane and place the appropriate labels in the correct positioning
+     */
     private void rightPane() {
         // Adding buttons properties
         b.setButtonProperties(saveButton, "", rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80, initialPositionY, e -> handle(e), new ImageView(saveButtonImage));
@@ -197,6 +220,12 @@ public class MapEditorInterface {
         ((BorderPane) scene.getRoot()).setRight(rightMenuPane);
     }
 
+    /**
+     * Handles events invoked by the Map Editing interface
+     * These includes saving the map, clearing the map and exiting the map
+     * To make the program more concise, also includes handling event of click yes or no for overwriting map files
+     * @param event
+     */
     public static void handle(ActionEvent event) {
         if (event.getSource() == MapEditorInterface.saveButton) {
             parser.saveToUserFile();
@@ -221,14 +250,26 @@ public class MapEditorInterface {
         }
     }
 
+    /**
+     * Gets the name of the map as in the text area
+     * @return The map name
+     */
     public String getFileName() {
         return fileNameBox.getText();
     }
 
+    /**
+     * Gets the status of the saving process
+     * @return The TextArea containing the save status
+     */
     public TextArea getSaveStatusBox() {
         return saveStatus;
     }
 
+    /**
+     * Sets up the pop-up window which asks user if they want to override an already existing map (name clash)
+     * The pop-up will have 2 buttons for yes and no choice, and a message to display to the user that there is a name clash
+     */
     private void setUpPopUp() {
         popUpStage = new Stage();
         int sceneWidth = 300;
@@ -270,6 +311,10 @@ public class MapEditorInterface {
         });
     }
 
+    /**
+     * Returns the 'overwrite' pop-up stage
+     * @return The pop-up stage
+     */
     public Stage getPopUpStage() {
         return popUpStage;
     }

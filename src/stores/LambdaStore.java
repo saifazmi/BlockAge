@@ -36,6 +36,11 @@ public final class LambdaStore {
         // To prevent instantiation.
     }
 
+    /**
+     * Implements Singleton for this class (Only one can exist)
+     *
+     * @return the only engine to be created
+     */
     public static LambdaStore Instance() {
         if (instance == null) {
             instance = new LambdaStore();
@@ -43,11 +48,14 @@ public final class LambdaStore {
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
         instance = null;
-        return true;
     }
 
+    // Places a unsortable blockade on the grid where the mouse is clicked
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
 
         if (CoreEngine.Instance().unbreakableBlockadesLeft()) {
@@ -69,6 +77,7 @@ public final class LambdaStore {
         }
     };
 
+    // Places a sortable blockade on the grid where the mouse is clicked
     private final EventHandler<MouseEvent> sceneClickPlaceBreakableBlockade = e -> {
 
         if (CoreEngine.Instance().breakableBlockadesLeft()) {

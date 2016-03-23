@@ -24,6 +24,10 @@ import java.util.logging.Logger;
 /**
  * Created by hung on 06/03/16.
  */
+
+/**
+ * The class that builds and handles the interface and inputs for the map editor
+ */
 public class MapChooserInterface {
 
     private static final Logger LOG = Logger.getLogger(MapChooserInterface.class.getName());
@@ -42,6 +46,10 @@ public class MapChooserInterface {
 
     private static MapChooserInterface instance;
 
+    /**
+     * Implements singleton as there will only ever be one instance of this class
+     * @return
+     */
     public static MapChooserInterface Instance() {
         if (instance == null)
             instance = new MapChooserInterface();
@@ -54,7 +62,13 @@ public class MapChooserInterface {
         return true;
     }
 
-    private MapChooserInterface() {
+    /**
+     * The constructor creates a new stage and scene for the map chooser
+     * It will look for the map files in the application directory and sets up the appropriate images for the scroll pane
+     * The chooser will act like a pop-up window
+     */
+    private MapChooserInterface()
+    {
         mapChooseStage = new Stage();
         images = new HBox();
 
@@ -78,6 +92,9 @@ public class MapChooserInterface {
         mapChooseStage.hide();
     }
 
+    /**
+     * Clears all the previous images to refresh, loads images and add them to scroll pane
+     */
     private void setUpMapImages() {
 
         images.getChildren().clear();
@@ -90,7 +107,8 @@ public class MapChooserInterface {
         images.setSpacing(50);
     }
 
-    private void mapSelectScrolling(ScrollPane scroller, ScrollEvent e) {
+
+    /*private void mapSelectScrolling(ScrollPane scroller, ScrollEvent e) {
         double movedDistance = e.getTotalDeltaX();
         if (Math.abs(movedDistance - THRESHOLD) > 0) {
 
@@ -102,13 +120,20 @@ public class MapChooserInterface {
 
             oldHValue = scroller.getHvalue();
         }
-    }
+    }*/
 
+    /**
+     * Shows the map chooser, wait for user to click on a map
+     */
     public void showChooser() {
         setUpMapImages();
         mapChooseStage.showAndWait();
     }
 
+    /**
+     * Gets the map chosen by the user once they click on it
+     * @return
+     */
     public String getChosenMap() {
         System.out.println(USER_MAP_DIRECTORY + chosenMap);
         return USER_MAP_DIRECTORY + chosenMap;
@@ -118,6 +143,10 @@ public class MapChooserInterface {
         chosenMap = "null";
     }
 
+    /**
+     * Creates a new button for each map that is found in the application directory
+     * Each button will have an image, which is a saved .png version of the map
+     */
     private void getMapImages() {
 
         mapImages = new ArrayList<>();
@@ -131,10 +160,13 @@ public class MapChooserInterface {
         try {
 
             for (int i = 0; i < mapFiles.length; i++) {
+
+                // Gets the images and maps
                 Image mapImage = new Image(mapFiles[i].toURI().toString());
                 String mapName = getDataOf(mapFiles[i]);
                 mapNames.add(mapName);
 
+                // Create an image view
                 ImageView mapImageView = new ImageView(mapImage);
                 mapImageView.setPreserveRatio(true);
                 mapImageView.setFitHeight(600);
@@ -144,6 +176,7 @@ public class MapChooserInterface {
                 VBox container = new VBox();
                 container.setAlignment(Pos.CENTER);
 
+                // Creates the button for choosing the map
                 Button newMap = new Button();
                 b.setButtonProperties(newMap, "", 0, 0, e -> chooseMap(container), mapImageView);
                 b.addHoverEffect3(newMap);
@@ -157,7 +190,13 @@ public class MapChooserInterface {
         }
     }
 
+    /**
+     * Gets the actual data of the map (know the .png file name so just gets the .map file)
+     * @param mapFile The string that denotes the file to get <name>.png
+     * @return The .map file of the desired map
+     */
     private String getDataOf(File mapFile) {
+
         String[] mapNameParts = mapFile.toURI().toString().split(SEPERATOR);
         String mapFileName = mapNameParts[mapNameParts.length - 1];
 
@@ -166,6 +205,12 @@ public class MapChooserInterface {
         return mapName;
     }
 
+    /**
+     * Function is called when a 'map' button is pressed.
+     * The chosenMap variable will be set to the name of the chosen map (which the button was associated with)
+     * A new game will start with the chosen map
+     * @param e The VBox which contain the button
+     */
     private void chooseMap(VBox e) {
         int buttonIndex = mapImages.indexOf(e);
         chosenMap = mapNames.get(buttonIndex);

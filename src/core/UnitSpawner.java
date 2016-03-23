@@ -35,7 +35,6 @@ public class UnitSpawner {
 
     // Properties
     private String[] names;
-    private String[] descriptions;
     private int cooldown = 0;
 
     // Dependencies.
@@ -60,7 +59,6 @@ public class UnitSpawner {
      * Delete the existing instance of this class
      */
     public static void delete() {
-
         instance = null;
     }
 
@@ -73,19 +71,11 @@ public class UnitSpawner {
 
         instance = this;
 
+        // The names of our units that will be spawned on the map
         this.names = new String[]{
                 "Banshee",
                 "Demon",
                 "Death knight"
-        };
-
-        this.descriptions = new String[]{
-                "Depth First Search",
-                "Breadth First Search",
-                "A* Search",
-                "Selection Sort",
-                "Insertion Sort",
-                "Bubble Sort"
         };
 
         this.rndSearchGen = new Random(System.currentTimeMillis());
@@ -93,6 +83,7 @@ public class UnitSpawner {
         this.goal = goal;
         this.spawnlimit = spawnlimit;
 
+        // Creates the units and put them in a pool from where they will be taken to be spawned
         for (unitPoolCount = 0; unitPoolCount < totalSpawnables; unitPoolCount++) {
             create(graph, goal);
         }
@@ -114,6 +105,8 @@ public class UnitSpawner {
         int index = rndSearchGen.nextInt(3);
         Image image;
 
+        // Setting the images appropriately for different searches
+        // BFS - demon, A_STAR - death knight, DFS - banshee
         if (Unit.Search.values()[index] == Unit.Search.BFS) {
             image = ImageStore.imageDemon;
         } else if (Unit.Search.values()[index] == Unit.Search.A_STAR) {
@@ -168,19 +161,6 @@ public class UnitSpawner {
         Platform.runLater(() -> renderer.drawInitialEntity(newUnit));
     }
 
-    //@TODO: is this methods being used anymore?
-
-    /**
-     * Moves the unit back into the pool if its not needed
-     *
-     * @param unit The Unit to move back
-     */
-    private void despawnUnit(Unit unit) {
-
-        this.unitPool.add(unit);
-        //remove from list here?
-    }
-
     /**
      * Updates the spawner itself, If the number of Units in game is less than the set limit, spawn a new one
      */
@@ -194,23 +174,5 @@ public class UnitSpawner {
             this.cooldown = 300;
             spawnUnit();
         }
-    }
-
-    //@TODO: never used, delete?
-
-    /**
-     * Sets the limit to the number of unit to spawn in one game
-     *
-     * @param spawnlimit number of unit allowed to spawn
-     */
-    public void setSpawnlimit(int spawnlimit) {
-
-        this.spawnlimit = spawnlimit;
-    }
-
-    //@TODO: never used, delete? else javadoc
-    public Random getRndSearchGen() {
-
-        return this.rndSearchGen;
     }
 }

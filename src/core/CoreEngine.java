@@ -65,7 +65,6 @@ public class CoreEngine {
      * Delete the existing instance of this class
      */
     public static void delete() {
-
         instance = null;
     }
 
@@ -283,7 +282,6 @@ public class CoreEngine {
     private void updateGameState() {
 
         if (entities != null) {
-
             for (Entity entity : entities) {
                 entity.update();
             }

@@ -40,8 +40,7 @@ public class MapEditor implements Menu {
 
     /**
      * Implements Singleton for this class (Only one can exist)
-     *
-     * @return the only game runtime to be created
+     * @return the only Map Editor to be created
      */
     public static MapEditor Instance() {
 
@@ -57,6 +56,12 @@ public class MapEditor implements Menu {
     }
 
     // General Map Editor manager for scene, renderer and events
+
+    /**
+     * Creates a class that handles different aspect of map editing
+     * The map editor includes a Graph and Renderer as a separate instance to the game's instances of the same classes
+     * It also has its own panes
+     */
     private MapEditor() {
 
         createGraph();
@@ -66,23 +71,34 @@ public class MapEditor implements Menu {
         mapEditorRenderer = new Renderer();
         mapEditorRenderer.calculateSpacing();
 
-        //initialiseScene();
-        mapEditorPane = new BorderPane();
+        // creating the background from resources
         final String SEPARATOR = File.separator;
         final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
         Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
-
         BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        // Creating the pane which will include the background
+        mapEditorPane = new BorderPane();
         mapEditorPane.setBackground(new Background(myBIF));
-        //Group mapEditor = new Group(mapEditorPane);
+
+        // Create a new scene with the previously created pane
         mapEditorScene = new Scene(mapEditorPane, CoreGUI.WIDTH, CoreGUI.HEIGHT);
+
+        // Put the renderer onto the pane
         ((BorderPane) mapEditorScene.getRoot()).setCenter(mapEditorRenderer);
-        mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
         mapEditorRenderer.initialDraw();
+
+        // Create the interface for the scene
+        mapEditorInterface = new MapEditorInterface(mapEditorScene, this);
+
+        // define the mouse click event handler
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
     }
 
+    /**
+     * Creates new graph and add each node's neighbour appropriately
+     */
     private void createGraph() {
         mapEditorGraph = new Graph();
 
@@ -98,34 +114,56 @@ public class MapEditor implements Menu {
         }
     }
 
+    /**
+     * Returns the graph of the map editor
+     * @return
+     */
     public Graph getGraph() {
         return mapEditorGraph;
     }
 
-    // think about erasing blocks as wel
+    /**
+     * Mouse click handling event.
+     * Create a new blockade and place in appropriate node, logically and graphically
+     */
     private final EventHandler<MouseEvent> sceneClickPlaceBlockade = e -> {
         Blockade blockadeInstance = new Blockade(0, "Blockade", new GraphNode(0, 0), null);
         ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
         Blockade blockade = Blockade.mapBlockade(e, blockadeInstance, mapEditorRenderer, mapEditorGraph);
         if (blockade != null) {
             mapEditorRenderer.drawInitialEntity(blockade);
-            System.out.println(blockade.getPosition());
+            //System.out.println(blockade.getPosition());
         }
     };
 
+    /**
+     * Returns the object that holds the interface logic for the map editor
+     * @return The interface as an object
+     */
     public MapEditorInterface getInterface() {
         return mapEditorInterface;
     }
 
+    /**
+     * Gets the renderer instance of the map editor
+     * @return the Map renderer Instance
+     */
     public Renderer getRenderer() {
         return mapEditorRenderer;
     }
 
+    /**
+     * Returns the map editor scene
+     * @return
+     */
     @Override
     public Scene getScene() {
         return mapEditorScene;
     }
 
+    /**
+     * Clears all the nodes on the graph of blockades, this will remove them logically then tells the renderer to remove them graphically
+     */
     public void clearNodes() {
         List<GraphNode> graph = mapEditorGraph.getNodes();
         for (GraphNode aGraph : graph) {

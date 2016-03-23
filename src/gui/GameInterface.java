@@ -40,6 +40,10 @@ import java.util.logging.Logger;
 /**
  * @author : First created by Paul Popa with code by Paul Popa
  * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
+ * 
+ * This class contains the right pane that can be seen in-game. All the elements on the pane
+ * are appropriately positioned and coloured. The pane is formed by the unit description, key bindings,
+ * tutorial, sort visualisation as well as blockades (sortable/unsortable) and score.
  */
 public class GameInterface {
 
@@ -49,10 +53,11 @@ public class GameInterface {
 
     private Scene scene = GameRunTime.Instance().getScene();
 
-    public static int bottomPaneHeight = 0;
-    public static int rightPaneWidth = 424;
+    public static int bottomPaneHeight = 0; // The height of the right Pane, manually set
+    public static int rightPaneWidth = 424; // The width of the right Pane, manually set
 
-    public static Button playButton, pauseButton, unsortableButton, sortableButton;
+    // All elements that will be placed on the right pane
+    public static Button unsortableButton, sortableButton;
     public static TextArea unitDescriptionText;
     public static Font bellotaFont, bellotaFontBigger;
     public static Pane unitTextPane, sortVisualisationPane, rightMenuPane, rightMenuBox;
@@ -60,26 +65,26 @@ public class GameInterface {
             sortableLimitLabel, unsortableLimitLabel, scoreLabel, sortVisualisationLabel;
 
     private Label blockadesLabel, sortLabel;
-    private Image playImage, playImageHovered, pauseImage, pauseImageHovered, unsortableImage, sortableImage;
+    private Image unsortableImage, sortableImage;
     private ButtonProperties b;
     private LabelProperties l;
-    private int initialPositionY = 50;
-    private int heightSpacing = 30;
-    //TODO: never used, delete?
-    public SortVisual sortVisual = null;
-    //TODO: never used, delete?
+    
+    private int initialPositionY = 50; // the initial position of the first element of the pane
+    private int heightSpacing = 30; // the spacing that will be added between elements of the pane
+    
+    public SortVisual sortVisual = null; // the visual which will be placed on the pane
     public SortableBlockade sortableBlockade;
 
     // Instance for singleton.
     private static GameInterface instance = null;
 
     /**
-     * Implements Singleton for this class (Only one can exist).
+     * Implements Singleton for this class (Only one can exist)
      *
-     * @return the only base spawner to be created.
+     * @return the only game interface to be created
      */
     public static GameInterface Instance() {
-
+    	
         if (instance == null) {
             instance = new GameInterface();
         }
@@ -96,10 +101,10 @@ public class GameInterface {
     }
 
     /**
-     * Create a game interface
+     * Constructs the pane with all the elements and events
      */
     private GameInterface() {
-
+    	
         loadFont();
         declareElements();
         toggle();
@@ -123,7 +128,9 @@ public class GameInterface {
         try(InputStream fontStream1 = GameInterface.class.getResourceAsStream(
                 SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf")) {
 
-        bellotaFontBigger = Font.loadFont(fontStream1, 50);} catch (IOException e) {
+            bellotaFontBigger = Font.loadFont(fontStream1, 50);
+        }
+        catch (IOException e) {
             LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
@@ -156,23 +163,18 @@ public class GameInterface {
         rightMenuBox = new Pane();
 
         //Buttons
-        playButton = new Button();
-        pauseButton = new Button();
         unsortableButton = new Button();
         sortableButton = new Button();
         b = new ButtonProperties();
 
         //Images
-        playImage = ImageStore.playImage;
-        playImageHovered = ImageStore.playImageHovered;
-        pauseImage = ImageStore.pauseImage;
-        pauseImageHovered = ImageStore.pauseImageHovered;
         unsortableImage = ImageStore.unsortableImage2;
         sortableImage = ImageStore.sortableImage2;
     }
 
     /**
-     * Constructs the right Pane of the scene
+     * Constructs the right Pane of the scene where all the elements
+     * will be placed on. The elements will be appropriately positioned and coloured
      */
     public void rightPane() {
 
@@ -212,7 +214,7 @@ public class GameInterface {
         unitImage.setLayoutY(90 / 2 - 80 / 2);
         unitTextPane.getChildren().addAll(namePaneLabel, searchPaneLabel, sortPaneLabel, unitImage);
 
-        //SORT VISUALISATION PANE
+        //SORT VISUALISATION LABEL
         sortVisualisationLabel.setText("Sort Visualisation");
         sortVisualisationLabel.setFont(bellotaFont);
         sortVisualisationLabel.setLayoutX(rightPaneWidth / 2 - 197 / 2);
@@ -220,51 +222,13 @@ public class GameInterface {
         sortVisualisationLabel.setAlignment(Pos.CENTER);
         sortVisualisationLabel.setTextFill(Color.web("#FFE130"));
 
-        unitDescriptionLabel.widthProperty().addListener((observable, oldWidth, newWidth) -> {
-            LOG.log(Level.INFO, "The new width" + newWidth);
-        });
-
+        //SORT VISUALISATION PANE
         sortVisualisationPane.setPrefSize(300, 260);
         sortVisualisationPane.setStyle("-fx-border-color: white");
         sortVisualisationPane.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         sortVisualisationPane.setLayoutY(initialPositionY + 3 * heightSpacing + 90);
-
-
-        // Set the properties for the play button
-        b.setButtonProperties(
-                playButton,
-                "",
-                rightPaneWidth / 2 - 50 - playImage.getWidth(),
-                initialPositionY + 3.5 * heightSpacing + 290,
-                ElementsHandler::handle,
-                new ImageView(playImage)
-        );
-
-        b.addHoverEffect(
-                playButton,
-                playImageHovered,
-                playImage, rightPaneWidth / 2 - 50 - playImage.getWidth(),
-                initialPositionY + 3.5 * heightSpacing + 290
-        );
-
-        // Set the properties for the pause button
-        b.setButtonProperties(
-                pauseButton,
-                "",
-                rightPaneWidth / 2 + 50 - pauseButton.getWidth(),
-                initialPositionY + 3.5 * heightSpacing + 290,
-                ElementsHandler::handle,
-                new ImageView(pauseImage)
-        );
-
-        b.addHoverEffect(
-                pauseButton,
-                pauseImageHovered,
-                pauseImage,
-                rightPaneWidth / 2 + 50 - pauseButton.getWidth(),
-                initialPositionY + 3.5 * heightSpacing + 290
-        );
-
+        
+        //BLOCKADES LABEL
         blockadesLabel.setText("Blockades");
         blockadesLabel.setPrefSize(120, 30);
         blockadesLabel.setLayoutX(rightPaneWidth / 2 - 120 / 2);
@@ -273,6 +237,7 @@ public class GameInterface {
         blockadesLabel.setFont(bellotaFont);
         blockadesLabel.setTextFill(Color.web("#FFE130"));
 
+        //SORT LABEL
         sortLabel.setText("");
         sortLabel.setPrefSize(240, 30);
         sortLabel.setLayoutX(rightPaneWidth / 2 - 240 / 2);
@@ -403,8 +368,8 @@ public class GameInterface {
             if (!rightMenuBox.getChildren().contains(sortLabel))
                 rightMenuBox.getChildren().add(sortLabel);
         });
-
-        //Initial pane of 
+        
+        //Initial pane displayed on the top right. It contains the key bindings
         unitDescriptionLabel.setText("Key Bindings");
         namePaneLabel.setText("R-Show route");
         searchPaneLabel.setText("S-Unselect unit");
@@ -434,7 +399,7 @@ public class GameInterface {
                 if (namePaneLabel.getText().equals("R-Show route")) {
 
                     namePaneLabel.setText("Shift+R-Show visualisation");
-                    searchPaneLabel.setText("SPACE-Pause game");
+                    searchPaneLabel.setText("Shift+SPACE-Pause game");
                     sortPaneLabel.setText("Shift+B-Sortable blockade");
 
                 } else {

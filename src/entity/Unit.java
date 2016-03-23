@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import menus.MenuHandler;
 import sceneElements.SpriteImage;
 import searches.AStar;
@@ -34,6 +35,13 @@ public class Unit extends Entity {
 
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
 
+    public List<Pair<GraphNode, GraphNode>> getNodeAssociations() {
+        return nodeAssociations;
+    }
+
+    public void setNodeAssociations(List<Pair<GraphNode, GraphNode>> nodeAssociations) {
+        this.nodeAssociations = nodeAssociations;
+    }
     /**
      * Search flags
      */
@@ -83,6 +91,7 @@ public class Unit extends Entity {
     private Renderer renderer = Renderer.Instance();
     private List<GraphNode> route;
     private List<GraphNode> visited;
+    private List<Pair<GraphNode, GraphNode>> nodeAssociations;
 
     private SequentialTransition visualTransition;
 
@@ -412,7 +421,10 @@ public class Unit extends Entity {
     //@TODO: document this method
 
     /**
-     *
+     * Updates the unit's position. Whenever the unit is changing it's direction
+     * the sprite also rotates accordingly. 
+     * If the unit reaches the goal point then the scene is set to the End Menu which will
+     * display the score.
      */
     @Override
     public void update() {
@@ -538,18 +550,23 @@ public class Unit extends Entity {
 
     //@TODO: document this method
 
-    /**
-     * @param route
-     * @param show
+    /** Shows the transition of this unit. There is the option of choosing if it produces the route or the
+     * algorithm visualisation.
+     * 
+     * @param route if the route or the algorithm visualisation is going to be displayed
+     * @param show if the unit will show or not the route they will follow
      */
     public void showTransition(boolean route, boolean show) {
 
+    	// Create a visual transition for the unit
         SequentialTransition currentTrans = this.getVisualTransition();
 
+        // If there is no transition at this moment
         if (currentTrans == null && this.getRoute() != null && show) {
-
+        	
+        	// If route is true, produce the route visualisation
             if (route) {
-
+            	// Create a new one
                 SequentialTransition transition = renderer.produceRouteVisual(
                         renderer.produceRoute(getRoute(), getPosition()
                         )
@@ -557,18 +574,24 @@ public class Unit extends Entity {
 
                 setVisualTransition(transition);
                 transition.play();
+                // updates the tutorial
                 Tutorial.routeShown = Tutorial.active;
 
-            } else {
+            } 
+            // If route is false, produce the algorithm visualisation
+            else {
 
                 setVisualTransition(renderer.produceAlgoRouteVisual(this));
                 getVisualTransition().play();
+                // updates the tutorial
                 Tutorial.visualShown = Tutorial.active;
             }
 
-        } else if (currentTrans != null && !show) {
+        } 
+        // Deletes the route or algorithm visualisation if requested
+        else if (currentTrans != null && !show) {
 
-            currentTrans.stop();
+            currentTrans.stop(); // stop the current transition
             ObservableList<Animation> transitions = currentTrans.getChildren();
 
             for (Animation transition : transitions) {
@@ -576,7 +599,7 @@ public class Unit extends Entity {
                 if (transition instanceof FadeTransition) {
 
                     FadeTransition trans = (FadeTransition) transition;
-                    nullObject(trans.getNode());
+                    nullObject(trans.getNode()); // delete the current node
 
                 } else if (transition instanceof SequentialTransition) {
 
@@ -586,13 +609,13 @@ public class Unit extends Entity {
                     for (Animation transition2 : transitions2) {
 
                         FadeTransition trans2 = (FadeTransition) transition2;
-                        nullObject(trans2.getNode());
+                        nullObject(trans2.getNode()); // delete the current node
                     }
                 }
                 transition = null;
                 setVisualTransition(null);
-                Tutorial.routeShown = false;
-                Tutorial.visualShown = false;
+                Tutorial.routeShown = false; // route set to not shown if the tutorial is on
+                Tutorial.visualShown = false; // visual set to not shown if the tutorial is on
             }
         }
     }
@@ -600,17 +623,22 @@ public class Unit extends Entity {
     //@TODO: document this method
 
     /**
-     * @param object
+     * Deletes the lines and rectangles that were displayed for this unit
+     * 
+     * @param object the object which will be deleted
      */
     private void nullObject(Object object) {
 
+    	// if the object is a line, delete the line
         if (object instanceof Line) {
 
             Line line = (Line) object;
             line.setOpacity(0.0);
             line = null;
 
-        } else if (object instanceof Rectangle) {
+        } 
+        // if the object is a rectangle, delete the rectangle
+        else if (object instanceof Rectangle) {
 
             Rectangle rect = (Rectangle) object;
             rect.setOpacity(0.0);
