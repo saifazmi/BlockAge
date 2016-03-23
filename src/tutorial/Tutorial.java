@@ -29,7 +29,6 @@ public class Tutorial {
     private static List<Node> oldKids = new ArrayList<>();
 
     public static void setup() {
-        //@TODO cleanup fonts
         String SEPARATOR = "/";
         InputStream fontStream = GameInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
 
@@ -173,7 +172,6 @@ public class Tutorial {
         GameInterface.sortVisualisationPane.getChildren().addAll(oldKids);
         GameInterface.sortVisualisationLabel.setText("Sort Visualisation");
         GameInterface.sortVisualisationLabel.setLayoutX(212 - 197 / 2);
-        //@TODO reinitialise sort stuff if needed
         CoreEngine.Instance().setPaused(false);
     }
 

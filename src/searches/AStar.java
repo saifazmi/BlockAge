@@ -131,6 +131,8 @@ public class AStar {
     }
 
     /**
+     * calculates the distance between 2 graph nodes
+     *
      * @param a One of the node
      * @param b The other node
      * @return Euclidean distance between a and b

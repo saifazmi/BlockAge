@@ -90,7 +90,6 @@ public class Blockade extends Entity {
         double logicalX = Math.floor(x / xSpacing);
         double logicalY = Math.floor(y / ySpacing);
 
-        //@TODO: place the if statement logic in method.
         if (logicalX >= 0 && logicalX < Graph.WIDTH &&
                 logicalY >= 0 && logicalY <= Graph.HEIGHT) {
 
@@ -170,14 +169,14 @@ public class Blockade extends Entity {
         return null;
     }
 
-    //@TODO: document this method
-
     /**
-     * @param e
-     * @param blockadeInstance
-     * @param renderer
-     * @param graph
-     * @return
+     * Method for creating blockades in the map editor
+     *
+     * @param e                the mouse event at which to create the blockade
+     * @param blockadeInstance the blockade instance to copy
+     * @param renderer         the renderer to use
+     * @param graph            the graph to use
+     * @return the blockade that is created
      */
     public static Blockade mapBlockade(MouseEvent e, Blockade blockadeInstance, Renderer renderer, Graph graph) {
 
@@ -186,13 +185,13 @@ public class Blockade extends Entity {
         return create(blockadeInstance, node);
     }
 
-    //@TODO: document this method
-
     /**
-     * @param e
-     * @param renderer
-     * @param graph
-     * @return
+     * Calculates the graph node representation of a mouse click
+     *
+     * @param e        the click event to be interpreted
+     * @param renderer the renderer to use
+     * @param graph    the graph to use
+     * @return the graphnode representation of the mouse event
      */
     private static GraphNode calcMapGraphNode(MouseEvent e, Renderer renderer, Graph graph) {
 
