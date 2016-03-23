@@ -41,10 +41,11 @@ public class SoundManager {
         instance = null;
     }
 
-    //@TODO; document every method
+
 
     /**
-     *
+     * Constructor that creates a new Circular Buffer that will store the sound data
+     * It also loads in the URL paths for the sound file
      */
     private SoundManager() {
 
@@ -55,16 +56,19 @@ public class SoundManager {
 
         soundtracks = new CircularBufferNode[2];
 
+        // Wrap each url around a Circular Buffer Node
         for (int i = 0; i < soundtracks.length; i++) {
             soundtracks[i] = new CircularBufferNode<>(new MediaPlayer(new Media(soundPaths[i].toString())));
         }
 
+        // Sets each node's next node, the last node is set to the first
         for (int i = 0; i < soundtracks.length - 1; i++) {
             soundtracks[i].setNext(soundtracks[i + 1]);
         }
 
         soundtracks[soundtracks.length - 1].setNext(soundtracks[0]);
 
+        // Sets the action when the media ends, to go to the next node and play
         for (int i = 0; i < soundtracks.length; i++) {
 
             final int finalI = i;
@@ -80,7 +84,7 @@ public class SoundManager {
     }
     
     /**
-     *
+     * Starts playing the soundtrack
      */
     public void startSoundtrack() {
 
@@ -88,7 +92,7 @@ public class SoundManager {
     }
 
     /**
-     *
+     * Pauses the soundtrack
      */
     public void pauseSoundtrack() {
 
