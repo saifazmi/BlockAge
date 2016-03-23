@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="28" passed="28">
+  <reporter-output>
+  </reporter-output>
+  <suite name="BlockAge_Test_Suite" duration-ms="628" started-at="2016-03-23T22:04:41Z" finished-at="2016-03-23T22:04:42Z">
+    <groups>
+    </groups>
+    <test name="Test_GraphNode" duration-ms="34" started-at="2016-03-23T22:04:41Z" finished-at="2016-03-23T22:04:41Z">
+      <class name="Test_GraphNode">
+        <test-method status="PASS" signature="graphNodeGetSuccessors()[pri:0, instance:Test_GraphNode@4dcbadb4]" name="graphNodeGetSuccessors" duration-ms="15" started-at="2016-03-23T22:04:41Z" finished-at="2016-03-23T22:04:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- graphNodeGetSuccessors -->
+      </class> <!-- Test_GraphNode -->
+    </test> <!-- Test_GraphNode -->
+    <test name="Test_Search" duration-ms="274" started-at="2016-03-23T22:04:41Z" finished-at="2016-03-23T22:04:42Z">
+      <class name="Test_Search">
+        <test-method status="PASS" signature="aStarSearchTesting()[pri:0, instance:Test_Search@3d8c7aca]" name="aStarSearchTesting" duration-ms="170" started-at="2016-03-23T22:04:41Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- aStarSearchTesting -->
+        <test-method status="PASS" signature="aStarSearchTesting2()[pri:0, instance:Test_Search@3d8c7aca]" name="aStarSearchTesting2" duration-ms="4" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- aStarSearchTesting2 -->
+        <test-method status="PASS" signature="breadthFirstSearchTesting()[pri:0, instance:Test_Search@3d8c7aca]" name="breadthFirstSearchTesting" duration-ms="21" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- breadthFirstSearchTesting -->
+        <test-method status="PASS" signature="breadthFirstSearchTesting2()[pri:0, instance:Test_Search@3d8c7aca]" name="breadthFirstSearchTesting2" duration-ms="7" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- breadthFirstSearchTesting2 -->
+        <test-method status="PASS" signature="depthFirstSearchTesting()[pri:0, instance:Test_Search@3d8c7aca]" name="depthFirstSearchTesting" duration-ms="19" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- depthFirstSearchTesting -->
+        <test-method status="PASS" signature="depthFirstSearchTesting2()[pri:0, instance:Test_Search@3d8c7aca]" name="depthFirstSearchTesting2" duration-ms="49" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- depthFirstSearchTesting2 -->
+      </class> <!-- Test_Search -->
+    </test> <!-- Test_Search -->
+    <test name="Test_Sort" duration-ms="165" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+      <class name="Test_Sort">
+        <test-method status="PASS" signature="bubbleSort()[pri:0, instance:Test_Sort@79b4d0f]" name="bubbleSort" duration-ms="63" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- bubbleSort -->
+        <test-method status="PASS" signature="insertSort()[pri:0, instance:Test_Sort@79b4d0f]" name="insertSort" duration-ms="82" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- insertSort -->
+        <test-method status="PASS" signature="selectionSort()[pri:0, instance:Test_Sort@79b4d0f]" name="selectionSort" duration-ms="19" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- selectionSort -->
+      </class> <!-- Test_Sort -->
+    </test> <!-- Test_Sort -->
+    <test name="Test_Unit" duration-ms="117" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+      <class name="Test_Unit">
+        <test-method status="PASS" signature="unitBlockCheck()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitBlockCheck" duration-ms="12" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitBlockCheck -->
+        <test-method status="PASS" signature="unitDecideRoute()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitDecideRoute" duration-ms="9" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitDecideRoute -->
+        <test-method status="PASS" signature="unitMoveDownNoBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitMoveDownNoBlock" duration-ms="4" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitMoveDownNoBlock -->
+        <test-method status="PASS" signature="unitMoveDownWithBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitMoveDownWithBlock" duration-ms="2" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitMoveDownWithBlock -->
+        <test-method status="PASS" signature="unitMoveLeftNoBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitMoveLeftNoBlock" duration-ms="4" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitMoveLeftNoBlock -->
+        <test-method status="PASS" signature="unitMoveLeftWithBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitMoveLeftWithBlock" duration-ms="5" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitMoveLeftWithBlock -->
+        <test-method status="PASS" signature="unitMoveRightNoBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitMoveRightNoBlock" duration-ms="6" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitMoveRightNoBlock -->
+        <test-method status="PASS" signature="unitMoveRightWithBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitMoveRightWithBlock" duration-ms="2" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitMoveRightWithBlock -->
+        <test-method status="PASS" signature="unitMoveUpNoBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitMoveUpNoBlock" duration-ms="3" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitMoveUpNoBlock -->
+        <test-method status="PASS" signature="unitMoveUpWithBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitMoveUpWithBlock" duration-ms="2" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitMoveUpWithBlock -->
+        <test-method status="PASS" signature="unitUpdateMoveDownNoBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitUpdateMoveDownNoBlock" duration-ms="13" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitUpdateMoveDownNoBlock -->
+        <test-method status="PASS" signature="unitUpdateMoveDownWithBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitUpdateMoveDownWithBlock" duration-ms="20" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitUpdateMoveDownWithBlock -->
+        <test-method status="PASS" signature="unitUpdateMoveLeftNoBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitUpdateMoveLeftNoBlock" duration-ms="4" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitUpdateMoveLeftNoBlock -->
+        <test-method status="PASS" signature="unitUpdateMoveLeftWithBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitUpdateMoveLeftWithBlock" duration-ms="4" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitUpdateMoveLeftWithBlock -->
+        <test-method status="PASS" signature="unitUpdateMoveRightNoBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitUpdateMoveRightNoBlock" duration-ms="4" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitUpdateMoveRightNoBlock -->
+        <test-method status="PASS" signature="unitUpdateMoveRightWithBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitUpdateMoveRightWithBlock" duration-ms="8" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitUpdateMoveRightWithBlock -->
+        <test-method status="PASS" signature="unitUpdateMoveUpNoBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitUpdateMoveUpNoBlock" duration-ms="6" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitUpdateMoveUpNoBlock -->
+        <test-method status="PASS" signature="unitUpdateMoveUpWithBlock()[pri:0, instance:Test_Unit@42d3bd8b]" name="unitUpdateMoveUpWithBlock" duration-ms="4" started-at="2016-03-23T22:04:42Z" finished-at="2016-03-23T22:04:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unitUpdateMoveUpWithBlock -->
+      </class> <!-- Test_Unit -->
+    </test> <!-- Test_Unit -->
+  </suite> <!-- BlockAge_Test_Suite -->
+</testng-results>

@@ -1,2 +1,2 @@
 #!/bin/bash
-java -classpath "out/:dependencies/testng.jar" Test_GraphNode
+java -classpath "out/:dependencies/testng.jar:dependencies/jcommander.jar" org.testng.TestNG testng.xml

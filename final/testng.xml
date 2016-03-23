@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="BlockAge_Test_Suite">
+    <test name="Test_GraphNode">
+        <classes>
+            <class name="Test_GraphNode"/>
+        </classes>
+    </test>
+    <test name="Test_Search">
+        <classes>
+            <class name="Test_Search"/>
+        </classes>
+    </test>
+    <test name="Test_Sort">
+        <classes>
+            <class name="Test_Sort"/>
+        </classes>
+    </test>
+    <test name="Test_Unit">
+        <classes>
+            <class name="Test_Unit"/>
+        </classes>
+    </test>
+</suite>
