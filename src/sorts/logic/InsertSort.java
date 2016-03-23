@@ -8,7 +8,6 @@ import java.util.ArrayList;
  *          <p>
  *          InsertSort with a SortableComponent object which prepares the data to be
  *          more easily unpacked for visualisation at SortVisual class.
- *
  * @date : 21/03/16
  */
 public class InsertSort {

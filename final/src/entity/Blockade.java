@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
- * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
- * @date : 28/01/16, last edited by Dominic Walters on 20/02/16
+ * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
+ * @version : 23/03/2016;
+ *          <p>
+ *          Defines a blockade data structure.
+ * @date : 28/01/16
  */
 public class Blockade extends Entity {
 

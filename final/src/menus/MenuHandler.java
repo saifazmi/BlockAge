@@ -7,10 +7,11 @@ import javafx.stage.Stage;
 import maps.MapEditor;
 
 /**
- * Handles the menus so that we can easily switch through them
- *
- * @author : First created by Paul Popa with code by Evgeniy Kim, and Paul Popa
- * @date : 09/02/16, last edited by Paul Popa on 12/02/16
+ * @author : Paul Popa; Contributors - Evgeniy Kim, Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          Handles the menus so that we can easily switch through them
+ * @date : 09/02/16
  */
 public class MenuHandler {
 

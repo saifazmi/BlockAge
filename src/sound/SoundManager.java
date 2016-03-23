@@ -12,7 +12,6 @@ import java.net.URL;
  *          <p>
  *          This class uses a circular buffer to store all the soundtracks organises
  *          them to be played one after another in a loop
- *
  * @date : 28/01/16
  */
 public class SoundManager {

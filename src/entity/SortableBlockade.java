@@ -16,7 +16,6 @@ import java.util.logging.Logger;
  * @version : 23/03/2016;
  *          <p>
  *          Defines a sortable blockade data structure.
- *
  * @date : 27/02/16
  */
 public class SortableBlockade extends Blockade {

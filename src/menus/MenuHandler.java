@@ -11,7 +11,6 @@ import maps.MapEditor;
  * @version : 23/03/2016;
  *          <p>
  *          Handles the menus so that we can easily switch through them
- *
  * @date : 09/02/16
  */
 public class MenuHandler {

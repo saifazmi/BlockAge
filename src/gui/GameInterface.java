@@ -42,7 +42,6 @@ import java.util.logging.Logger;
  *          This class contains the right pane that can be seen in-game. All the elements on the pane
  *          are appropriately positioned and coloured. The pane is formed by the unit description, key bindings,
  *          tutorial, sort visualisation as well as blockades (sortable/unsortable) and score.
- *
  * @date : 28/01/16
  */
 public class GameInterface {
@@ -410,8 +409,6 @@ public class GameInterface {
                     sortPaneLabel.setText("B-Unsortable blockade");
                 }
 
-            } else {
-                LOG.log(Level.INFO, "Do nothing");
             }
         }));
 

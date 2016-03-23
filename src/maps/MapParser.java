@@ -18,7 +18,6 @@ import java.util.logging.Logger;
  * @version : 23/03/2016;
  *          <p>
  *          This class will parse a .map file and generate blockades for the game runtime instance to match the data in the map
- *
  * @date : 28/01/16
  */
 

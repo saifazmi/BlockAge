@@ -34,8 +34,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : First created by Paul Popa with code by Dominic Walters, and Paul Popa
- * @date : 09/02/16, last edited by Anh Pham on 14/03/16
+ * @author : Paul Popa; Contributors - Dominic Walters, and Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          Handles all the events that happen on all scenes in the game.
+ * @date : 09/02/16
  */
 public class ElementsHandler {
 

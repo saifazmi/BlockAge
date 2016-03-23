@@ -9,7 +9,6 @@ package sound;
  * @version : 23/03/2016;
  *          <p>
  *          This class is the implementation of the circular buffer data structure
- *
  * @date : 28/01/16
  */
 

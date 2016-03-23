@@ -17,8 +17,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, and Paul Popa
- * @date : 28/01/16, last edited by Dominic Walters on 25/02/16
+ * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, and Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          This is the class that will define the core engine loop. This calls all the
+ *          units update methods.
+ * @date : 28/01/16
  */
 public class CoreEngine {
 

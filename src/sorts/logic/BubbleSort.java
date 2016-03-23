@@ -8,7 +8,6 @@ import java.util.ArrayList;
  *          <p>
  *          BubbleSort with a SortableComponent object which prepares the data to be
  *          more easily unpacked for visualisation at SortVisual class.
- *
  * @date : 19/02/16
  */
 public class BubbleSort {

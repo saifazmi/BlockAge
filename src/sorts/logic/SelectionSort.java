@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * @version : 23/03/2016;
  *          <p>
  *          SelectionSort with use of SortableComponent, making it possible to visuailze at SortVisual class
- *
  * @date : 19/02/16
  */
 public class SelectionSort {

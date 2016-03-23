@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  *          <p>
  *          This is the class that will define the core engine loop. This calls all the
  *          units update methods.
- *
  * @date : 28/01/16
  */
 public class CoreEngine {

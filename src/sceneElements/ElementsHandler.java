@@ -38,7 +38,6 @@ import java.util.logging.Logger;
  * @version : 23/03/2016;
  *          <p>
  *          Handles all the events that happen on all scenes in the game.
- *
  * @date : 09/02/16
  */
 public class ElementsHandler {

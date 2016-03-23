@@ -5,8 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author : First created by Dominic Walters with code by Dominic Walters
- * @date : 05/02/16, last edited by Dominic Walters on 05/02/16
+ * @author : Dominic Walters; Contributors - Dominic Walters
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class associates an entity to an image.
+ * @date : 05/02/16
  */
 public class SpriteImage extends ImageView {
 

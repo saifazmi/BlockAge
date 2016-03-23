@@ -27,7 +27,6 @@ import java.util.logging.Logger;
  *          <p>
  *          This class creates all the lambda expressions that are used in several places.
  *          This saves time, memory, and prevents code duplication.
- *
  * @date : 16/02/16
  */
 public final class LambdaStore {

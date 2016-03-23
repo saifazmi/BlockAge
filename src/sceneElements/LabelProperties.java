@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
  * @version : 23/03/2016;
  *          <p>
  *          This class makes the setting of the label properties more easily
- *
  * @date : 09/02/16
  */
 public class LabelProperties {

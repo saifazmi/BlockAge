@@ -3,11 +3,12 @@ package sorts.logic;
 import java.util.ArrayList;
 
 /**
- * @author : First created by Evgeniy Kim with code by Evgeniy Kim
- * @date : 21/03/16, last edited by Evgeniy Kim on 21/03/16
- * <p>
- * InsertSort with a SortableComponent object which prepares the data to be
- * more easily unpacked for visualisation at SortVisual class.
+ * @author : Evgeniy Kim; Contributors - Evgeniy Kim
+ * @version : 23/03/2016;
+ *          <p>
+ *          InsertSort with a SortableComponent object which prepares the data to be
+ *          more easily unpacked for visualisation at SortVisual class.
+ * @date : 21/03/16
  */
 public class InsertSort {
 

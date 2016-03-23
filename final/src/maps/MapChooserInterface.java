@@ -20,13 +20,15 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by hung on 06/03/16.
- */
 
 /**
- * The class that builds and handles the interface and inputs for the map editor
+ * @author : Hung Hoang; Contributors - Paul Popa, Saif Azmi
+ * @version : 23/03/2016;
+ *          <p>
+ *          The class that builds and handles the interface and inputs for the map editor
+ * @date : 28/01/16
  */
+
 public class MapChooserInterface {
 
     private static final Logger LOG = Logger.getLogger(MapChooserInterface.class.getName());

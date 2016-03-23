@@ -9,7 +9,6 @@ import java.util.logging.Logger;
  * @version : 23/03/2016;
  *          <p>
  *          Defines a graph data structure.
- *
  * @date : 28/01/16
  */
 public class Graph {

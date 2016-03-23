@@ -23,7 +23,6 @@ import stores.ImageStore;
  *          <p>
  *          This class contains the main menu of the game. The interface for this menu is formed by buttons such as
  *          New game, Choose Map, Options, Map Editor and Exit. There is also a fading transition on the portal.
- *
  * @date : 09/02/16
  */
 public class MainMenu implements Menu {

@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
  * @version : 23/03/2016;
  *          <p>
  *          This class associates an entity to an image.
- *
  * @date : 05/02/16
  */
 public class SpriteImage extends ImageView {

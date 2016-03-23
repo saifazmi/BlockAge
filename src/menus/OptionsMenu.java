@@ -24,7 +24,6 @@ import stores.ImageStore;
  *          <p>
  *          This class is the Options Menu. There are four options that can be turned on or off: Show Search,
  *          Sound, Tutorial, No initial blockades.
- *
  * @date : 09/02/16
  */
 

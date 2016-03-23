@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * @version : 23/03/2016;
  *          <p>
  *          Specific object made for storing 'states' of a given sort. For visualisation.
- *
  * @date : 19/02/16
  */
 public class SortableComponent {

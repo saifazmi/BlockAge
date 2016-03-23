@@ -16,7 +16,6 @@ import java.util.logging.Logger;
  * @version : 23/03/2016;
  *          <p>
  *          Defines an abstract entity data structure.
- *
  * @date : 28/01/16
  */
 public abstract class Entity extends Observable {

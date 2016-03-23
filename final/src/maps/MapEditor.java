@@ -23,7 +23,11 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by hung on 04/03/16.
+ * @author : Hung Hoang; Contributors - Dominic Walter
+ * @version : 23/03/2016;
+ *          <p>
+ *          The class that builds and handles the interface and inputs for the map editor
+ * @date : 28/01/16
  */
 public class MapEditor implements Menu {
 

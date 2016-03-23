@@ -20,7 +20,6 @@ import java.util.logging.Logger;
  * @version : 23/03/2016;
  *          <p>
  *          Spawns the units at certain time intervals.
- *
  * @date : 13/02/16
  */
 

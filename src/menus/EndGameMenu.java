@@ -30,7 +30,6 @@ import java.util.logging.Logger;
  *          <p>
  *          This class creates the menu with the end game state. The menu will display
  *          the final score the user achieved as well as with a button to go back to the main menu.
- *
  * @date : 11/03/16
  */
 public class EndGameMenu implements Menu {

@@ -7,7 +7,6 @@ import sound.SoundManager;
  * @version : 23/03/2016;
  *          <p>
  *          Handles the options for the game.
- *
  * @date : 13/03/16
  */
 public class Options {

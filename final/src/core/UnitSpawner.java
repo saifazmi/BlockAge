@@ -16,9 +16,13 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 /**
- * @author : First created by Hung Hoang with code by Hung Hoang, and Paul Popa
- * @date : 13/02/16, last edited by Paul Popa on 23/02/16
+ * @author : Hung Hoang; Contributors - Hung Hoang, and Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          Spawns the units at certain time intervals.
+ * @date : 13/02/16
  */
+
 public class UnitSpawner {
 
     private static final Logger LOG = Logger.getLogger(UnitSpawner.class.getName());

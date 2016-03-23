@@ -18,11 +18,12 @@ import sceneElements.ElementsHandler;
 import stores.ImageStore;
 
 /**
- * @author : First created by Paul Popa with code by Evgeniy Kim, and Paul Popa
- * @date : 09/02/16, last edited by Paul Popa on 25/02/16
- * <p>
- * This class contains the main menu of the game. The interface for this menu is formed by buttons such as
- * New game, Choose Map, Options, Map Editor and Exit. There is also a fading transition on the portal.
+ * @author : Paul Popa; Contributors - Evgeniy Kim, Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class contains the main menu of the game. The interface for this menu is formed by buttons such as
+ *          New game, Choose Map, Options, Map Editor and Exit. There is also a fading transition on the portal.
+ * @date : 09/02/16
  */
 public class MainMenu implements Menu {
 

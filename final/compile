@@ -1,4 +1,6 @@
 #!/bin/bash
 mkdir out
 find -name "*.java" > .source
-javac -Xlint -sourcepath src/ -d out/ @.source
+javac -sourcepath src/ -d out/ @.source
+
+cp -r ./src/resources ./out/

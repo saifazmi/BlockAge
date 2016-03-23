@@ -16,11 +16,13 @@ import sceneElements.ElementsHandler;
 import stores.ImageStore;
 
 /**
- * @author : First created by Paul Popa with code by Paul Popa
- * @date : 09/02/16, last edited by Paul Popa on 12/02/16
- * <p>
- * This class is Pause Menu. This menu contains three buttons: Resume Game, Options and Back To Main Menu.
+ * @author : Paul Popa; Contributors -  Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class is Pause Menu. This menu contains three buttons: Resume Game, Options and Back To Main Menu.
+ * @date : 09/02/16
  */
+
 public class PauseMenu implements Menu {
 
     public static Button backGameButton, optionsButton, backMainButton;

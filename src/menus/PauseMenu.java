@@ -20,7 +20,6 @@ import stores.ImageStore;
  * @version : 23/03/2016;
  *          <p>
  *          This class is Pause Menu. This menu contains three buttons: Resume Game, Options and Back To Main Menu.
- *
  * @date : 09/02/16
  */
 

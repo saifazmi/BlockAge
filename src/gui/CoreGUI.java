@@ -13,7 +13,6 @@ import java.util.logging.Logger;
  * @version : 23/03/2016;
  *          <p>
  *          This the class that will be run. It opens the initial gui window.
- *
  * @date : 28/01/16
  */
 public class CoreGUI extends Application {

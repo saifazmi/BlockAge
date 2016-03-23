@@ -1,9 +1,11 @@
 package sorts.visual;
 
 /**
- * @author : Evgeniy Kim
- * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- * Simple tuple class for use in swap indexes for sorting.
+ * @author : Evgeniy Kim; Contributors - Evgeniy Kim,Dominic Walters, Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          Simple tuple class for use in swap indexes for sorting.
+ * @date : 19/02/16
  */
 public class Tuple {
 

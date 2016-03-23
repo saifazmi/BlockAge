@@ -5,7 +5,6 @@ package sceneElements;
  * @version : 23/03/2016;
  *          <p>
  *          This is the class that will monitor the score of the game
- *
  * @date : 11/03/16
  */
 public class Score {

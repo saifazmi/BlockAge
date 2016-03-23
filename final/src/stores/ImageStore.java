@@ -8,7 +8,12 @@ import sceneElements.SpriteImage;
 import java.io.File;
 
 /**
- * Created by dominic on 26/02/16.
+ * @author : Dominic Walters; Contributors - Dominic Walters
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class creates all the images that are needed in several places.
+ *          This is done to save space and time.
+ * @date : 26/02/16
  */
 public final class ImageStore {
 

@@ -25,7 +25,6 @@ import java.util.logging.Logger;
  *          <p>
  *          Creates the main interface for the game. This will contain the grid
  *          where all the entities will be drawn on.
- *
  * @date : 28/01/16
  */
 public class GameRunTime {

@@ -13,7 +13,6 @@ import java.io.File;
  *          <p>
  *          This class creates all the images that are needed in several places.
  *          This is done to save space and time.
- *
  * @date : 26/02/16
  */
 public final class ImageStore {

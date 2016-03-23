@@ -10,6 +10,14 @@ import java.util.logging.Logger;
  * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
  * @date : 28/01/16, last edited by Dominic Walters on 20/02/16
  */
+
+/**
+ * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
+ * @version : 23/03/2016;
+ *          <p>
+ *          Defines an abstract entity data structure.
+ * @date : 28/01/16
+ */
 public abstract class Entity extends Observable {
 
     private static final Logger LOG = Logger.getLogger(Entity.class.getName());

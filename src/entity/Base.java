@@ -9,7 +9,6 @@ import sceneElements.SpriteImage;
  *          <p>
  *          Defines a base data structure.
  *          This represents the goal for the game.
- *
  * @date : 24/02/16
  */
 public class Base extends Entity {

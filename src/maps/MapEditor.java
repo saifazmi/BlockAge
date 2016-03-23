@@ -27,7 +27,6 @@ import java.util.List;
  * @version : 23/03/2016;
  *          <p>
  *          The class that builds and handles the interface and inputs for the map editor
- *
  * @date : 28/01/16
  */
 public class MapEditor implements Menu {

@@ -25,12 +25,13 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * @author : First created by Dominic Walters with code by Dominic Walters
- * @date : 29/01/16, last edited by Dominic Walters on 26/02/16
- * <p>
- * This class creates all the elements that will be placed on the map such as
- * grid lines and entities(base, blocks, units). It also has a function to delete certain nodes
- * if needed to.
+ * @author : Dominic Walters; Contributors - Dominic Walters
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class creates all the elements that will be placed on the map such as
+ *          grid lines and entities(base, blocks, units). It also has a function to delete certain nodes
+ *          if needed to.
+ * @date : 29/01/16
  */
 public class Renderer extends Group {
 
@@ -414,10 +415,12 @@ public class Renderer extends Group {
         List<GraphNode> temp = unit.getVisited();
         List<GraphNode> visitedNodes = hardCopy(temp);
 
+        visitedNodes.remove(0);
+
         for (GraphNode node : visitedNodes) {
+
             GraphNode drawTo = linkedNode(unit, node);
 
-            assert drawTo != null;
             Line line = new Line(
                     this.xSpacing / 2 + node.getX() * xSpacing,
                     this.ySpacing / 2 + node.getY() * ySpacing,
