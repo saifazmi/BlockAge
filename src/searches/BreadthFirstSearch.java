@@ -58,11 +58,15 @@ public class BreadthFirstSearch {
                     return path;
                 } else {
                     visited.add(current);
-                    frontier.addAll(current.getSuccessors());
+                    //frontier.addAll(current.getSuccessors());
                     for (GraphNode successor : current.getSuccessors()) {
-                        nodeAssociations.add(new Pair<>(current, successor));
-                        if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor))
-                            possiblePath.put(successor, current);
+                        if (!visited.contains(successor) && !frontier.contains(successor)) {
+                            frontier.add(successor);
+                            nodeAssociations.add(new Pair<>(current, successor));
+                            if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor)) {
+                                possiblePath.put(successor, current);
+                            }
+                        }
                     }
                 }
             }
@@ -70,3 +74,4 @@ public class BreadthFirstSearch {
         return null;
     }
 }
+
