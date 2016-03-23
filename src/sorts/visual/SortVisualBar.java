@@ -5,12 +5,13 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
- * @author : Evgeniy Kim
- * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- * <p>
- * Custom visual object extending Rectangle, which stores a value to help track
- * what the object is in accordance to the sort, and has an additional x value
- * specifically for updating logical location. (Normal javaFX x values are not adequate)
+ * @author : Evgeniy Kim; Contributors - Evgeniy Kim,Dominic Walters, Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          Custom visual object extending Rectangle, which stores a value to help track
+ *          what the object is in accordance to the sort, and has an additional x value
+ *          specifically for updating logical location. (Normal javaFX x values are not adequate)
+ * @date : 19/02/16
  */
 public class SortVisualBar extends Rectangle {
 

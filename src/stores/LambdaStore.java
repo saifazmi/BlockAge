@@ -22,8 +22,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : First created by Dominic Walters with code by Dominic Walters
- * @date : 16/02/16, last edited by Dominic Walters on 25/02/16
+ * @author : Dominic Walters; Contributors - Dominic Walters
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class creates all the lambda expressions that are used in several places.
+ *          This saves time, memory, and prevents code duplication.
+ *
+ * @date : 16/02/16
  */
 public final class LambdaStore {
 

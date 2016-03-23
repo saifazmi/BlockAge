@@ -1,7 +1,12 @@
 package sceneElements;
 
 /**
- * Created by Anh Pham on 14/03/2016.
+ * @author : Anh Pham; Contributors - Anh Pham
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class tracks the users score.
+ *
+ * @date : 14/03/16
  */
 public class Score {
 

@@ -2,6 +2,14 @@ package menus;
 
 import sound.SoundManager;
 
+/**
+ * @author : Paul Popa; Contributors -  Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          Handles the options for the game.
+ *
+ * @date : 13/03/16
+ */
 public class Options {
 
     private boolean showPath;
