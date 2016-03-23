@@ -40,6 +40,7 @@ public class MapEditor implements Menu {
 
     /**
      * Implements Singleton for this class (Only one can exist)
+     *
      * @return the only Map Editor to be created
      */
     public static MapEditor Instance() {
@@ -116,6 +117,7 @@ public class MapEditor implements Menu {
 
     /**
      * Returns the graph of the map editor
+     *
      * @return
      */
     public Graph getGraph() {
@@ -138,6 +140,7 @@ public class MapEditor implements Menu {
 
     /**
      * Returns the object that holds the interface logic for the map editor
+     *
      * @return The interface as an object
      */
     public MapEditorInterface getInterface() {
@@ -146,6 +149,7 @@ public class MapEditor implements Menu {
 
     /**
      * Gets the renderer instance of the map editor
+     *
      * @return the Map renderer Instance
      */
     public Renderer getRenderer() {
@@ -154,6 +158,7 @@ public class MapEditor implements Menu {
 
     /**
      * Returns the map editor scene
+     *
      * @return
      */
     @Override

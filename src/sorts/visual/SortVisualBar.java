@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * @author : Evgeniy Kim
  * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- * 
+ * <p>
  * Custom visual object extending Rectangle, which stores a value to help track
  * what the object is in accordance to the sort, and has an additional x value
  * specifically for updating logical location. (Normal javaFX x values are not adequate)

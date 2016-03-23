@@ -3,7 +3,6 @@ package gui;
 import core.CoreEngine;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import menus.MenuHandler;
 
 import java.util.logging.Level;
@@ -29,7 +28,7 @@ public class CoreGUI extends Application {
     }
 
     /**
-     * This is the main stage that everything will be added on. 
+     * This is the main stage that everything will be added on.
      * Including: Main menu,Options Menu, Map Editor and the game itself.
      */
     @Override
@@ -37,7 +36,7 @@ public class CoreGUI extends Application {
 
         new MenuHandler(primaryStage);
         MenuHandler.switchScene(MenuHandler.MAIN_MENU);
-        //primaryStage.initStyle(StageStyle.UNDECORATED);
+
         primaryStage.setOnCloseRequest(e -> {
 
             CoreEngine engine = CoreEngine.Instance();

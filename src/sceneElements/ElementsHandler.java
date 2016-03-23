@@ -54,15 +54,15 @@ public class ElementsHandler {
      */
     public static void handle(Event event) {
         // Elements from the Main Menu scene
-    	
-    	// Start game if the new game button is pressed
+
+        // Start game if the new game button is pressed
         if (event.getSource() == MainMenu.newGameButton) {
             startGame();
-        } 
+        }
         // Switches to the Options Menu if the options button is pressed
         else if (event.getSource() == MainMenu.optionsButton) {
-        	// Sets which options will be displayed
-        	// In this case all the options will be displayed
+            // Sets which options will be displayed
+            // In this case all the options will be displayed
             OptionsMenu.blockadeLabel.setVisible(true);
             OptionsMenu.noButtonB.setVisible(true);
             OptionsMenu.yesButtonB.setVisible(true);
@@ -85,9 +85,9 @@ public class ElementsHandler {
             System.exit(0);
         }
         // End of elements from Main Menu scene
-        
+
         CoreEngine engine = CoreEngine.Instance(); // gets the current running engine
-        
+
         // Elements from the Options Menu scene
         // If the off Search button is pressed, the search for the units will not be displayed
         if (event.getSource() == OptionsMenu.yesButtonSearch) {
@@ -220,8 +220,8 @@ public class ElementsHandler {
         }
         // Switches to the Options Menu if the options button is pressed
         if (event.getSource() == PauseMenu.optionsButton) {
-        	// Displays different options
-        	// In this case the initial blockades is not displayed as the map has already been generated
+            // Displays different options
+            // In this case the initial blockades is not displayed as the map has already been generated
             OptionsMenu.blockadeLabel.setVisible(false);
             OptionsMenu.noButtonB.setVisible(false);
             OptionsMenu.yesButtonB.setVisible(false);
@@ -246,7 +246,7 @@ public class ElementsHandler {
             quitGame();
         }
         // End of elements in the End Game Menu Scene
-        
+
 
         // Adding events for the map editor interface
         // If the back button is pressed then it will switch to the Main Menu
@@ -266,15 +266,15 @@ public class ElementsHandler {
         KeyCode k = event.getCode(); // gets the key code of the event
         // if the current scene is the main game
         if (MenuHandler.currentScene == MenuHandler.MAIN_GAME) {
-        	// if the escape key is pressed then switch scene to pause menu
+            // if the escape key is pressed then switch scene to pause menu
             if (k == KeyCode.ESCAPE) {
                 engine.setPaused(true);
                 MenuHandler.switchScene(MenuHandler.PAUSE_MENU);
-            } 
+            }
             // if the B key is pressed then enable placing unsortable blockades
             else if (k == KeyCode.B) {
                 LambdaStore.Instance().setBlockadeClickEvent(event.isShiftDown());
-            } 
+            }
             // if the space key is pressed and the tutorial is not active then toggle the pause state
             else if (k == KeyCode.SPACE && !Tutorial.active) {
                 if (engine.isPaused()) {
@@ -282,19 +282,19 @@ public class ElementsHandler {
                 } else {
                     engine.setPaused(true);
                 }
-            } 
+            }
             // if the R key is pressed then show the route from the selected unit
             else if (k == KeyCode.R && options.getShowPath()) {
                 ((Unit) GameRunTime.Instance().getLastClicked().getEntity()).showTransition(!event.isShiftDown(), true);
-            } 
+            }
             // if the S key is pressed then unselect the currently selected unit
             else if (k == KeyCode.S) {
-            	// Change the Unit description pane to be the Key bindings one
-            	GameInterface.unitDescriptionLabel.setText("Key Bindings");
-            	GameInterface.unitDescriptionLabel.setLayoutX(GameInterface.rightPaneWidth/2 - 131.25/2);
-            	GameInterface.namePaneLabel.setText("R-Show route");
-            	GameInterface.searchPaneLabel.setText("S-Unselect unit");
-            	GameInterface.sortPaneLabel.setText("B-Unsortable blockade");
+                // Change the Unit description pane to be the Key bindings one
+                GameInterface.unitDescriptionLabel.setText("Key Bindings");
+                GameInterface.unitDescriptionLabel.setLayoutX(GameInterface.rightPaneWidth / 2 - 131.25 / 2);
+                GameInterface.namePaneLabel.setText("R-Show route");
+                GameInterface.searchPaneLabel.setText("S-Unselect unit");
+                GameInterface.sortPaneLabel.setText("B-Unsortable blockade");
                 ArrayList<Entity> units = engine.getEntities();
                 // Unselects all the units on the grid
                 for (int i = 0; i < units.size(); i++) {
@@ -311,7 +311,7 @@ public class ElementsHandler {
                 GameInterface.unitTextPane.getChildren().get(3).setVisible(false);
                 Tutorial.routeShown = false;
                 Tutorial.visualShown = false;
-            } 
+            }
             // If the ENTER key is pressed then continue with the active tutorial
             else if (k == KeyCode.ENTER && Tutorial.active) {
                 Tutorial.inc();
@@ -321,7 +321,7 @@ public class ElementsHandler {
 
     /**
      * Unselects all the the units
-     * 
+     *
      * @param sprite the sprite of the unit that will be unselected
      */
     public static void pressedToNotPressed(SpriteImage sprite) {
@@ -340,6 +340,7 @@ public class ElementsHandler {
             sprite.setOnMouseClicked(LambdaStore.Instance().getUnitClickEvent());
         }
     }
+
     /**
      * Starts the game that will be played
      */

@@ -11,7 +11,7 @@ import maps.MapEditorInterface;
 /**
  * @author : First created by Paul Popa with code by Paul Popa
  * @date : 09/02/16, last edited by Paul Popa on 12/02/16
- * 
+ * <p>
  * This class makes the setting of the button properties more easily
  */
 public class ButtonProperties {

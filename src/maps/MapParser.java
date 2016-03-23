@@ -79,6 +79,7 @@ public class MapParser {
 
     /**
      * Get the next integer by getting the character parse it as an integer.
+     *
      * @return the next integer in the file
      */
     private int getNextInt() {
@@ -97,6 +98,7 @@ public class MapParser {
 
     /**
      * Checks if character is a space
+     *
      * @param c the character
      * @return whether the character passed is a space
      */

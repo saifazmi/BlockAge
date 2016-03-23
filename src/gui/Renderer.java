@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * @author : First created by Dominic Walters with code by Dominic Walters
  * @date : 29/01/16, last edited by Dominic Walters on 26/02/16
- * 
+ * <p>
  * This class creates all the elements that will be placed on the map such as
  * grid lines and entities(base, blocks, units). It also has a function to delete certain nodes
  * if needed to.
@@ -129,16 +129,13 @@ public class Renderer extends Group {
     }
 
     /**
-<<<<<<< HEAD
+     * <<<<<<< HEAD
      * Removes a given node from renderer
      *
      * @param node the node to be removed
-     * @return the node that was removed, or null if no node was removed
-=======
-     * Removes a node from the renderer meaning that it will get deleted from the map
      * @param node the node which will be deleted
      * @return the node if it contains it or null if it does not
->>>>>>> New
+     * >>>>>>> New
      */
     public Node remove(Node node) {
 
@@ -155,11 +152,11 @@ public class Renderer extends Group {
     }
 
     /**
-<<<<<<< HEAD
+     * <<<<<<< HEAD
      * Clears the renderer
-=======
+     * =======
      * Deletes all the nodes that currently exist on the map
->>>>>>> New
+     * >>>>>>> New
      */
     public void clear() {
 
@@ -262,16 +259,12 @@ public class Renderer extends Group {
     }
 
     /**
-<<<<<<< HEAD
+     * <<<<<<< HEAD
      *
      * @param lines
-     * @return
-=======
-     * Produces a visualisation of the route that the clicked unit is going to follow
-     * 
      * @param lines the lines that will be drawn on the grid
      * @return the transition for the drawing lines
->>>>>>> New
+     * >>>>>>> New
      */
     public SequentialTransition produceRouteVisual(List<Line> lines) {
 
@@ -292,16 +285,12 @@ public class Renderer extends Group {
     }
 
     /**
-<<<<<<< HEAD
+     * <<<<<<< HEAD
      *
      * @param route
-     * @return
-=======
-     * Creates the route in terms of lines that is going to be drawn on the grid
-     * 
      * @param route the route that the unit is logically following
      * @return the lines that need to be drawn on the grid starting from the initial spawned unit
->>>>>>> New
+     * >>>>>>> New
      */
     public List<Line> produceRoute(List<GraphNode> route) {
 
@@ -335,7 +324,7 @@ public class Renderer extends Group {
 
     /**
      * Creates the route in terms of lines that is going to be drawn on the grid
-     * 
+     *
      * @param route the route that the unit is logically following
      * @param start the start node that the visualisation is going to be produced
      * @return the lines that need to be drawn on the grid starting from the initial spawned unit
@@ -371,7 +360,7 @@ public class Renderer extends Group {
 
     /**
      * Produces the algorithm visualisation of the current unit
-     * 
+     *
      * @param unit the unit for which the visualisation is going to be created
      * @return the transition which will consists of the visualisation of the current's unit algorithm
      */
@@ -383,7 +372,7 @@ public class Renderer extends Group {
 
         for (Line line : lines) {
             line.setMouseTransparent(true); // makes the click event transparent for this sprite
-            
+
             // Creates the green rectangles that are displayed on the map (which follow the search algorithm). when
             // the transition is played
             Rectangle rect = new Rectangle(xSpacing, ySpacing);
@@ -418,7 +407,7 @@ public class Renderer extends Group {
         rect.setX(lines.get(lines.size() - 1).getStartX() - xSpacing / 2);
         rect.setY(lines.get(lines.size() - 1).getStartY() - ySpacing / 2);
         this.getChildren().add(rect);
-        
+
         // Creates a transition for this rectangle 
         FadeTransition rectIn2 = buildFadeAnimation(1000.0, 0.0, 1.0, rect);
         FadeTransition rectOut2 = buildFadeAnimation(1000.0, 1.0, 0.0, rect);
@@ -440,7 +429,6 @@ public class Renderer extends Group {
     }
 
     /**
-     *
      * @param unit
      * @return
      */
@@ -472,7 +460,6 @@ public class Renderer extends Group {
     }
 
     /**
-     *
      * @param from
      * @param drawn
      * @return
@@ -495,7 +482,6 @@ public class Renderer extends Group {
     }
 
     /**
-     *
      * @param unit
      * @param toNode
      * @return
@@ -507,8 +493,8 @@ public class Renderer extends Group {
 //                return (GraphNode) pair.getKey();
 //            }
 //        }
-        for(int i = nodeAssociations.size() - 1; i >= 0; i--) {
-            if(toNode.equals(nodeAssociations.get(i).getValue())) {
+        for (int i = nodeAssociations.size() - 1; i >= 0; i--) {
+            if (toNode.equals(nodeAssociations.get(i).getValue())) {
                 return nodeAssociations.get(i).getKey();
             }
         }
@@ -517,7 +503,6 @@ public class Renderer extends Group {
     }
 
     /**
-     *
      * @param list
      * @param <A>
      * @return

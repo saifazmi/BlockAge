@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -48,6 +47,7 @@ public class MapChooserInterface {
 
     /**
      * Implements singleton as there will only ever be one instance of this class
+     *
      * @return
      */
     public static MapChooserInterface Instance() {
@@ -67,8 +67,7 @@ public class MapChooserInterface {
      * It will look for the map files in the application directory and sets up the appropriate images for the scroll pane
      * The chooser will act like a pop-up window
      */
-    private MapChooserInterface()
-    {
+    private MapChooserInterface() {
         mapChooseStage = new Stage();
         images = new HBox();
 
@@ -132,6 +131,7 @@ public class MapChooserInterface {
 
     /**
      * Gets the map chosen by the user once they click on it
+     *
      * @return
      */
     public String getChosenMap() {
@@ -192,6 +192,7 @@ public class MapChooserInterface {
 
     /**
      * Gets the actual data of the map (know the .png file name so just gets the .map file)
+     *
      * @param mapFile The string that denotes the file to get <name>.png
      * @return The .map file of the desired map
      */
@@ -209,6 +210,7 @@ public class MapChooserInterface {
      * Function is called when a 'map' button is pressed.
      * The chosenMap variable will be set to the name of the chosen map (which the button was associated with)
      * A new game will start with the chosen map
+     *
      * @param e The VBox which contain the button
      */
     private void chooseMap(VBox e) {

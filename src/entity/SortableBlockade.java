@@ -27,7 +27,6 @@ public class SortableBlockade extends Blockade {
     private ArrayList<Integer> toSortArray;
 
     // Dependencies
-    private static int sortID;
     private SortVisual sortVisual = null;
 
     /**

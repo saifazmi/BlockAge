@@ -20,7 +20,7 @@ import stores.ImageStore;
 /**
  * @author : First created by Paul Popa with code by Evgeniy Kim, and Paul Popa
  * @date : 09/02/16, last edited by Paul Popa on 25/02/16
- * 
+ * <p>
  * This class contains the main menu of the game. The interface for this menu is formed by buttons such as
  * New game, Choose Map, Options, Map Editor and Exit. There is also a fading transition on the portal.
  */
@@ -43,7 +43,7 @@ public class MainMenu implements Menu {
      */
     public void declareElements() {
 
-    	//Panes
+        //Panes
         mainMenuPane = new Pane();
         fadingPane = new Pane();
         //Buttons
@@ -100,7 +100,7 @@ public class MainMenu implements Menu {
         // ADD ALL BUTTONS TO THE PANE
         BackgroundImage myBIF = new BackgroundImage(ImageStore.backgroundMainMenuGlow, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         fadingPane.setBackground(new Background(myBIF));
-        
+
         // Set the size of the fading pane
         fadingPane.setPrefWidth(Menu.WIDTH);
         fadingPane.setPrefHeight(Menu.HEIGHT);
@@ -128,7 +128,7 @@ public class MainMenu implements Menu {
 
     /**
      * The rough x position where all the images will be placed
-     * 
+     *
      * @param image the image which will be positioned
      * @return the coordinate where the image will be placed
      */

@@ -22,8 +22,7 @@ import java.util.logging.Logger;
 /**
  * @author : First created by Dominic Walters with code by Dominic Walters, and Paul Popa
  * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
- * 
- * Creates the main interface for the game. This will contain the grid 
+ * Creates the main interface for the game. This will contain the grid
  * where all the entities will be drawn on.
  */
 public class GameRunTime {
@@ -62,6 +61,7 @@ public class GameRunTime {
      * Delete the existing instance of this class
      */
     public static void delete() {
+
         instance = null;
     }
 
@@ -70,16 +70,18 @@ public class GameRunTime {
      * Initialises the engine, renderer, unit and unitSpawner
      */
     public GameRunTime() {
-    	
+
         instance = this;
-        
+
         Thread engThread = new Thread(() -> {
+
             this.engine = new CoreEngine();
             this.engine.startGame();
         });
         engThread.start();
 
         while (this.engine == null) {
+
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -89,7 +91,7 @@ public class GameRunTime {
 
         // The pane that will be placed on the grid in order to set a background
         BorderPane mainGamePane = new BorderPane();
-        
+
         // Setting width and height for this pane
         mainGamePane.setPrefWidth(CoreGUI.WIDTH - GameInterface.rightPaneWidth);
         mainGamePane.setPrefHeight(CoreGUI.HEIGHT);

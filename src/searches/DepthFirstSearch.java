@@ -61,8 +61,7 @@ public class DepthFirstSearch {
                     current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(frontier::push);
 
                     for (GraphNode successor : current.getSuccessors()) {
-                        if (!possiblePath.containsValue(successor))
-                        {
+                        if (!possiblePath.containsValue(successor)) {
                             dfsSpecificNodeAssociation(nodeAssociations, successor, current);
                             possiblePath.put(successor, current);
                         }

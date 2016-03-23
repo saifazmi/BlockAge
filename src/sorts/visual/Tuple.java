@@ -13,8 +13,8 @@ public class Tuple {
 
     /**
      * Creates a tuple
-     * 
-     * @param first the first element of the tuple
+     *
+     * @param first  the first element of the tuple
      * @param second the second element of the tuple
      */
     public Tuple(int first, int second) {
@@ -24,7 +24,7 @@ public class Tuple {
 
     /**
      * Gets the second element of the tuple
-     * 
+     *
      * @return the second element of the tuple
      */
     public int getSecond() {
@@ -33,7 +33,7 @@ public class Tuple {
 
     /**
      * Sets the second element of the tuple
-     * 
+     *
      * @param second the value that will be set
      */
     public void setSecond(int second) {
@@ -42,7 +42,7 @@ public class Tuple {
 
     /**
      * Gets the first element of the tuple
-     * 
+     *
      * @return the first element of the tuple
      */
     public int getFirst() {
@@ -51,7 +51,7 @@ public class Tuple {
 
     /**
      * Sets the first element of the tuple
-     * 
+     *
      * @param first the value that will be set
      */
     public void setFirst(int first) {

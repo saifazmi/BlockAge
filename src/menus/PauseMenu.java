@@ -18,7 +18,7 @@ import stores.ImageStore;
 /**
  * @author : First created by Paul Popa with code by Paul Popa
  * @date : 09/02/16, last edited by Paul Popa on 12/02/16
- * 
+ * <p>
  * This class is Pause Menu. This menu contains three buttons: Resume Game, Options and Back To Main Menu.
  */
 public class PauseMenu implements Menu {
@@ -35,12 +35,12 @@ public class PauseMenu implements Menu {
         initialiseScene();
     }
 
-    /** 
-     * Declares the elements that will be used for the creation of the 
+    /**
+     * Declares the elements that will be used for the creation of the
      * scene
      */
     public void declareElements() {
-    	//Panes
+        //Panes
         pauseMenuPane = new Pane();
         //Buttons
         backGameButton = new Button();
@@ -71,7 +71,7 @@ public class PauseMenu implements Menu {
         b.setButtonProperties(optionsButton, "", Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH,
                 ElementsHandler::handle, new ImageView(optionsImage));
         b.addHoverEffect(optionsButton, optionsImageHovered, optionsImage, Menu.WIDTH / 5 - optionsImage.getWidth() / 2, Menu.HEIGHT / 3 + spaceBetweenImgH);
-        
+
         // BACK TO MAIN MENU BUTTON
         b.setButtonProperties(backMainButton, "", Menu.WIDTH / 5 - backMainImage.getWidth() / 2, Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 ElementsHandler::handle, new ImageView(backMainImage));
@@ -85,7 +85,7 @@ public class PauseMenu implements Menu {
         pauseMenuPane.setBackground(new Background(myBI));
         pauseMenuPane.getChildren().addAll(backGameButton, optionsButton, backMainButton);
         Group mainMenuGroup = new Group(pauseMenuPane);
-        
+
         // Initialises the scene with the pane
         pauseMenuScene = new Scene(mainMenuGroup, Menu.WIDTH, Menu.HEIGHT);
     }

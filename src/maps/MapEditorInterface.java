@@ -80,8 +80,9 @@ public class MapEditorInterface {
 
     /**
      * What?
+     *
      * @param mapEditorScene The scene of the map editor
-     * @param mapEditor The Map Editor instance of which information about the editor can be accessed
+     * @param mapEditor      The Map Editor instance of which information about the editor can be accessed
      */
     public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor) {
         instance = this;
@@ -224,6 +225,7 @@ public class MapEditorInterface {
      * Handles events invoked by the Map Editing interface
      * These includes saving the map, clearing the map and exiting the map
      * To make the program more concise, also includes handling event of click yes or no for overwriting map files
+     *
      * @param event
      */
     public static void handle(ActionEvent event) {
@@ -252,6 +254,7 @@ public class MapEditorInterface {
 
     /**
      * Gets the name of the map as in the text area
+     *
      * @return The map name
      */
     public String getFileName() {
@@ -260,6 +263,7 @@ public class MapEditorInterface {
 
     /**
      * Gets the status of the saving process
+     *
      * @return The TextArea containing the save status
      */
     public TextArea getSaveStatusBox() {
@@ -313,6 +317,7 @@ public class MapEditorInterface {
 
     /**
      * Returns the 'overwrite' pop-up stage
+     *
      * @return The pop-up stage
      */
     public Stage getPopUpStage() {

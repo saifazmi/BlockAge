@@ -21,7 +21,7 @@ import stores.ImageStore;
 /**
  * @author : First created by Paul Popa with code by Paul Popa
  * @date : 09/02/16, last edited by Paul Popa on 12/02/16
- * 
+ * <p>
  * This class is the Options Menu. There are four options that can be turned on or off: Show Search,
  * Sound, Tutorial, No initial blockades.
  */
@@ -50,7 +50,7 @@ public class OptionsMenu implements Menu {
      * Declaring the elements which will be placed on the scene
      */
     public void declareElements() {
-    	//Buttons
+        //Buttons
         yesButtonSearch = new Button();
         noButtonSearch = new Button();
         yesButtonSound = new Button();

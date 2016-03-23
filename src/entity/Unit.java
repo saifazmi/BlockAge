@@ -35,13 +35,6 @@ public class Unit extends Entity {
 
     private static final Logger LOG = Logger.getLogger(Unit.class.getName());
 
-    public List<Pair<GraphNode, GraphNode>> getNodeAssociations() {
-        return nodeAssociations;
-    }
-
-    public void setNodeAssociations(List<Pair<GraphNode, GraphNode>> nodeAssociations) {
-        this.nodeAssociations = nodeAssociations;
-    }
     /**
      * Search flags
      */
@@ -189,6 +182,16 @@ public class Unit extends Entity {
         return this.sorting;
     }
 
+    //@TODO: dom, doc this please
+
+    /**
+     * @return
+     */
+    public List<Pair<GraphNode, GraphNode>> getNodeAssociations() {
+
+        return this.nodeAssociations;
+    }
+
     // SETTER methods
 
     /**
@@ -233,6 +236,12 @@ public class Unit extends Entity {
         if (sorting == null) {
             this.completedMove = true;
         }
+    }
+
+    //@TODO: dom, doc this please
+    public void setNodeAssociations(List<Pair<GraphNode, GraphNode>> nodeAssociations) {
+
+        this.nodeAssociations = nodeAssociations;
     }
 
     // MOVEMENT methods
@@ -422,7 +431,7 @@ public class Unit extends Entity {
 
     /**
      * Updates the unit's position. Whenever the unit is changing it's direction
-     * the sprite also rotates accordingly. 
+     * the sprite also rotates accordingly.
      * If the unit reaches the goal point then the scene is set to the End Menu which will
      * display the score.
      */
@@ -550,23 +559,24 @@ public class Unit extends Entity {
 
     //@TODO: document this method
 
-    /** Shows the transition of this unit. There is the option of choosing if it produces the route or the
+    /**
+     * Shows the transition of this unit. There is the option of choosing if it produces the route or the
      * algorithm visualisation.
-     * 
+     *
      * @param route if the route or the algorithm visualisation is going to be displayed
-     * @param show if the unit will show or not the route they will follow
+     * @param show  if the unit will show or not the route they will follow
      */
     public void showTransition(boolean route, boolean show) {
 
-    	// Create a visual transition for the unit
+        // Create a visual transition for the unit
         SequentialTransition currentTrans = this.getVisualTransition();
 
         // If there is no transition at this moment
         if (currentTrans == null && this.getRoute() != null && show) {
-        	
-        	// If route is true, produce the route visualisation
+
+            // If route is true, produce the route visualisation
             if (route) {
-            	// Create a new one
+                // Create a new one
                 SequentialTransition transition = renderer.produceRouteVisual(
                         renderer.produceRoute(getRoute(), getPosition()
                         )
@@ -577,7 +587,7 @@ public class Unit extends Entity {
                 // updates the tutorial
                 Tutorial.routeShown = Tutorial.active;
 
-            } 
+            }
             // If route is false, produce the algorithm visualisation
             else {
 
@@ -587,7 +597,7 @@ public class Unit extends Entity {
                 Tutorial.visualShown = Tutorial.active;
             }
 
-        } 
+        }
         // Deletes the route or algorithm visualisation if requested
         else if (currentTrans != null && !show) {
 
@@ -624,19 +634,19 @@ public class Unit extends Entity {
 
     /**
      * Deletes the lines and rectangles that were displayed for this unit
-     * 
+     *
      * @param object the object which will be deleted
      */
     private void nullObject(Object object) {
 
-    	// if the object is a line, delete the line
+        // if the object is a line, delete the line
         if (object instanceof Line) {
 
             Line line = (Line) object;
             line.setOpacity(0.0);
             line = null;
 
-        } 
+        }
         // if the object is a rectangle, delete the rectangle
         else if (object instanceof Rectangle) {
 

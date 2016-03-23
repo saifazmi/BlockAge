@@ -40,7 +40,7 @@ import java.util.logging.Logger;
 /**
  * @author : First created by Paul Popa with code by Paul Popa
  * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
- * 
+ * <p>
  * This class contains the right pane that can be seen in-game. All the elements on the pane
  * are appropriately positioned and coloured. The pane is formed by the unit description, key bindings,
  * tutorial, sort visualisation as well as blockades (sortable/unsortable) and score.
@@ -53,8 +53,10 @@ public class GameInterface {
 
     private Scene scene = GameRunTime.Instance().getScene();
 
-    public static int bottomPaneHeight = 0; // The height of the right Pane, manually set
-    public static int rightPaneWidth = 424; // The width of the right Pane, manually set
+    // The height of the right Pane, manually set
+    public static int bottomPaneHeight = 0;
+    // The width of the right Pane, manually set
+    public static int rightPaneWidth = 424;
 
     // All elements that will be placed on the right pane
     public static Button unsortableButton, sortableButton;
@@ -68,11 +70,16 @@ public class GameInterface {
     private Image unsortableImage, sortableImage;
     private ButtonProperties b;
     private LabelProperties l;
-    
-    private int initialPositionY = 50; // the initial position of the first element of the pane
-    private int heightSpacing = 30; // the spacing that will be added between elements of the pane
-    
-    public SortVisual sortVisual = null; // the visual which will be placed on the pane
+
+    // the initial position of the first element of the pane
+    private int initialPositionY = 50;
+    // the spacing that will be added between elements of the pane
+    private int heightSpacing = 30;
+
+    //@TODO: never used, delete?
+    // the visual which will be placed on the pane
+    public SortVisual sortVisual = null;
+    //@TODO: never used, delete?
     public SortableBlockade sortableBlockade;
 
     // Instance for singleton.
@@ -84,7 +91,7 @@ public class GameInterface {
      * @return the only game interface to be created
      */
     public static GameInterface Instance() {
-    	
+
         if (instance == null) {
             instance = new GameInterface();
         }
@@ -104,7 +111,7 @@ public class GameInterface {
      * Constructs the pane with all the elements and events
      */
     private GameInterface() {
-    	
+
         loadFont();
         declareElements();
         toggle();
@@ -120,17 +127,15 @@ public class GameInterface {
                 SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf")) {
 
             bellotaFont = Font.loadFont(fontStream, 23);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOG.log(Level.SEVERE, e.toString(), e);
         }
 
-        try(InputStream fontStream1 = GameInterface.class.getResourceAsStream(
+        try (InputStream fontStream = GameInterface.class.getResourceAsStream(
                 SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf")) {
 
-            bellotaFontBigger = Font.loadFont(fontStream1, 50);
-        }
-        catch (IOException e) {
+            bellotaFontBigger = Font.loadFont(fontStream, 50);
+        } catch (IOException e) {
             LOG.log(Level.SEVERE, e.toString(), e);
         }
     }
@@ -227,7 +232,7 @@ public class GameInterface {
         sortVisualisationPane.setStyle("-fx-border-color: white");
         sortVisualisationPane.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         sortVisualisationPane.setLayoutY(initialPositionY + 3 * heightSpacing + 90);
-        
+
         //BLOCKADES LABEL
         blockadesLabel.setText("Blockades");
         blockadesLabel.setPrefSize(120, 30);
@@ -343,8 +348,8 @@ public class GameInterface {
     /**
      * Handles the blockades appropriately
      *
-     * @param button - the button to be handled
-     * @param text   - the text the label will have
+     * @param button the button to be handled
+     * @param text   the text the label will have
      */
     public void handleSort(Button button, String text) {
 
@@ -354,8 +359,9 @@ public class GameInterface {
             button.setScaleY(1.0);
             scene.setCursor(Cursor.DEFAULT);
 
-            if (rightMenuBox.getChildren().contains(sortLabel))
+            if (rightMenuBox.getChildren().contains(sortLabel)) {
                 rightMenuBox.getChildren().remove(sortLabel);
+            }
         });
 
         button.setOnMouseEntered(event -> {
@@ -365,10 +371,11 @@ public class GameInterface {
             sortLabel.setText(text);
             scene.setCursor(Cursor.HAND);
 
-            if (!rightMenuBox.getChildren().contains(sortLabel))
+            if (!rightMenuBox.getChildren().contains(sortLabel)) {
                 rightMenuBox.getChildren().add(sortLabel);
+            }
         });
-        
+
         //Initial pane displayed on the top right. It contains the key bindings
         unitDescriptionLabel.setText("Key Bindings");
         namePaneLabel.setText("R-Show route");

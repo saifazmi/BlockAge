@@ -30,10 +30,10 @@ public class EditorParser {
     /**
      * The constructor creates a new directory for the application to store its files
      * The files stored include both a .map file (our own extension but should be readable by any text editor) and a .png file
+     *
      * @param mapEditor The Map Editing manager which this class can get information from (about the graph etc.)
      */
-    public EditorParser(MapEditor mapEditor)
-    {
+    public EditorParser(MapEditor mapEditor) {
         String dir = System.getProperty("user.home");
         System.out.println(dir);
         String SEPERATOR = File.separator;
@@ -54,8 +54,7 @@ public class EditorParser {
      * Goes through the map, obtained from the Map Editor instance, and for each node with a blockade, place a 1 in the saved file, else place a 0
      * Saves the map in the form <name>.map and a .png image
      */
-    public void saveToUserFile()
-    {
+    public void saveToUserFile() {
         String fileName = editor.getInterface().getFileName() + ".map";
         String imageName = editor.getInterface().getFileName() + ".png";
 
@@ -162,6 +161,7 @@ public class EditorParser {
      * Checks the file name is invalid
      * File name is invalid if:
      * It contains a '.'
+     *
      * @param fileName The name to invalidate
      * @return whether the file name is invalid
      */
@@ -176,6 +176,7 @@ public class EditorParser {
 
     /**
      * Sets the boolean to overwrite an existing map if it already exists, called when
+     *
      * @param overwrite
      */
     public void setOverwrite(boolean overwrite) {

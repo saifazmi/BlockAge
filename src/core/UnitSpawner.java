@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  * @date : 13/02/16, last edited by Paul Popa on 23/02/16
  */
 public class UnitSpawner {
+
     private static final Logger LOG = Logger.getLogger(UnitSpawner.class.getName());
 
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
@@ -59,6 +60,7 @@ public class UnitSpawner {
      * Delete the existing instance of this class
      */
     public static void delete() {
+
         instance = null;
     }
 
@@ -137,6 +139,7 @@ public class UnitSpawner {
 
         // adds the units into an array list
         unitPool.add(unit);
+
         return unit;
     }
 

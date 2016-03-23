@@ -65,6 +65,7 @@ public class CoreEngine {
      * Delete the existing instance of this class
      */
     public static void delete() {
+
         instance = null;
     }
 
@@ -202,6 +203,44 @@ public class CoreEngine {
         }
     }
 
+    // Blockade checks
+
+    /**
+     * Check if there is any more sortable blockades to place
+     *
+     * @return false if there are none left
+     */
+    public boolean breakableBlockadesLeft() {
+
+        return this.breakableBlockadesLimit > 0;
+    }
+
+    /**
+     * Reduce the amount of sortable blockades available by 1
+     */
+    public void breakableBlockadesPlaced() {
+
+        this.breakableBlockadesLimit--;
+    }
+
+    /**
+     * Check if there is any more unsortable blockades to place
+     *
+     * @return false if there are none left
+     */
+    public boolean unbreakableBlockadesLeft() {
+
+        return this.unbreakableBlockadesLimit > 0;
+    }
+
+    /**
+     * Reduce the amount of unsortable blockades available by 1
+     */
+    public void unbreakableBlockadesPlaced() {
+
+        this.unbreakableBlockadesLimit--;
+    }
+
     /**
      * Called to start the game's ticker.
      * The frame rate is 60 frames per second, so checks if its time to update yet (every 1/60 a second),
@@ -282,6 +321,7 @@ public class CoreEngine {
     private void updateGameState() {
 
         if (entities != null) {
+
             for (Entity entity : entities) {
                 entity.update();
             }
@@ -294,42 +334,6 @@ public class CoreEngine {
 
             Platform.runLater(GameInterface::update);
         }
-    }
-
-    /**
-     * Check if there is any more sortable blockades to place
-     *
-     * @return false if there are none left
-     */
-    public boolean breakableBlockadesLeft() {
-
-        return this.breakableBlockadesLimit > 0;
-    }
-
-    /**
-     * Reduce the amount of sortable blockades available by 1
-     */
-    public void breakableBlockadesPlaced() {
-
-        this.breakableBlockadesLimit--;
-    }
-
-    /**
-     * Check if there is any more unsortable blockades to place
-     *
-     * @return false if there are none left
-     */
-    public boolean unbreakableBlockadesLeft() {
-
-        return this.unbreakableBlockadesLimit > 0;
-    }
-
-    /**
-     * Reduce the amount of unsortable blockades available by 1
-     */
-    public void unbreakableBlockadesPlaced() {
-
-        this.unbreakableBlockadesLimit--;
     }
 
     /**

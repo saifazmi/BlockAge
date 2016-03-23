@@ -1,7 +1,6 @@
 package searches;
 
 import entity.Unit;
-import graph.Graph;
 import graph.GraphNode;
 import javafx.util.Pair;
 
