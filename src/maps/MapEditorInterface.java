@@ -28,7 +28,10 @@ import menus.MenuHandler;
 import sceneElements.ButtonProperties;
 import stores.ImageStore;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by hung on 05/03/16.
@@ -39,28 +42,34 @@ import java.io.InputStream;
  */
 public class MapEditorInterface {
 
+    private static final Logger LOG = Logger.getLogger(MapEditorInterface.class.getName());
+
+    private final String SEPARATOR = "/";
+
     //for popup Scene
     private static Stage popUpStage;
     private Image yesImage, noImage, yesImageHover, noImageHover;
 
     //For the Map Editing scene itself
+    //@TODO: arrange these in some order
     private Scene scene;
     public static Pane rightMenuPane, rightMenuBox;
     private HBox rightMenuSaveBack;
     private VBox rightMenuText;
     public static Button saveButton, backButton, clearButton, yes, no;
     private ButtonProperties b;
-    private Image saveButtonImage, backButtonImage, saveButtonImageHover, backButtonImageHover, clearButtonImage, clearButtonImageHover;
+    private Image saveButtonImage, backButtonImage, saveButtonImageHover,
+            backButtonImageHover, clearButtonImage, clearButtonImageHover;
     private TextArea instructions, fileNameBox, saveStatus;
     private Label instructionLabel, instructionTextLabel, saveStatusLabel, fileNameLabel;
     private static EditorParser parser;
     private Font bellotaFont, bellotaFontSmaller;
-    private String SEPARATOR = "/";
     private static MapEditor mapEditor;
     private int rightPaneWidth = GameInterface.rightPaneWidth;
     private int initialPositionY = 50;
     private int heightSpacing = 30;
 
+    // Instance for singleton.
     private static MapEditorInterface instance = null;
 
     /**
@@ -73,10 +82,15 @@ public class MapEditorInterface {
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
+
         instance = null;
-        return true;
     }
+
+    //@TODO: complete documentation
 
     /**
      * What?
@@ -85,37 +99,152 @@ public class MapEditorInterface {
      * @param mapEditor      The Map Editor instance of which information about the editor can be accessed
      */
     public MapEditorInterface(Scene mapEditorScene, MapEditor mapEditor) {
+
         instance = this;
+
         declareElements();
         MapEditorInterface.mapEditor = mapEditor;
         loadFont();
-        loadFont2();
         parser = new EditorParser(MapEditorInterface.mapEditor);
         scene = mapEditorScene;
         rightPane();
         setUpPopUp();
     }
 
+    // GETTER methods
+
+    /**
+     * Gets the name of the map as in the text area
+     *
+     * @return The map name
+     */
+    public String getFileName() {
+
+        return this.fileNameBox.getText();
+    }
+
+    /**
+     * Gets the status of the saving process
+     *
+     * @return The TextArea containing the save status
+     */
+    public TextArea getSaveStatusBox() {
+
+        return this.saveStatus;
+    }
+
+    /**
+     * Returns the 'overwrite' pop-up stage
+     *
+     * @return The pop-up stage
+     */
+    public Stage getPopUpStage() {
+
+        return MapEditorInterface.popUpStage;
+    }
+
+    /**
+     * Sets up the pop-up window which asks user if they want to override an already existing map (name clash)
+     * The pop-up will have 2 buttons for yes and no choice, and a message to display to the user that there is a name clash
+     */
+    private void setUpPopUp() {
+
+        popUpStage = new Stage();
+        int sceneWidth = 300;
+        int sceneHeight = 200;
+        Pane messagePanel = new Pane();
+
+        BackgroundImage myBI = new BackgroundImage(
+                ImageStore.yesNoBackground,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+
+        messagePanel.setPrefSize(sceneWidth, sceneHeight);
+        messagePanel.setBackground(new Background(myBI));
+        Label message = new Label();
+        ButtonProperties b = new ButtonProperties();
+
+        //@TODO: add comments specifying what everything is
+        b.setButtonProperties(
+                yes,
+                "",
+                sceneWidth / 2 + 25 - noImage.getWidth() / 2, 125,
+                e -> handle(e),
+                new ImageView(yesImage)
+        );
+
+        b.addHoverEffect2(
+                yes,
+                yesImageHover,
+                yesImage,
+                sceneWidth / 2 + 25 - noImage.getWidth() / 2,
+                125
+        );
+
+        b.setButtonProperties(
+                no,
+                "",
+                sceneWidth / 2 - 60 - noImage.getWidth() / 2,
+                125,
+                e -> handle(e),
+                new ImageView(noImage)
+        );
+
+        b.addHoverEffect2(
+                no,
+                noImageHover,
+                noImage,
+                sceneWidth / 2 - 60 - noImage.getWidth() / 2,
+                125
+        );
+
+        message.setText("That map already exists. Overwrite existing map?");
+        message.setWrapText(true);
+        message.setFont(bellotaFontSmaller);
+        message.setPrefSize(240, 50);
+        message.setAlignment(Pos.CENTER);
+        message.setLayoutX(300 / 2 - 200 / 2);
+        message.setLayoutY(50);
+        message.setTextFill(Color.web("#FFE130"));
+
+        Scene popUpScene = new Scene(messagePanel);
+        messagePanel.getChildren().addAll(no, yes, message);
+
+        popUpStage.setWidth(sceneWidth);
+        popUpStage.setHeight(sceneHeight);
+        popUpStage.setScene(popUpScene);
+        popUpStage.initModality(Modality.APPLICATION_MODAL);
+        popUpStage.hide();
+        popUpStage.initStyle(StageStyle.UNDECORATED);
+        popUpStage.setOnCloseRequest(event -> parser.setOverwrite(false));
+    }
+
     /**
      * Loads the chosen font to use for labels
      */
     private void loadFont() {
-        InputStream fontStream = MapEditorInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
-        if (fontStream == null) {
-            System.out.println("No font at that path");
-        }
-        bellotaFont = Font.loadFont(fontStream, 28);
-    }
 
-    /**
-     * Loads the chosen font, different to font from loadFont() to use for labels
-     */
-    private void loadFont2() {
-        InputStream fontStream = MapEditorInterface.class.getResourceAsStream(SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf");
-        if (fontStream == null) {
-            System.out.println("No font at that path");
+        try (InputStream fontStream = MapEditorInterface.class.getResourceAsStream(
+                SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf")) {
+
+            bellotaFont = Font.loadFont(fontStream, 28);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "No font found");
+            LOG.log(Level.SEVERE, e.toString(), e);
         }
-        bellotaFontSmaller = Font.loadFont(fontStream, 18);
+
+        try (InputStream fontStream = MapEditorInterface.class.getResourceAsStream(
+                SEPARATOR + "resources" + SEPARATOR + "fonts" + SEPARATOR + "basis33.ttf")) {
+
+            bellotaFontSmaller = Font.loadFont(fontStream, 18);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "No font found");
+            LOG.log(Level.SEVERE, e.toString(), e);
+        }
+
     }
 
     /**
@@ -123,11 +252,13 @@ public class MapEditorInterface {
      * This includes all the buttons, labels, text areas and panes
      */
     private void declareElements() {
+
         // HBoxes & VBoxes
         rightMenuSaveBack = new HBox();
         rightMenuText = new VBox();
         rightMenuPane = new Pane();
         rightMenuBox = new Pane();
+
         // Images
         saveButtonImage = ImageStore.saveMapImage;
         saveButtonImageHover = ImageStore.saveMapImageHovered;
@@ -139,16 +270,19 @@ public class MapEditorInterface {
         noImage = ImageStore.overwriteNo;
         yesImageHover = ImageStore.overwriteYesHovered;
         noImageHover = ImageStore.overwriteNoHovered;
+
         //Buttons
         saveButton = new Button();
         backButton = new Button();
         clearButton = new Button();
         yes = new Button();
         no = new Button();
+
         //Text areas
         instructions = new TextArea();
         fileNameBox = new TextArea();
         saveStatus = new TextArea();
+
         //Label
         instructionLabel = new Label();
         instructionTextLabel = new Label();
@@ -163,23 +297,77 @@ public class MapEditorInterface {
      * Also sets the background for the right pane and place the appropriate labels in the correct positioning
      */
     private void rightPane() {
+
+        //@TODO: add comments specifying what everything is
         // Adding buttons properties
-        b.setButtonProperties(saveButton, "", rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80, initialPositionY, e -> handle(e), new ImageView(saveButtonImage));
-        b.addHoverEffect2(saveButton, saveButtonImageHover, saveButtonImage, rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80, initialPositionY);
+        b.setButtonProperties(
+                saveButton,
+                "",
+                rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80,
+                initialPositionY,
+                e -> handle(e),
+                new ImageView(saveButtonImage)
+        );
 
-        b.setButtonProperties(backButton, "", rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80, initialPositionY, e -> handle(e), new ImageView(backButtonImage));
-        b.addHoverEffect2(backButton, backButtonImageHover, backButtonImage, rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80, initialPositionY);
+        b.addHoverEffect2(
+                saveButton,
+                saveButtonImageHover,
+                saveButtonImage,
+                rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80,
+                initialPositionY
+        );
 
-        b.setButtonProperties(clearButton, "", rightPaneWidth / 2 - clearButtonImage.getWidth() / 2, Menu.HEIGHT - 100, e -> handle(e), new ImageView(clearButtonImage));
-        b.addHoverEffect2(clearButton, clearButtonImageHover, clearButtonImage, rightPaneWidth / 2 - clearButtonImage.getWidth() / 2, Menu.HEIGHT - 100);
+        b.setButtonProperties(
+                backButton,
+                "",
+                rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80,
+                initialPositionY,
+                e -> handle(e),
+                new ImageView(backButtonImage)
+        );
 
-        BackgroundImage myBI = new BackgroundImage(ImageStore.paneBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        b.addHoverEffect2(
+                backButton,
+                backButtonImageHover,
+                backButtonImage,
+                rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80,
+                initialPositionY
+        );
+
+        b.setButtonProperties(
+                clearButton,
+                "",
+                rightPaneWidth / 2 - clearButtonImage.getWidth() / 2,
+                Menu.HEIGHT - 100,
+                e -> handle(e),
+                new ImageView(clearButtonImage)
+        );
+
+        b.addHoverEffect2(
+                clearButton,
+                clearButtonImageHover,
+                clearButtonImage,
+                rightPaneWidth / 2 - clearButtonImage.getWidth() / 2,
+                Menu.HEIGHT - 100
+        );
+
+        BackgroundImage myBI = new BackgroundImage(
+                ImageStore.paneBackground,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+
         rightMenuPane.setPrefSize(GameInterface.rightPaneWidth, Menu.HEIGHT);
         rightMenuPane.setBackground(new Background(myBI));
 
         instructionTextLabel.setFont(bellotaFont);
-        instructionTextLabel.setText("Click on rectangle node to create blockades. Enter the map's name and press save to save your current configuration or back to cancel.");
+        instructionTextLabel.setText(
+                "Click on rectangle node to create blockades. " +
+                        "Enter the map's name and press save to save your current configuration or back to cancel."
+        );
+
         instructionTextLabel.setTextFill(Color.web("#FFE130"));
         instructionTextLabel.setPrefSize(300, 200);
         instructionTextLabel.setLayoutX(rightPaneWidth / 2 - 300 / 2);
@@ -215,11 +403,23 @@ public class MapEditorInterface {
         saveStatus.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         saveStatus.setLayoutY(initialPositionY + 8 * heightSpacing + 230);
 
-        rightMenuBox.getChildren().addAll(saveButton, backButton, clearButton, instructionTextLabel, fileNameLabel, fileNameBox, saveStatusLabel, saveStatus);
+        rightMenuBox.getChildren().addAll(
+                saveButton,
+                backButton,
+                clearButton,
+                instructionTextLabel,
+                fileNameLabel,
+                fileNameBox,
+                saveStatusLabel,
+                saveStatus
+        );
+
         rightMenuPane.getChildren().add(rightMenuBox);
 
         ((BorderPane) scene.getRoot()).setRight(rightMenuPane);
     }
+
+    //@TODO: complete documentation
 
     /**
      * Handles events invoked by the Map Editing interface
@@ -229,98 +429,31 @@ public class MapEditorInterface {
      * @param event
      */
     public static void handle(ActionEvent event) {
+
         if (event.getSource() == MapEditorInterface.saveButton) {
             parser.saveToUserFile();
         }
+
         if (event.getSource() == MapEditorInterface.clearButton) {
             mapEditor.clearNodes();
         }
+
         if (event.getSource() == MapEditorInterface.backButton) {
+
             MenuHandler.switchScene(MenuHandler.MAIN_MENU);
             mapEditor.clearNodes();
-            //Renderer.delete();
-            //MapEditorInterface.delete();
-            //MapEditor.delete();
         }
+
         if (event.getSource() == MapEditorInterface.no) {
+
             parser.setOverwrite(false);
             popUpStage.hide();
         }
+
         if (event.getSource() == MapEditorInterface.yes) {
+
             parser.setOverwrite(true);
             popUpStage.hide();
         }
-    }
-
-    /**
-     * Gets the name of the map as in the text area
-     *
-     * @return The map name
-     */
-    public String getFileName() {
-        return fileNameBox.getText();
-    }
-
-    /**
-     * Gets the status of the saving process
-     *
-     * @return The TextArea containing the save status
-     */
-    public TextArea getSaveStatusBox() {
-        return saveStatus;
-    }
-
-    /**
-     * Sets up the pop-up window which asks user if they want to override an already existing map (name clash)
-     * The pop-up will have 2 buttons for yes and no choice, and a message to display to the user that there is a name clash
-     */
-    private void setUpPopUp() {
-        popUpStage = new Stage();
-        int sceneWidth = 300;
-        int sceneHeight = 200;
-        Pane messagePanel = new Pane();
-        BackgroundImage myBI = new BackgroundImage(ImageStore.yesNoBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        messagePanel.setPrefSize(sceneWidth, sceneHeight);
-        messagePanel.setBackground(new Background(myBI));
-        Label message = new Label();
-        ButtonProperties b = new ButtonProperties();
-
-        b.setButtonProperties(yes, "", sceneWidth / 2 + 25 - noImage.getWidth() / 2, 125, e -> handle(e), new ImageView(yesImage));
-        b.addHoverEffect2(yes, yesImageHover, yesImage, sceneWidth / 2 + 25 - noImage.getWidth() / 2, 125);
-
-        b.setButtonProperties(no, "", sceneWidth / 2 - 60 - noImage.getWidth() / 2, 125, e -> handle(e), new ImageView(noImage));
-        b.addHoverEffect2(no, noImageHover, noImage, sceneWidth / 2 - 60 - noImage.getWidth() / 2, 125);
-
-        message.setText("That map already exists. Overwrite existing map?");
-        message.setWrapText(true);
-        message.setFont(bellotaFontSmaller);
-        message.setPrefSize(240, 50);
-        message.setAlignment(Pos.CENTER);
-        message.setLayoutX(300 / 2 - 200 / 2);
-        message.setLayoutY(50);
-        message.setTextFill(Color.web("#FFE130"));
-
-        Scene popUpScene = new Scene(messagePanel);
-        messagePanel.getChildren().addAll(no, yes, message);
-
-        popUpStage.setWidth(sceneWidth);
-        popUpStage.setHeight(sceneHeight);
-        popUpStage.setScene(popUpScene);
-        popUpStage.initModality(Modality.APPLICATION_MODAL);
-        popUpStage.hide();
-        popUpStage.initStyle(StageStyle.UNDECORATED);
-        popUpStage.setOnCloseRequest(event -> {
-            parser.setOverwrite(false);
-        });
-    }
-
-    /**
-     * Returns the 'overwrite' pop-up stage
-     *
-     * @return The pop-up stage
-     */
-    public Stage getPopUpStage() {
-        return popUpStage;
     }
 }

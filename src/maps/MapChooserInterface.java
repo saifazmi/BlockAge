@@ -31,24 +31,30 @@ public class MapChooserInterface {
 
     private static final Logger LOG = Logger.getLogger(MapChooserInterface.class.getName());
 
-    private static final double THRESHOLD = 100;
-    private static String chosenMap;
+    private final String SEPERATOR = "/";
+    //@TODO: why is this static?
     private static String USER_MAP_DIRECTORY;
     private final String IMAGE_DIRECTORY;
-    private final String SEPERATOR = "/";
+
+    //@TODO: never used, delete?
+    private static final double THRESHOLD = 100;
+    //@TODO: never used, delete?
+    private double oldHValue = 0;
+
+    private static String chosenMap;
     private static Stage mapChooseStage;
     private Scene mapChooseScene;
     private HBox images;
     private ArrayList<VBox> mapImages;
     private ArrayList<String> mapNames;
-    private double oldHValue = 0;
 
+    // Instance for singleton.
     private static MapChooserInterface instance;
 
     /**
-     * Implements singleton as there will only ever be one instance of this class
+     * Implements Singleton for this class (Only one can exist).
      *
-     * @return
+     * @return the map chooser interface instance
      */
     public static MapChooserInterface Instance() {
         if (instance == null)
@@ -57,17 +63,22 @@ public class MapChooserInterface {
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
+
         instance = null;
-        return true;
     }
 
     /**
      * The constructor creates a new stage and scene for the map chooser
-     * It will look for the map files in the application directory and sets up the appropriate images for the scroll pane
+     * It will look for the map files in the application directory and
+     * sets up the appropriate images for the scroll pane
      * The chooser will act like a pop-up window
      */
     private MapChooserInterface() {
+
         mapChooseStage = new Stage();
         images = new HBox();
 
@@ -76,6 +87,7 @@ public class MapChooserInterface {
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
 
         File userMapDir = new File(USER_MAP_DIRECTORY);
+
         if (userMapDir.exists()) {
             setUpMapImages();
         }
@@ -83,7 +95,6 @@ public class MapChooserInterface {
         ScrollPane scroller = new ScrollPane(images);
         scroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroller.setPrefSize(820, 650);
-        //scroller.setOnScroll(e -> mapSelectScrolling(scroller, e));
 
         mapChooseScene = new Scene(scroller);
         mapChooseStage.setScene(mapChooseScene);
@@ -91,43 +102,9 @@ public class MapChooserInterface {
         mapChooseStage.hide();
     }
 
-    /**
-     * Clears all the previous images to refresh, loads images and add them to scroll pane
-     */
-    private void setUpMapImages() {
+    // GETTER methods
 
-        images.getChildren().clear();
-
-        getMapImages();
-
-        for (int i = 0; i < mapImages.size(); i++) {
-            images.getChildren().add(mapImages.get(i));
-        }
-        images.setSpacing(50);
-    }
-
-
-    /*private void mapSelectScrolling(ScrollPane scroller, ScrollEvent e) {
-        double movedDistance = e.getTotalDeltaX();
-        if (Math.abs(movedDistance - THRESHOLD) > 0) {
-
-            if (scroller.getHvalue() < oldHValue) {
-                scroller.setHvalue(scroller.getHvalue() - scroller.getHmax() / mapImages.size());
-            } else {
-                scroller.setHvalue(scroller.getHvalue() + scroller.getHmax() / mapImages.size());
-            }
-
-            oldHValue = scroller.getHvalue();
-        }
-    }*/
-
-    /**
-     * Shows the map chooser, wait for user to click on a map
-     */
-    public void showChooser() {
-        setUpMapImages();
-        mapChooseStage.showAndWait();
-    }
+    //@TODO: complete documentation
 
     /**
      * Gets the map chosen by the user once they click on it
@@ -135,12 +112,9 @@ public class MapChooserInterface {
      * @return
      */
     public String getChosenMap() {
-        System.out.println(USER_MAP_DIRECTORY + chosenMap);
-        return USER_MAP_DIRECTORY + chosenMap;
-    }
 
-    public void resetChosenMap() {
-        chosenMap = "null";
+        LOG.log(Level.INFO, USER_MAP_DIRECTORY + chosenMap);
+        return USER_MAP_DIRECTORY + chosenMap;
     }
 
     /**
@@ -159,36 +133,77 @@ public class MapChooserInterface {
 
         try {
 
-            for (int i = 0; i < mapFiles.length; i++) {
+            if (mapFiles != null) {
+                for (File mapFile : mapFiles) {
 
-                // Gets the images and maps
-                Image mapImage = new Image(mapFiles[i].toURI().toString());
-                String mapName = getDataOf(mapFiles[i]);
-                mapNames.add(mapName);
+                    // Gets the images and maps
+                    Image mapImage = new Image(mapFile.toURI().toString());
+                    String mapName = getDataOf(mapFile);
+                    mapNames.add(mapName);
 
-                // Create an image view
-                ImageView mapImageView = new ImageView(mapImage);
-                mapImageView.setPreserveRatio(true);
-                mapImageView.setFitHeight(600);
+                    // Create an image view
+                    ImageView mapImageView = new ImageView(mapImage);
+                    mapImageView.setPreserveRatio(true);
+                    mapImageView.setFitHeight(600);
 
 
-                Label mapNameLabel = new Label(mapName);
-                VBox container = new VBox();
-                container.setAlignment(Pos.CENTER);
+                    Label mapNameLabel = new Label(mapName);
+                    VBox container = new VBox();
+                    container.setAlignment(Pos.CENTER);
 
-                // Creates the button for choosing the map
-                Button newMap = new Button();
-                b.setButtonProperties(newMap, "", 0, 0, e -> chooseMap(container), mapImageView);
-                b.addHoverEffect3(newMap);
+                    // Creates the button for choosing the map
+                    Button newMap = new Button();
+                    b.setButtonProperties(newMap, "", 0, 0, e -> chooseMap(container), mapImageView);
+                    b.addHoverEffect3(newMap);
 
-                container.getChildren().addAll(mapNameLabel, newMap);
-                mapImages.add(container);
+                    container.getChildren().addAll(mapNameLabel, newMap);
+                    mapImages.add(container);
+                }
             }
+
         } catch (NullPointerException e) {
-            LOG.log(Level.SEVERE, "No custom map directory");
+
+            LOG.log(Level.WARNING, "No custom map directory");
             MenuHandler.switchScene(MenuHandler.MAP_EDITOR);
         }
     }
+
+    // SETTER methods
+
+    /**
+     * Clears all the previous images to refresh, loads images and add them to scroll pane
+     */
+    private void setUpMapImages() {
+
+        images.getChildren().clear();
+
+        getMapImages();
+
+        for (VBox mapImage : mapImages) {
+            images.getChildren().add(mapImage);
+        }
+
+        images.setSpacing(50);
+    }
+
+    /**
+     * Resets the chosen map
+     */
+    public void resetChosenMap() {
+
+        //@TODO: why is this a string null?
+        chosenMap = "null";
+    }
+
+    /**
+     * Shows the map chooser, wait for user to click on a map
+     */
+    public void showChooser() {
+
+        setUpMapImages();
+        mapChooseStage.showAndWait();
+    }
+
 
     /**
      * Gets the actual data of the map (know the .png file name so just gets the .map file)
@@ -201,9 +216,7 @@ public class MapChooserInterface {
         String[] mapNameParts = mapFile.toURI().toString().split(SEPERATOR);
         String mapFileName = mapNameParts[mapNameParts.length - 1];
 
-        String mapName = mapFileName.replace(".png", ".map");
-
-        return mapName;
+        return mapFileName.replace(".png", ".map");
     }
 
     /**
@@ -214,6 +227,7 @@ public class MapChooserInterface {
      * @param e The VBox which contain the button
      */
     private void chooseMap(VBox e) {
+
         int buttonIndex = mapImages.indexOf(e);
         chosenMap = mapNames.get(buttonIndex);
         ElementsHandler.startGame();

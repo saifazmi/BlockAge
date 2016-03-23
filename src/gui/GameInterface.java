@@ -128,6 +128,7 @@ public class GameInterface {
 
             bellotaFont = Font.loadFont(fontStream, 23);
         } catch (IOException e) {
+            LOG.log(Level.SEVERE, "No font found");
             LOG.log(Level.SEVERE, e.toString(), e);
         }
 
@@ -136,6 +137,7 @@ public class GameInterface {
 
             bellotaFontBigger = Font.loadFont(fontStream, 50);
         } catch (IOException e) {
+            LOG.log(Level.SEVERE, "No font found");
             LOG.log(Level.SEVERE, e.toString(), e);
         }
     }

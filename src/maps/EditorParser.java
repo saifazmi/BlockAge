@@ -11,6 +11,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by hung on 05/03/16.
@@ -21,6 +23,8 @@ import java.io.IOException;
  */
 public class EditorParser {
 
+    private static final Logger LOG = Logger.getLogger(EditorParser.class.getName());
+
     private MapEditor editor;
     private String SAVE_DIRECTORY;
     private String IMAGE_DIRECTORY;
@@ -29,19 +33,23 @@ public class EditorParser {
 
     /**
      * The constructor creates a new directory for the application to store its files
-     * The files stored include both a .map file (our own extension but should be readable by any text editor) and a .png file
+     * The files stored include both a .map file (our own extension but should be readable by any text editor)
+     * and a .png file
      *
      * @param mapEditor The Map Editing manager which this class can get information from (about the graph etc.)
      */
     public EditorParser(MapEditor mapEditor) {
-        String dir = System.getProperty("user.home");
-        System.out.println(dir);
+
         String SEPERATOR = File.separator;
+
+        String dir = System.getProperty("user.home");
         RTS_DIRECTORY = dir + SEPERATOR + "bestRTS";
         SAVE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "data" + SEPERATOR;
         IMAGE_DIRECTORY = dir + SEPERATOR + "bestRTS" + SEPERATOR + "image" + SEPERATOR;
-        System.out.println(SAVE_DIRECTORY);
-        System.out.println(IMAGE_DIRECTORY);
+
+        LOG.log(Level.INFO, dir);
+        LOG.log(Level.INFO, SAVE_DIRECTORY);
+        LOG.log(Level.INFO, IMAGE_DIRECTORY);
 
         this.editor = mapEditor;
     }
@@ -51,10 +59,12 @@ public class EditorParser {
      * Called when the 'saved' button is clicked
      * Gets the name of the map and ensures it isn't empty
      * Creates a new directory if necessary, i.e. a directory for the application doesn't exist yet
-     * Goes through the map, obtained from the Map Editor instance, and for each node with a blockade, place a 1 in the saved file, else place a 0
+     * Goes through the map, obtained from the Map Editor instance, and for each node with a blockade,
+     * place a 1 in the saved file, else place a 0
      * Saves the map in the form <name>.map and a .png image
      */
     public void saveToUserFile() {
+
         String fileName = editor.getInterface().getFileName() + ".map";
         String imageName = editor.getInterface().getFileName() + ".png";
 
@@ -62,12 +72,14 @@ public class EditorParser {
 
         if (fileName.equals("")) {
             editor.getInterface().getSaveStatusBox().setText("The map must have a name, please enter a name above");
+
         } else {
 
-            if (invalidName(editor.getInterface().getFileName()))
+            if (invalidName(editor.getInterface().getFileName())) {
                 return;
+            }
 
-            System.out.println("attempt save now");
+            LOG.log(Level.INFO, "Attempting to save now");
 
             try {
 
@@ -77,6 +89,7 @@ public class EditorParser {
                 File rtsDir = new File(RTS_DIRECTORY);
 
                 if (!rtsDir.exists()) {
+
                     newDirectory = true;
                     rtsDir.mkdir();
                 }
@@ -84,6 +97,7 @@ public class EditorParser {
                 File saveDir = new File(SAVE_DIRECTORY);
 
                 if (!saveDir.exists()) {
+
                     newDirectory = true;
                     saveDir.mkdir();
                 }
@@ -94,7 +108,7 @@ public class EditorParser {
                     imageDir.mkdir();
                 }
 
-                // Create actuall files, both image and map data
+                // Create actual files, both image and map data
                 File savedFile = new File(SAVE_DIRECTORY + fileName);
                 File imageFile = new File(IMAGE_DIRECTORY + imageName);
 
@@ -103,8 +117,9 @@ public class EditorParser {
                     editor.getInterface().getPopUpStage().showAndWait();
                 }
 
-                if (!overwrite)
+                if (!overwrite) {
                     return;
+                }
 
                 // Begin writing data
                 FileWriter fileWriter = new FileWriter(savedFile);
@@ -113,13 +128,17 @@ public class EditorParser {
 
                 for (int y = 0; y < 20; y++) {
                     for (int x = 0; x < 20; x++) {
+
                         if (x < 19) {
+
                             if (graph.nodeWith(new GraphNode(x, y)).getBlockade() != null) {
                                 writer.write("1 ");
                             } else {
                                 writer.write("0 ");
                             }
+
                         } else {
+
                             if (graph.nodeWith(new GraphNode(x, y)).getBlockade() != null) {
                                 writer.write("1");
                             } else {
@@ -131,26 +150,30 @@ public class EditorParser {
                 }
 
                 // Save Image
-
                 WritableImage mapImage = editor.getRenderer().snapshot(new SnapshotParameters(), null);
 
                 try {
                     ImageIO.write(SwingFXUtils.fromFXImage(mapImage, null), "png", imageFile);
                 } catch (IOException e) {
-                    // just whatever
+                    LOG.log(Level.SEVERE, e.toString(), e);
                 }
 
 
                 if (newDirectory) {
-                    editor.getInterface().getSaveStatusBox().setText("New directory created at " + SAVE_DIRECTORY + ", map saved: " + fileName);
+                    editor.getInterface().getSaveStatusBox().setText(
+                            "New directory created at " + SAVE_DIRECTORY + ", map saved: " + fileName
+                    );
                 }
+
                 editor.getInterface().getSaveStatusBox().setText("map saved: " + SAVE_DIRECTORY + fileName);
 
                 writer.close();
 
             } catch (IOException e) {
+
                 editor.getInterface().getSaveStatusBox().setText("Save failed, game error");
-                //notify user
+                LOG.log(Level.SEVERE, e.toString(), e);
+
             } finally {
                 overwrite = true;
             }
@@ -166,13 +189,20 @@ public class EditorParser {
      * @return whether the file name is invalid
      */
     private boolean invalidName(String fileName) {
+
         if (fileName.contains(".")) {
-            editor.getInterface().getSaveStatusBox().setText("File name can only be contain alphanumerical characters, no special symbols allowed");
+
+            editor.getInterface().getSaveStatusBox().setText(
+                    "File name can only be contain alphanumerical characters, no special symbols allowed"
+            );
+
             return true;
         }
 
         return false;
     }
+
+    //@TODO: complete the documentation
 
     /**
      * Sets the boolean to overwrite an existing map if it already exists, called when
@@ -180,6 +210,7 @@ public class EditorParser {
      * @param overwrite
      */
     public void setOverwrite(boolean overwrite) {
+
         this.overwrite = overwrite;
     }
 }

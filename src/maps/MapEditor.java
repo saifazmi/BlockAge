@@ -34,8 +34,10 @@ public class MapEditor implements Menu {
     private Graph mapEditorGraph;
 
     private MapEditorInterface mapEditorInterface;
+    //@TODO: never used, delete?
     private MapChooserInterface mapChooserInterface;
 
+    // Instance for singleton.
     private static MapEditor instance = null;
 
     /**
@@ -48,14 +50,19 @@ public class MapEditor implements Menu {
         if (instance == null) {
             instance = new MapEditor();
         }
+
         return instance;
     }
 
-    public static boolean delete() {
+    /**
+     * Delete the existing instance of this class
+     */
+    public static void delete() {
+
         instance = null;
-        return true;
     }
 
+    //@TODO: what is this comment?
     // General Map Editor manager for scene, renderer and events
 
     /**
@@ -77,7 +84,14 @@ public class MapEditor implements Menu {
         final String SPRITE_RESOURCES = SEPARATOR + "resources" + SEPARATOR + "sprites" + SEPARATOR;
         final String BACKGROUNDS = "backgrounds" + SEPARATOR;
         Image sandBackground = new Image(SPRITE_RESOURCES + BACKGROUNDS + "SandBackground.png");
-        BackgroundImage myBIF = new BackgroundImage(sandBackground, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        BackgroundImage myBIF = new BackgroundImage(
+                sandBackground,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
 
         // Creating the pane which will include the background
         mapEditorPane = new BorderPane();
@@ -97,6 +111,53 @@ public class MapEditor implements Menu {
         mapEditorScene.setOnMouseClicked(sceneClickPlaceBlockade);
     }
 
+    // GETTER methods
+
+    /**
+     * Returns the object that holds the interface logic for the map editor
+     *
+     * @return The interface as an object
+     */
+    public MapEditorInterface getInterface() {
+
+        return this.mapEditorInterface;
+    }
+
+    /**
+     * Gets the renderer instance of the map editor
+     *
+     * @return the Map renderer Instance
+     */
+    public Renderer getRenderer() {
+
+        return this.mapEditorRenderer;
+    }
+
+    //@TODO: complete documentation
+
+    /**
+     * Returns the graph of the map editor
+     *
+     * @return
+     */
+    public Graph getGraph() {
+
+        return this.mapEditorGraph;
+    }
+
+    //@TODO: complete documentation
+
+    /**
+     * Returns the map editor scene
+     *
+     * @return
+     */
+    @Override
+    public Scene getScene() {
+
+        return this.mapEditorScene;
+    }
+
     /**
      * Creates new graph and add each node's neighbour appropriately
      */
@@ -105,6 +166,7 @@ public class MapEditor implements Menu {
 
         for (int x = 0; x < Graph.WIDTH; x++) {
             for (int y = 0; y < Graph.HEIGHT; y++) {
+
                 GraphNode node = new GraphNode(x, y);
                 mapEditorGraph.nodeWith(node);
             }
@@ -116,64 +178,33 @@ public class MapEditor implements Menu {
     }
 
     /**
-     * Returns the graph of the map editor
-     *
-     * @return
-     */
-    public Graph getGraph() {
-        return mapEditorGraph;
-    }
-
-    /**
      * Mouse click handling event.
      * Create a new blockade and place in appropriate node, logically and graphically
      */
     private final EventHandler<MouseEvent> sceneClickPlaceBlockade = e -> {
+
         Blockade blockadeInstance = new Blockade(0, "Blockade", new GraphNode(0, 0), null);
         ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
         Blockade blockade = Blockade.mapBlockade(e, blockadeInstance, mapEditorRenderer, mapEditorGraph);
+
         if (blockade != null) {
             mapEditorRenderer.drawInitialEntity(blockade);
-            //System.out.println(blockade.getPosition());
         }
     };
-
-    /**
-     * Returns the object that holds the interface logic for the map editor
-     *
-     * @return The interface as an object
-     */
-    public MapEditorInterface getInterface() {
-        return mapEditorInterface;
-    }
-
-    /**
-     * Gets the renderer instance of the map editor
-     *
-     * @return the Map renderer Instance
-     */
-    public Renderer getRenderer() {
-        return mapEditorRenderer;
-    }
-
-    /**
-     * Returns the map editor scene
-     *
-     * @return
-     */
-    @Override
-    public Scene getScene() {
-        return mapEditorScene;
-    }
 
     /**
      * Clears all the nodes on the graph of blockades, this will remove them logically then tells the renderer to remove them graphically
      */
     public void clearNodes() {
+
         List<GraphNode> graph = mapEditorGraph.getNodes();
+
         for (GraphNode aGraph : graph) {
+
             Blockade blockade = aGraph.getBlockade();
+
             if (blockade != null) {
+
                 mapEditorRenderer.remove(blockade.getSprite());
                 aGraph.setBlockade(null);
             }
