@@ -77,14 +77,12 @@ public class ButtonProperties {
         });
     }
 
-    //@TODO: complete doc
-
     /**
-     * Adds hover effect as above, but for buttons in the map editor interface
+     * Adds an on mouse entered effect as above, but for buttons
      *
-     * @param button
-     * @param hoverImageIn
-     * @param hoverImageOut
+     * @param button        the button that will be hovered
+     * @param hoverImageIn  the image that will be changed into when mouse entered
+     * @param hoverImageOut the image that will be change into when mouse exited
      */
     public void addHoverEffect2(Button button, Image hoverImageIn, Image hoverImageOut, double posX, double posY) {
 
@@ -121,12 +119,10 @@ public class ButtonProperties {
         });
     }
 
-    //@TODO: complete doc
-
     /**
-     * Simple enlargement of image inside Button
+     * Adds an on mouse entered effect
      *
-     * @param button
+     * @param button        the button that will be hovered
      */
     public void addHoverEffect3(Button button) {
 

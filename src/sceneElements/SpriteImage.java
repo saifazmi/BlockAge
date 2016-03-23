@@ -12,13 +12,11 @@ public class SpriteImage extends ImageView {
 
     private Entity entity;
 
-    //@TODO: complete doc
-
     /**
-     * Constructs an sprite image to display
+     * Constructs a sprite image to display
      *
-     * @param image
-     * @param entity
+     * @param image the image to use
+     * @param entity the entity that the image relates to
      */
     public SpriteImage(Image image, Entity entity) {
 

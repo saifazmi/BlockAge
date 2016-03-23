@@ -4,50 +4,32 @@ import sound.SoundManager;
 
 public class Options {
 
-    private boolean showDescription = true;
-    private boolean showPath = true;
-    private boolean initialBlockades = true;
-    private boolean tutorial = true;
+    private boolean showPath;
+    private boolean tutorial;
 
     public Options() {
 
-        //@TODO: initialise properties here thats what constructors are for
+        showPath = true;
+        tutorial = true;
     }
 
-    //@TODO: never used, delete?
-
     /**
-     * Sets the show Description option for the game that will start
+     * Sets the show path option for the game that will start
      *
-     * @param showDescription - if it shows the description or not
-     */
-    public void setDescription(boolean showDescription) {
-
-        this.showDescription = showDescription;
-    }
-
-    //@TODO: fix doc; wrong param
-
-    /**
-     * Sets the show Description option for the game that will start
-     *
-     * @param showDescription - if it shows the description or not
+     * @param showPath - if it shows the path or not
      */
     public void setPath(boolean showPath) {
 
         this.showPath = showPath;
     }
 
-    //@TODO: fix doc; wrong param
-
     /**
      * Sets the initial blockades option for the game that will start
      *
-     * @param showDescription - if it shows the description or not
+     * @param initialBlockades - if it shows the blockades or not or not
      */
     public void setInitialBlockades(boolean initialBlockades) {
 
-        this.initialBlockades = initialBlockades;
     }
 
     /**
@@ -64,18 +46,6 @@ public class Options {
         }
     }
 
-    //@TODO: never used, delete?
-
-    /**
-     * Gets if the description of a unit will be shown or not
-     *
-     * @return - the option if the the description of a unit will be shown or not
-     */
-    public boolean getShowDescription() {
-
-        return showDescription;
-    }
-
     /**
      * Gets if the path will be shown or not
      *
@@ -86,31 +56,20 @@ public class Options {
         return this.showPath;
     }
 
-    //@TODO: never used, delete?
-
     /**
-     * Gets if the initial blockades will be shown or not
+     * Gets the boolean representing if the tutorial is active
      *
-     * @return - the option if the path will be shown or not
-     */
-    public boolean getInitialBlockades() {
-        return initialBlockades;
-    }
-
-    //@TODO: doc mthd.
-
-    /**
-     * @return
+     * @return the boolean value
      */
     public boolean isTutorial() {
 
         return this.tutorial;
     }
 
-    //@TODO: doc mthd.
-
     /**
-     * @param tutorial
+     * Sets the boolean representing if the tutorial is active
+     *
+     * @param tutorial the boolean to set to
      */
     public void setTutorial(boolean tutorial) {
 
