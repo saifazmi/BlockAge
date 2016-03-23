@@ -34,11 +34,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by hung on 05/03/16.
- */
-
-/**
- * This class holds the information for the interface of the map editor
+ * @author : Hung Hoang; Contributors - Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class holds the information for the interface of the map editor
+ *
+ * @date : 28/01/16
  */
 public class MapEditorInterface {
 
