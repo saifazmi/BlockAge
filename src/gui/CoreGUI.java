@@ -51,7 +51,7 @@ public class CoreGUI extends Application {
             LOG.log(Level.INFO, "Exiting...");
             System.exit(0);
         });
-
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }

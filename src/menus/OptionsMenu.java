@@ -134,17 +134,17 @@ public class OptionsMenu implements Menu {
 
         // Set properties for the on/off SOUND button
         b.setButtonProperties(
-                yesButtonTutorial,
+                noButtonTutorial,
                 Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
                 Menu.HEIGHT / 3 + 2 * spaceBetweenImgH,
                 ElementsHandler::handle,
-                new ImageView(onImage)
+                new ImageView(offImage)
         );
 
         b.addHoverEffect(
-                yesButtonTutorial,
-                onImageHovered,
-                onImage,
+                noButtonTutorial,
+                offImageHovered,
+                offImage,
                 Menu.WIDTH / 2 + onImage.getWidth() + spaceBetweenText,
                 Menu.HEIGHT / 3 + 2 * spaceBetweenImgH
         );
@@ -220,7 +220,7 @@ public class OptionsMenu implements Menu {
                 blockadeLabel,
                 yesButtonSearch,
                 noButtonSound,
-                yesButtonTutorial,
+                noButtonTutorial,
                 yesButtonB,
                 backButton
         );
