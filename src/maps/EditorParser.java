@@ -15,11 +15,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by hung on 05/03/16.
- */
-
-/**
- * This class handles saving of maps created via the map editor
+ * @author : Hung Hoang; Contributors - Saif Azmi
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class handles saving of maps created via the map editor
+ *
+ * @date : 28/01/16
  */
 public class EditorParser {
 
