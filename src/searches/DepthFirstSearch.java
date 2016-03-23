@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 /**
  * Created by hung on 06/02/16.
@@ -34,7 +35,6 @@ public class DepthFirstSearch {
         GraphNode current;
         GraphNode parent;
 
-        //@TODO: comments explaining the search steps
         frontier.push(unit.getPosition());
 
         while (!frontier.isEmpty()) {
@@ -81,24 +81,16 @@ public class DepthFirstSearch {
         return null;
     }
 
-    //@TODO: complete doc
-
     /**
-     * @param nodeAssociations
-     * @param to
-     * @param from
+     * Adds the pair of graphnodes to the association list. If a pair exists with the same value, they are removed and replaced by a new one.
+     *
+     * @param nodeAssociations the list of all node association pairs
+     * @param to the node to go to
+     * @param from the node to come from
      */
     private static void dfsSpecificNodeAssociation(ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations, GraphNode to, GraphNode from) {
 
-        ArrayList<Pair<GraphNode, GraphNode>> toRemove = new ArrayList<>();
-
-        for (Pair<GraphNode, GraphNode> pair : nodeAssociations) {
-
-            if (to.equals(pair.getValue())) {
-                toRemove.add(pair);
-            }
-        }
-
+        ArrayList<Pair<GraphNode, GraphNode>> toRemove = nodeAssociations.stream().filter(pair -> to.equals(pair.getValue())).collect(Collectors.toCollection(ArrayList::new));
         nodeAssociations.removeAll(toRemove);
         nodeAssociations.add(new Pair<>(from, to));
     }

@@ -191,8 +191,6 @@ public class MapChooserInterface {
      */
     public void resetChosenMap() {
 
-        //@TODO: why is this a string null?
-        //@TODO: cuz why not
         chosenMap = "null";
     }
 

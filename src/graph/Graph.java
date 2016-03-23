@@ -28,11 +28,11 @@ public class Graph {
         this.nodes = new ArrayList<>();
     }
 
-    //@TODO: document this method
-
     /**
-     * @param node
-     * @return
+     * Checks if node is in the graph. Adds it if it isn't, then returns it. If it is, returns the version that is.
+     *
+     * @param node the node to check
+     * @return the node
      */
     public GraphNode nodeWith(GraphNode node) {
 

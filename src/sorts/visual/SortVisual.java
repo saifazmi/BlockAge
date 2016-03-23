@@ -62,12 +62,11 @@ public class SortVisual {
     //flag for game elements to know whether the sort pane is removable ( done with animating )
     private boolean remove = false;
 
-    //@TODO: complete doc
     /**
      * Builds a sort visualiser
      *
-     * @param block
-     * @param unit
+     * @param block the blockade to perform the sort for
+     * @param unit the unit that started the sort
      */
     public SortVisual(SortableBlockade block, Unit unit) {
 
@@ -82,73 +81,47 @@ public class SortVisual {
 
     // GETTER method
 
-    //@TODO: complete doc
     /**
+     * get the list of blocks that the sort uses
      *
-     *
-     * @return
+     * @return the list of blocks
      */
     public ArrayList<SortVisualBar> getBlocks() {
 
         return this.blocks;
     }
 
-    //@TODO: complete doc
-
     /**
+     * get the pane that the sort is contained in
      *
-     * @return
+     * @return the pane
      */
     public Pane getPane() {
 
         return this.sortPane;
     }
 
-    //@TODO: complete doc
-
     /**
+     * Gets the unit that the sort visual is using
      *
-     * @return
+     * @return the unit
      */
     public Unit getUnit() {
 
         return this.unit;
     }
 
-    //@TODO: never used, delete?=================
-    public SortableBlockade getBlock() {
-
-        return this.block;
-    }
-
-    public boolean isRemove() {
-
-        return this.remove;
-    }
-    //@TODO:====================================
-
     // SETTER method
 
-    //@TODO: complete doc
     /**
+     * Set the unit that the sort visual uses
      *
-     * @param unit
+     * @param unit the unit to set to
      */
     public void setUnit(Unit unit) {
 
         this.unit = unit;
     }
-
-    //@TODO: never used, DELET? ========================
-    public void setBlock(SortableBlockade block) {
-
-        this.block = block;
-    }
-
-    public void setRemove(boolean remove) {
-        this.remove = remove;
-    }
-    //@TODO: ===========================================
 
     /**
      * Decides which sort to use.
@@ -236,13 +209,12 @@ public class SortVisual {
         swapTwo(tuples.get(0).getFirst(), tuples.get(0).getSecond(), 0);
     }
 
-    //@TODO: complete doc
     /**
      * Used to generate a correct location for a block inside a data structure.
      * This is done to synchronize the data structure that contains the blocks, with the first sort state.
      * Giving the correct visual order.
      *
-     * @param s
+     * @param s the numerical representation of a sort bar
      * @return x position
      */
     private int find(double s) {
@@ -353,7 +325,7 @@ public class SortVisual {
 
         TranslateTransition ttx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         ttx.setFromX(0);
-        ttx.setToX(-oldX);//was -200
+        ttx.setToX(-oldX);
 
         TranslateTransition txx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         txx.setFromY(-100);
@@ -379,13 +351,12 @@ public class SortVisual {
 
         TranslateTransition gx = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         gx.setFromX(-oldX);
-        gx.setToX(oldSecondX - oldX);//old distance-  width - gap
+        gx.setToX(oldSecondX - oldX);
 
         TranslateTransition gyy = new TranslateTransition(Duration.seconds(0.17), blocks.get(block1));
         gyy.setFromY(-200);
         gyy.setToY(0);
 
-        //@TODO: explain what are these?
         SequentialTransition temp = new SequentialTransition(
                 colx,
                 tty,
@@ -461,10 +432,10 @@ public class SortVisual {
         temp.play();
     }
 
-    //@TODO: complete doc
     /**
+     * Either displays or undisplays all bars and backgrounds.
      *
-     * @param display
+     * @param display whether to display or not
      */
     public void display(boolean display) {
 

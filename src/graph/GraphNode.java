@@ -43,10 +43,10 @@ public class GraphNode {
         base = null;
     }
 
-    //@TODO: document this method
-
     /**
-     * @param graph
+     * Adds all the graphnode neighbours to the graphnode
+     *
+     * @param graph the graph to use
      */
     public void addNeighbours(Graph graph) {
 

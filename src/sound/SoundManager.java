@@ -15,13 +15,9 @@ public class SoundManager {
     private final String AUDIO_RESOURES = SEPARATOR + "resources" + SEPARATOR + "audio" + SEPARATOR;
 
     private CircularBufferNode<MediaPlayer> soundtracks[];
-    //@TODO: never used, delete?
-    private CircularBufferNode<MediaPlayer> currentMPointer;
-    private boolean paused = true;
 
     // Instance for singleton.
     private static SoundManager instance = null;
-
 
     /**
      * Implements Singleton for this class (Only one can exist).
@@ -82,26 +78,11 @@ public class SoundManager {
 
     }
 
-    // GETTER methods
-
-    //@TODO: never used, delete?
-    /**
-     *
-     * @return
-     */
-    public boolean isPaused() {
-
-        return this.paused;
-    }
-
-    // SETTER methods
-
     /**
      *
      */
     public void startSoundtrack() {
 
-        this.paused = false;
         this.soundtracks[0].getValue().play();
     }
 
@@ -110,14 +91,6 @@ public class SoundManager {
      */
     public void pauseSoundtrack() {
 
-        this.paused = true;
         this.soundtracks[0].getValue().pause();
-    }
-
-    //@TODO: never used, delete?
-    public void resumeSoudtrack() {
-
-        this.paused = false;
-        this.currentMPointer.getValue().play();
     }
 }
