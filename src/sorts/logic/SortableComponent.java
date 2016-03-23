@@ -19,10 +19,10 @@ public class SortableComponent {
 
     // GETTER method
 
-    //@TODO: complete doc
-
     /**
-     * @return
+     * get the value of the component
+     *
+     * @return the value
      */
     public ArrayList<Integer> getValue() {
 
@@ -31,23 +31,23 @@ public class SortableComponent {
 
     // SETTER method
 
-    //@TODO: complete doc
-
     /**
-     * @param value
+     * set the value of the value of the component
+     *
+     * @param value the new value
      */
     public void setValue(ArrayList<Integer> value) {
 
         this.value = value;
     }
 
-    //@TODO: complete doc
-
     /**
-     * @param value
-     * @param comparing1
-     * @param comparing2
-     * @param swapped
+     * Constructor for Sortable Components
+     *
+     * @param value the value of the component
+     * @param comparing1 the flag representing the first thing to swap
+     * @param comparing2 the flag representing the second thing to swap
+     * @param swapped the boolean representing whether it has been swapped or not
      */
     public SortableComponent(ArrayList<Integer> value, int comparing1, int comparing2, boolean swapped) {
 
@@ -56,37 +56,4 @@ public class SortableComponent {
         this.comparing2 = comparing2;
         this.swapped = swapped;
     }
-
-    //@TODO: never used, DELETE? =========================
-    public boolean isSwapped() {
-
-        return this.swapped;
-    }
-
-    public void setSwapped(boolean swapped) {
-
-        this.swapped = swapped;
-    }
-
-    public int getComparing1() {
-
-        return comparing1;
-    }
-
-    public void setComparing1(int comparing1) {
-
-        this.comparing1 = comparing1;
-    }
-
-    public int getComparing2() {
-
-        return comparing2;
-    }
-
-    public void setComparing2(int comparing2) {
-
-        this.comparing2 = comparing2;
-    }
-
-    //@TODO: ==============================================
 }
