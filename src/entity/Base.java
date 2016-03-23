@@ -4,7 +4,7 @@ import graph.GraphNode;
 import sceneElements.SpriteImage;
 
 /**
- * @author : Anh Pham; Contributors - Anh Pham
+ * @author : Anh Pham
  * @version : 23/03/2016;
  *          <p>
  *          Defines a base data structure.
