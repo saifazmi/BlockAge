@@ -45,7 +45,7 @@ public class ElementsHandler {
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
 
     private static ButtonProperties b = new ButtonProperties();
-    public static Options options = new Options();
+    public static Options options = Options.Instance();
 
     /**
      * Handles the events for the buttons
@@ -173,7 +173,7 @@ public class ElementsHandler {
             // Changes the button from on to off
             b.setButtonProperties(
                     OptionsMenu.noButtonSound,
-                    OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText,
+                    Menu.WIDTH / 2 + OptionsMenu.onImage.getWidth() + OptionsMenu.spaceBetweenText,
                     Menu.HEIGHT / 3 + OptionsMenu.spaceBetweenImgH,
                     ElementsHandler::handle,
                     new ImageView(OptionsMenu.offImage)
@@ -297,8 +297,6 @@ public class ElementsHandler {
         // If the on Initial blockades button is pressed, the map will spawn with no initial blockades
         if (event.getSource() == OptionsMenu.yesButtonB) {
 
-            options.setInitialBlockades(false);
-
             // Changes the button from on to off
             b.setButtonProperties(
                     OptionsMenu.noButtonB,
@@ -326,8 +324,6 @@ public class ElementsHandler {
 
         // If the off Initial blockades button is pressed, the map will spawn with random initial blockades
         if (event.getSource() == OptionsMenu.noButtonB) {
-
-            options.setInitialBlockades(true);
 
             // Changes the button from off to on
             b.setButtonProperties(
@@ -379,6 +375,9 @@ public class ElementsHandler {
 
             // Displays different options
             // In this case the initial blockades is not displayed as the map has already been generated
+            OptionsMenu.searchLabel.setVisible(false);
+            OptionsMenu.noButtonSearch.setVisible(false);
+            OptionsMenu.yesButtonSearch.setVisible(false);
             OptionsMenu.blockadeLabel.setVisible(false);
             OptionsMenu.noButtonB.setVisible(false);
             OptionsMenu.yesButtonB.setVisible(false);
@@ -391,6 +390,9 @@ public class ElementsHandler {
             OptionsMenu.tutorialLabel.setDisable(true);
             OptionsMenu.noButtonTutorial.setDisable(true);
             OptionsMenu.yesButtonTutorial.setDisable(true);
+            OptionsMenu.searchLabel.setDisable(true);
+            OptionsMenu.noButtonSearch.setDisable(true);
+            OptionsMenu.yesButtonSearch.setDisable(true);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
 
@@ -549,7 +551,7 @@ public class ElementsHandler {
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
 
-        if (options.isTutorial()) {
+        if (Options.Instance().isTutorial()) {
             Tutorial.setup();
         }
 
