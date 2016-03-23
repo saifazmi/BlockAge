@@ -32,14 +32,9 @@ public class MapChooserInterface {
     private static final Logger LOG = Logger.getLogger(MapChooserInterface.class.getName());
 
     private final String SEPERATOR = "/";
-    //@TODO: why is this static?
-    private static String USER_MAP_DIRECTORY;
-    private final String IMAGE_DIRECTORY;
 
-    //@TODO: never used, delete?
-    private static final double THRESHOLD = 100;
-    //@TODO: never used, delete?
-    private double oldHValue = 0;
+    private String USER_MAP_DIRECTORY;
+    private final String IMAGE_DIRECTORY;
 
     private static String chosenMap;
     private static Stage mapChooseStage;
@@ -104,12 +99,10 @@ public class MapChooserInterface {
 
     // GETTER methods
 
-    //@TODO: complete documentation
-
     /**
      * Gets the map chosen by the user once they click on it
      *
-     * @return
+     * @return The name of the map selected by the user
      */
     public String getChosenMap() {
 
@@ -199,6 +192,7 @@ public class MapChooserInterface {
     public void resetChosenMap() {
 
         //@TODO: why is this a string null?
+        //@TODO: cuz why not
         chosenMap = "null";
     }
 

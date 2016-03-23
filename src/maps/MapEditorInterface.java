@@ -46,28 +46,34 @@ public class MapEditorInterface {
 
     private final String SEPARATOR = "/";
 
-    //for popup Scene
+    // For popup Scene
     private static Stage popUpStage;
     private Image yesImage, noImage, yesImageHover, noImageHover;
 
-    //For the Map Editing scene itself
-    //@TODO: arrange these in some order
     private Scene scene;
+
+    // scene related GUI
     public static Pane rightMenuPane, rightMenuBox;
     private HBox rightMenuSaveBack;
     private VBox rightMenuText;
+    private int rightPaneWidth = GameInterface.rightPaneWidth;
+    private int initialPositionY = 50;
+    private int heightSpacing = 30;
+
+    // button and its images
     public static Button saveButton, backButton, clearButton, yes, no;
     private ButtonProperties b;
     private Image saveButtonImage, backButtonImage, saveButtonImageHover,
             backButtonImageHover, clearButtonImage, clearButtonImageHover;
+
+    // text related things
     private TextArea instructions, fileNameBox, saveStatus;
     private Label instructionLabel, instructionTextLabel, saveStatusLabel, fileNameLabel;
-    private static EditorParser parser;
     private Font bellotaFont, bellotaFontSmaller;
+
+    // Logical classes
+    private static EditorParser parser;
     private static MapEditor mapEditor;
-    private int rightPaneWidth = GameInterface.rightPaneWidth;
-    private int initialPositionY = 50;
-    private int heightSpacing = 30;
 
     // Instance for singleton.
     private static MapEditorInterface instance = null;
@@ -90,10 +96,10 @@ public class MapEditorInterface {
         instance = null;
     }
 
-    //@TODO: complete documentation
-
     /**
-     * What?
+     * Creates the Map editor interface by instantiating all the GUI elements and place them appropriately
+     * This is also done for the pop-up stage.
+     * Constructor also sets up association between the interface and the parser (to call its functions when buttons are pressed on the interface)
      *
      * @param mapEditorScene The scene of the map editor
      * @param mapEditor      The Map Editor instance of which information about the editor can be accessed
@@ -167,7 +173,7 @@ public class MapEditorInterface {
         Label message = new Label();
         ButtonProperties b = new ButtonProperties();
 
-        //@TODO: add comments specifying what everything is
+        // button for agreeing to overwrite
         b.setButtonProperties(
                 yes,
                 sceneWidth / 2 + 25 - noImage.getWidth() / 2, 125,
@@ -183,6 +189,7 @@ public class MapEditorInterface {
                 125
         );
 
+        // button for not agreeing to overwrite
         b.setButtonProperties(
                 no,
                 sceneWidth / 2 - 60 - noImage.getWidth() / 2,
@@ -199,6 +206,8 @@ public class MapEditorInterface {
                 125
         );
 
+
+        // position the text area
         message.setText("That map already exists. Overwrite existing map?");
         message.setWrapText(true);
         message.setFont(bellotaFontSmaller);
@@ -211,6 +220,7 @@ public class MapEditorInterface {
         Scene popUpScene = new Scene(messagePanel);
         messagePanel.getChildren().addAll(no, yes, message);
 
+        // set up the pop-up so that it acts as a pop-up
         popUpStage.setWidth(sceneWidth);
         popUpStage.setHeight(sceneHeight);
         popUpStage.setScene(popUpScene);
@@ -296,8 +306,9 @@ public class MapEditorInterface {
      */
     private void rightPane() {
 
-        //@TODO: add comments specifying what everything is
-        // Adding buttons properties
+
+        // Adding buttons properties for save button
+
         b.setButtonProperties(
                 saveButton,
                 rightPaneWidth / 2 - saveButtonImage.getWidth() / 2 - 80,
@@ -314,6 +325,8 @@ public class MapEditorInterface {
                 initialPositionY
         );
 
+        // Adding buttons properties for back button
+
         b.setButtonProperties(
                 backButton,
                 rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80,
@@ -329,6 +342,9 @@ public class MapEditorInterface {
                 rightPaneWidth / 2 - backButtonImage.getWidth() / 2 + 80,
                 initialPositionY
         );
+
+
+        // Adding buttons properties for clear button
 
         b.setButtonProperties(
                 clearButton,
@@ -354,6 +370,7 @@ public class MapEditorInterface {
                 BackgroundSize.DEFAULT
         );
 
+
         rightMenuPane.setPrefSize(GameInterface.rightPaneWidth, Menu.HEIGHT);
         rightMenuPane.setBackground(new Background(myBI));
 
@@ -363,13 +380,14 @@ public class MapEditorInterface {
                         "Enter the map's name and press save to save your current configuration or back to cancel."
         );
 
+        // instruction label set-up
         instructionTextLabel.setTextFill(Color.web("#FFE130"));
         instructionTextLabel.setPrefSize(300, 200);
         instructionTextLabel.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         instructionTextLabel.setLayoutY(initialPositionY + 4 * heightSpacing);
         instructionTextLabel.setWrapText(true);
 
-        // File name and saving
+        // File name and saving label set-up
         fileNameLabel.setFont(bellotaFont);
         fileNameLabel.setText("File Name");
         fileNameLabel.setTextFill(Color.web("#FFE130"));
@@ -383,6 +401,7 @@ public class MapEditorInterface {
         fileNameBox.setFont(bellotaFontSmaller);
         fileNameBox.setLayoutY(initialPositionY + 5 * heightSpacing + 230);
 
+        // Save status label set up
         saveStatusLabel.setFont(bellotaFont);
         saveStatusLabel.setText("Save Status");
         saveStatusLabel.setAlignment(Pos.CENTER_RIGHT);
@@ -391,6 +410,7 @@ public class MapEditorInterface {
         saveStatusLabel.setLayoutX(47);
         saveStatusLabel.setLayoutY(initialPositionY + 8 * heightSpacing + 200);
 
+        // save status text area set up
         saveStatus.setEditable(false);
         saveStatus.setPrefSize(300, 5);
         saveStatus.setStyle("-fx-background-color: #FFE130;");
@@ -398,6 +418,7 @@ public class MapEditorInterface {
         saveStatus.setLayoutX(rightPaneWidth / 2 - 300 / 2);
         saveStatus.setLayoutY(initialPositionY + 8 * heightSpacing + 230);
 
+        // add all buttons, labels and text area to the right pane
         rightMenuBox.getChildren().addAll(
                 saveButton,
                 backButton,
@@ -414,14 +435,12 @@ public class MapEditorInterface {
         ((BorderPane) scene.getRoot()).setRight(rightMenuPane);
     }
 
-    //@TODO: complete documentation
-
     /**
      * Handles events invoked by the Map Editing interface
      * These includes saving the map, clearing the map and exiting the map
      * To make the program more concise, also includes handling event of click yes or no for overwriting map files
      *
-     * @param event
+     * @param event the click event
      */
     public static void handle(ActionEvent event) {
 
