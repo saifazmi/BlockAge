@@ -36,3 +36,4 @@ local.properties
 svnpush
 makefinal
 .source
+test-output/
