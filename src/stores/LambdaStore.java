@@ -18,6 +18,7 @@ import sceneElements.SpriteImage;
 import sorts.visual.SortVisual;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -42,9 +43,11 @@ public final class LambdaStore {
      * @return the only engine to be created
      */
     public static LambdaStore Instance() {
+
         if (instance == null) {
             instance = new LambdaStore();
         }
+
         return instance;
     }
 
@@ -52,24 +55,74 @@ public final class LambdaStore {
      * Delete the existing instance of this class
      */
     public static void delete() {
+
         instance = null;
     }
 
-    // Places a unsortable blockade on the grid where the mouse is clicked
+    // GETTER methods
+
+    //@TODO: complete doc
+
+    /**
+     * @return
+     */
+    public EventHandler<MouseEvent> getShowSort() {
+
+        return this.showSort;
+    }
+
+    //@TODO: complete doc
+
+    /**
+     * @return
+     */
+    public EventHandler<MouseEvent> getPlaceUnbreakableBlockade() {
+
+        return this.sceneClickPlaceUnbreakableBlockade;
+    }
+
+    //@TODO: complete doc
+
+    /**
+     * @return
+     */
+    public EventHandler<MouseEvent> getPlaceBreakableBlockade() {
+
+        return this.sceneClickPlaceBreakableBlockade;
+    }
+
+    //@TODO: complete doc
+
+    /**
+     * @return
+     */
+    public EventHandler<MouseEvent> getUnitClickEvent() {
+
+        return this.unitClickEvent;
+    }
+
+    /**
+     * Places a unsortable blockade on the grid where the mouse is clicked
+     */
     private final EventHandler<MouseEvent> sceneClickPlaceUnbreakableBlockade = e -> {
 
         if (CoreEngine.Instance().unbreakableBlockadesLeft()) {
+
             Blockade blockadeInstance = new Blockade(
                     1,
                     "Blockade",
                     new GraphNode(0, 0),
                     null
             );
-            System.out.println("Blockade instance made");
+
+            LOG.log(Level.INFO, "Blockade instance made");
+
             ImageStore.setSpriteProperties(blockadeInstance, ImageStore.unsortableImage1);
             Blockade blockade = Blockade.createBlockade(e, blockadeInstance);
+
             if (blockade != null) {
-                System.out.println("Blockade rendered");
+
+                LOG.log(Level.INFO, "Blockade rendered");
                 renderer.drawInitialEntity(blockade);
                 CoreEngine.Instance().getBlockades().add(blockade);
                 CoreEngine.Instance().unbreakableBlockadesPlaced();
@@ -77,10 +130,13 @@ public final class LambdaStore {
         }
     };
 
-    // Places a sortable blockade on the grid where the mouse is clicked
+    /**
+     * Places a sortable blockade on the grid where the mouse is clicked
+     */
     private final EventHandler<MouseEvent> sceneClickPlaceBreakableBlockade = e -> {
 
         if (CoreEngine.Instance().breakableBlockadesLeft()) {
+
             SortableBlockade sortableBlockadeInstance = new SortableBlockade(
                     0,
                     "Sortable Blockade",
@@ -91,7 +147,9 @@ public final class LambdaStore {
 
             ImageStore.setSpriteProperties(sortableBlockadeInstance, ImageStore.sortableImage1);
             SortableBlockade blockade = SortableBlockade.create(sortableBlockadeInstance);
+
             if (blockade != null) {
+
                 renderer.drawInitialEntity(blockade);
                 blockade.getSprite().setOnMouseClicked(getShowSort());
                 CoreEngine.Instance().getBlockades().add(blockade);
@@ -100,30 +158,37 @@ public final class LambdaStore {
         }
     };
 
-    public EventHandler<MouseEvent> getShowSort() {
-        return showSort;
-    }
-
+    //@TODO: complete doc
+    /**
+     *
+     */
     private final EventHandler<MouseEvent> showSort = e -> {
 
         if (SortVisual.rendered != null) {
             SortVisual.rendered.display(false);
         }
+
         SpriteImage sprite = (SpriteImage) e.getSource();
         SortableBlockade blockade = (SortableBlockade) sprite.getEntity();
+
         if (blockade.getSortVisual() != null) {
             blockade.getSortVisual().display(true);
         }
     };
 
+    //@TODO: complete doc
+    /**
+     *
+     */
     private final EventHandler<MouseEvent> unitClickEvent = e -> {
 
         SpriteImage sprite = (SpriteImage) e.getSource();
         Unit unit = (Unit) sprite.getEntity();
         sprite.requestFocus();
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++) {
             GameInterface.unitTextPane.getChildren().get(i).setVisible(true);
+        }
 
         if (SortVisual.rendered != null) {
             SortVisual.rendered.display(false);
@@ -149,7 +214,7 @@ public final class LambdaStore {
                 GameInterface.namePaneLabel.setText("Name: " + sprite.getEntity().getName());
                 GameInterface.searchPaneLabel.setText("Search: " + search.name());
                 GameInterface.sortPaneLabel.setText("Sort: " + sort.name());
-
+                //@TODO: explain whats happening in here maybe?
                 if (search == Unit.Search.BFS) {
 
                     sprite.setImage(ImageStore.imagePressedDemon);
@@ -183,43 +248,53 @@ public final class LambdaStore {
         }
     };
 
-    public EventHandler<MouseEvent> getPlaceUnbreakableBlockade() {
-        return sceneClickPlaceUnbreakableBlockade;
-    }
+    //@TODO: complete doc
 
-    public EventHandler<MouseEvent> getPlaceBreakableBlockade() {
-        return sceneClickPlaceBreakableBlockade;
-    }
-
+    /**
+     * @param sortable
+     */
     public void setBlockadeClickEvent(boolean sortable) {
+
+        //@TODO: explain whats happening in here maybe?
         if (scene.getOnMouseClicked() == null) {
+
             if (!sortable) {
-                System.out.println("Unsortable on");
+
+                LOG.log(Level.INFO, "Unsortable on");
                 scene.setOnMouseClicked(getPlaceUnbreakableBlockade());
+
             } else {
-                System.out.println("Sortable on");
+
+                LOG.log(Level.INFO, "Sortable on");
                 scene.setOnMouseClicked(getPlaceBreakableBlockade());
+
             }
+
         } else if (scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade())) {
+
             if (!sortable) {
-                System.out.println("Unsortable off");
+
+                LOG.log(Level.INFO, "Unsortable off");
                 scene.setOnMouseClicked(null);
+
             } else {
-                System.out.println("Sortable on");
+
+                LOG.log(Level.INFO, "Sortable on");
                 scene.setOnMouseClicked(getPlaceBreakableBlockade());
             }
+
         } else if (scene.getOnMouseClicked().equals(getPlaceBreakableBlockade())) {
+
             if (!sortable) {
-                System.out.println("Unsortable on");
+
+                LOG.log(Level.INFO, "Unsortable on");
                 scene.setOnMouseClicked(getPlaceUnbreakableBlockade());
+
             } else {
-                System.out.println("Sortable off");
+
+                LOG.log(Level.INFO, "Sortable off");
                 scene.setOnMouseClicked(null);
             }
         }
-    }
-
-    public EventHandler<MouseEvent> getUnitClickEvent() {
-        return unitClickEvent;
     }
 }

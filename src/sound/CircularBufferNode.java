@@ -11,7 +11,6 @@ public class CircularBufferNode<M> {
     //@TODO: every method needs doc
 
     /**
-     *
      * @param data
      */
     public CircularBufferNode(M data) {
@@ -22,7 +21,6 @@ public class CircularBufferNode<M> {
     //GETTER methods
 
     /**
-     *
      * @return
      */
     public M getValue() {
@@ -30,7 +28,6 @@ public class CircularBufferNode<M> {
     }
 
     /**
-     *
      * @return
      */
     public CircularBufferNode<M> getNext() {
@@ -41,7 +38,6 @@ public class CircularBufferNode<M> {
     // SETTER methods
 
     /**
-     *
      * @param value
      */
     public void setValue(M value) {
@@ -50,7 +46,6 @@ public class CircularBufferNode<M> {
     }
 
     /**
-     *
      * @param next
      */
     public void setNext(CircularBufferNode<M> next) {

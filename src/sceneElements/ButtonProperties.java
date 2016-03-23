@@ -122,7 +122,7 @@ public class ButtonProperties {
     /**
      * Adds an on mouse entered effect
      *
-     * @param button        the button that will be hovered
+     * @param button the button that will be hovered
      */
     public void addHoverEffect3(Button button) {
 

@@ -8,7 +8,6 @@ import graph.GraphNode;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
-import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -436,7 +435,7 @@ public class Renderer extends Group {
     /**
      * Finds the node that added the provided node to the search tree
      *
-     * @param unit the unit that started the search
+     * @param unit   the unit that started the search
      * @param toNode the node to find the parent of
      * @return the parent of the supplied node
      */
@@ -455,7 +454,7 @@ public class Renderer extends Group {
      * Produces a hard copy of a list
      *
      * @param list the list to hard copy
-     * @param <A> the type of the elements of the list
+     * @param <A>  the type of the elements of the list
      * @return the hard copy of the list
      */
     private <A> List<A> hardCopy(List<A> list) {

@@ -63,6 +63,7 @@ public class SortVisual {
     private boolean remove = false;
 
     //@TODO: complete doc
+
     /**
      * Builds a sort visualiser
      *
@@ -83,9 +84,8 @@ public class SortVisual {
     // GETTER method
 
     //@TODO: complete doc
+
     /**
-     *
-     *
      * @return
      */
     public ArrayList<SortVisualBar> getBlocks() {
@@ -96,7 +96,6 @@ public class SortVisual {
     //@TODO: complete doc
 
     /**
-     *
      * @return
      */
     public Pane getPane() {
@@ -107,7 +106,6 @@ public class SortVisual {
     //@TODO: complete doc
 
     /**
-     *
      * @return
      */
     public Unit getUnit() {
@@ -130,8 +128,8 @@ public class SortVisual {
     // SETTER method
 
     //@TODO: complete doc
+
     /**
-     *
      * @param unit
      */
     public void setUnit(Unit unit) {
@@ -237,6 +235,7 @@ public class SortVisual {
     }
 
     //@TODO: complete doc
+
     /**
      * Used to generate a correct location for a block inside a data structure.
      * This is done to synchronize the data structure that contains the blocks, with the first sort state.
@@ -326,8 +325,8 @@ public class SortVisual {
      * Take block1, push it to x=0 (edge of screen) , replace its old pos with block2, put block 1 in old block2 pos
      * USAGE: formatted to use the same corresponding numbers as the Tuples generated.
      *
-     * @param block1 first block id
-     * @param block2 second block id
+     * @param block1    first block id
+     * @param block2    second block id
      * @param swapIndex keep track of where you are in all swaps
      */
     private void swapTwo(int block1, int block2, int swapIndex) {
@@ -462,8 +461,8 @@ public class SortVisual {
     }
 
     //@TODO: complete doc
+
     /**
-     *
      * @param display
      */
     public void display(boolean display) {

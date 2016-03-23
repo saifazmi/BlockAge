@@ -46,6 +46,7 @@ public class SoundManager {
     }
 
     //@TODO; document every method
+
     /**
      *
      */
@@ -85,8 +86,8 @@ public class SoundManager {
     // GETTER methods
 
     //@TODO: never used, delete?
+
     /**
-     *
      * @return
      */
     public boolean isPaused() {

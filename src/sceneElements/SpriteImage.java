@@ -15,7 +15,7 @@ public class SpriteImage extends ImageView {
     /**
      * Constructs a sprite image to display
      *
-     * @param image the image to use
+     * @param image  the image to use
      * @param entity the entity that the image relates to
      */
     public SpriteImage(Image image, Entity entity) {

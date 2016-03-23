@@ -204,6 +204,7 @@ public class EditorParser {
 
     /**
      * Sets the boolean to overwrite an existing map if it already exists, called when user press 'yes' when prompted
+     *
      * @param overwrite whether to overwrite or not
      */
     public void setOverwrite(boolean overwrite) {
