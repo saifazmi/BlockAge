@@ -10,16 +10,16 @@ public class Tuple {
     private int first;
     private int second;
 
+    // GETTER methods
 
     /**
-     * Creates a tuple
+     * Gets the first element of the tuple
      *
-     * @param first  the first element of the tuple
-     * @param second the second element of the tuple
+     * @return the first element of the tuple
      */
-    public Tuple(int first, int second) {
-        this.first = first;
-        this.second = second;
+    public int getFirst() {
+
+        return this.first;
     }
 
     /**
@@ -28,7 +28,20 @@ public class Tuple {
      * @return the second element of the tuple
      */
     public int getSecond() {
-        return second;
+
+        return this.second;
+    }
+
+    // SETTER methods
+
+    /**
+     * Sets the first element of the tuple
+     *
+     * @param first the value that will be set
+     */
+    public void setFirst(int first) {
+
+        this.first = first;
     }
 
     /**
@@ -37,24 +50,19 @@ public class Tuple {
      * @param second the value that will be set
      */
     public void setSecond(int second) {
+
         this.second = second;
     }
 
     /**
-     * Gets the first element of the tuple
+     * Creates a tuple
      *
-     * @return the first element of the tuple
+     * @param first  the first element of the tuple
+     * @param second the second element of the tuple
      */
-    public int getFirst() {
-        return first;
-    }
+    public Tuple(int first, int second) {
 
-    /**
-     * Sets the first element of the tuple
-     *
-     * @param first the value that will be set
-     */
-    public void setFirst(int first) {
         this.first = first;
+        this.second = second;
     }
 }

@@ -13,28 +13,62 @@ import javafx.scene.shape.Rectangle;
  * specifically for updating logical location. (Normal javaFX x values are not adequate)
  */
 public class SortVisualBar extends Rectangle {
+
     private int value;
     private double updateX;
 
+    //@TODO: every method needs doc
+    // GETTER method
+
+    /**
+     *
+     * @return
+     */
     public double getUpdateX() {
-        return updateX;
+
+        return this.updateX;
     }
 
+    /**
+     *
+     * @return
+     */
+    public int getValue() {
+
+        return this.value;
+    }
+
+    // SETTER methods
+
+    /**
+     *
+     * @param updateX
+     */
     public void setUpdateX(double updateX) {
+
         this.updateX = updateX;
     }
 
+    /**
+     *
+     * @param value
+     */
+    public void setValue(int value) {
+
+        this.value = value;
+    }
+
+    /**
+     *
+     * @param width
+     * @param height
+     * @param fill
+     * @param value
+     */
     public SortVisualBar(double width, double height, Paint fill, int value) {
+
         super(width, height, fill);
         this.value = value;
         this.setStroke(Color.BLACK);
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 }
