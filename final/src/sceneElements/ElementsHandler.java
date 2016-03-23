@@ -45,7 +45,7 @@ public class ElementsHandler {
     private static final Logger LOG = Logger.getLogger(ElementsHandler.class.getName());
 
     private static ButtonProperties b = new ButtonProperties();
-    public static Options options = new Options();
+    public static Options options = Options.Instance();
 
     /**
      * Handles the events for the buttons
@@ -297,8 +297,6 @@ public class ElementsHandler {
         // If the on Initial blockades button is pressed, the map will spawn with no initial blockades
         if (event.getSource() == OptionsMenu.yesButtonB) {
 
-            options.setInitialBlockades(false);
-
             // Changes the button from on to off
             b.setButtonProperties(
                     OptionsMenu.noButtonB,
@@ -326,8 +324,6 @@ public class ElementsHandler {
 
         // If the off Initial blockades button is pressed, the map will spawn with random initial blockades
         if (event.getSource() == OptionsMenu.noButtonB) {
-
-            options.setInitialBlockades(true);
 
             // Changes the button from off to on
             b.setButtonProperties(
@@ -555,7 +551,7 @@ public class ElementsHandler {
         MenuHandler.switchScene(MenuHandler.MAIN_GAME);
         Renderer.Instance().initialDraw();
 
-        if (options.isTutorial()) {
+        if (Options.Instance().isTutorial()) {
             Tutorial.setup();
         }
 

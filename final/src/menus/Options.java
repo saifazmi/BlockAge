@@ -13,11 +13,19 @@ public class Options {
 
     private boolean showPath;
     private boolean tutorial;
+    private static Options instance = null;
 
-    public Options() {
+    public static Options Instance() {
+        if (instance == null) {
+            instance = new Options();
+        }
+        return instance;
+    }
+
+    private Options() {
 
         showPath = true;
-        tutorial = true;
+        tutorial = false;
     }
 
     /**
@@ -28,15 +36,6 @@ public class Options {
     public void setPath(boolean showPath) {
 
         this.showPath = showPath;
-    }
-
-    /**
-     * Sets the initial blockades option for the game that will start
-     *
-     * @param initialBlockades - if it shows the blockades or not or not
-     */
-    public void setInitialBlockades(boolean initialBlockades) {
-
     }
 
     /**

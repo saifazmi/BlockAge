@@ -47,6 +47,8 @@ public class BaseSpawner {
     private GameRunTime runTime = GameRunTime.Instance();
     private GraphNode goal;
 
+    public static boolean placing;
+
     // Instance for singleton.
     private static BaseSpawner instance = null;
 
@@ -76,7 +78,7 @@ public class BaseSpawner {
      * Builds a base for the player
      */
     private BaseSpawner() {
-
+        placing = true;
         runTime.getScene().setOnMouseClicked(e -> {
 
             this.goal = Blockade.calcGraphNode(e);
@@ -95,6 +97,7 @@ public class BaseSpawner {
                 generateBlockades();
 
                 this.runTime.getScene().setOnMouseClicked(null);
+                placing = false;
             }
         });
     }

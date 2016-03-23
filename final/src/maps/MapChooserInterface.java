@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import menus.MenuHandler;
+import menus.Options;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 
@@ -231,6 +232,7 @@ public class MapChooserInterface {
 
         int buttonIndex = mapImages.indexOf(e);
         chosenMap = mapNames.get(buttonIndex);
+        Options.Instance().setTutorial(false);
         ElementsHandler.startGame();
         mapChooseStage.hide();
     }

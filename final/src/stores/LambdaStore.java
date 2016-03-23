@@ -1,5 +1,6 @@
 package stores;
 
+import core.BaseSpawner;
 import core.CoreEngine;
 import core.GameRunTime;
 import entity.Blockade;
@@ -269,6 +270,8 @@ public final class LambdaStore {
                 scene.setOnMouseClicked(getPlaceBreakableBlockade());
 
             }
+
+        } else if (BaseSpawner.placing) {
 
         } else if (scene.getOnMouseClicked().equals(getPlaceUnbreakableBlockade())) {
 
