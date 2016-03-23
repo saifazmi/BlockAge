@@ -35,9 +35,8 @@ the game.~~
 - ~~Occasionally make diagonal moves.~~
 
 #### Unit  
-- Transitions don't work if unit doesn't spawn at (0,0)
 - ~~If boxed in the unit stops moving and the game crashes.~~ 
-- Cannot select unit after generating route with SHIFT+R.
+- ~~Cannot select unit after generating route with SHIFT+R.~~
 
 #### SortVisualisation
 - ~~Doesn't reset the visualiser for new game.~~
