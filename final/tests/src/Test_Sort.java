@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by decklol on 19/02/16.
+ * @author : Anh Pham
+ * @version : 11/03/2016
+ *          <p>
+ *          This is the class that will test the logical aspect of the sorting mechanism
+ * @date : 24/02/16
  */
 
 public class Test_Sort {

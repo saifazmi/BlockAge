@@ -11,8 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Anh on 26/02/2016.
- * Testing class for the purpose of testing the output of different functions of different class
+ * @author : Anh Pham
+ * @version : 11/03/2016
+ *          <p>
+ *          This is the class that will test the logical aspect of the unit
+ * @date : 24/02/16
  */
 public class Test_Unit extends Test_Logic {
 

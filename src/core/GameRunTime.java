@@ -20,17 +20,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : First created by Dominic Walters with code by Dominic Walters, and Paul Popa
- * @date : 28/01/16, last edited by Dominic Walters on 26/02/16
- * Creates the main interface for the game. This will contain the grid
- * where all the entities will be drawn on.
+ * @author : Dominic Walters; Contributors - Dominic Walters, and Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          Creates the main interface for the game. This will contain the grid
+ *          where all the entities will be drawn on.
+ *
+ * @date : 28/01/16
  */
 public class GameRunTime {
 
     private static final Logger LOG = Logger.getLogger(GameRunTime.class.getName());
 
-    // States
-    private boolean basePlaced = false;
     private SpriteImage lastClicked = null;
 
     // Dependencies
@@ -122,16 +123,6 @@ public class GameRunTime {
     // GETTER methods
 
     /**
-     * Checks if the player has placed the base
-     *
-     * @return true if the base has been placed else false
-     */
-    public boolean isBasePlaced() {
-
-        return this.basePlaced;
-    }
-
-    /**
      * Returns the main game scene where the game will be played
      *
      * @return the main game scene
@@ -170,6 +161,5 @@ public class GameRunTime {
      */
     public void setBasePlaced(boolean basePlaced) {
 
-        this.basePlaced = basePlaced;
     }
 }

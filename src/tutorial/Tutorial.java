@@ -19,7 +19,11 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Created by dominic on 13/03/16.
+ * @author : Dominic Walters; Contributors - Dominic Walters
+ * @version : 23/03/2016;
+ *          <p>
+ *          This is the class that tracks the tutorial and performs the necessary visual changes.
+ * @date : 13/03/16
  */
 public class Tutorial {
 

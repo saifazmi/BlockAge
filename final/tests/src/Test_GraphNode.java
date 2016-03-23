@@ -6,7 +6,11 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 
 /**
- * Created by user on 12/03/2016.
+ * @author : Anh Pham
+ * @version : 11/03/2016
+ *          <p>
+ *          This is the class that will test the logical aspect of the GraphNode class
+ * @date : 24/02/16
  */
 public class Test_GraphNode extends Test_Logic {
 

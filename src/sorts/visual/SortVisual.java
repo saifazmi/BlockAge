@@ -27,15 +27,16 @@ import stores.LambdaStore;
 import java.util.ArrayList;
 
 /**
- * @author : Evgeniy Kim
- * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- * <p>
- * The central class for displaying the sort visual. Loosely based on the Model-View-Controller model.
- * This class contains both: Controller and View, and the Model being individual Sort classes.
- * However instead of the Controller constantly changing the Model, it does it all in one go:
- * after a sort is chosen, all sort 'states' which are steps from the beginning to the end where the
- * list is sorted, are stored with swapped flags where necessary. This class then unwraps that information
- * in a way that can be easily usable by a visualizer, which is also here.
+ * @author : Evgeniy Kim; Contributors - Evgeniy Kim,Dominic Walters, Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          The central class for displaying the sort visual. Loosely based on the Model-View-Controller model.
+ *          This class contains both: Controller and View, and the Model being individual Sort classes.
+ *          However instead of the Controller constantly changing the Model, it does it all in one go:
+ *          after a sort is chosen, all sort 'states' which are steps from the beginning to the end where the
+ *          list is sorted, are stored with swapped flags where necessary. This class then unwraps that information
+ *          in a way that can be easily usable by a visualizer, which is also here.
+ * @date : 19/02/16
  */
 public class SortVisual {
 

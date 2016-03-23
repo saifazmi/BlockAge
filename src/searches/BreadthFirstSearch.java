@@ -11,8 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author : First created by Hung Hoang with code by Hung Hoang
- * @date : 06/02/16, last edited by Hung Hoang on 25/02/16
+ * @author : Hung Hoang; Contributors - Hung Hoang
+ * @version : 23/03/2016;
+ *          <p>
+ *          This is the class that performs breadth first searches.
+ * @date : 06/02/16
  */
 public class BreadthFirstSearch {
 

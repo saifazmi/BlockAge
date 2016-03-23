@@ -3,11 +3,13 @@ package sorts.logic;
 import java.util.ArrayList;
 
 /**
- * @author : First created by Evgeniy Kim with code by Evgeniy Kim
- * @date : 19/02/16, last edited by Evgeniy Kim on 19/02/16
- * <p>
- * BubbleSort with a SortableComponent object which prepares the data to be
- * more easily unpacked for visualisation at SortVisual class.
+ * @author : Evgeniy Kim; Contributors - Evgeniy Kim
+ * @version : 23/03/2016;
+ *          <p>
+ *          BubbleSort with a SortableComponent object which prepares the data to be
+ *          more easily unpacked for visualisation at SortVisual class.
+ *
+ * @date : 19/02/16
  */
 public class BubbleSort {
 

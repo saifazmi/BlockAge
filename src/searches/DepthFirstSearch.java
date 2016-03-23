@@ -12,7 +12,11 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
- * Created by hung on 06/02/16.
+ * @author : Hung Hoang; Contributors - Hung Hoang
+ * @version : 23/03/2016;
+ *          <p>
+ *          This is the class that performs depth first searches.
+ * @date : 06/02/16
  */
 public class DepthFirstSearch {
 

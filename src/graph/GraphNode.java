@@ -9,8 +9,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
- * @date : 28/01/16, last edited by Hung Hoang on 02/02/16
+ * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
+ * @version : 23/03/2016;
+ *          <p>
+ *          Defines a graphnode data structure.
+ *
+ * @date : 28/01/16
  */
 public class GraphNode {
 

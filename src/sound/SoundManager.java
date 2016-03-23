@@ -7,7 +7,13 @@ import javafx.util.Duration;
 import java.net.URL;
 
 /**
- * Created by hung on 01/03/16.
+ * @author : Hung Hoang;
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class uses a circular buffer to store all the soundtracks organises
+ *          them to be played one after another in a loop
+ *
+ * @date : 28/01/16
  */
 public class SoundManager {
 

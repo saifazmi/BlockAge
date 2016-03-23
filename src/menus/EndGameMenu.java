@@ -25,11 +25,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : First created by Anh with code by Paul Popa
- * @date : 11/03/16, last edited by Anh on 11/03/16
- * <p>
- * This class creates the menu with the end game state. The menu will display
- * the final score the user achieved as well as with a button to go back to the main menu.
+ * @author : Anh Pham; Contributors - Paul Popa
+ * @version : 23/03/2016;
+ *          <p>
+ *          This class creates the menu with the end game state. The menu will display
+ *          the final score the user achieved as well as with a button to go back to the main menu.
+ *
+ * @date : 11/03/16
  */
 public class EndGameMenu implements Menu {
 

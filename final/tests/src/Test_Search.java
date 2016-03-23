@@ -14,11 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author : Evgeniy
- * @project : bestRTS
- * @date : 07/02/16
- * <p>
- * Barebones search test.
+ * @author : Anh Pham
+ * @version : 11/03/2016
+ *          <p>
+ *          This is the class that will test the logical aspect of the searching mechanism
+ * @date : 24/02/16
  */
 public class Test_Search extends Test_Logic {
     private Graph graph = createGraph();
