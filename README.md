@@ -19,7 +19,7 @@ Knows Bugs
 the game.~~  
 
 #### Custom Game  
-- When redirected to map creator it pop-ups a window.  
+- ~~When redirected to map creator it pop-ups a window.~~  
 
 #### Base Spawner
 - ~~Base can be placed anywhere (on blockades, off of grid etc)~~
