@@ -13,6 +13,7 @@ public class SpriteImage extends ImageView {
     private Entity entity;
 
     //@TODO: complete doc
+
     /**
      * Constructs an sprite image to display
      *

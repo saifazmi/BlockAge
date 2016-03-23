@@ -19,11 +19,11 @@ public class ButtonProperties {
     /**
      * Sets the button properties
      *
-     * @param button        the button to be set
-     * @param posX          the x coord of the button
-     * @param posY          the y coord of the button
-     * @param eventHandler  the event that will happen
-     * @param imgView       the image set on the button
+     * @param button       the button to be set
+     * @param posX         the x coord of the button
+     * @param posY         the y coord of the button
+     * @param eventHandler the event that will happen
+     * @param imgView      the image set on the button
      */
     public void setButtonProperties(Button button, double posX, double posY, EventHandler<ActionEvent> eventHandler, ImageView imgView) {
 
@@ -37,9 +37,9 @@ public class ButtonProperties {
     /**
      * Adds an on mouse entered effect
      *
-     * @param button         the button that will be hovered
-     * @param hoverImageIn   the image that will be changed into when mouse entered
-     * @param hoverImageOut  the image that will be change into when mouse exited
+     * @param button        the button that will be hovered
+     * @param hoverImageIn  the image that will be changed into when mouse entered
+     * @param hoverImageOut the image that will be change into when mouse exited
      */
     public void addHoverEffect(Button button, Image hoverImageIn, Image hoverImageOut, double posX, double posY) {
 
@@ -78,6 +78,7 @@ public class ButtonProperties {
     }
 
     //@TODO: complete doc
+
     /**
      * Adds hover effect as above, but for buttons in the map editor interface
      *
@@ -121,6 +122,7 @@ public class ButtonProperties {
     }
 
     //@TODO: complete doc
+
     /**
      * Simple enlargement of image inside Button
      *

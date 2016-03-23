@@ -14,6 +14,7 @@ import java.util.Stack;
  * Created by hung on 06/02/16.
  */
 public class DepthFirstSearch {
+
     /**
      * Finds a path from a start node to the end node using DFS, utilises a stack
      * The returned path should not include the start node
@@ -29,23 +30,25 @@ public class DepthFirstSearch {
         LinkedHashMap<GraphNode, GraphNode> possiblePath = new LinkedHashMap<>();
         ArrayList<GraphNode> path = new ArrayList<>();
         ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations = new ArrayList<>();
+
         GraphNode current;
         GraphNode parent;
 
+        //@TODO: comments explaining the search steps
         frontier.push(unit.getPosition());
 
         while (!frontier.isEmpty()) {
+
             current = frontier.pop();
 
             if (!visited.contains(current) && (current.getBlockade() == null || current.getBlockade().isBreakable())) {
 
                 if (current.equals(endNode)) {
-                    System.out.println("path back");
+
                     while (possiblePath.keySet().contains(current)) {
+
                         path.add(current);
-                        System.out.println("current: " + current);
                         parent = possiblePath.get(current);
-                        System.out.println("parent: " + parent);
                         current = parent;
                     }
 
@@ -54,14 +57,18 @@ public class DepthFirstSearch {
                     unit.setVisited(visited);
                     unit.setRoute(path);
                     unit.setNodeAssociations(nodeAssociations);
+
                     return path;
+
                 } else {
 
                     visited.add(current);
                     current.getSuccessors().stream().filter(n -> !visited.contains(n)).forEach(frontier::push);
 
                     for (GraphNode successor : current.getSuccessors()) {
+
                         if (!possiblePath.containsValue(successor)) {
+
                             dfsSpecificNodeAssociation(nodeAssociations, successor, current);
                             possiblePath.put(successor, current);
                         }
@@ -74,13 +81,24 @@ public class DepthFirstSearch {
         return null;
     }
 
+    //@TODO: complete doc
+
+    /**
+     * @param nodeAssociations
+     * @param to
+     * @param from
+     */
     private static void dfsSpecificNodeAssociation(ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations, GraphNode to, GraphNode from) {
+
         ArrayList<Pair<GraphNode, GraphNode>> toRemove = new ArrayList<>();
+
         for (Pair<GraphNode, GraphNode> pair : nodeAssociations) {
+
             if (to.equals(pair.getValue())) {
                 toRemove.add(pair);
             }
         }
+
         nodeAssociations.removeAll(toRemove);
         nodeAssociations.add(new Pair<>(from, to));
     }

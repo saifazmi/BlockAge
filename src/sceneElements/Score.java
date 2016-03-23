@@ -29,8 +29,10 @@ public class Score {
     // SETTER methods
 
     //@TODO: complete doc, Anh
+
     /**
      * Updates the score
+     *
      * @param rate
      */
     public void update(double rate) {

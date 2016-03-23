@@ -9,7 +9,6 @@ import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * @author : First created by Saif Amzi with code by Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi

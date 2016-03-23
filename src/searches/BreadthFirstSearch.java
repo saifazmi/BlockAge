@@ -15,6 +15,7 @@ import java.util.List;
  * @date : 06/02/16, last edited by Hung Hoang on 25/02/16
  */
 public class BreadthFirstSearch {
+
     /**
      * Finds a path from a start node to the end node using BFS, this utilises a queue which is just a linked list
      * The returned path should not include the start node.
@@ -34,11 +35,13 @@ public class BreadthFirstSearch {
         GraphNode current;
         GraphNode parent;
 
+        //@TODO: comments explaining the search steps
         frontier.add(unit.getPosition());
 
         while (!frontier.isEmpty()) {
 
             current = frontier.poll();
+
             if (!visited.contains(current) && (current.getBlockade() == null || current.getBlockade().isBreakable())) {
 
                 if (current.equals(endNode)) {
@@ -55,14 +58,20 @@ public class BreadthFirstSearch {
                     unit.setVisited(visited);
                     unit.setRoute(path);
                     unit.setNodeAssociations(nodeAssociations);
+
                     return path;
+
                 } else {
+
                     visited.add(current);
-                    //frontier.addAll(current.getSuccessors());
+
                     for (GraphNode successor : current.getSuccessors()) {
+
                         if (!visited.contains(successor) && !frontier.contains(successor)) {
+
                             frontier.add(successor);
                             nodeAssociations.add(new Pair<>(current, successor));
+
                             if (!possiblePath.keySet().contains(successor) && !possiblePath.containsValue(successor)) {
                                 possiblePath.put(successor, current);
                             }
@@ -71,6 +80,7 @@ public class BreadthFirstSearch {
                 }
             }
         }
+
         return null;
     }
 }

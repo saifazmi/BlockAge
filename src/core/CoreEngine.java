@@ -139,6 +139,7 @@ public class CoreEngine {
 
     /**
      * Gets the list of blockades that the engine keeps track of
+     *
      * @return the list of blockades
      */
     public ArrayList<Blockade> getBlockades() {
@@ -355,7 +356,7 @@ public class CoreEngine {
 
         boolean removed = false;
 
-        if(entity instanceof Unit) {
+        if (entity instanceof Unit) {
 
             removed = units.remove(entity);
             units.trimToSize();
