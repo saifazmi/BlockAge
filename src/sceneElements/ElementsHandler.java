@@ -68,9 +68,15 @@ public class ElementsHandler {
             OptionsMenu.blockadeLabel.setVisible(true);
             OptionsMenu.noButtonB.setVisible(true);
             OptionsMenu.yesButtonB.setVisible(true);
+            OptionsMenu.tutorialLabel.setVisible(true);
+            OptionsMenu.noButtonTutorial.setVisible(true);
+            OptionsMenu.yesButtonTutorial.setVisible(true);
             OptionsMenu.blockadeLabel.setDisable(false);
             OptionsMenu.noButtonB.setDisable(false);
             OptionsMenu.yesButtonB.setDisable(false);
+            OptionsMenu.tutorialLabel.setDisable(false);
+            OptionsMenu.noButtonTutorial.setDisable(false);
+            OptionsMenu.yesButtonTutorial.setDisable(false);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
         // Switches to the Map Editor Menu if the map editor button is pressed
@@ -95,11 +101,12 @@ public class ElementsHandler {
         if (event.getSource() == OptionsMenu.yesButtonSearch) {
 
             options.setPath(false);
-            ArrayList<Entity> units = engine.getEntities();
+
+            ArrayList<Unit> units = engine.getUnits();
 
             for (int i = 0; i < units.size(); i++) {
 
-                SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
+                SpriteImage obtainedSprite = engine.getUnits().get(i).getSprite();
                 pressedToNotPressed(obtainedSprite);
             }
 
@@ -375,9 +382,15 @@ public class ElementsHandler {
             OptionsMenu.blockadeLabel.setVisible(false);
             OptionsMenu.noButtonB.setVisible(false);
             OptionsMenu.yesButtonB.setVisible(false);
+            OptionsMenu.tutorialLabel.setVisible(false);
+            OptionsMenu.noButtonTutorial.setVisible(false);
+            OptionsMenu.yesButtonTutorial.setVisible(false);
             OptionsMenu.blockadeLabel.setDisable(true);
             OptionsMenu.noButtonB.setDisable(true);
             OptionsMenu.yesButtonB.setDisable(true);
+            OptionsMenu.tutorialLabel.setDisable(true);
+            OptionsMenu.noButtonTutorial.setDisable(true);
+            OptionsMenu.yesButtonTutorial.setDisable(true);
             MenuHandler.switchScene(MenuHandler.OPTIONS_MENU);
         }
 
@@ -457,14 +470,15 @@ public class ElementsHandler {
                 GameInterface.namePaneLabel.setText("R-Show route");
                 GameInterface.searchPaneLabel.setText("S-Unselect unit");
                 GameInterface.sortPaneLabel.setText("B-Unsortable blockade");
-                ArrayList<Entity> units = engine.getEntities();
+
+                ArrayList<Unit> units = engine.getUnits();
 
                 // Unselects all the units on the grid
                 for (int i = 0; i < units.size(); i++) {
 
                     if (units.get(i) instanceof Unit) {
 
-                        SpriteImage obtainedSprite = engine.getEntities().get(i).getSprite();
+                        SpriteImage obtainedSprite = engine.getUnits().get(i).getSprite();
                         pressedToNotPressed(obtainedSprite);
                     }
                 }

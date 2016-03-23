@@ -208,7 +208,7 @@ public class BaseSpawner {
                     if (blockade != null) {
                         renderer.drawInitialEntity(blockade);
                         blockade.getSprite().setOnMouseClicked(f -> blockade.getSortVisual().display(true));
-                        CoreEngine.Instance().getEntities().add(blockade);
+                        CoreEngine.Instance().getBlockades().add(blockade);
                     }
                 }
             }

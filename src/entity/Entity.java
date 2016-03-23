@@ -100,13 +100,6 @@ public abstract class Entity extends Observable {
         this.sprite = sprite;
     }
 
-    //@TODO: document this method
-
-    /**
-     *
-     */
-    public abstract void update();
-
     /**
      * Checks if a given object is equal to this Entity
      *

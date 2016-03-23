@@ -36,16 +36,6 @@ public class Blockade extends Entity {
         this.breakable = false;
     }
 
-    /**
-     * Abstract method from Entity that required implementation.
-     * Left empty as nothing is necessary.
-     */
-    @Override
-    public void update() {
-
-        // Nothing to update
-    }
-
     // GETTER methods
 
     /**
@@ -82,25 +72,6 @@ public class Blockade extends Entity {
         GraphNode node = calcGraphNode(e);
 
         return create(blockadeInstance, node);
-    }
-
-    /**
-     * Get all current blockades from the engine.
-     *
-     * @return the list of blockades
-     */
-    public static ArrayList<Blockade> getBlockades() {
-
-        ArrayList<Blockade> blockades = new ArrayList<>();
-        ArrayList<Entity> entities = CoreEngine.Instance().getEntities();
-
-        blockades.addAll(
-                entities.stream().filter(entity ->
-                        entity instanceof Blockade).map(entity ->
-                        (Blockade) entity).collect(Collectors.toList())
-        );
-
-        return blockades;
     }
 
     /**
@@ -156,7 +127,7 @@ public class Blockade extends Entity {
      */
     protected static int calcId() {
 
-        ArrayList<Blockade> blockades = getBlockades();
+        ArrayList<Blockade> blockades = CoreEngine.Instance().getBlockades();
         int max = 0;
 
         for (Blockade blockade : blockades) {

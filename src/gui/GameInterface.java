@@ -2,7 +2,6 @@ package gui;
 
 import core.CoreEngine;
 import core.GameRunTime;
-import entity.SortableBlockade;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -28,7 +27,6 @@ import menus.Menu;
 import sceneElements.ButtonProperties;
 import sceneElements.ElementsHandler;
 import sceneElements.LabelProperties;
-import sorts.visual.SortVisual;
 import stores.ImageStore;
 import stores.LambdaStore;
 
@@ -75,12 +73,6 @@ public class GameInterface {
     private int initialPositionY = 50;
     // the spacing that will be added between elements of the pane
     private int heightSpacing = 30;
-
-    //@TODO: never used, delete?
-    // the visual which will be placed on the pane
-    public SortVisual sortVisual = null;
-    //@TODO: never used, delete?
-    public SortableBlockade sortableBlockade;
 
     // Instance for singleton.
     private static GameInterface instance = null;

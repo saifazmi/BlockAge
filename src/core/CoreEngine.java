@@ -2,6 +2,7 @@ package core;
 
 import entity.Blockade;
 import entity.Entity;
+import entity.Unit;
 import graph.Graph;
 import graph.GraphNode;
 import gui.GameInterface;
@@ -41,7 +42,8 @@ public class CoreEngine {
 
     // Runtime dependencies
     private Graph graph;
-    private ArrayList<Entity> entities;
+    private ArrayList<Unit> units;
+    private ArrayList<Blockade> blockades;
     private UnitSpawner spawner;
 
     // Instance for singleton.
@@ -77,7 +79,8 @@ public class CoreEngine {
 
         instance = this;
         this.graph = new Graph();
-        this.entities = new ArrayList<>();
+        this.units = new ArrayList<>();
+        this.blockades = new ArrayList<>();
 
         for (int x = 0; x < Graph.WIDTH; x++) {
             for (int y = 0; y < Graph.HEIGHT; y++) {
@@ -125,13 +128,22 @@ public class CoreEngine {
     }
 
     /**
-     * Gets the list of entities that the engine updates
+     * Gets the list of units that the engine updates
      *
      * @return the list of Entities
      */
-    public ArrayList<Entity> getEntities() {
+    public ArrayList<Unit> getUnits() {
 
-        return this.entities;
+        return this.units;
+    }
+
+    /**
+     * Gets the list of blockades that the engine keeps track of
+     * @return the list of blockades
+     */
+    public ArrayList<Blockade> getBlockades() {
+
+        return blockades;
     }
 
     /**
@@ -320,11 +332,8 @@ public class CoreEngine {
      */
     private void updateGameState() {
 
-        if (entities != null) {
-
-            for (Entity entity : entities) {
-                entity.update();
-            }
+        if (units != null) {
+            units.forEach(Unit::update);
         }
 
         if (spawner != null) {
@@ -344,19 +353,23 @@ public class CoreEngine {
      */
     public boolean removeEntity(Entity entity) {
 
-        // remove the given entity
-        boolean removed = entities.remove(entity);
-        entities.trimToSize();
+        boolean removed = false;
+
+        if(entity instanceof Unit) {
+
+            removed = units.remove(entity);
+            units.trimToSize();
+        } else if (entity instanceof Blockade) {
+            removed = blockades.remove(entity);
+            blockades.trimToSize();
+            entity.getPosition().setBlockade(null);
+        }
 
         // check if the entity was logically removed
         if (removed) {
 
             // remove the sprite of the entity from renderer
             Renderer.Instance().remove(entity.getSprite());
-        }
-
-        if (entity instanceof Blockade) {
-            entity.getPosition().setBlockade(null);
         }
 
         return removed;

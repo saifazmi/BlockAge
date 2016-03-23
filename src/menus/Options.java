@@ -7,7 +7,7 @@ public class Options {
     private boolean showDescription = true;
     private boolean showPath = true;
     private boolean initialBlockades = true;
-    private boolean tutorial = false;
+    private boolean tutorial = true;
 
     public Options() {
 
@@ -22,6 +22,7 @@ public class Options {
      * @param showDescription - if it shows the description or not
      */
     public void setDescription(boolean showDescription) {
+
         this.showDescription = showDescription;
     }
 
@@ -33,6 +34,7 @@ public class Options {
      * @param showDescription - if it shows the description or not
      */
     public void setPath(boolean showPath) {
+
         this.showPath = showPath;
     }
 
@@ -44,6 +46,7 @@ public class Options {
      * @param showDescription - if it shows the description or not
      */
     public void setInitialBlockades(boolean initialBlockades) {
+
         this.initialBlockades = initialBlockades;
     }
 
@@ -69,6 +72,7 @@ public class Options {
      * @return - the option if the the description of a unit will be shown or not
      */
     public boolean getShowDescription() {
+
         return showDescription;
     }
 
