@@ -24,9 +24,9 @@ How to Run
 
 - Open a terminal.
 - ```$``` represents a terminal prompt.
-- Make sure the scripts "compile" and "run" are executable.  
+- Make sure the scripts "compile", "run" and "run_tests" are executable.  
 ```
-$ chmod +x compile run  
+$ chmod +x compile run run_tests
 ```
 
 ### Compile  
