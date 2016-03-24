@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * @author : Dominic Walters; Contributors - Dominic Walters
+ * @author : Dominic Walters
  * @version : 23/03/2016;
  *          <p>
  *          This is the class that tracks the tutorial and performs the necessary visual changes.
@@ -123,10 +123,12 @@ public class Tutorial {
                     mapBlockadeCount = CoreEngine.Instance().getBlockades().size();
                     System.out.println(mapBlockadeCount);
 
-                    tutorial.setText("Good, the enemy units will spawn in the upper left hand corner and try to reach the base. " +
+                    tutorial.setText("Good, the enemy units will spawn in the upper left hand corner and " +
+                            "try to reach the base. " +
                             "Once these units reach your base, you lose the game. " +
                             "You can place blockades to slow down the units and/or redirect them. " +
-                            "However, if you fully surround a unit so it can't reach the base, the game will end and your score will halve. " +
+                            "However, if you fully surround a unit so it can't reach the base, the game will end and " +
+                            "your score will halve. " +
                             "Place one or more blockades of any type on the grid. " +
                             "Press the ENTER key to continue."
                     );
@@ -187,7 +189,8 @@ public class Tutorial {
                     step--;
 
                 } else {
-                    tutorial.setText("Good, this should give you some more insight as to how the search is implemented. " +
+                    tutorial.setText("Good, this should give you some more insight as to " +
+                            "how the search is implemented. " +
                             "You can also press SHIFT+R to show a more advanced visual. " +
                             "This visual shows all the paths that the algorithm attempted. " +
                             "Press SHIFT+R to show this visual. " +
@@ -205,8 +208,10 @@ public class Tutorial {
                     step--;
 
                 } else {
-                    tutorial.setText("Good, this visual shows all the nodes that are considered by the search in the order they are considered. " +
-                            "By studying this, along with the current route, you should be able to place blockades intelligently. " +
+                    tutorial.setText("Good, this visual shows all the nodes that are considered by " +
+                            "the search in the order they are considered. " +
+                            "By studying this, along with the current route, you should be able to " +
+                            "place blockades intelligently. " +
                             "This will allow you to survive longer and improve your score. " +
                             "This is the end of the tutorial, the game will unpause once you continue. " +
                             "Press the ENTER key to continue."
@@ -220,7 +225,7 @@ public class Tutorial {
     }
 
     /**
-     * Resets the tutorial information to before it was initialised. Reenables the sort.
+     * Resets the tutorial information to before it was initialised. Re-enables the sort.
      */
     public static void reset() {
 
@@ -237,5 +242,4 @@ public class Tutorial {
         GameInterface.sortVisualisationLabel.setLayoutX(212 - 197 / 2);
         CoreEngine.Instance().setPaused(false);
     }
-
 }

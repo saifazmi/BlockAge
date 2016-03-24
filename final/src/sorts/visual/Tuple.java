@@ -1,7 +1,7 @@
 package sorts.visual;
 
 /**
- * @author : Evgeniy Kim; Contributors - Evgeniy Kim,Dominic Walters, Paul Popa
+ * @author : Evgeniy Kim; Contributors - Dominic Walters and Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          Simple tuple class for use in swap indexes for sorting.
@@ -11,6 +11,18 @@ public class Tuple {
 
     private int first;
     private int second;
+
+    /**
+     * Creates a tuple
+     *
+     * @param first  the first element of the tuple
+     * @param second the second element of the tuple
+     */
+    public Tuple(int first, int second) {
+
+        this.first = first;
+        this.second = second;
+    }
 
     // GETTER methods
 
@@ -53,18 +65,6 @@ public class Tuple {
      */
     public void setSecond(int second) {
 
-        this.second = second;
-    }
-
-    /**
-     * Creates a tuple
-     *
-     * @param first  the first element of the tuple
-     * @param second the second element of the tuple
-     */
-    public Tuple(int first, int second) {
-
-        this.first = first;
         this.second = second;
     }
 }

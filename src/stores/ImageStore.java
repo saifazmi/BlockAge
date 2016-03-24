@@ -8,10 +8,10 @@ import sceneElements.SpriteImage;
 import java.io.File;
 
 /**
- * @author : Dominic Walters; Contributors - Dominic Walters
+ * @author : Dominic Walters; Contributors - Saif Azmi
  * @version : 23/03/2016;
  *          <p>
- *          This class creates all the images that are needed in several places.
+ *          This is a static class which creates all the images that are needed in several places.
  *          This is done to save space and time.
  * @date : 26/02/16
  */

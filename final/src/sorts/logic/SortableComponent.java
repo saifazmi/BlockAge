@@ -3,7 +3,7 @@ package sorts.logic;
 import java.util.ArrayList;
 
 /**
- * @author : Evgeniy Kim; Contributors - Evgeniy Kim
+ * @author : Evgeniy Kim
  * @version : 23/03/2016;
  *          <p>
  *          Specific object made for storing 'states' of a given sort. For visualisation.

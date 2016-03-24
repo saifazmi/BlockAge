@@ -91,7 +91,6 @@ public class BaseSpawner {
                 ImageStore.setSpriteProperties(base, image);
                 this.renderer.drawInitialEntity(base);
                 this.goal.setBase(base);
-                this.runTime.setBasePlaced(true);
 
                 protectBase(goal);
                 generateBlockades();

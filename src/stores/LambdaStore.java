@@ -23,10 +23,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : Dominic Walters; Contributors - Dominic Walters
+ * @author : Dominic Walters; Contributors - Saif Azmi
  * @version : 23/03/2016;
  *          <p>
- *          This class creates all the lambda expressions that are used in several places.
+ *          This is a static class which creates all the lambda expressions that are used in several places.
  *          This saves time, memory, and prevents code duplication.
  * @date : 16/02/16
  */
@@ -36,11 +36,9 @@ public final class LambdaStore {
 
     private Renderer renderer = Renderer.Instance();
     private Scene scene = GameRunTime.Instance().getScene();
-    private static LambdaStore instance = null;
 
-    private LambdaStore() {
-        // To prevent instantiation.
-    }
+    // Instance for singleton.
+    private static LambdaStore instance = null;
 
     /**
      * Implements Singleton for this class (Only one can exist)
@@ -64,12 +62,17 @@ public final class LambdaStore {
         instance = null;
     }
 
+    private LambdaStore() {
+
+        // To prevent instantiation.
+    }
+
     // GETTER methods
 
     /**
-     * gets the show sort mouse eventhandler
+     * gets the show sort mouse event handler
      *
-     * @return the eventhandler
+     * @return the event handler
      */
     public EventHandler<MouseEvent> getShowSort() {
 
@@ -77,9 +80,9 @@ public final class LambdaStore {
     }
 
     /**
-     * gets the place unbreakable blockade mouse eventhandler
+     * gets the place unbreakable blockade mouse event handler
      *
-     * @return the eventhandler
+     * @return the event handler
      */
     public EventHandler<MouseEvent> getPlaceUnbreakableBlockade() {
 
@@ -87,9 +90,9 @@ public final class LambdaStore {
     }
 
     /**
-     * gets the place breakable blockade mouse eventhandler
+     * gets the place breakable blockade mouse event handler
      *
-     * @return the eventhandler
+     * @return the event handler
      */
     public EventHandler<MouseEvent> getPlaceBreakableBlockade() {
 
@@ -97,9 +100,9 @@ public final class LambdaStore {
     }
 
     /**
-     * gets the unit click mouse eventhandler
+     * gets the unit click mouse event handler
      *
-     * @return the eventhandler
+     * @return the event handler
      */
     public EventHandler<MouseEvent> getUnitClickEvent() {
 

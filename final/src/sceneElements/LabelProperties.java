@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 /**
- * @author : Paul Popa; Contributors - Paul Popa
+ * @author : Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          This class makes the setting of the label properties more easily

@@ -17,7 +17,8 @@ import java.util.logging.Logger;
  * @author : Hung Hoang;
  * @version : 23/03/2016;
  *          <p>
- *          This class will parse a .map file and generate blockades for the game runtime instance to match the data in the map
+ *          This class will parse a .map file and generate blockades for the game runtime instance
+ *          to match the data in the map
  * @date : 28/01/16
  */
 
@@ -28,6 +29,11 @@ public class MapParser {
     private BufferedReader reader;
     private String row;
 
+    /**
+     * Initialises the map parser
+     *
+     * @param reader stream containing the map file
+     */
     public MapParser(BufferedReader reader) {
 
         this.reader = reader;

@@ -8,18 +8,15 @@ import javafx.scene.input.MouseEvent;
 import sceneElements.SpriteImage;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
- * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
+ * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang and Paul Popa.
  * @version : 23/03/2016;
  *          <p>
  *          Defines a blockade data structure.
  * @date : 28/01/16
  */
 public class Blockade extends Entity {
-
-    private static final Logger LOG = Logger.getLogger(Blockade.class.getName());
 
     // Blockade property
     protected boolean breakable;

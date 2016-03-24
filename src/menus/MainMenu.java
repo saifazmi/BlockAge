@@ -18,7 +18,7 @@ import sceneElements.ElementsHandler;
 import stores.ImageStore;
 
 /**
- * @author : Paul Popa; Contributors - Evgeniy Kim, Paul Popa
+ * @author : Paul Popa; Contributors - Evgeniy Kim
  * @version : 23/03/2016;
  *          <p>
  *          This class contains the main menu of the game. The interface for this menu is formed by buttons such as
@@ -36,6 +36,9 @@ public class MainMenu implements Menu {
     private Image newGameImage, newGameImageHovered, optionsImage, optionsImageHovered, exitImage,
             exitImageHovered, mapEditorImage, mapEditorHovered, customGameImage, customGameImageHovered;
 
+    /**
+     * Initialises the Main menu
+     */
     public MainMenu() {
 
         initialiseScene();
@@ -49,6 +52,7 @@ public class MainMenu implements Menu {
         //Panes
         mainMenuPane = new Pane();
         fadingPane = new Pane();
+
         //Buttons
         newGameButton = new Button();
         optionsButton = new Button();

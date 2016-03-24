@@ -19,14 +19,13 @@ import sceneElements.LabelProperties;
 import stores.ImageStore;
 
 /**
- * @author : Paul Popa; Contributors -  Paul Popa
+ * @author : Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          This class is the Options Menu. There are four options that can be turned on or off: Show Search,
  *          Sound, Tutorial, No initial blockades.
  * @date : 09/02/16
  */
-
 public class OptionsMenu implements Menu {
 
     public static Button yesButtonSearch, yesButtonSound, noButtonSearch, noButtonSound, yesButtonTutorial,

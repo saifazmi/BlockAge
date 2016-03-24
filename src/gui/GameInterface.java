@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : Paul Popa; Contributors - Paul Popa
+ * @author : Paul Popa; Contributors - Saif Azmi
  * @version : 23/03/2016;
  *          <p>
  *          This class contains the right pane that can be seen in-game. All the elements on the pane

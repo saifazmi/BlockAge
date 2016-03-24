@@ -34,7 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : Paul Popa; Contributors - Dominic Walters, and Paul Popa
+ * @author : Paul Popa; Contributors - Dominic Walters
  * @version : 23/03/2016;
  *          <p>
  *          Handles all the events that happen on all scenes in the game.
@@ -475,10 +475,10 @@ public class ElementsHandler {
 
                 ArrayList<Unit> units = engine.getUnits();
 
-                // Unselects all the units on the grid
+                // Un-selects all the units on the grid
                 for (int i = 0; i < units.size(); i++) {
 
-                    if (units.get(i) instanceof Unit) {
+                    if (units.get(i) != null) {
 
                         SpriteImage obtainedSprite = engine.getUnits().get(i).getSprite();
                         pressedToNotPressed(obtainedSprite);
@@ -503,7 +503,7 @@ public class ElementsHandler {
     }
 
     /**
-     * Unselects all the the units
+     * Un-selects all the the units
      *
      * @param sprite the sprite of the unit that will be unselected
      */

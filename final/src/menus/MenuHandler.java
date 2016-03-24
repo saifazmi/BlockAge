@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import maps.MapEditor;
 
 /**
- * @author : Paul Popa; Contributors - Evgeniy Kim, Paul Popa
+ * @author : Paul Popa; Contributors - Evgeniy Kim
  * @version : 23/03/2016;
  *          <p>
  *          Handles the menus so that we can easily switch through them

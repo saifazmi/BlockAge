@@ -9,10 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa
+ * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, and Paul Popa
  * @version : 23/03/2016;
  *          <p>
- *          This the class that will be run. It opens the initial gui window.
+ *          This is the class which will be run. It opens the initial gui window.
  * @date : 28/01/16
  */
 public class CoreGUI extends Application {

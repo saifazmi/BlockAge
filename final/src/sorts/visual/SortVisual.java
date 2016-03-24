@@ -27,7 +27,7 @@ import stores.LambdaStore;
 import java.util.ArrayList;
 
 /**
- * @author : Evgeniy Kim; Contributors - Evgeniy Kim,Dominic Walters, Paul Popa
+ * @author : Evgeniy Kim; Contributors - Dominic Walters and Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          The central class for displaying the sort visual. Loosely based on the Model-View-Controller model.
@@ -254,8 +254,6 @@ public class SortVisual {
 
             count++;
         }
-
-
     }
 
     /**

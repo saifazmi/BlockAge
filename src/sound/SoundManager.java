@@ -7,7 +7,7 @@ import javafx.util.Duration;
 import java.net.URL;
 
 /**
- * @author : Hung Hoang;
+ * @author : Hung Hoang
  * @version : 23/03/2016;
  *          <p>
  *          This class uses a circular buffer to store all the soundtracks organises

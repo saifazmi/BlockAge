@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : Dominic Walters; Contributors - Dominic Walters, and Paul Popa
+ * @author : Dominic Walters; Contributors - Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          Creates the main interface for the game. This will contain the grid
@@ -151,14 +151,5 @@ public class GameRunTime {
     public void setLastClicked(SpriteImage lastClicked) {
 
         this.lastClicked = lastClicked;
-    }
-
-    /**
-     * Set the base existence
-     *
-     * @param basePlaced the base placement state
-     */
-    public void setBasePlaced(boolean basePlaced) {
-
     }
 }

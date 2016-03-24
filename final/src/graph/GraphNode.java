@@ -6,18 +6,15 @@ import entity.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
- * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
+ * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, and Paul Popa
  * @version : 23/03/2016;
  *          <p>
- *          Defines a graphnode data structure.
+ *          Defines a graph node data structure.
  * @date : 28/01/16
  */
 public class GraphNode {
-
-    private static final Logger LOG = Logger.getLogger(GraphNode.class.getName());
 
     // X-coordinate of the node
     private int x;

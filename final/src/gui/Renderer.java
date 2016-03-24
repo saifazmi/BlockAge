@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * @author : Dominic Walters; Contributors - Dominic Walters
+ * @author : Dominic Walters
  * @version : 23/03/2016;
  *          <p>
  *          This class creates all the elements that will be placed on the map such as
@@ -53,6 +53,7 @@ public class Renderer extends Group {
      * @return the renderer instance
      */
     public static Renderer Instance() {
+
         if (instance == null) {
             instance = new Renderer();
         }
@@ -179,8 +180,8 @@ public class Renderer extends Group {
 
     /**
      * Calculates the spacing needed for the grid to fit the space it has been granted.
-     *
-     * @return an array list containing 6 things ordered as follows:
+     * <p>
+     * generates an array list containing 6 things ordered as follows:
      * <p>
      * width           Number of GraphNodes on the width
      * height          Number of GraphNodes on the height
@@ -207,7 +208,7 @@ public class Renderer extends Group {
         returnList.add(pixelWidth);
         returnList.add(pixelHeight);
 
-        spacingOutput = returnList;
+        this.spacingOutput = returnList;
     }
 
     /**
@@ -346,10 +347,12 @@ public class Renderer extends Group {
         List<Line> lines = produceAlgoRoute(unit);
 
         for (Line line : lines) {
-            line.setMouseTransparent(true); // makes the click event transparent for this sprite
 
-            // Creates the green rectangles that are displayed on the map (which follow the search algorithm). when
-            // the transition is played
+            // makes the click event transparent for this sprite
+            line.setMouseTransparent(true);
+
+            // Creates the green rectangles that are displayed on the map (which follow the search algorithm)
+            // when the transition is played
             Rectangle rect = new Rectangle(xSpacing, ySpacing);
             rect.setFill(Color.GREEN);
             rect.setOpacity(0.0);
@@ -421,14 +424,20 @@ public class Renderer extends Group {
 
             GraphNode drawTo = linkedNode(unit, node);
 
-            Line line = new Line(
-                    this.xSpacing / 2 + node.getX() * xSpacing,
-                    this.ySpacing / 2 + node.getY() * ySpacing,
-                    this.xSpacing / 2 + drawTo.getX() * xSpacing,
-                    this.ySpacing / 2 + drawTo.getY() * ySpacing
-            );
+            Line line = null;
+            if (drawTo != null) {
+                line = new Line(
+                        this.xSpacing / 2 + node.getX() * xSpacing,
+                        this.ySpacing / 2 + node.getY() * ySpacing,
+                        this.xSpacing / 2 + drawTo.getX() * xSpacing,
+                        this.ySpacing / 2 + drawTo.getY() * ySpacing
+                );
+            }
 
-            line.setStrokeWidth(4.0);
+            if (line != null) {
+                line.setStrokeWidth(4.0);
+            }
+
             lines.add(line);
         }
 
@@ -443,12 +452,16 @@ public class Renderer extends Group {
      * @return the parent of the supplied node
      */
     private GraphNode linkedNode(Unit unit, GraphNode toNode) {
+
         List<Pair<GraphNode, GraphNode>> nodeAssociations = unit.getNodeAssociations();
+
         for (int i = nodeAssociations.size() - 1; i >= 0; i--) {
+
             if (toNode.equals(nodeAssociations.get(i).getValue())) {
                 return nodeAssociations.get(i).getKey();
             }
         }
+
         //shouldn't ever get here
         return null;
     }

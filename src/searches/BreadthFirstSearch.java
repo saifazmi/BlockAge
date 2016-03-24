@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author : Hung Hoang; Contributors - Hung Hoang
+ * @author : Hung Hoang
  * @version : 23/03/2016;
  *          <p>
  *          This is the class that performs breadth first searches.

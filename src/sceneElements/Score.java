@@ -1,7 +1,7 @@
 package sceneElements;
 
 /**
- * @author : Anh Pham; Contributors - Anh Pham
+ * @author : Anh Pham
  * @version : 23/03/2016;
  *          <p>
  *          This is the class that will monitor the score of the game
@@ -12,6 +12,9 @@ public class Score {
     private double score;
     private boolean halved;
 
+    /**
+     * Initialises the score counter
+     */
     public Score() {
 
         this.score = 0;

@@ -333,7 +333,7 @@ public class CoreEngine {
     }
 
     /**
-     * Updates all game objects that need updating, includes all the entites, spawner
+     * Updates all game objects that need updating, includes all the entities, spawner
      */
     private void updateGameState() {
 

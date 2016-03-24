@@ -2,18 +2,15 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
- * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, Paul Popa, and Saif Amzi
+ * @author : Saif Azmi; Contributors - Anh Pham, Dominic Walters, Evgeniy Kim, Hung Hoang, and Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          Defines a graph data structure.
  * @date : 28/01/16
  */
 public class Graph {
-
-    private static final Logger LOG = Logger.getLogger(Graph.class.getName());
 
     // Graph Width
     public static final int WIDTH = 20;

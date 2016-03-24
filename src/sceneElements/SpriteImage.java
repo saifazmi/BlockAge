@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author : Dominic Walters; Contributors - Dominic Walters
+ * @author : Dominic Walters
  * @version : 23/03/2016;
  *          <p>
  *          This class associates an entity to an image.

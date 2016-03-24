@@ -3,7 +3,7 @@ package sorts.logic;
 import java.util.ArrayList;
 
 /**
- * @author : Evgeniy Kim; Contributors - Evgeniy Kim
+ * @author : Evgeniy Kim
  * @version : 23/03/2016;
  *          <p>
  *          BubbleSort with a SortableComponent object which prepares the data to be
@@ -31,7 +31,8 @@ public class BubbleSort {
 
             swap = false;
 
-            for (int x = 0; x < state.size() - 1; x++) { //compare all with adjacents
+            //compare all with adjacent
+            for (int x = 0; x < state.size() - 1; x++) {
 
                 // consider order, should show comparison first, then swap, so 2 states per swap,
                 // 1 state per comparison and no swap

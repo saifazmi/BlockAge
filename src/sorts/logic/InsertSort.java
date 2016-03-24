@@ -3,7 +3,7 @@ package sorts.logic;
 import java.util.ArrayList;
 
 /**
- * @author : Evgeniy Kim; Contributors - Evgeniy Kim
+ * @author : Evgeniy Kim
  * @version : 23/03/2016;
  *          <p>
  *          InsertSort with a SortableComponent object which prepares the data to be

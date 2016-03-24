@@ -9,13 +9,12 @@ import javafx.scene.image.ImageView;
 import maps.MapEditorInterface;
 
 /**
- * @author : Paul Popa; Contributors - Paul Popa
+ * @author : Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          This class makes the setting of the button properties more easily
  * @date : 09/02/16
  */
-
 public class ButtonProperties {
 
     /**

@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : Saif Azmi; Contributors - Saif Amzi
+ * @author : Saif Azmi
  * @version : 23/03/2016;
  *          <p>
  *          Defines a sortable blockade data structure.
@@ -67,6 +67,7 @@ public class SortableBlockade extends Blockade {
 
         return this.sortVisual;
     }
+
     // SETTER methods.
 
     /**

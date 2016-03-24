@@ -13,19 +13,15 @@ import stores.LambdaStore;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Logger;
 
 /**
- * @author : Hung Hoang; Contributors - Hung Hoang, and Paul Popa
+ * @author : Hung Hoang; Contributors - Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          Spawns the units at certain time intervals.
  * @date : 13/02/16
  */
-
 public class UnitSpawner {
-
-    private static final Logger LOG = Logger.getLogger(UnitSpawner.class.getName());
 
     //A pool of units instantiated at start-time, prevents lagging from Garbage Collection
     private ArrayList<Unit> unitPool;

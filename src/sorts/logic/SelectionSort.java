@@ -3,10 +3,10 @@ package sorts.logic;
 import java.util.ArrayList;
 
 /**
- * @author : Evgeniy Kim; Contributors - Evgeniy Kim
+ * @author : Evgeniy Kim
  * @version : 23/03/2016;
  *          <p>
- *          SelectionSort with use of SortableComponent, making it possible to visuailze at SortVisual class
+ *          SelectionSort with use of SortableComponent, making it possible to visualise at SortVisual class
  * @date : 19/02/16
  */
 public class SelectionSort {

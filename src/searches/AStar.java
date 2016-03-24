@@ -15,7 +15,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
- * @author : Evgeniy Kim; Contributors - Evgeniy Kim
+ * @author : Evgeniy Kim
  * @version : 23/03/2016;
  *          <p>
  *          This is the class that performs a star searches.

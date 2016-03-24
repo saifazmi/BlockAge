@@ -34,7 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author : Hung Hoang; Contributors - Paul Popa
+ * @author : Hung Hoang; Contributors - Paul Popa and Saif Azmi
  * @version : 23/03/2016;
  *          <p>
  *          This class holds the information for the interface of the map editor
@@ -99,7 +99,8 @@ public class MapEditorInterface {
     /**
      * Creates the Map editor interface by instantiating all the GUI elements and place them appropriately
      * This is also done for the pop-up stage.
-     * Constructor also sets up association between the interface and the parser (to call its functions when buttons are pressed on the interface)
+     * Constructor also sets up association between the interface and the parser
+     * (to call its functions when buttons are pressed on the interface)
      *
      * @param mapEditorScene The scene of the map editor
      * @param mapEditor      The Map Editor instance of which information about the editor can be accessed

@@ -5,7 +5,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
- * @author : Evgeniy Kim; Contributors - Evgeniy Kim,Dominic Walters, Paul Popa
+ * @author : Evgeniy Kim; Contributors - Dominic Walters and Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          Custom visual object extending Rectangle, which stores a value to help track
@@ -17,6 +17,21 @@ public class SortVisualBar extends Rectangle {
 
     private int value;
     private double updateX;
+
+    /**
+     * Constructor for sort visual bars
+     *
+     * @param width  the width of the bar
+     * @param height the height of the bar
+     * @param fill   the colour of the bar
+     * @param value  the value associated to the bar
+     */
+    public SortVisualBar(double width, double height, Paint fill, int value) {
+
+        super(width, height, fill);
+        this.value = value;
+        this.setStroke(Color.BLACK);
+    }
 
     // GETTER method
 
@@ -60,20 +75,5 @@ public class SortVisualBar extends Rectangle {
     public void setValue(int value) {
 
         this.value = value;
-    }
-
-    /**
-     * Constructor for sort visual bars
-     *
-     * @param width  the width of the bar
-     * @param height the height of the bar
-     * @param fill   the colour of the bar
-     * @param value  the value associated to the bar
-     */
-    public SortVisualBar(double width, double height, Paint fill, int value) {
-
-        super(width, height, fill);
-        this.value = value;
-        this.setStroke(Color.BLACK);
     }
 }

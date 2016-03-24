@@ -3,7 +3,7 @@ package menus;
 import sound.SoundManager;
 
 /**
- * @author : Paul Popa; Contributors -  Paul Popa
+ * @author : Paul Popa
  * @version : 23/03/2016;
  *          <p>
  *          Handles the options for the game.
@@ -13,15 +13,27 @@ public class Options {
 
     private boolean showPath;
     private boolean tutorial;
+
+    // Instance for singleton.
     private static Options instance = null;
 
+    /**
+     * Implements Singleton for this class (Only one can exist).
+     *
+     * @return the options menu instance
+     */
     public static Options Instance() {
+
         if (instance == null) {
             instance = new Options();
         }
+
         return instance;
     }
 
+    /**
+     * Initialises the Options menu
+     */
     private Options() {
 
         showPath = true;

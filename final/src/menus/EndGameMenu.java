@@ -46,6 +46,9 @@ public class EndGameMenu implements Menu {
     private LabelProperties l = null;
     private Image backMainImage, backMainImageHovered;
 
+    /**
+     * Initialises the End game menu
+     */
     public EndGameMenu() {
 
         initialiseScene();
@@ -69,7 +72,7 @@ public class EndGameMenu implements Menu {
     }
 
     /**
-     * Initilizes the scene with the score and the back to main menu button
+     * Initialises the scene with the score and the back to main menu button
      */
     public void initialiseScene() {
 

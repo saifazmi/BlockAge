@@ -1,17 +1,12 @@
 package sound;
 
 /**
- * Created by hung on 01/03/16.
- */
-
-/**
- * @author : Hung Hoang;
+ * @author : Hung Hoang
  * @version : 23/03/2016;
  *          <p>
  *          This class is the implementation of the circular buffer data structure
  * @date : 28/01/16
  */
-
 public class CircularBufferNode<M> {
 
     private M value;
@@ -35,6 +30,7 @@ public class CircularBufferNode<M> {
      * @return the data
      */
     public M getValue() {
+
         return this.value;
     }
 

@@ -12,7 +12,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
- * @author : Hung Hoang; Contributors - Hung Hoang
+ * @author : Hung Hoang
  * @version : 23/03/2016;
  *          <p>
  *          This is the class that performs depth first searches.
@@ -86,7 +86,8 @@ public class DepthFirstSearch {
     }
 
     /**
-     * Adds the pair of graphnodes to the association list. If a pair exists with the same value, they are removed and replaced by a new one.
+     * Adds the pair of graph nodes to the association list. If a pair exists with the same value,
+     * they are removed and replaced by a new one.
      *
      * @param nodeAssociations the list of all node association pairs
      * @param to               the node to go to
@@ -94,7 +95,10 @@ public class DepthFirstSearch {
      */
     private static void dfsSpecificNodeAssociation(ArrayList<Pair<GraphNode, GraphNode>> nodeAssociations, GraphNode to, GraphNode from) {
 
-        ArrayList<Pair<GraphNode, GraphNode>> toRemove = nodeAssociations.stream().filter(pair -> to.equals(pair.getValue())).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Pair<GraphNode, GraphNode>> toRemove = nodeAssociations.stream().filter(pair ->
+                to.equals(pair.getValue())).collect(Collectors.toCollection(ArrayList::new)
+        );
+
         nodeAssociations.removeAll(toRemove);
         nodeAssociations.add(new Pair<>(from, to));
     }

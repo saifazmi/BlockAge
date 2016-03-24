@@ -23,13 +23,12 @@ import java.util.logging.Logger;
 
 
 /**
- * @author : Hung Hoang; Contributors - Paul Popa, Saif Azmi
+ * @author : Hung Hoang; Contributors - Paul Popa and Saif Azmi
  * @version : 23/03/2016;
  *          <p>
  *          The class that builds and handles the interface and inputs for the map editor
  * @date : 28/01/16
  */
-
 public class MapChooserInterface {
 
     private static final Logger LOG = Logger.getLogger(MapChooserInterface.class.getName());
@@ -55,8 +54,10 @@ public class MapChooserInterface {
      * @return the map chooser interface instance
      */
     public static MapChooserInterface Instance() {
-        if (instance == null)
+
+        if (instance == null) {
             instance = new MapChooserInterface();
+        }
 
         return instance;
     }
