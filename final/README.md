@@ -11,6 +11,9 @@ Key Bindings
 - **S:** Un-selects units, sortable blockades & removes routes.
 - **ESC:** Opens pause menu (when in game).
 
+**NOTE:** Please un-select the unit with **S** after drawing route with **R**   
+if you want to draw the advance route **SHIFT-R** and vice-versa.
+
 Dependencies
 ------------
 
