@@ -1,7 +1,6 @@
 BlockAge
 =======
 **Team Name:** D3  
-[Link](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to the Markdown cheat sheet for editing this file.  
 
 Key Bindings  
 ------------
@@ -10,7 +9,10 @@ Key Bindings
 - **SHIFT+R:** Toggle advanced route display
 - **B:** Toggle normal block placement  
 - **SHIFT+B:** Toggle sortable block placement.
-- **S:** Toggle unit selection
+- **S:** Toggle unit selection  
+  
+**NOTE:** Please un-select the unit with **S** after drawing route with **R**   
+if you want to draw the advance route **SHIFT-R** and vice-versa.
 
 Knows Bugs    
 ----------  
