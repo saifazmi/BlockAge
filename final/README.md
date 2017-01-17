@@ -18,7 +18,7 @@ Dependencies
 ------------
 
 - JDK 8 and above
-- JavaFX api
+- JavaFX API
 
 How to Run
 ----------
@@ -53,3 +53,13 @@ To run TestNG suite of tests use script "run_tests".
 ```
 $ ./run_tests
 ```
+  
+Clean the directory
+-------------------
+```
+$ ./clean
+```  
+This removes the following:  
+- `out` folder
+- `test-output` folder
+- `.source` file
