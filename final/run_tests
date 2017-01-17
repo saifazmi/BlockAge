@@ -1,2 +1,2 @@
-#!/bin/bash
+#!/bin/sh
 java -classpath "out/:dependencies/testng.jar:dependencies/jcommander.jar" org.testng.TestNG ./dependencies/testng.xml
