@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 mkdir out
 find -name "*.java" > .source
 javac -classpath dependencies/testng.jar -sourcepath src/ -d out/ @.source
