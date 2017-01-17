@@ -27,9 +27,9 @@ How to Run
 
 - Open a terminal.
 - ```$``` represents a terminal prompt.
-- Make sure the scripts "compile", "run" and "run_tests" are executable.  
+- Make sure the scripts "compile", "run", "run_tests" and "clean" are executable.  
 ```
-$ chmod +x compile run run_tests
+$ chmod +x compile run run_tests clean
 ```
 
 ### Compile  
@@ -56,6 +56,7 @@ $ ./run_tests
   
 Clean the directory
 -------------------
+To clean the directory, run script "clean".  
 ```
 $ ./clean
 ```  
