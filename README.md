@@ -3,7 +3,7 @@ BlockAge
 
 **NOTE:** To compile, run and play the game please refer to: [final/README.md](https://github.com/saifazmi/BlockAge/blob/master/final/README.md)
 
-###Project Structure 
+### Project Structure 
 ```
 final/src
 ├── core
