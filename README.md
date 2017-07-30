@@ -194,7 +194,7 @@ the game.~~
 
 Contributors
 ------------
-- [Saifullah Azmi](https://github.com/saif-azmi)  
+- [Saif Azmi](https://github.com/saifazmi)  
 - [Dominic Walters](https://github.com/domWalters)  
 - [Evgeniy Kim](https://github.com/yev1master)  
 - [Anh Tuan Pham](https://github.com/istatsuki)  
